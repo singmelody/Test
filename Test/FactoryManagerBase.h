@@ -78,6 +78,8 @@ public:
 			return NULL;
 
 		::new(p)T();
+
+		return p;
 	}
 	virtual void Free(void* ptr)
 	{

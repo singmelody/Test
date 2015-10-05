@@ -12,6 +12,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	assert(tt == 65398277);
 
 	FACTORY_NEWOBJ(GDBRow);
+	FACTORY_NEWOBJ(GDBRow);
 
 	return 0;
 }

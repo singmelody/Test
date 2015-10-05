@@ -24,6 +24,7 @@ enum eDBType
 };
 
 class GDBRow;
+class GDBTable;
 
 class GDBColumn
 {
@@ -41,13 +42,39 @@ public:
 	int32 Index() { return m_nIdx; }
 
 	void SetRow(GDBRow* row) { m_row = row; }
+	GDBRow* Row() { return m_row; }
 protected:
-	int32 m_nType;
-	int32 m_nIdx;
+	int32	m_nType;
+	int32	m_nIdx;
 	GDBRow* m_row;
 };
 
+struct GDBRowData
+{
+	GDBRowData(int32 nInitBuffSize);
+	~GDBRowData();
 
+	char*	_buff;
+	size_t	_capacity;
+	size_t	_cursor;
+
+	size_t Write(const char* data, size_t len);
+
+	template <class T>
+	size_t Write(T nValue)
+	{
+		char* addr = reinterpret_cast<char*>(&nValue);
+		return Write( addr, sizeof(T));
+	}
+
+	template <class T>
+	void Read( size_t pos, T& val)
+	{
+		assert (pos < _cursor);
+		*val = *((T*)((char*)_buff + pos));
+	}
+
+};
 class GDBRow
 {
 	DECLARE_FACTORY_ARG0(GDBRow, -1, new PoolAllocatorEx)
@@ -56,6 +83,32 @@ public:
 	~GDBRow();
 
 	GDBColumn* GetColumn(int32 nIdx);
+
+	void AddColumn( const char* data, size_t len, bool isStr);
+	
+	template <class T>
+	void AddColumn(T val)
+	{
+		size_t oldCursor = m_data.Write(val);
+		T columnFlag = sizeof(T);
+		columnFlag <<= 32;
+		int64 pos = (int64)oldCursor;
+		pos &= 0x00000000ffffffff;
+		m_column.push_back( columnFlag | pos );
+	}
+
+	template <class T>
+	void Fill(T& obj, int32 nColumnID, T defaultValue)
+	{
+
+	}
+
+	GDBTable*		m_pTable;
+protected:
+	typedef std::vector<int64> ColumnInfoVec;
+	ColumnInfoVec	m_columns;
+	GDBRowData		m_data;
+	GDBColumn		m_column;
 };
 
 
@@ -77,11 +130,11 @@ public:
 	int32 GetRowCount();
 	int32 GetColumnType(int32 nIdx);
 
-	GDBRowList m_rowList;
+	GDBRowList		m_rowList;
 private:
-	GDBType			m_ValueType;
-	GDBColumnName	m_ColName;
-	GDBColumnMap	m_ColMap;
+	GDBType			m_valueType;
+	GDBColumnName	m_colName;
+	GDBColumnMap	m_colMap;
 };
 
 class DBInterface
@@ -95,5 +148,39 @@ public:
 
 	virtual bool ExecuteSqlInternal(const char* pSql, GDBTable* pTable) = 0;
 	virtual bool GetResult(GDBTable* pTable);
+
+	virtual bool IsConnect() { return true; }
 };
 
+struct DBConnection
+{
+	DBConnection() : m_pInterface(NULL)
+	{
+	}
+
+
+#if !USE_SQLITE_DB
+	Mutex m_mutex;
+#else
+	sturct SqliteMutex
+	{
+		void UnLock(){}
+		bool AttemptLock() { return true;}
+	}
+#endif
+
+	bool CheckDBConnect()
+	{
+		if(!m_pInterface)
+			return false;
+
+		if(!m_pInterface->IsConnect())
+		{
+			for (int32 i = 0; i < 5; ++i)
+			{
+			}
+		}
+	}
+
+	DBInterface* m_pInterface;
+};

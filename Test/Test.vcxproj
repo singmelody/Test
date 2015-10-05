@@ -17,7 +17,7 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v100</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
@@ -86,6 +86,10 @@
     <ClInclude Include="DLMallocConfig.h" />
     <ClInclude Include="Factory.h" />
     <ClInclude Include="FactoryManagerBase.h" />
+    <ClInclude Include="LoadTemplate.h" />
+    <ClInclude Include="LoadTemplateManager.h" />
+    <ClInclude Include="LoadThread.h" />
+    <ClInclude Include="MyFile.h" />
     <ClInclude Include="MyMutex.h" />
     <ClInclude Include="ODBCInterface.h" />
     <ClInclude Include="PoolAllocator.h" />
@@ -107,6 +111,10 @@
     </ClCompile>
     <ClCompile Include="Factory.cpp" />
     <ClCompile Include="FactoryManagerBase.cpp" />
+    <ClCompile Include="LoadTemplate.cpp" />
+    <ClCompile Include="LoadTemplateManager.cpp" />
+    <ClCompile Include="LoadThread.cpp" />
+    <ClCompile Include="MyFile.cpp" />
     <ClCompile Include="MyMutex.cpp" />
     <ClCompile Include="ODBCInterface.cpp" />
     <ClCompile Include="PoolAllocator.cpp" />

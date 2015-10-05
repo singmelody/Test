@@ -55,8 +55,6 @@ bool ODBCInterface::ExecuteSqlInternal(const char* pSql, GDBTable* pTable)
 	{
 		Clear();
 
-		int nColIdx;
-
 		m_result = SQLExecDirect( m_hStmt, (SQLCHAR*)pSql, SQL_NTS);
 		
 		if (m_result != SQL_SUCCESS && m_result != SQL_SUCCESS_WITH_INFO && m_result != SQL_NO_DATA)
