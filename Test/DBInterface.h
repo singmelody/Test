@@ -8,6 +8,11 @@
 #include "Factory.h"
 #include "PoolAllocatorEx.h"
 
+#define USE_SQLITE_DB		0	// sqlite may not be thread safe, please use single thread
+#define USE_ODBC_DB			1
+#define USE_CONNECTION		4	// may be less the num of thread , depends on the test result
+#define MAX_USE_CONNECTION	16
+
 enum eDBType
 {
 	eDB_UnKonw = 0,
@@ -24,13 +29,13 @@ enum eDBType
 };
 
 class GDBRow;
-class GDBTable;
+class DBTable;
 
-class GDBColumn
+class DBColumn
 {
 public:
-	GDBColumn();
-	~GDBColumn();
+	DBColumn();
+	~DBColumn();
 
 	void Type(int32 nType) { m_nType = nType; }
 	int32 nType() { return m_nType; }
@@ -82,7 +87,7 @@ public:
 	GDBRow();
 	~GDBRow();
 
-	GDBColumn* GetColumn(int32 nIdx);
+	DBColumn* GetColumn(int32 nIdx);
 
 	void AddColumn( const char* data, size_t len, bool isStr);
 	
@@ -103,25 +108,25 @@ public:
 
 	}
 
-	GDBTable*		m_pTable;
+	DBTable*		m_pTable;
 protected:
 	typedef std::vector<int64> ColumnInfoVec;
 	ColumnInfoVec	m_columns;
 	GDBRowData		m_data;
-	GDBColumn		m_column;
+	DBColumn		m_column;
 };
 
 
 typedef std::list<GDBRow*> GDBRowList;
-class GDBTable
+class DBTable
 {
 	typedef std::map< std::string, int> GDBColumnMap;
 	typedef std::vector<int> GDBType;
 	typedef std::map< int, std::string> GDBColumnName;
 
 public:
-	GDBTable();
-	~GDBTable();
+	DBTable();
+	~DBTable();
 
 	void AddColumn( const char* pColName, int32 nColumnID, int32 nValueType);
 	const char* GetColumnName(int32 nIdx);
@@ -146,10 +151,13 @@ public:
 	virtual bool ConnectDB(const char* pConnectStr, const char* pUsername, const char* pPassword) = 0;
 	virtual bool CloseDB() = 0;
 
-	virtual bool ExecuteSqlInternal(const char* pSql, GDBTable* pTable) = 0;
-	virtual bool GetResult(GDBTable* pTable);
-
 	virtual bool IsConnect() { return true; }
+
+	virtual bool LoadTable( const char* pTableName, DBTable& table);
+	virtual bool ExecuteSql( const Char* sSql, DBTable* pTable) = 0;
+	virtual bool ExecuteSql( const Char* sSql, DBTable& pTable) { return ExecuteSql( sSql, &pTable); }
+	virtual bool ExecuteSqlInternal(const char* pSql, DBTable* pTable) = 0;
+	virtual bool GetResult(DBTable* pTable);
 };
 
 struct DBConnection
@@ -197,6 +205,6 @@ public:
 
 
 protected:
-	DBConnection*		m_connections;
+	DBConnection		m_connections[MAX_USE_CONNECTION];
 	int32				m_con;
 };

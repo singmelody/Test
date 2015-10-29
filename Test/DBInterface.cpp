@@ -3,25 +3,25 @@
 #include <assert.h>
 
 
-GDBColumn::GDBColumn()
+DBColumn::DBColumn()
 {
 
 }
 
 
-GDBColumn::~GDBColumn()
+DBColumn::~DBColumn()
 {
 
 }
 
-void GDBTable::AddColumn(const char* pColName, int32 nColumnID, int32 nValueType)
+void DBTable::AddColumn(const char* pColName, int32 nColumnID, int32 nValueType)
 {
 	m_colMap[pColName] = nColumnID;
 	m_colName[nColumnID] = pColName;
 	m_valueType.push_back(nValueType);
 }
 
-const char* GDBTable::GetColumnName(int32 nIdx)
+const char* DBTable::GetColumnName(int32 nIdx)
 {
 	auto itr = m_colName.find(nIdx);
 	if( itr == m_colName.end())
@@ -30,7 +30,7 @@ const char* GDBTable::GetColumnName(int32 nIdx)
 	return itr->second.c_str();
 }
 
-int32 GDBTable::GetColumnIdx(const char* pCol)
+int32 DBTable::GetColumnIdx(const char* pCol)
 {
 	auto itr = m_colMap.find(pCol);
 	if(itr == m_colMap.end())
@@ -39,22 +39,38 @@ int32 GDBTable::GetColumnIdx(const char* pCol)
 	return itr->second;
 }
 
-int32 GDBTable::GetColumnCount()
+int32 DBTable::GetColumnCount()
 {
 	return (int32)m_colMap.size();
 }
 
-int32 GDBTable::GetRowCount()
+int32 DBTable::GetRowCount()
 {
 	return (int32)m_rowList.size();
 }
 
-int32 GDBTable::GetColumnType(int32 nIdx)
+int32 DBTable::GetColumnType(int32 nIdx)
 {
 	if ( nIdx < 0 || nIdx >= (int32)m_valueType.size())
 		return 0;
 
 	return m_valueType[nIdx];
+}
+
+bool DBInterface::LoadTable(const char* pTableName, DBTable& table)
+{
+	if(!pTableName)
+	{
+		printf("should not load empty table\n");
+		return false;
+	}
+
+	std::string strSql = std::string("select * from ") + pTableName;
+	if( TRUE == ExecuteSql( strSql.c_str(), table))
+		return false;
+
+	printf("Failed to load table\n", pTableName);
+	return false;
 }
 
 DBInterface::DBInterface()
@@ -67,12 +83,13 @@ DBInterface::~DBInterface()
 
 }
 
-bool DBInterface::GetResult(GDBTable* pTable)
+bool DBInterface::GetResult(DBTable* pTable)
 {
 	return true;
 }
 
 FINISH_FACTORY_ARG0(GDBRow)
+
 GDBRow::GDBRow() : m_data(512)
 {
 
@@ -83,7 +100,7 @@ GDBRow::~GDBRow()
 
 }
 
-GDBColumn* GDBRow::GetColumn(int32 nIdx)
+DBColumn* GDBRow::GetColumn(int32 nIdx)
 {
 	m_column.Type(m_pTable->GetColumnType(nIdx));
 	m_column.SetIndex(nIdx);
@@ -121,6 +138,16 @@ size_t GDBRowData::Write(const char* data, size_t len)
 	size_t oldCursor = _cursor;
 	_cursor += len;
 	return oldCursor;
+}
+
+DBConnectionManager::DBConnectionManager(int32 n)
+{
+	m_con = n;
+}
+
+DBConnectionManager::~DBConnectionManager()
+{
+
 }
 
 DBConnection* DBConnectionManager::GetDBInterface()

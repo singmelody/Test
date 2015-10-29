@@ -12,6 +12,11 @@ LoadTemplate::~LoadTemplate(void)
 {
 }
 
+bool LoadTemplate::LoadData()
+{
+
+}
+
 LoadTemplate* LoadTemplate::GetTemplate(const char* pStr)
 {
 	return NULL;

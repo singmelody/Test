@@ -46,7 +46,7 @@ bool ODBCInterface::ConnectDB(const char* pConnectStr, const char* pUsername, co
 	return true;
 }
 
-bool ODBCInterface::ExecuteSqlInternal(const char* pSql, GDBTable* pTable)
+bool ODBCInterface::ExecuteSqlInternal(const char* pSql, DBTable* pTable)
 {
 	if (!pTable || !pTable)
 		return false;
@@ -176,14 +176,26 @@ bool ODBCInterface::CloseDB()
 	return true;
 }
 
-bool ODBCInterface::GetResult(GDBTable* pTable)
+bool ODBCInterface::GetResult(DBTable* pTable)
 {
+	return true;
+}
+
+bool ODBCInterface::ExecuteSql(const Char* sSql, DBTable* pTable)
+{
+	if ( !ExecuteSqlInternal( sSql, pTable) )
+		return false;
+
 	return true;
 }
 
 bool ODBCConnectionManager::Init(const char* dbName, const char* user, const char* pwd, const char* codepageSql)
 {
+	bool bError = false;
 
+	for (int32 i = 0; i < m_con;)
+	{
+	}
 }
 
 

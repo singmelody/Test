@@ -16,9 +16,10 @@ public:
 
 	virtual bool ConnectDB(const char* pConnectStr, const char* pUsername, const char* pPassword);
 	virtual bool CloseDB();
-	virtual bool GetResult(GDBTable* pTable);
+	virtual bool GetResult(DBTable* pTable);
 
-	virtual bool ExecuteSqlInternal( const char* pSql, GDBTable* pTable);
+	virtual bool ExecuteSql( const Char* sSql, DBTable* pTable);
+	virtual bool ExecuteSqlInternal( const char* pSql, DBTable* pTable);
 protected:
 	void Clear();
 

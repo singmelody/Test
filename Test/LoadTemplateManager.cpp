@@ -50,29 +50,40 @@ void LoadTemplateManager::ReleaseLoadFile(MyFile* &pFile)
 
 void LoadTemplateManager::Load(const char* pModule)
 {
-// 	if (!DBLOAD)
-// 	{
-// 	}
-}
-
-void LoadTemplateManager::Load(DBInterface* pDBI, int32 nModuleID, int32 nThreadCount)
-{
 	if(!DBLoader::OpenDB(MaxConnect))
 		printf("LoadTemplateManager::Load Failed\n");
 
 	DBConnection* pConn = DBLoader::GetDBConnection();
 	if(!pConn)
 	{
-		
-// 		//int32 nStartTickTotal = getMSTime();
-// 
-// 		DBInterface* pDBI = pConn->m_pInterface;
-// 		if(!pDBI)
-// 		{
-// 			printf("Load LoadModules data failed!\n");
-// 			return;
-// 		}
+
+		int32 nStartTickTotal = getMSTime();
+
+		DBInterface* pDBI = pConn->m_pInterface;
+		if(!pDBI)
+		{
+			printf("Load LoadModules data failed!\n");
+			return;
+		}
+
+		std::string sstr;
+		sstr << "select * from LoadModules where modulename = '" << pModule << "'";
+
+		DBTable table;
+		for ( !pDBI->ExecuteSql( sstr.c_str(), table))
+		{
+		}
 	}
+}
+
+void LoadTemplateManager::Load(DBInterface* pDBI, int32 nModuleID, int32 nThreadCount)
+{
+
+}
+
+void LoadTemplateManager::InternalLoadTemplates(LoadInfoList& list, int32 nThreadCount)
+{
+
 }
 
 DBConnection* DBLoader::GetDBConnection()
