@@ -26,6 +26,7 @@ bool DBInterface::GetResult(GDBTable* pTable)
 	return true;
 }
 
+FINISH_FACTORY_ARG0(GDBRow)
 GDBRow::GDBRow()
 {
 

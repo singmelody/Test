@@ -29,7 +29,7 @@ public:
 	}
 
 	virtual void* New() = 0;
-	virtual void Free(void* ptr) = 0;
+	virtual void  Free(void* ptr) = 0;
 protected:
 	int32		m_id;
 	std::string m_name;
@@ -70,10 +70,22 @@ public:
 
 	virtual void* New()
 	{
-		this->m_id = id;
+		if(!m_pAlloc)
+			return NULL;
 
+		T* p = (T*)m_pAlloc->TMalloc(sizeof(T));
+		if(!p)
+			return NULL;
+
+		::new(p)T();
 	}
-	virtual void Free(void* ptr) = 0;
+	virtual void Free(void* ptr)
+	{
+		if ( !ptr || !m_pAlloc || !m_pAlloc->IsValidMemory(ptr))
+			return;
+
+		m_pAlloc->TFree(ptr);
+	}
 protected:
 	Allocator* m_pAlloc;
 };
@@ -100,7 +112,7 @@ protected:
 	FactoryMap	m_FuncName_Arg0;
 };
 
-class FactoryManager : public FactoryManagerBase, public Singleton<FactoryManager>
+class FactoryManager : public FactoryManagerBase
 {
 public:
 	FactoryManager(){}

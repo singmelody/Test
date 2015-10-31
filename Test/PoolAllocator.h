@@ -23,6 +23,7 @@ public:
 	void SetMemoryInfo(const MemoryHead& head);
 	const MemoryHead& GetMemoryInfo();
 
+	virtual int32 GetType() { return eAlloc_Pool; }
 	virtual int32 GetAllocInfo(void* ptr);
 
 	virtual int32 GetMemorySize(void* ptr);

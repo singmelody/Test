@@ -49,10 +49,10 @@ public:
 	virtual const MemoryHead& GetMemoryInfo() = 0;
 
 	virtual void CollectMemory() {}
-	virtual bool IsValidMemory() = 0;
+	virtual bool IsValidMemory(void* ptr) = 0;
 	virtual int32 GetAllocInfo(void* ptr) = 0;
-	virtual uint64 GetMemoryUsage(void* ptr) = 0;
-	int32 GetType() { return eAlloc_Base; }
+	virtual uint64 GetMemoryUsage() = 0;
+	virtual int32 GetType() { return eAlloc_Base; }
 	virtual int32 GetCurrentUseCount() { return 0; }
 	virtual int32 GetMemorySize(void* ptr) { return 0;}
 	virtual int32 GetClassSize() { return 0; }

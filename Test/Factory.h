@@ -13,3 +13,6 @@
 		~ClassFactory_##classObj() {} \
 	}; \
 	static ClassFactory_##classObj m_FactoryArg0_##classObj;
+
+#define FINISH_FACTORY_ARG0(classObj) \
+	classObj::ClassFactory_##classObj classObj::m_FactoryArg0_##classObj;

@@ -50,7 +50,7 @@ protected:
 
 class GDBRow
 {
-	//DECLARE_FACTORY_ARG0(GDBRow, -1, new PoolAllocatorEx)
+	DECLARE_FACTORY_ARG0(GDBRow, -1, new PoolAllocatorEx)
 public:
 	GDBRow();
 	~GDBRow();

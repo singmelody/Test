@@ -12,7 +12,7 @@ public:
 
 	virtual void* TMalloc(int32 nSize);
 	virtual void TFree(void* ptr);
-	int32 GetType() { return eAlloc_Pool_Ex; }
+	virtual int32 GetType() { return eAlloc_Pool_Ex; }
 protected:
 
 	int32 m_maxSize;
