@@ -40,7 +40,12 @@ class Factory_Arg0 : public FactoryBase_Arg0
 {
 public:
 	Factory_Arg0() : m_pAlloc(NULL){}
-	Factory_Arg0(Allocator* pAlloc) : m_pAlloc(pAlloc) {}
+	Factory_Arg0(Allocator* pAlloc) : m_pAlloc(pAlloc) {
+		Allocator* ptr = static_cast<Allocator*>(pAlloc);
+		if (!ptr)
+			return;
+		ptr->Init(sizeof(T));
+	}
 
 	virtual void ClassID(int32 nID) { 
 		m_id = nID; 
@@ -49,7 +54,7 @@ public:
 			return;
 
 		MemoryHead head;
-		head.AllocInfo = id;
+		head.AllocInfo = nID;
 		m_pAlloc->SetMemoryInfo(head);
 	}
 	int32 ClassID() { return m_id; }

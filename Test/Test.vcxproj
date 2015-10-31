@@ -100,6 +100,9 @@
     <ClCompile Include="Allocator.cpp" />
     <ClCompile Include="DBInterface.cpp" />
     <ClCompile Include="DLMalloc.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="DLMallocConfig.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Factory.cpp" />

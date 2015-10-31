@@ -12,9 +12,8 @@ public:
 
 	virtual void* TMalloc(int32 nSize);
 	virtual void TFree(void* ptr);
+	int32 GetType() { return eAlloc_Pool_Ex; }
 protected:
-	void* PopMemory();
-	void PushMemory( void* ptr);
 
 	int32 m_maxSize;
 	Mutex m_lock;
