@@ -46,12 +46,11 @@ public:
 	virtual void TFree(void* ptr) = 0;
 
 	virtual void SetMemoryInfo(const MemoryHead& head) = 0;
-	virtual const MemoryHead& GetMemoryHead() { return m_head; }
-	virtual int32 GetAllocInfo() = 0;
+	const MemoryHead& GetMemoryHead() { return m_head; }
 
 	virtual int32 GetType() { return m_nAllocType; }
 protected:
-	MemoryHead m_head;
+	MemoryHead  m_head;
 	int			m_nAllocType;
 };
 

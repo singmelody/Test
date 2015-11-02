@@ -616,9 +616,9 @@ declarations should be compatible with system versions
 		void* arg);
 #endif  /* MSPACES */
 
-#ifdef __cplusplus
-};  /* end of extern "C" */
-#endif
+// #ifdef __cplusplus
+// };  /* end of extern "C" */
+// #endif
 
 #endif /* MALLOC_280_H */
 
@@ -1422,12 +1422,12 @@ inlining are defined as macros, so these aren't used for them.
 #endif
 #endif
 
-#ifdef __cplusplus
-extern "C" {
-#ifndef FORCEINLINE
-#define FORCEINLINE inline
-#endif
-#endif /* __cplusplus */
+// #ifdef __cplusplus
+// extern "C" {
+// #ifndef FORCEINLINE
+// #define FORCEINLINE inline
+// #endif
+// #endif /* __cplusplus */
 #ifndef FORCEINLINE
 #define FORCEINLINE
 #endif
@@ -2037,9 +2037,9 @@ extern "C" {
 
 #endif /* MSPACES */
 
-#ifdef __cplusplus
-}  /* end of extern "C" */
-#endif /* __cplusplus */
+// #ifdef __cplusplus
+// }  /* end of extern "C" */
+// #endif /* __cplusplus */
 
    /*
    ========================================================================
@@ -2477,8 +2477,8 @@ static FORCEINLINE void x86_clear_lock(int* sl) {
 #define CLEAR_LOCK(sl)   x86_clear_lock(sl)
 
 #else /* Win32 MSC */
-#define CAS_LOCK(sl)     interlockedexchange(sl, (LONG)1)
-#define CLEAR_LOCK(sl)   interlockedexchange (sl, (LONG)0)
+#define CAS_LOCK(sl)     interlockedexchange((LONG*)sl, (LONG)1)
+#define CLEAR_LOCK(sl)   interlockedexchange ((LONG*)sl, (LONG)0)
 
 #endif /* ... gcc spins locks ... */
 

@@ -1,3 +1,3 @@
 #pragma once
 
-#define USE_SYS_NEW 1
+#define USE_SYS_NEW 0

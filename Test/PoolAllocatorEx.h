@@ -1,6 +1,7 @@
 #pragma once
 
 #include "PoolAllocator.h"
+#include "MyMutex.h"
 
 class PoolAllocatorEx : public PoolAllocator
 {
@@ -11,13 +12,11 @@ public:
 
 	virtual void* TMalloc(int32 nSize);
 	virtual void TFree(void* ptr);
-
-	virtual void SetMemoryInfo(const MemoryHead& head);
-
-	virtual void Init(int32 nSize);
-	virtual int32 GetAllocInfo();
-
 protected:
+	void* PopMemory();
+	void PushMemory( void* ptr);
+
 	int32 m_maxSize;
+	Mutex m_lock;
 };
 

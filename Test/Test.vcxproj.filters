@@ -60,6 +60,9 @@
     <ClInclude Include="ServerConfig.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="MyMutex.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -96,6 +99,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="DLMalloc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MyMutex.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

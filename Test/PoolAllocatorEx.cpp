@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "PoolAllocatorEx.h"
 #include "ServerConfig.h"
+#include "DLMalloc.h"
 
 #define Max_Pool_Alloc_Count 10000
 PoolAllocatorEx::PoolAllocatorEx()
@@ -22,7 +23,7 @@ PoolAllocatorEx::~PoolAllocatorEx()
 void* PoolAllocatorEx::TMalloc(int32 nSize)
 {
 	LOCK(&m_lock);
-	if (size > m_ObjSize)
+	if (nSize > m_ObjSize)
 		return NULL;
 
 #if USE_SYS_NEW
@@ -30,33 +31,54 @@ void* PoolAllocatorEx::TMalloc(int32 nSize)
 	if (!res)
 		return NULL;
 
-	*((MemoryHead*)res) = m_Info;
+	*((MemoryHead*)res) = m_head;
 	((MemoryHead*)res)->MemInfo |= 0x80000000;
 	res = res + sizeof(MemoryHead);
 	m_MemUsage += m_CellSize;
-	m_Count++;
+	m_count++;
 	return res;
 #else
 	return PopMemory();
 #endif
 }
 
-void PoolAllocatorEx::Init(int32 nSize)
-{
-	if( size < sizeof(MemoryCell*))
-}
-
 void PoolAllocatorEx::TFree(void* ptr)
 {
+	LOCK(&m_lock);
+	if(!ptr)
+		return;
 
+#if USE_SYS_NEW
+	char* pCell = ((char*)ptr - sizeof(MemoryHead));
+	dlfree((void*)pCell);
+	m_MemUsage -= m_CellSize;
+	m_count--;
+#else
+	PushMemory(ptr);
+	if((int32)m_count > m_maxSize)
+	{
+		// free more memory
+		for (UINT32 i=m_maxSize; i < m_count && m_cell; ++i)
+		{
+			void* ptr = PopMemory();
+			for (!ptr)
+				return;
+
+			void* realPtr = (void*)((char*)ptr - sizeof(MemoryHead));
+			dlfree(realPtr);
+			m_MemUsage -= m_CellSize;
+			m_count--;
+		}
+	}
+#endif
 }
 
-void PoolAllocatorEx::SetMemoryInfo(const MemoryHead& head)
+void* PoolAllocatorEx::PopMemory()
 {
 
 }
 
-int32 PoolAllocatorEx::GetAllocInfo()
+void PoolAllocatorEx::PushMemory(void* ptr)
 {
 
 }
