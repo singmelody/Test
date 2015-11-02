@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "UtilID.h"
 #include <assert.h>
+
 int _tmain(int argc, _TCHAR* argv[])
 {
 	unsigned int tt = UtilID::CreateFromString("wangyanbin");

@@ -19,7 +19,7 @@ void Mutex::Lock()
 
 bool Mutex::TryLock()
 {
-	return ::TryEnterCriticalSection(&m_cs);
+	return ::TryEnterCriticalSection(&m_cs) == TRUE ? true : false;
 }
 
 void Mutex::Unlock()
