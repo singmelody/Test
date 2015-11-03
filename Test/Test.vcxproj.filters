@@ -42,6 +42,15 @@
     <ClInclude Include="UtilID.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Allocator.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="PoolAllocaterEx.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="PoolAllocatorEx.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -66,6 +75,15 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="UtilID.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Allocator.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="PoolAllocaterEx.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="PoolAllocatorEx.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

@@ -3,11 +3,13 @@
 
 #include "stdafx.h"
 #include "UtilID.h"
-
+#include <assert.h>
 int _tmain(int argc, _TCHAR* argv[])
 {
 	unsigned int tt = UtilID::CreateFromString("wangyanbin");
-	printf("%ud\n", tt);
+	assert(tt == 65398277);
+
+
 	return 0;
 }
 

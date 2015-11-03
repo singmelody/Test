@@ -21,7 +21,22 @@ DBInterface::~DBInterface()
 {
 }
 
+bool DBInterface::GetResult(GDBTable* pTable)
+{
+	return true;
+}
+
 GDBRow::GDBRow()
 {
 
+}
+
+GDBRow::~GDBRow()
+{
+
+}
+
+GDBColumn* GDBRow::GetColumn(int32 nIdx)
+{
+	return NULL;
 }

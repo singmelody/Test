@@ -20,12 +20,41 @@ enum eDBType
 	eDB_BINARY
 };
 
+class GDBRow;
+
+class GDBColumn
+{
+public:
+	GDBColumn();
+	~GDBColumn();
+
+	void Type(int32 nType) { m_nType = nType; }
+	int32 nType() { return m_nType; }
+
+	virtual void FreeColumn() {}
+	bool bIsNullValue;
+
+	void SetIndex(int32 nIdx) { m_nIdx = nIdx; }
+	int32 Index() { return m_nIdx; }
+
+	void SetRow(GDBRow* row) { m_row = row; }
+protected:
+	int32 m_nType;
+	int32 m_nIdx;
+	GDBRow* m_row;
+};
+
+
 class GDBRow
 {
-	//DECLARE_FACTORY_ARG0_EX( GDBRow, -1);
+	DECLARE_FACTORY_ARG0(GDBRow, -1, new CPoolAllocatorEx);
 public:
 	GDBRow();
+	~GDBRow();
+
+	GDBColumn* GetColumn(int32 nIdx);
 };
+
 
 typedef std::list<GDBRow*> GDBRowList;
 class GDBTable

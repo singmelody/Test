@@ -1,12 +1,15 @@
 #pragma once
 #include "FactoryManagerBase.h"
 
-#define DECLARE_FACTORY_ARG0_EX( classObj, classID) \
+#define DECLARE_FACTORY_ARG0( classObj, classID, allocator) \
 	private:	\
-	class CClassFactory_##classObj : public FactoryBase_Arg0 \
+	class ClassFactory_##classObj : public FactoryBase_Arg0<classObj> \
 	{	\
 	public: \
-		CClassFactory_##classObj() : CFactoryBase_Arg0() \
+		ClassFactory_##classObj() : CFactoryBase_Arg0<classObj>(allocator) \
 		{ \
+			ClassID(classID); ClassName(#classObj); FactoryManager::Instance().AddFactory(this); \
 		} \
-	};
+		~ClassFactory_##classObj() {} \
+	}; \
+	static ClassFactory_##classObj m_FactoryArg0_##classObj;
