@@ -42,6 +42,8 @@ bool ODBCInterface::ConnectDB(const char* pConnectStr, const char* pUsername, co
 	SQLAllocHandle(SQL_HANDLE_ENV, SQL_NULL_HANDLE, &m_hEnv);
 	SQLSetEnvAttr(m_hEnv, SQL_ATTR_ODBC_VERSION, (SQLPOINTER)SQL_OV_ODBC3, SQL_IS_INTEGER);
 	SQLAllocHandle( SQL_HANDLE_DBC, m_hEnv, &m_hDbc);
+
+	return true;
 }
 
 bool ODBCInterface::ExecuteSqlInternal(const char* pSql, GDBTable* pTable)
@@ -169,4 +171,14 @@ void ODBCInterface::Clear()
 {
 	SQLCloseCursor(m_hStmt);
 	SQLFreeStmt(m_hStmt, SQL_UNBIND);
+}
+
+bool ODBCInterface::CloseDB()
+{
+	return true;
+}
+
+bool ODBCInterface::GetResult(GDBTable* pTable)
+{
+	return true;
 }

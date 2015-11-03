@@ -26,8 +26,8 @@ public:
 		m_name = pName;
 	}
 
-	virtual void* New();
-	virtual void Free(void* ptr);
+	virtual void* New() = 0;
+	virtual void Free(void* ptr) = 0;
 protected:
 	int32		m_id;
 	std::string m_name;
@@ -47,10 +47,11 @@ public:
 	virtual void AddFactory(CFactoryBase_Arg0* pFunc);
 	virtual void AddFactoryEx(CFactoryBase_Arg0* pFunc);
 
-	int32 GetFactoryCount() { return (int32)m_FuncID_A }
+	int32 GetFactoryCount() { return (int32)m_FuncID_Arg0.size(); }
 
 protected:
 	typedef std::map< UtilID, CFactoryBase_Arg0*> FactoryMap;
 
 	std::vector<CFactoryBase_Arg0*> m_FuncID_Arg0;
+	FactoryMap	m_FuncName_Arg0;
 };

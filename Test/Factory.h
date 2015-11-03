@@ -6,5 +6,7 @@
 	class CClassFactory_##classObj : public FactoryBase_Arg0 \
 	{	\
 	public: \
-		CClassFactory_##classObj() : CFactoryBase_Arg0()
-	};	\
+		CClassFactory_##classObj() : CFactoryBase_Arg0() \
+		{ \
+		} \
+	};

@@ -22,7 +22,7 @@ enum eDBType
 
 class GDBRow
 {
-	DECLARE_FACTORY_ARG0_EX( GDBRow, -1);
+	//DECLARE_FACTORY_ARG0_EX( GDBRow, -1);
 public:
 	GDBRow();
 };
@@ -62,5 +62,6 @@ public:
 	virtual bool CloseDB() = 0;
 
 	virtual bool ExecuteSqlInternal(const char* pSql, GDBTable* pTable) = 0;
+	virtual bool GetResult(GDBTable* pTable);
 };
 

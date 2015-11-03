@@ -10,7 +10,7 @@ public:
 		return _instance;
 	}
 
-private:
+protected:
 	Singleton() {}
 	~Singleton(){}
 	Singleton(const Singleton<T>&);
