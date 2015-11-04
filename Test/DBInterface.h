@@ -5,6 +5,9 @@
 #include <vector>
 #include <list>
 
+#include "Factory.h"
+#include "PoolAllocatorEx.h"
+
 enum eDBType
 {
 	eDB_UnKonw = 0,
@@ -47,7 +50,7 @@ protected:
 
 class GDBRow
 {
-	DECLARE_FACTORY_ARG0(GDBRow, -1, new CPoolAllocatorEx);
+	DECLARE_FACTORY_ARG0(GDBRow, -1, new PoolAllocatorEx)
 public:
 	GDBRow();
 	~GDBRow();

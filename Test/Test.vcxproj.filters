@@ -45,10 +45,16 @@
     <ClInclude Include="Allocator.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="PoolAllocaterEx.h">
+    <ClInclude Include="PoolAllocatorEx.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="PoolAllocatorEx.h">
+    <ClInclude Include="PoolAllocator.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="DLMalloc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="DLMallocConfig.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
@@ -80,10 +86,13 @@
     <ClCompile Include="Allocator.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="PoolAllocaterEx.cpp">
+    <ClCompile Include="PoolAllocatorEx.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="PoolAllocatorEx.cpp">
+    <ClCompile Include="PoolAllocator.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="DLMalloc.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

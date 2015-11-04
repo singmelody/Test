@@ -2,7 +2,7 @@
 #include "Allocator.h"
 
 
-Allocator::Allocator()
+Allocator::Allocator() : m_nAllocType(eAlloc_Base)
 {
 }
 
