@@ -1,20 +1,22 @@
 #include "stdafx.h"
 #include "PoolAllocatorEx.h"
+#include "ServerConfig.h"
 
-
-PoolAllocatorEx::PoolAllocatorEx() : PoolAllocator()
+#define Max_Pool_Alloc_Count 10000
+PoolAllocatorEx::PoolAllocatorEx()
 {
-	m_nAllocType = eAlloc_Pool_Ex;
+	m_maxSize = Max_Pool_Alloc_Count;
 }
 
 
 PoolAllocatorEx::PoolAllocatorEx(int32 nMaxSize)
 {
-
+	m_maxSize = nMaxSize;
 }
 
 PoolAllocatorEx::~PoolAllocatorEx()
 {
+
 }
 
 void* PoolAllocatorEx::TMalloc(int32 nSize)
@@ -39,17 +41,17 @@ void* PoolAllocatorEx::TMalloc(int32 nSize)
 #endif
 }
 
+void PoolAllocatorEx::Init(int32 nSize)
+{
+	if( size < sizeof(MemoryCell*))
+}
+
 void PoolAllocatorEx::TFree(void* ptr)
 {
 
 }
 
 void PoolAllocatorEx::SetMemoryInfo(const MemoryHead& head)
-{
-
-}
-
-void PoolAllocatorEx::Init(int32 nSize)
 {
 
 }

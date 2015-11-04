@@ -1,5 +1,7 @@
 #pragma once
 
+#include "BaseType.h"
+
 enum
 {
 	eAlloc_Base,
@@ -39,17 +41,17 @@ public:
 	Allocator();
 	virtual ~Allocator();
 
+	virtual void Init(int32 nSize) = 0;
 	virtual void* TMalloc(int32 nSize) = 0;
 	virtual void TFree(void* ptr) = 0;
 
 	virtual void SetMemoryInfo(const MemoryHead& head) = 0;
 	virtual const MemoryHead& GetMemoryHead() { return m_head; }
-
-	virtual void Init(int32 nSize) = 0;
 	virtual int32 GetAllocInfo() = 0;
+
 	virtual int32 GetType() { return m_nAllocType; }
 protected:
 	MemoryHead m_head;
-	int32 m_nAllocType;
+	int			m_nAllocType;
 };
 

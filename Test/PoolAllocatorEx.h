@@ -16,5 +16,8 @@ public:
 
 	virtual void Init(int32 nSize);
 	virtual int32 GetAllocInfo();
+
+protected:
+	int32 m_maxSize;
 };
 

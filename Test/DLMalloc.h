@@ -26,9 +26,9 @@ declarations should be compatible with system versions
 #include "DLMallocConfig.h"
 
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+// #ifdef __cplusplus
+// extern "C" {
+// #endif
 
 #include <stddef.h>   /* for size_t */
 

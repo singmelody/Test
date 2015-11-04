@@ -1855,8 +1855,8 @@ static FORCEINLINE void x86_clear_lock(int* sl) {
 #define CLEAR_LOCK(sl)   x86_clear_lock(sl)
 
 #else /* Win32 MSC */
-#define CAS_LOCK(sl)     interlockedexchange(sl, (LONG)1)
-#define CLEAR_LOCK(sl)   interlockedexchange (sl, (LONG)0)
+#define CAS_LOCK(sl)     interlockedexchange((LONG*)sl, (LONG)1)
+#define CLEAR_LOCK(sl)   interlockedexchange ((LONG*)sl, (LONG)0)
 
 #endif /* ... gcc spins locks ... */
 
@@ -6281,7 +6281,3 @@ Trial version Fri Aug 28 13:14:29 1992  Doug Lea  (dl at g.oswego.edu)
 structure of old version,  but most details differ.)
 
 */
-
-#ifdef _MSC_VER
-#pragma warning( default:4267 )
-#endif
