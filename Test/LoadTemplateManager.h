@@ -81,6 +81,6 @@ public:
 
 private:
 
-	static DBConnectionManager& m_pDBMgr;
+	static DBConnectionManager* m_pDBMgr;
 	static std::string m_strDBFile;
 };

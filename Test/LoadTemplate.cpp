@@ -5,6 +5,11 @@
 
 LoadTemplate::LoadTemplate(void)
 {
+	m_loadState = eLS_Unload;
+	m_bLoadFromDB = true;
+
+	m_pLoadInfo = NULL;
+	m_pLoadMgr = NULL;
 }
 
 
@@ -14,7 +19,37 @@ LoadTemplate::~LoadTemplate(void)
 
 bool LoadTemplate::LoadData()
 {
+	bool bSucceed = false;
 
+	if( m_bLoadFromDB )
+	{
+		DBConnection* pConn = DBLoader::GetDBConnection();
+		if(pConn)
+		{
+			try
+			{
+				printf("start load %s from db\n", m_strName.c_str());
+				bSucceed = LoadDataFromDB( pConn->m_pInterface );
+				pConn->m_mutex.Unlock();
+
+				if ( bSucceed )
+					printf("LoadTempate:%s from DB Success\n", m_strName.c_str());
+				else
+					printf("LoadTempate:%s from DB Failed\n", m_strName.c_str());
+			}
+			catch (...)
+			{
+				pConn->m_mutex.Unlock();
+				printf("LoadTempate:%s from DB Exception\n", m_strName.c_str());
+			}
+		}
+	}
+	else
+	{
+		// todo:load sqlite
+	}
+
+	return bSucceed;
 }
 
 LoadTemplate* LoadTemplate::GetTemplate(const char* pStr)

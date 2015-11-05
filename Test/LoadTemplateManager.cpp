@@ -1,6 +1,12 @@
 #include "StdAfx.h"
 #include "LoadTemplateManager.h"
 #include "MyFile.h"
+#include "Timer.h"
+#include <sstream>
+
+DBConnectionManager* DBLoader::m_pDBMgr = NULL;
+std::string DBLoader::m_strDBFile;
+int32 DBLoader::m_maxThread = 4;
 
 LoadTemplateManager::LoadTemplateManager(void)
 {
@@ -51,12 +57,14 @@ void LoadTemplateManager::ReleaseLoadFile(MyFile* &pFile)
 void LoadTemplateManager::Load(const char* pModule)
 {
 	if(!DBLoader::OpenDB(MaxConnect))
+	{
 		printf("LoadTemplateManager::Load Failed\n");
+		return;
+	}
 
 	DBConnection* pConn = DBLoader::GetDBConnection();
-	if(!pConn)
+	if(pConn)
 	{
-
 		int32 nStartTickTotal = getMSTime();
 
 		DBInterface* pDBI = pConn->m_pInterface;
@@ -66,13 +74,53 @@ void LoadTemplateManager::Load(const char* pModule)
 			return;
 		}
 
-		std::string sstr;
+		std::stringstream sstr;
 		sstr << "select * from LoadModules where modulename = '" << pModule << "'";
 
 		DBTable table;
-		for ( !pDBI->ExecuteSql( sstr.c_str(), table))
+		if ( !pDBI->ExecuteSql( sstr.str().c_str(), table))
 		{
+			printf("Load LoadModules Data Failed\n");
+			return;
 		}
+
+		int32 nCol_ModuleID		= table.GetColumnIdx("ModuleID");
+		int32 nCol_ThreadCount	= table.GetColumnIdx("ThreadCount");
+		int32 nCol_BindReferenceTemplates = table.GetColumnIdx("BindReferenceTemplates");
+
+		GDBRowList& rows = table.m_rowList;
+		for (auto itr = rows.begin(); itr != rows.end(); ++itr)
+		{
+			GDBRow& row = **itr;
+
+			int32 nModuleID = -1;
+			row.Fill( nModuleID, nCol_ModuleID,	0);
+
+			if ( nModuleID >= 0)
+			{
+				int32 nThreadCount = -1;
+				row.Fill( nThreadCount,	nCol_ThreadCount,	0);
+
+				if( nThreadCount > DBLoader::m_maxThread )
+					nThreadCount = DBLoader::m_maxThread;
+
+				if( nThreadCount > MaxThread )
+					nThreadCount = MaxThread;
+
+				Load( pDBI, nModuleID, nThreadCount);
+
+				bool bBind = false;
+				row.Fill( bBind, nCol_BindReferenceTemplates, false);
+
+				if(bBind)
+					BindAllReferenceTemplates();
+			}
+			row.Release();
+		}
+		
+		m_nLoadTimeCastTotal = getMSTime() - nStartTickTotal;
+
+		pConn->m_mutex.Unlock();
 	}
 }
 

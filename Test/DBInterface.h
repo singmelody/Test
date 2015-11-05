@@ -4,6 +4,7 @@
 #include <map>
 #include <vector>
 #include <list>
+#include <assert.h>
 
 #include "Factory.h"
 #include "PoolAllocatorEx.h"
@@ -76,7 +77,7 @@ struct GDBRowData
 	void Read( size_t pos, T& val)
 	{
 		assert (pos < _cursor);
-		*val = *((T*)((char*)_buff + pos));
+		val = *((T*)((char*)_buff + pos));
 	}
 
 };
@@ -99,14 +100,32 @@ public:
 		columnFlag <<= 32;
 		int64 pos = (int64)oldCursor;
 		pos &= 0x00000000ffffffff;
-		m_column.push_back( columnFlag | pos );
+		m_columns.push_back( columnFlag | pos );
 	}
 
 	template <class T>
 	void Fill(T& obj, int32 nColumnID, T defaultValue)
 	{
+		if( nColumnID < 0 || nColumnID >= (int32)m_columns.size())	
+		{
+			obj = defaultValue;
+			return;
+		}
 
+		int64 nColumnFlag = m_columns[nColumnID];
+
+		size_t pos = (size_t)(nColumnFlag & 0x00000000ffffffff);
+		size_t len = (size_t)( (nColumnFlag >> 32) & 0x00000000ffffffff);
+
+		if(len > 0)
+		{
+			m_data.Read( pos, obj);
+		}
+		else
+			obj = defaultValue;
 	}
+
+	void Release() {}
 
 	DBTable*		m_pTable;
 protected:

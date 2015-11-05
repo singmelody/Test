@@ -195,7 +195,38 @@ bool ODBCConnectionManager::Init(const char* dbName, const char* user, const cha
 
 	for (int32 i = 0; i < m_con;)
 	{
+		ODBCInterface* temp = new ODBCInterface();
+		if(!temp)
+		{
+			bError = true;
+			break;
+		}
+
+		m_connections[i].m_pInterface = temp;
+		if (!temp->ConnectDB( dbName, user, pwd))
+		{
+			bError = true;
+			break;
+		}
+
+		if(!codepageSql)
+		{
+			DBTable table;
+			if (!m_connections[i].m_pInterface->ExecuteSql( codepageSql, table))
+			{
+				bError = true;
+				break;
+			}
+		}
 	}
+
+	if (bError)
+	{
+		for (int32 i = 0; i < m_con; ++i)
+			SAFE_DELETE(m_connections[i].m_pInterface);
+	}
+
+	return !bError;
 }
 
 

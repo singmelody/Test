@@ -98,6 +98,7 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="BaseType.h" />
+    <ClInclude Include="Timer.h" />
     <ClInclude Include="UtilID.h" />
   </ItemGroup>
   <ItemGroup>
