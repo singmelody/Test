@@ -184,3 +184,19 @@ struct DBConnection
 
 	DBInterface* m_pInterface;
 };
+
+class DBConnectionManager
+{
+public:
+	DBConnectionManager(int32 n);
+	virtual ~DBConnectionManager();
+
+	virtual bool Init( const char* dbName, const char* user, const char* pwd, const char* codepageSql) { return false;}
+
+	DBConnection* GetDBInterface();
+
+
+protected:
+	DBConnection*		m_connections;
+	int32				m_con;
+};

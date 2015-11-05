@@ -36,3 +36,15 @@ protected:
 	std::string m_password;
 };
 
+class ODBCConnectionManager : public DBConnectionManager
+{
+public:
+	ODBCConnectionManager(int32 n);
+	virtual ~ODBCConnectionManager();
+
+	virtual bool Init( const char* dbName, const char* user, const char* pwd, const char* codepageSql);
+
+	virtual void Close();
+	virtual DBConnection* GetDBInterface();
+
+};

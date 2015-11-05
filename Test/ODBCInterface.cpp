@@ -180,3 +180,10 @@ bool ODBCInterface::GetResult(GDBTable* pTable)
 {
 	return true;
 }
+
+bool ODBCConnectionManager::Init(const char* dbName, const char* user, const char* pwd, const char* codepageSql)
+{
+
+}
+
+

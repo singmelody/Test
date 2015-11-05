@@ -4,6 +4,7 @@
 #include <map>
 #include "LoadTemplate.h"
 #include "LoadThread.h"
+#include "DBInterface.h"
 
 class DBInterface;
 struct DBConnection;
@@ -72,4 +73,14 @@ public:
 	static bool SetDBLocalPassword( const char* dbName );
 
 	static DBConnection* GetDBConnection();
+	static void SetDBFile( const char* strDBFile);
+
+	static int m_maxThread;
+
+	static const char* GetDBFile() { return m_strDBFile.c_str(); }
+
+private:
+
+	static DBConnectionManager& m_pDBMgr;
+	static std::string m_strDBFile;
 };

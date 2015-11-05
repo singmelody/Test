@@ -122,3 +122,17 @@ size_t GDBRowData::Write(const char* data, size_t len)
 	_cursor += len;
 	return oldCursor;
 }
+
+DBConnection* DBConnectionManager::GetDBInterface()
+{
+	uint32 i = 0;
+	for (;;)
+	{
+		DBConnection* conn = &(m_connections[ (i++) % m_con]);
+
+		if(conn->m_mutex.TryLock())
+			return conn;
+	}
+
+	return NULL;
+}

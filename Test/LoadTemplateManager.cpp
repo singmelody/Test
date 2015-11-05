@@ -54,3 +54,31 @@ void LoadTemplateManager::Load(const char* pModule)
 // 	{
 // 	}
 }
+
+void LoadTemplateManager::Load(DBInterface* pDBI, int32 nModuleID, int32 nThreadCount)
+{
+	if(!DBLoader::OpenDB(MaxConnect))
+		printf("LoadTemplateManager::Load Failed\n");
+
+	DBConnection* pConn = DBLoader::GetDBConnection();
+	if(!pConn)
+	{
+		
+// 		//int32 nStartTickTotal = getMSTime();
+// 
+// 		DBInterface* pDBI = pConn->m_pInterface;
+// 		if(!pDBI)
+// 		{
+// 			printf("Load LoadModules data failed!\n");
+// 			return;
+// 		}
+	}
+}
+
+DBConnection* DBLoader::GetDBConnection()
+{
+	if(!m_pDBMgr)
+		return NULL;
+
+	return m_pDBMgr->GetDBInterface();
+}
