@@ -23,7 +23,7 @@ public:
 	virtual bool LoadData();
 	virtual bool LoadDataFromFile();	// odbc interface
 	virtual bool LoadDataFromDB(DBInterface* ptr);
-	virtual bool AfterLoadData();
+	virtual void AfterLoadData(){}
 
 	virtual void BindReferenceTemplates(){}
 
@@ -40,7 +40,7 @@ public:
 
 	inline		bool IsLoaded() { return m_loadState == eLS_Loaded; }
 
-	virtual	std::string GetDataFolder();
+	virtual	std::string GetDataFolder(){ return m_folderPath; }
 	inline void SetDataFolder( const char* pPath) { m_folderPath = pPath; }
 
 	LoadTemplateManager* m_pLoadMgr;

@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "ODBCInterface.h"
 
-
 ODBCInterface::ODBCInterface()
 {
 	m_hEnv = NULL;
@@ -12,7 +11,7 @@ ODBCInterface::ODBCInterface()
 	m_hStmt = NULL;
 	m_colCount = NULL;
 
-	m_bConnected = false;
+	m_connected = false;
 }
 
 
@@ -42,6 +41,26 @@ bool ODBCInterface::ConnectDB(const char* pConnectStr, const char* pUsername, co
 	SQLAllocHandle(SQL_HANDLE_ENV, SQL_NULL_HANDLE, &m_hEnv);
 	SQLSetEnvAttr(m_hEnv, SQL_ATTR_ODBC_VERSION, (SQLPOINTER)SQL_OV_ODBC3, SQL_IS_INTEGER);
 	SQLAllocHandle( SQL_HANDLE_DBC, m_hEnv, &m_hDbc);
+
+	m_result = SQLConnect( m_hDbc, (SQLCHAR*)pConnectStr, SQL_NTS, (SQLCHAR*)pUsername, SQL_NTS, (SQLCHAR*)pPassword, SQL_NTS);
+
+	if( m_result != SQL_SUCCESS && m_result != SQL_SUCCESS_WITH_INFO )
+	{
+		printf("ErrorSql:ConnectDBError %s@%s, %s\n", pConnectStr, pUsername, pPassword);
+		DiagState();
+
+		return false;
+	}
+
+	m_result = SQLAllocHandle( SQL_HANDLE_STMT, m_hDbc, &m_hStmt);
+
+	if( m_result != SQL_SUCCESS && m_result != SQL_SUCCESS_WITH_INFO )
+	{
+		m_hStmt = NULL;
+		return false;
+	}
+
+	m_connected = true;
 
 	return true;
 }
@@ -155,7 +174,7 @@ bool ODBCInterface::ExecuteSqlInternal(const char* pSql, DBTable* pTable)
 			pTable->AddColumn( (char*)rColName, i, nDBType);
 		}
 
-		return GetResult( pTable);
+		return GetResult( pTable, arrUnsignedFlag);
 	}
 	catch (...)
 	{
@@ -163,6 +182,18 @@ bool ODBCInterface::ExecuteSqlInternal(const char* pSql, DBTable* pTable)
 	}
 
 	return true;
+}
+
+void ODBCInterface::DiagState()
+{
+	int i = 1;
+	SQLINTEGER navError;
+	SQLCHAR SqlState[6];
+	SQLSMALLINT MsgLen;
+	SQLCHAR errorMsg[200];
+	SQLRETURN ret = SQLGetDiagRec( SQL_HANDLE_DBC, m_hDbc, i, SqlState, &navError, errorMsg, sizeof(errorMsg), &MsgLen);
+
+	printf("Mysql Error %s\n", SqlState);
 }
 
 void ODBCInterface::Clear()
@@ -173,11 +204,171 @@ void ODBCInterface::Clear()
 
 bool ODBCInterface::CloseDB()
 {
+	if (m_hStmt)
+	{
+		try
+		{
+			SQLCloseCursor(m_hStmt);
+			SQLFreeStmt(m_hStmt, SQL_UNBIND);
+			SQLFreeHandle(SQL_HANDLE_STMT, m_hStmt);
+			m_hStmt = NULL;
+			printf("DBA Close Database Connection\n");
+		}
+		catch (...)
+		{
+			m_hStmt = NULL;
+		}
+	}
+
+	if (m_hDbc)
+	{
+		try
+		{
+			SQLDisconnect(m_hDbc);
+			SQLFreeHandle(SQL_HANDLE_DBC, m_hDbc);
+			m_hDbc = NULL;
+		}
+		catch (...)
+		{
+			m_hDbc = NULL;
+		}
+	}
+
+	if (m_hEnv)
+	{
+		try
+		{
+			SQLFreeHandle(SQL_HANDLE_ENV, m_hEnv);
+			m_hEnv = NULL;
+		}
+		catch (...)
+		{
+			m_hEnv = NULL;
+		}
+	}
+
+	m_connected = false;
+
 	return true;
 }
 
-bool ODBCInterface::GetResult(DBTable* pTable)
+
+bool ODBCInterface::GetResult(DBTable* pTable, bool* arrColumnSignedFlag /*= 0*/)
 {
+	return GetResult( pTable, MAXROW, arrColumnSignedFlag);
+}
+
+bool ODBCInterface::GetResult(DBTable* pTable, int32 nMaxRow, bool* arrFlag)
+{
+	if(!m_connected || !pTable)
+		return false;
+
+	if( m_rowCount == 0 || m_colCount == 0)
+		return false;
+
+	nMaxRow = (m_rowCount > nMaxRow) ? nMaxRow : m_rowCount;
+	for(int32 i = 0; i < nMaxRow; ++i)
+	{
+		m_result = SQLFetch(m_hStmt);
+
+		if (m_result != SQL_SUCCESS_WITH_INFO && m_result != SQL_SUCCESS && m_result != SQL_NO_DATA)
+			break;
+
+		if (m_result == SQL_NO_DATA)
+			break;
+
+		DBRow* pRow = FACTORY_NEWOBJ(DBRow);
+		if(!pRow)
+			assert(false);
+
+		pRow->SetDBTable(pTable);
+
+		for (int32 i = 0; i < m_colCount; ++i)
+		{
+			int32 totalGet = 0;
+			volatile SQLLEN	lenData = 0;
+			SQLSMALLINT type = (SQLSMALLINT)pTable->GetColumnType(i);
+
+			bool bUnSignedInt = (arrFlag == 0)? false: arrFlag[i];
+
+			switch(type)
+			{
+			case eDB_INT:
+				{
+					SQLINTEGER val = 0;
+					SQLRETURN ret = SQLGetData( m_hStmt, i+1, bUnSignedInt ? SQL_C_ULONG:SQL_C_SLONG, &val, sizeof(val),  (SQLLEN*)(&lenData) );
+					lenData = (SQLLEN)(*(SQLINTEGER*)((char*)(&lenData)));
+					if ( ( ret == SQL_SUCCESS_WITH_INFO || ret == SQL_SUCCESS) && lenData != SQL_NULL_DATA)
+						pRow->AddColumn((int)val);
+					else
+						pRow->AddColumn();
+				}
+				break;
+			case eDB_INT64:
+				{
+					SQLBIGINT val = 0;
+					SQLRETURN ret = SQLGetData( m_hStmt, i+1, bUnSignedInt ? SQL_C_UBIGINT:SQL_C_SBIGINT, &val, sizeof(val), (SQLLEN*)(&lenData ));
+					lenData = (SQLLEN)(*(SQLINTEGER*)((char*)(&lenData)));
+					if ( ( ret == SQL_SUCCESS_WITH_INFO || ret == SQL_SUCCESS) && lenData != SQL_NULL_DATA)
+						pRow->AddColumn((int64)val);
+					else
+						pRow->AddColumn();
+				}
+				break;
+			case eDB_FLOAT:
+			case eDB_DOUBLE:
+				{
+					SQLDOUBLE val = 0;
+					SQLRETURN ret = SQLGetData( m_hStmt, i+1, SQL_C_DOUBLE, &val, sizeof(val) , (SQLLEN*)(&lenData));
+					lenData = (SQLLEN)(*(SQLINTEGER*)((char*)(&lenData)));
+					if ( ( ret == SQL_SUCCESS_WITH_INFO || ret == SQL_SUCCESS) && lenData != SQL_NULL_DATA)
+						pRow->AddColumn((int64)val);
+					else
+						pRow->AddColumn();
+				}
+				break;
+			case eDB_BINARY:
+				{
+					SQLRETURN ret = SQLGetData( m_hStmt, i+1, SQL_C_BINARY, m_databuffer, MAX_COLUMN_BUFFER, (SQLLEN*)(&lenData));
+					lenData = (SQLLEN)(*(SQLINTEGER*)((char*)(&lenData)));
+					if ( ( ret == SQL_SUCCESS_WITH_INFO || ret == SQL_SUCCESS) && lenData != SQL_NULL_DATA)
+						pRow->AddColumn( (char*)m_databuffer, lenData, true);
+					else
+						pRow->AddColumn();
+				}
+				break;
+			case eDB_TEXT:
+				{
+					SQLRETURN ret = SQLGetData( m_hStmt, i+1, SQL_C_CHAR, m_databuffer, MAX_COLUMN_BUFFER, (SQLLEN*)(&lenData));
+					lenData = (SQLLEN)(*(SQLINTEGER*)((char*)(&lenData)));
+					if ( ( ret == SQL_SUCCESS_WITH_INFO || ret == SQL_SUCCESS) && lenData != SQL_NULL_DATA)
+						pRow->AddColumn( (char*)m_databuffer, lenData, true);
+					else
+						pRow->AddColumn();
+				}
+				break;
+			case eDB_SMALLINT:
+			case eDB_TINYINT:
+				{
+					SQLINTEGER val = 0;
+					SQLRETURN ret = SQLGetData( m_hStmt, i+1, SQL_C_LONG, &val, sizeof(val), (SQLLEN*)(&lenData));
+					lenData = (SQLLEN)(*(SQLINTEGER*)((char*)(&lenData)));
+					if ( ( ret == SQL_SUCCESS_WITH_INFO || ret == SQL_SUCCESS) && lenData != SQL_NULL_DATA)
+						pRow->AddColumn((int32)val);
+					else
+						pRow->AddColumn();
+				}
+				break;
+			default:
+				{
+					pRow->AddColumn( );
+				}
+				break;
+			}
+		}
+		pTable->m_rowList.push_back(pRow);
+	}
+
 	return true;
 }
 
@@ -187,6 +378,16 @@ bool ODBCInterface::ExecuteSql(const Char* sSql, DBTable* pTable)
 		return false;
 
 	return true;
+}
+
+ODBCConnectionManager::ODBCConnectionManager(int32 n) : DBConnectionManager(n)
+{
+
+}
+
+ODBCConnectionManager::~ODBCConnectionManager()
+{
+
 }
 
 bool ODBCConnectionManager::Init(const char* dbName, const char* user, const char* pwd, const char* codepageSql)
@@ -209,7 +410,7 @@ bool ODBCConnectionManager::Init(const char* dbName, const char* user, const cha
 			break;
 		}
 
-		if(!codepageSql)
+		if( strcmp(codepageSql, "") != 0)
 		{
 			DBTable table;
 			if (!m_connections[i].m_pInterface->ExecuteSql( codepageSql, table))
@@ -229,4 +430,29 @@ bool ODBCConnectionManager::Init(const char* dbName, const char* user, const cha
 	return !bError;
 }
 
+void ODBCConnectionManager::Close()
+{
+	for (int32 i = 0; i < m_con; ++i)
+	{
+		DBConnection& con = m_connections[i];
+		if(!con.m_pInterface)
+			continue;
+
+		con.m_pInterface->CloseDB();
+		SAFE_DELETE(con.m_pInterface);
+	}
+}
+
+DBConnection* ODBCConnectionManager::GetDBInterface()
+{
+	uint32 i = 0;
+	for (;;)
+	{
+		DBConnection* con = &(m_connections[(i++) % m_con]);
+		if (con->m_mutex.TryLock())
+			return con;
+	}
+
+	return NULL;
+}
 

@@ -3,21 +3,28 @@
 #include <assert.h>
 #include "DBInterface.h"
 #include "LoadTemplateManager.h"
+#include "CommonConfig.h"
 
 // unit test
 #include "TestODBCManager.h"
 
 int _tmain(int argc, _TCHAR* argv[])
 {
+	CommonConfig::DBType	= eDBType_DBC;
+	CommonConfig::DBCName	= "testdb";
+	CommonConfig::DBCUser	= "root";
+	CommonConfig::DBCPwd	= "123456";
+
 	unsigned int tt = UtilID::CreateFromString("wangyanbin");
 	assert(tt == 65398277);
 
-	FACTORY_NEWOBJ(GDBRow);
-	FACTORY_NEWOBJ(GDBRow);
+	FACTORY_NEWOBJ(DBRow);
+	FACTORY_NEWOBJ(DBRow);
 
 	LoadTemplateManager templateMgr;
 
 	templateMgr.AddTemplate("TestODBCManager", TestODBCManager::Instance());
+	templateMgr.Load("BaseServer");
 
 	printf("I am here waiting for u\n");
 

@@ -14,7 +14,6 @@ typedef std::map< std::string, LoadTemplate*> LoadTemplateMap;
 
 // 1.分批次加载
 // 2.每个批次启动设置数量的加载线程并行加载
-
 class LoadTemplateManager
 {
 public:
@@ -55,7 +54,7 @@ private:
 	void OnLoadCompleted();
 
 private:
-	void InternalLoadTemplates( LoadInfoList& list, int32 nThreadCount);
+	void InternalLoadTemplates( LoadBatch& list, int32 nThreadCount);
 
 	LoadTemplateMap		m_LoadTemplateMap;
 	int32				m_nLoadTimeCastTotal;

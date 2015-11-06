@@ -6,7 +6,7 @@
 #include "UtilID.h"
 
 #define FACTORY_NEWOBJ(className) (className*)FactoryManagerBase::Instance().New(#className);
-#define FACTORY_DELOBJ( pObj, id) { if(pObj) { FactoryManagerBase::Instance().Delete( pObj, id); pObj = NULL; }}
+#define FACTORY_DELOBJ( pObj) { if(pObj) { FactoryManagerBase::Instance().Delete( pObj); pObj = NULL; }}
 
 class Allocator;
 

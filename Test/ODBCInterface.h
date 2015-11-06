@@ -16,10 +16,16 @@ public:
 
 	virtual bool ConnectDB(const char* pConnectStr, const char* pUsername, const char* pPassword);
 	virtual bool CloseDB();
-	virtual bool GetResult(DBTable* pTable);
+
+	bool GetResult(DBTable* pTable, bool* arrColumnSignedFlag = 0);
+	bool GetResult(DBTable* pTable, int32 nMaxRow, bool* arrFlag );
 
 	virtual bool ExecuteSql( const Char* sSql, DBTable* pTable);
 	virtual bool ExecuteSqlInternal( const char* pSql, DBTable* pTable);
+
+	virtual bool IsConnect() { return m_connected; }
+
+	void DiagState();
 protected:
 	void Clear();
 
@@ -30,11 +36,15 @@ protected:
 	SQLLEN		m_rowCount;
 	SQLHSTMT	m_hStmt;
 	SQLSMALLINT m_colCount;
-	bool		m_bConnected;
+	bool		m_connected;
 
 	std::string m_connectStr;
 	std::string m_username;
 	std::string m_password;
+
+	char		m_databuffer[MAX_COLUMN_BUFFER];
+	SQLINTEGER	m_dataLength;
+	SQLINTEGER	m_errorCode;
 };
 
 class ODBCConnectionManager : public DBConnectionManager

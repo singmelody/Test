@@ -29,7 +29,7 @@ enum eDBType
 	eDB_BINARY
 };
 
-class GDBRow;
+class DBRow;
 class DBTable;
 
 class DBColumn
@@ -47,18 +47,18 @@ public:
 	void SetIndex(int32 nIdx) { m_nIdx = nIdx; }
 	int32 Index() { return m_nIdx; }
 
-	void SetRow(GDBRow* row) { m_row = row; }
-	GDBRow* Row() { return m_row; }
+	void SetRow(DBRow* row) { m_row = row; }
+	DBRow* Row() { return m_row; }
 protected:
 	int32	m_nType;
 	int32	m_nIdx;
-	GDBRow* m_row;
+	DBRow*	m_row;
 };
 
-struct GDBRowData
+struct DBRowData
 {
-	GDBRowData(int32 nInitBuffSize);
-	~GDBRowData();
+	DBRowData(int32 nInitBuffSize);
+	~DBRowData();
 
 	char*	_buff;
 	size_t	_capacity;
@@ -81,16 +81,17 @@ struct GDBRowData
 	}
 
 };
-class GDBRow
+class DBRow
 {
-	DECLARE_FACTORY_ARG0(GDBRow, -1, new PoolAllocatorEx)
+	DECLARE_FACTORY_ARG0(DBRow, -1, new PoolAllocatorEx)
 public:
-	GDBRow();
-	~GDBRow();
+	DBRow();
+	~DBRow();
 
 	DBColumn* GetColumn(int32 nIdx);
 
 	void AddColumn( const char* data, size_t len, bool isStr);
+	void AddColumn();
 	
 	template <class T>
 	void AddColumn(T val)
@@ -125,18 +126,20 @@ public:
 			obj = defaultValue;
 	}
 
+	void SetDBTable(DBTable* pTable) { m_pTable = pTable; }
+
 	void Release() {}
 
 	DBTable*		m_pTable;
 protected:
 	typedef std::vector<int64> ColumnInfoVec;
 	ColumnInfoVec	m_columns;
-	GDBRowData		m_data;
+	DBRowData		m_data;
 	DBColumn		m_column;
 };
 
 
-typedef std::list<GDBRow*> GDBRowList;
+typedef std::list<DBRow*> DBRowList;
 class DBTable
 {
 	typedef std::map< std::string, int> GDBColumnMap;
@@ -154,7 +157,7 @@ public:
 	int32 GetRowCount();
 	int32 GetColumnType(int32 nIdx);
 
-	GDBRowList		m_rowList;
+	DBRowList		m_rowList;
 private:
 	GDBType			m_valueType;
 	GDBColumnName	m_colName;
@@ -176,7 +179,6 @@ public:
 	virtual bool ExecuteSql( const Char* sSql, DBTable* pTable) = 0;
 	virtual bool ExecuteSql( const Char* sSql, DBTable& pTable) { return ExecuteSql( sSql, &pTable); }
 	virtual bool ExecuteSqlInternal(const char* pSql, DBTable* pTable) = 0;
-	virtual bool GetResult(DBTable* pTable);
 };
 
 struct DBConnection

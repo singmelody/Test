@@ -52,6 +52,16 @@ bool LoadTemplate::LoadData()
 	return bSucceed;
 }
 
+bool LoadTemplate::LoadDataFromFile()
+{
+	return false;
+}
+
+bool LoadTemplate::LoadDataFromDB(DBInterface* ptr)
+{
+	return false;
+}
+
 LoadTemplate* LoadTemplate::GetTemplate(const char* pStr)
 {
 	return NULL;

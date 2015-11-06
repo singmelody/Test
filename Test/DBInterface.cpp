@@ -14,6 +14,16 @@ DBColumn::~DBColumn()
 
 }
 
+DBTable::DBTable()
+{
+}
+
+DBTable::~DBTable()
+{
+	for (auto itr = m_rowList.begin(); itr != m_rowList.end(); ++itr)
+		FACTORY_DELOBJ(*itr);
+}
+
 void DBTable::AddColumn(const char* pColName, int32 nColumnID, int32 nValueType)
 {
 	m_colMap[pColName] = nColumnID;
@@ -83,24 +93,19 @@ DBInterface::~DBInterface()
 
 }
 
-bool DBInterface::GetResult(DBTable* pTable)
-{
-	return true;
-}
+FINISH_FACTORY_ARG0(DBRow)
 
-FINISH_FACTORY_ARG0(GDBRow)
-
-GDBRow::GDBRow() : m_data(512)
+DBRow::DBRow() : m_data(512)
 {
 
 }
 
-GDBRow::~GDBRow()
+DBRow::~DBRow()
 {
 
 }
 
-DBColumn* GDBRow::GetColumn(int32 nIdx)
+DBColumn* DBRow::GetColumn(int32 nIdx)
 {
 	m_column.Type(m_pTable->GetColumnType(nIdx));
 	m_column.SetIndex(nIdx);
@@ -109,19 +114,41 @@ DBColumn* GDBRow::GetColumn(int32 nIdx)
 	return &m_column;
 }
 
-GDBRowData::GDBRowData(int32 nInitBuffSize)
+void DBRow::AddColumn(const char* data, size_t len, bool isStr)
+{
+	size_t oldCursor = m_data.Write( data, len);
+	if (isStr)
+	{
+		static char strEnd = '\0';
+		m_data.Write( &strEnd, 1);
+		len += 1;
+	}
+
+	int64 nColumnFlag = len;
+	nColumnFlag <<= 32;
+	int64 pos = (int64)oldCursor;
+	pos &= 0x00000000ffffffff;
+	m_columns.push_back( nColumnFlag | pos );
+}
+
+void DBRow::AddColumn()
+{
+	m_columns.push_back((int64)0);
+}
+
+DBRowData::DBRowData(int32 nInitBuffSize)
 : _capacity(nInitBuffSize)
 {
 	_buff = new char[_capacity];
 	assert( _buff != NULL );
 }
 
-GDBRowData::~GDBRowData()
+DBRowData::~DBRowData()
 {
 	SAFE_DELETE_ARRAY(_buff);
 }
 
-size_t GDBRowData::Write(const char* data, size_t len)
+size_t DBRowData::Write(const char* data, size_t len)
 {
 	if(_cursor + len > _capacity)
 	{
