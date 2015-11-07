@@ -223,6 +223,7 @@
     <ClInclude Include="Allocator.h" />
     <ClInclude Include="CommonConfig.h" />
     <ClInclude Include="DBInterface.h" />
+    <ClInclude Include="DLAllocator.h" />
     <ClInclude Include="DLMalloc.h" />
     <ClInclude Include="DLMallocConfig.h" />
     <ClInclude Include="Factory.h" />
@@ -249,6 +250,7 @@
     <ClCompile Include="Allocator.cpp" />
     <ClCompile Include="CommonConfig.cpp" />
     <ClCompile Include="DBInterface.cpp" />
+    <ClCompile Include="DLAllocator.cpp" />
     <ClCompile Include="DLMalloc.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
