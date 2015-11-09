@@ -18,6 +18,9 @@ void LoadThread::ProcessLoad()
 	while(true)
 	{
 		int32 nWaitTemplateCnt = 0;
+
+		// when the template dependence templates is not ready, block template self, cpu clip to other
+		// when ready, then load the template self
 		LoadTemplate* pTemplate = m_pLoadBatch->GetTemplate2Load( nWaitTemplateCnt );
 
 		if(!pTemplate)
@@ -35,7 +38,7 @@ void LoadThread::ProcessLoad()
 		if(pTemplate->ProcessLoad())
 		{
 			pTemplate->m_nLoadThreadIdx = m_nThreadIdx;
-			pTemplate->m_loadState = eLS_Loaded;
+			pTemplate->SetLoadState(eLS_Loaded);
 		}
 
 		pTemplate->m_LoadCastTicks = getMSTime() - nStartTick;
@@ -61,34 +64,39 @@ LoadInfo::LoadInfo(LoadTemplateManager* pMgr, DBRow &row) : m_pMgr(pMgr)
 	if ( m_pTemplate != NULL )
 		m_pTemplate->m_pLoadInfo = this;
 
-	m_pDependTemplateList = NULL;
+	m_pDependList = NULL;
 }
 
 LoadInfo::~LoadInfo()
 {
-	SAFE_DELETE(m_pDependTemplateList);
-	SAFE_DELETE(m_pTemplate);
+ 	SAFE_DELETE(m_pDependList);
+ 	
+	if(!m_pTemplate)
+	{
+		m_pTemplate->m_pLoadInfo = NULL;
+		m_pTemplate = NULL;
+	}
 }
 
-void LoadInfo::AddDependence(LoadTemplate* ptr)
+void LoadInfo::AddDependence(LoadTemplate* pTemp)
 {
-	if(!m_pDependTemplateList)
-		m_pDependTemplateList = new LoadTemplateList();
+	if(!m_pDependList)
+		m_pDependList = new LoadTemplateList();
 
-	m_pDependTemplateList->push_back(ptr);
+	m_pDependList->push_back(pTemp);
 }
 
 bool LoadInfo::CheckLoad()
 {
 	if(!m_pTemplate)
 	{
-		printf("Can't load template [%s]!", m_strTemplate.c_str());
+		printf("Can't load template [%s]!\n", m_strTemplate.c_str());
 		return false;
 	}
 
 	if (m_batchID < 0 || m_batchID >= MAXBATCHCOUNT)
 	{
-		printf("BatchID is invalid	[%s] is [%d]", m_strTemplate.c_str(), m_batchID);
+		printf("BatchID is invalid	[%s] is [%d]\n", m_strTemplate.c_str(), m_batchID);
 		return false;
 	}
 
@@ -106,22 +114,23 @@ bool LoadInfo::CanBeLoad(int32& nWaitTemplateCnt)
 	if (!m_pTemplate)
 		return false;
 
-	if( m_pTemplate->m_loadState != eLS_Unload )
+	if( m_pTemplate->GetLoadState() != eLS_Unload )
 		return false;
 
 	// check dependence is loaded
-	if (m_pDependTemplateList != NULL)
+	if (!m_pDependList)
+		return true;
+
+	for( auto itr = m_pDependList->begin(); itr != m_pDependList->end(); ++itr)
 	{
-		for( auto itr = m_pDependTemplateList->begin(); itr != m_pDependTemplateList->end(); ++itr)
+		LoadTemplate* pTemplate = *itr;
+		if (!pTemplate->IsLoaded())
 		{
-			LoadTemplate* pTemplate = *itr;
-			if (!pTemplate->IsLoaded())
-			{
-				nWaitTemplateCnt++;
-				return false;
-			}
+			nWaitTemplateCnt++;
+			return false;
 		}
 	}
+
 	return true;
 }
 
@@ -129,6 +138,8 @@ LoadBatch::~LoadBatch()
 {
 	for (auto itr = m_list.begin(); itr != m_list.end(); ++itr)
 		SAFE_DELETE(*itr);
+
+	m_list.clear();
 }
 
 LoadTemplate* LoadBatch::GetTemplate2Load(int32 &nWaitTemplateCnt)
@@ -140,9 +151,11 @@ LoadTemplate* LoadBatch::GetTemplate2Load(int32 &nWaitTemplateCnt)
 		if ( pInfo->CanBeLoad(nWaitTemplateCnt) )
 		{
 			LoadTemplate* pTemplate = pInfo->m_pTemplate;
-			pTemplate->m_loadState = eLS_Loading;
+			if(!pTemplate)
+				continue;
+
+			pTemplate->SetLoadState(eLS_Loading);
 			pTemplate->m_strName = pInfo->m_strTemplate;
-		
 			return pTemplate;
 		}
 	}
@@ -152,12 +165,21 @@ LoadTemplate* LoadBatch::GetTemplate2Load(int32 &nWaitTemplateCnt)
 
 LoadThreadBatch::LoadThreadBatch()
 {
-
+	
 }
 
 LoadThreadBatch::~LoadThreadBatch()
 {
+	for (auto itr = m_list.begin(); itr != m_list.end(); ++itr)
+	{
+		if(!(*itr))
+			continue;
 
+		(*itr)->Stop();
+		SAFE_DELETE(*itr);
+	}
+
+	m_list.clear();
 }
 
 void LoadThreadBatch::StartBatchLoad(LoadTemplateManager* pMgr, LoadBatch* pBatch, int32 nThreadCount)
@@ -194,13 +216,11 @@ bool LoadThreadBatch::IsAllThreadExit()
 	return true;
 }
 
-bool LoadThreadBatch::WaitAllThreadExit()
+void LoadThreadBatch::WaitAllThreadExit()
 {
 	for (auto itr = m_list.begin(); itr != m_list.end(); ++itr)
 	{
 		LoadThread* pThread = *itr;
 		pThread->Wait();
 	}
-
-	return true;
 }

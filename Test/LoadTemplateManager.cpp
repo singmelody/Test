@@ -121,9 +121,10 @@ void LoadTemplateManager::Load(const char* pModule)
 		}
 		
 		m_nLoadTimeCastTotal = getMSTime() - nStartTickTotal;
-
 		pConn->m_mutex.Unlock();
 	}
+
+	DBLoader::CloseDB();
 }
 
 void LoadTemplateManager::Load(DBInterface* pDBI, int32 nModuleID, int32 nThreadCount)
@@ -138,7 +139,7 @@ void LoadTemplateManager::Load(DBInterface* pDBI, int32 nModuleID, int32 nThread
 		return;
 	}
 
-	LoadBatch LoadInfos[MAXBATCHCOUNT];
+	LoadBatch loadBatches[MAXBATCHCOUNT];
 
 	DBRowList& rows = table.m_rowList;
 
@@ -164,20 +165,19 @@ void LoadTemplateManager::Load(DBInterface* pDBI, int32 nModuleID, int32 nThread
 			continue;
 		}
 
-		LoadBatch& pBatch = LoadInfos[pInfo->m_batchID];
-		pBatch.m_list.push_back(pInfo);
-		pBatch.m_count++;
+ 		LoadBatch& batch = loadBatches[pInfo->m_batchID];
+ 		batch.m_list.push_back(pInfo);
 	}
 
 	LoadDependence( pDBI, nModuleID);
 
 	for (int32 i = 0; i < MAXBATCHCOUNT; ++i)
 	{
-		LoadBatch& list = LoadInfos[i];
-		if ( list.m_count == 0)
+		LoadBatch& ins = loadBatches[i];
+		if(ins.m_list.size() == 0)
 			continue;
 
-		InternalLoadTemplates( list, nThreadCount);
+		InternalLoadTemplates( ins, nThreadCount);
 	}
 
 	OnLoadCompleted();
@@ -222,11 +222,13 @@ void LoadTemplateManager::LoadDependence(DBInterface* pDBI, int32 nModuleID)
 		LoadTemplate* pDepand = GetTemplate( strDepend.c_str() );
 		if(!pDepand)
 		{
-			printf("can't find dependtemplate [%s]->[%s]", strTemplate.c_str(), strDepend.c_str());
+			printf("Can't find DependTemplate [%s]->[%s]\n", strTemplate.c_str(), strDepend.c_str());
 			continue;
 		}
 
 		pTemplate->m_pLoadInfo->AddDependence( pDepand );
+
+		row.Release();
 	}
 }
 
@@ -251,8 +253,8 @@ void LoadTemplateManager::InternalLoadTemplates(LoadBatch& list, int32 nThreadCo
 {
 	LoadThreadBatch threads;
 
-	if( nThreadCount > list.m_count )
-		nThreadCount = list.m_count;
+	if( nThreadCount > (int32)list.m_list.size() )
+		nThreadCount = list.m_list.size();
 
 	threads.StartBatchLoad( this, &list, nThreadCount);
 
@@ -281,7 +283,11 @@ bool DBLoader::OpenDB(int32 nConnectCnt)
 
 void DBLoader::CloseDB()
 {
+	if(!m_pDBMgr)
+		return;
 
+	m_pDBMgr->Close();
+	SAFE_DELETE(m_pDBMgr);
 }
 
 bool DBLoader::OpenDBCenter(int32 nConnectCnt)

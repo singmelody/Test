@@ -230,6 +230,7 @@ public:
 	virtual ~DBConnectionManager();
 
 	virtual bool Init( const char* dbName, const char* user, const char* pwd, const char* codepageSql) { return false;}
+	virtual void Close();
 
 	DBConnection* GetDBInterface();
 

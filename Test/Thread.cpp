@@ -5,10 +5,10 @@
 
 #define MS_VC_EXCEPTION 0x406D1388
 
-Thread::Thread(const char* strName) : m_strName(strName)
+Thread::Thread(const char* strName) : m_strName("")
 {
 	m_threadID = 0;
-	m_status = eThread_Ready;
+	SetStatus(eThread_Ready);
 	m_handle = NULL;
 }
 
@@ -19,7 +19,7 @@ Thread::~Thread()
 
 void Thread::Start()
 {
-	if(m_status != eThread_Ready)
+	if(GetStatus() != eThread_Ready)
 		return;
 
 	SECURITY_ATTRIBUTES attr;
@@ -46,7 +46,7 @@ void Thread::Start()
 
 		__try
 		{
-			RaiseException( MS_VC_EXCEPTION, 0, sizeof(threadName)/sizeof(DWORD), (ULONG_PTR*)&threadName);
+			//RaiseException( MS_VC_EXCEPTION, 0, sizeof(threadName)/sizeof(DWORD), (ULONG_PTR*)&threadName);
 		}
 		__except (EXCEPTION_CONTINUE_EXECUTION)
 		{
@@ -54,20 +54,20 @@ void Thread::Start()
 	}
 
 	SetStatus(eThread_Running);
-	printf("Thread[%s] START!", m_strName.c_str());
+	printf("Thread[%s] START!\n", m_strName.c_str());
 }
 
 void Thread::Stop()
 {
-	if(GetStatus() != eThread_Running)
-		return;
+// 	if(GetStatus() != eThread_Running)
+// 		return;
 
 	TerminateThread(m_handle, 0);
 	CloseHandle( m_handle);
 
 	m_threadID = 0;
 	SetStatus(eThread_Exiting);
-	printf("Thread[%s] STOP!", m_strName.c_str());
+	printf("Thread[%s] STOP!\n", m_strName.c_str());
 }
 
 void Thread::Wait()
@@ -81,7 +81,7 @@ void Thread::Wait()
 	m_threadID = 0;
 	SetStatus(eThread_Ready);
 
-	printf("Thread[%s] STOP!", m_strName.c_str());
+	printf("Thread[%s] STOP!\n", m_strName.c_str());
 }
 
 bool Thread::IsInThisThread()

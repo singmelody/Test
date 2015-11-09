@@ -5,7 +5,7 @@
 
 LoadTemplate::LoadTemplate(void)
 {
-	m_loadState = eLS_Unload;
+	SetLoadState(eLS_Unload);
 	m_bLoadFromDB = true;
 
 	m_pLoadInfo = NULL;

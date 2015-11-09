@@ -1,15 +1,14 @@
 #pragma once
 
-#include "Singleton.h"
+#include "NoCopyable.h"
 #include <Windows.h>
-
 #define LOCK(pLock) AUTOLOCK(*pLock)
 
 #define AUTOLOCK(mutex) \
 	AutoLock __autolock(&mutex);
 
 // »¥³âËø
-class Mutex : private Singleton<Mutex>
+class Mutex : private NoCopyable
 {
 public:
 	Mutex();
@@ -27,13 +26,10 @@ protected:
 class AutoLock
 {
 public:
-	AutoLock(Mutex* pMutex)
+	AutoLock(Mutex* pMutex) : m_pLock(NULL)
 	{
-		if (pMutex)
-		{
-			m_pLock = NULL;
+		if (!pMutex)
 			return;
-		}
 
 		m_pLock = pMutex;
 		m_pLock->Lock();
@@ -41,8 +37,10 @@ public:
 
 	~AutoLock()
 	{
-		if (m_pLock)
-			m_pLock->Unlock();
+		if (!m_pLock)
+			return;
+
+		m_pLock->Unlock();
 	}
 
 protected:

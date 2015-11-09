@@ -1,6 +1,6 @@
 #pragma once
 
-#include <list>
+#include <vector>
 #include "DBInterface.h"
 #include "LoadThread.h"
 #include "Thread.h"
@@ -34,20 +34,18 @@ public:
 private:
 
 	LoadTemplateManager*	m_pMgr;
-	LoadTemplateList*		m_pDependTemplateList;
+	LoadTemplateList*		m_pDependList;
 };
 
 class LoadBatch
 {
 public:
-	LoadBatch() : m_count(0) {}
+	LoadBatch() {}
 	~LoadBatch();
 
 	LoadTemplate* GetTemplate2Load( int32 &nWaitTemplateCnt);
 
-	std::list<LoadInfo*>	m_list;
-	int32					m_count;
-
+	std::vector<LoadInfo*>	m_list;
 	Mutex					m_mutex;
 };
 
@@ -74,7 +72,7 @@ public:
 
 	void StartBatchLoad(LoadTemplateManager* pMgr, LoadBatch* pBatch, int32 nThreadCount);
 	bool IsAllThreadExit();
-	bool WaitAllThreadExit();
+	void WaitAllThreadExit();
 
 protected:
 	std::list<LoadThread*>	m_list;

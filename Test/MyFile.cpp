@@ -14,7 +14,9 @@ MyFile::~MyFile(void)
 FILE* SimpleFile::Open(const char* pFile, const char* flag /*= "rb"*/)
 {
 	m_fileName = pFile;
-	return fopen( m_fileName.c_str(), flag);
+	FILE * fp = NULL;
+	fopen_s( &fp, m_fileName.c_str(), flag);
+	return fp;
 }
 
 void SimpleFile::Close(FILE* file)

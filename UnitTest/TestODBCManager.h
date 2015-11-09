@@ -4,8 +4,11 @@
 
 class TestODBCManager : public LoadTemplate, public Singleton<TestODBCManager>
 {
-public:
+protected:
 	TestODBCManager();
-	~TestODBCManager();
+	virtual ~TestODBCManager();
+	friend class Singleton<TestODBCManager>;
+
+	virtual bool LoadDataFromDB(DBInterface* ptr);
 };
 

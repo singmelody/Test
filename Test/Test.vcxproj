@@ -232,7 +232,9 @@
     <ClInclude Include="LoadThread.h" />
     <ClInclude Include="MyFile.h" />
     <ClInclude Include="MyMutex.h" />
+    <ClInclude Include="NoCopyable.h" />
     <ClInclude Include="ODBCInterface.h" />
+    <ClInclude Include="OperatorNew.h" />
     <ClInclude Include="PoolAllocator.h" />
     <ClInclude Include="PoolAllocatorEx.h" />
     <ClInclude Include="ServerConfig.h" />
@@ -265,6 +267,7 @@
     <ClCompile Include="MyFile.cpp" />
     <ClCompile Include="MyMutex.cpp" />
     <ClCompile Include="ODBCInterface.cpp" />
+    <ClCompile Include="OperatorNew.cpp" />
     <ClCompile Include="PoolAllocator.cpp" />
     <ClCompile Include="PoolAllocatorEx.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -276,7 +279,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Itanium'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Test.cpp" />
-    <ClCompile Include="Singleton.h">
+    <ClInclude Include="Singleton.h">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Itanium'">NotUsing</PrecompiledHeader>
@@ -292,7 +295,7 @@
       </PrecompiledHeaderOutputFile>
       <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Itanium'">
       </PrecompiledHeaderOutputFile>
-    </ClCompile>
+    </ClInclude>
     <ClCompile Include="Thread.cpp" />
     <ClCompile Include="UtilID.cpp" />
   </ItemGroup>

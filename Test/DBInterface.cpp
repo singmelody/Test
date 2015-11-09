@@ -178,12 +178,35 @@ size_t DBRowData::Write(const char* data, size_t len)
 
 DBConnectionManager::DBConnectionManager(int32 n)
 {
+	if( n > MAX_USE_CONNECTION )
+		m_con = MAX_USE_CONNECTION;
+
 	m_con = n;
 }
 
 DBConnectionManager::~DBConnectionManager()
 {
+	for (int32 i = 0; i < m_con; ++i)
+	{
+		if(!m_connections[i].m_pInterface)
+			continue;
 
+		m_connections[i].m_pInterface->CloseDB();
+		SAFE_DELETE(m_connections->m_pInterface);
+	}
+}
+
+void DBConnectionManager::Close()
+{
+	for (int i = 0; i < m_con; ++i)
+	{
+		DBConnection& con = m_connections[i];
+		if(!con.m_pInterface)
+			continue;
+
+		con.m_pInterface->CloseDB();
+		SAFE_DELETE(con.m_pInterface);
+	}
 }
 
 DBConnection* DBConnectionManager::GetDBInterface()

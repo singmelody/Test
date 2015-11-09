@@ -31,16 +31,9 @@ public:
 
 	bool ProcessLoad();
 
-	LoadState	m_loadState;
-	LoadInfo*	m_pLoadInfo;
-
-	bool		m_bLoadFromDB;
-	std::string	m_strName;
-
-	int32		m_LoadCastTicks;
-	int32		m_nLoadThreadIdx;
-
-	inline		bool IsLoaded() { return m_loadState == eLS_Loaded; }
+	inline	bool IsLoaded() { return m_loadState == eLS_Loaded; }
+	LoadState GetLoadState() { return m_loadState; }
+	void SetLoadState(LoadState state) { m_loadState = state; }
 
 	virtual	std::string GetDataFolder(){ return m_folderPath; }
 	inline void SetDataFolder( const char* pPath) { m_folderPath = pPath; }
@@ -50,6 +43,15 @@ public:
 
 	MyFile* CreateLoadFile();
 	void ReleaseLoadFile(MyFile*& pFile);
+
+	LoadState	m_loadState;
+	LoadInfo*	m_pLoadInfo;
+
+	bool		m_bLoadFromDB;
+	std::string	m_strName;
+
+	int32		m_LoadCastTicks;
+	int32		m_nLoadThreadIdx;
 protected:
 	std::string	m_folderPath;
 };
