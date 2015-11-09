@@ -1,8 +1,10 @@
 #include "StdAfx.h"
 #include "LoadThread.h"
 #include "LoadTemplateManager.h"
+#include "Timer.h"
 
-LoadThread::LoadThread(void)
+LoadThread::LoadThread(LoadTemplateManager* pMgr, LoadBatch* pBatch, int32 nThreadIdx) 
+	: m_pMgr(pMgr), m_pLoadBatch(pBatch), m_nThreadIdx(nThreadIdx)
 {
 }
 
@@ -11,13 +13,47 @@ LoadThread::~LoadThread(void)
 {
 }
 
-LoadInfo::LoadInfo(LoadTemplateManager* pMgr, DBRow &row)
+void LoadThread::ProcessLoad()
 {
-	static int32 nCol_TemplateName = -1;
-	static int32 nCol_BatachID = -1;
-	static int32 nCol_OrderID = -1;
+	while(true)
+	{
+		int32 nWaitTemplateCnt = 0;
+		LoadTemplate* pTemplate = m_pLoadBatch->GetTemplate2Load( nWaitTemplateCnt );
 
-	row.Fill( m_strTemplate, nCol_TemplateName, std::string(""));
+		if(!pTemplate)
+		{
+			if(nWaitTemplateCnt > 1)
+			{
+				GSleep( 10 );
+				continue;
+			}
+			break;
+		}
+
+		int32 nStartTick = getMSTime();
+
+		if(pTemplate->ProcessLoad())
+		{
+			pTemplate->m_nLoadThreadIdx = m_nThreadIdx;
+			pTemplate->m_loadState = eLS_Loaded;
+		}
+
+		pTemplate->m_LoadCastTicks = getMSTime() - nStartTick;
+	}
+}
+
+void LoadThread::Run()
+{
+	ProcessLoad();
+}
+
+LoadInfo::LoadInfo(LoadTemplateManager* pMgr, DBRow &row) : m_pMgr(pMgr)
+{
+	static int32 nCol_TemplateName = row.GetColumnIdx("TemplateName");
+	static int32 nCol_BatachID = row.GetColumnIdx("BatchID");
+	static int32 nCol_OrderID = row.GetColumnIdx("OrderID");
+
+	row.Fill( m_strTemplate, nCol_TemplateName, "");
 	row.Fill( m_batchID, nCol_BatachID, 0);
 	row.Fill( m_orderID, nCol_OrderID, 0);
 
@@ -112,4 +148,59 @@ LoadTemplate* LoadBatch::GetTemplate2Load(int32 &nWaitTemplateCnt)
 	}
 
 	return NULL;
+}
+
+LoadThreadBatch::LoadThreadBatch()
+{
+
+}
+
+LoadThreadBatch::~LoadThreadBatch()
+{
+
+}
+
+void LoadThreadBatch::StartBatchLoad(LoadTemplateManager* pMgr, LoadBatch* pBatch, int32 nThreadCount)
+{
+	if (nThreadCount == 0)
+	{
+		LoadThread thread( pMgr, pBatch, 0);
+		thread.ProcessLoad();
+	}
+	else
+	{
+		// create thread obj
+		for (int32 i = 0; i < nThreadCount; ++i)
+		{
+			LoadThread* pThread = new LoadThread( pMgr, pBatch, i+1);
+			if(!pThread)
+				continue;
+
+			m_list.push_back(pThread);
+			pThread->Start();
+		}
+	}
+}
+
+bool LoadThreadBatch::IsAllThreadExit()
+{
+	for (auto itr = m_list.begin(); itr != m_list.end(); ++itr)
+	{
+		LoadThread* pThread = *itr;
+		if(pThread->GetStatus() != eThread_Exiting)
+			return false;
+	}
+
+	return true;
+}
+
+bool LoadThreadBatch::WaitAllThreadExit()
+{
+	for (auto itr = m_list.begin(); itr != m_list.end(); ++itr)
+	{
+		LoadThread* pThread = *itr;
+		pThread->Wait();
+	}
+
+	return true;
 }

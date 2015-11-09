@@ -80,6 +80,12 @@ struct DBRowData
 		val = *((T*)((char*)_buff + pos));
 	}
 
+	template<>
+	void Read( size_t pos, std::string& val)
+	{
+		assert (pos < _cursor);
+		val = (char*)((char*)_buff + pos);
+	}
 };
 class DBRow
 {
@@ -89,6 +95,7 @@ public:
 	~DBRow();
 
 	DBColumn* GetColumn(int32 nIdx);
+	int32 GetColumnIdx(const char* pName);
 
 	void AddColumn( const char* data, size_t len, bool isStr);
 	void AddColumn();
@@ -97,15 +104,15 @@ public:
 	void AddColumn(T val)
 	{
 		size_t oldCursor = m_data.Write(val);
-		T columnFlag = sizeof(T);
+		int64 columnFlag = sizeof(T);
 		columnFlag <<= 32;
 		int64 pos = (int64)oldCursor;
 		pos &= 0x00000000ffffffff;
 		m_columns.push_back( columnFlag | pos );
 	}
 
-	template <class T>
-	void Fill(T& obj, int32 nColumnID, T defaultValue)
+	template <class T, class T2>
+	void Fill(T& obj, int32 nColumnID, T2 defaultValue)
 	{
 		if( nColumnID < 0 || nColumnID >= (int32)m_columns.size())	
 		{
@@ -177,7 +184,9 @@ public:
 
 	virtual bool LoadTable( const char* pTableName, DBTable& table);
 	virtual bool ExecuteSql( const Char* sSql, DBTable* pTable) = 0;
-	virtual bool ExecuteSql( const Char* sSql, DBTable& pTable) { return ExecuteSql( sSql, &pTable); }
+	virtual bool ExecuteSql( const Char* sSql, DBTable& pTable) { 
+		return ExecuteSql( sSql, &pTable); 
+	}
 	virtual bool ExecuteSqlInternal(const char* pSql, DBTable* pTable) = 0;
 };
 

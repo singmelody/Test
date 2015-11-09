@@ -114,6 +114,15 @@ DBColumn* DBRow::GetColumn(int32 nIdx)
 	return &m_column;
 }
 
+int32 DBRow::GetColumnIdx(const char* pName)
+{
+	if(!m_pTable)
+		return -1;
+
+	int32 nIdx = m_pTable->GetColumnIdx(pName);
+	return nIdx;
+}
+
 void DBRow::AddColumn(const char* data, size_t len, bool isStr)
 {
 	size_t oldCursor = m_data.Write( data, len);

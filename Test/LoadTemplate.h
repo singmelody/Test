@@ -29,6 +29,8 @@ public:
 
 	virtual void ClearData(){}
 
+	bool ProcessLoad();
+
 	LoadState	m_loadState;
 	LoadInfo*	m_pLoadInfo;
 

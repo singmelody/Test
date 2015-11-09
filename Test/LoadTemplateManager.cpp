@@ -40,7 +40,7 @@ void LoadTemplateManager::AddTemplate(const char* strTemplate, LoadTemplate* pTe
 LoadTemplate* LoadTemplateManager::GetTemplate(const char* strTemplate)
 {
 	auto itr = m_LoadTemplateMap.find(strTemplate);
-	if( itr != m_LoadTemplateMap.end() )
+	if( itr == m_LoadTemplateMap.end() )
 		return NULL;
 
 	return itr->second;
@@ -77,7 +77,7 @@ void LoadTemplateManager::Load(const char* pModule)
 		}
 
 		std::stringstream sstr;
-		sstr << "select * from LoadModules where modulename = '" << pModule << "'";
+		sstr << "select * from LoadModules where ModuleName = '" << pModule << "'";
 
 		DBTable table;
 		if ( !pDBI->ExecuteSql( sstr.str().c_str(), table))
@@ -86,9 +86,9 @@ void LoadTemplateManager::Load(const char* pModule)
 			return;
 		}
 
-		int32 nCol_ModuleID		= table.GetColumnIdx("ModuleID");
-		int32 nCol_ThreadCount	= table.GetColumnIdx("ThreadCount");
-		int32 nCol_BindReferenceTemplates = table.GetColumnIdx("BindReferenceTemplates");
+		static int32 nCol_ModuleID		= table.GetColumnIdx("ModuleID");
+		static int32 nCol_ThreadCount	= table.GetColumnIdx("ThreadCount");
+		static int32 nCol_BindReferenceTemplates = table.GetColumnIdx("BindReferenceTemplates");
 
 		DBRowList& rows = table.m_rowList;
 		for (auto itr = rows.begin(); itr != rows.end(); ++itr)
@@ -129,7 +129,7 @@ void LoadTemplateManager::Load(const char* pModule)
 void LoadTemplateManager::Load(DBInterface* pDBI, int32 nModuleID, int32 nThreadCount)
 {
 	std::stringstream sstr;
-	sstr << "select * from LoadTemplate where moduleid = "<< nModuleID <<" order by BatchID, OrderID";
+	sstr << "select * from LoadTemplates where ModuleID = "<< nModuleID <<" order by BatchID, OrderID";
 
 	DBTable table;
 	if (!pDBI->ExecuteSql( sstr.str().c_str(), table))
@@ -186,17 +186,17 @@ void LoadTemplateManager::Load(DBInterface* pDBI, int32 nModuleID, int32 nThread
 void LoadTemplateManager::LoadDependence(DBInterface* pDBI, int32 nModuleID)
 {
 	char textBuff[1024] = {0};
-	sprintf( textBuff, "select * from LoadDependence where ModuleID = %d order by DependOrder", nModuleID);
+	sprintf_s( textBuff, "select * from LoadDependence where ModuleID = %d order by DependOrder", nModuleID);
 
 	DBTable table;
 	if (!pDBI->ExecuteSql( textBuff, table))
 	{
-		printf("Load LoadDependence data failed!");
+		printf("Load LoadDependence data failed!\n");
 		return;
 	}
 
-	int32 nCol_TemplateName = table.GetColumnIdx("TemplateName");
-	int32 nCol_DependTemplate = table.GetColumnIdx("DependTemplate");
+	static int32 nCol_TemplateName = table.GetColumnIdx("TemplateName");
+	static int32 nCol_DependTemplate = table.GetColumnIdx("DependTemplate");
 
 	auto itr = table.m_rowList.begin();
 	auto itrEnd = table.m_rowList.end();
@@ -249,7 +249,23 @@ void LoadTemplateManager::OnLoadCompleted()
 
 void LoadTemplateManager::InternalLoadTemplates(LoadBatch& list, int32 nThreadCount)
 {
+	LoadThreadBatch threads;
 
+	if( nThreadCount > list.m_count )
+		nThreadCount = list.m_count;
+
+	threads.StartBatchLoad( this, &list, nThreadCount);
+
+	while (!threads.IsAllThreadExit())
+	{
+		if( m_pLoadCallback != NULL )
+			m_pLoadCallback();
+
+		// wait all thread exit
+		GSleep(10);
+	}
+
+	threads.WaitAllThreadExit();
 }
 
 bool DBLoader::OpenDB(int32 nConnectCnt)

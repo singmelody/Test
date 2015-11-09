@@ -62,6 +62,17 @@ bool LoadTemplate::LoadDataFromDB(DBInterface* ptr)
 	return false;
 }
 
+bool LoadTemplate::ProcessLoad()
+{
+	ClearData();
+
+	if (!LoadData())
+		return false;
+
+	AfterLoadData();	// 完成数据加载后整理数据
+	return true;
+}
+
 LoadTemplate* LoadTemplate::GetTemplate(const char* pStr)
 {
 	return NULL;

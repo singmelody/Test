@@ -2,12 +2,15 @@
 
 #include <list>
 #include "DBInterface.h"
+#include "LoadThread.h"
+#include "Thread.h"
 
 #define MAXBATCHCOUNT	5
 
 class LoadInfo;
 class LoadTemplate;
 class LoadTemplateManager;
+class LoadThread;
 
 typedef std::list<LoadTemplate*> LoadTemplateList;
 
@@ -48,10 +51,33 @@ public:
 	Mutex					m_mutex;
 };
 
-class LoadThread
+class LoadThread : public Thread
 {
 public:
-	LoadThread(void);
+	LoadThread( LoadTemplateManager* pMgr, LoadBatch* pBatch, int32 nThreadIdx);
 	~LoadThread(void);
+
+	void ProcessLoad();
+protected:
+	void Run();
+
+	LoadTemplateManager*	m_pMgr;
+	LoadBatch*				m_pLoadBatch;
+	const int32				m_nThreadIdx;
 };
 
+class LoadThreadBatch
+{
+public:
+	LoadThreadBatch();
+	~LoadThreadBatch();
+
+	void StartBatchLoad(LoadTemplateManager* pMgr, LoadBatch* pBatch, int32 nThreadCount);
+	bool IsAllThreadExit();
+	bool WaitAllThreadExit();
+
+protected:
+	std::list<LoadThread*>	m_list;
+
+	bool m_bSyncMode;
+};
