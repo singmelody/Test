@@ -78,6 +78,7 @@ bool ODBCInterface::ExecuteSqlInternal(const char* pSql, DBTable* pTable)
 		
 		if (m_result != SQL_SUCCESS && m_result != SQL_SUCCESS_WITH_INFO && m_result != SQL_NO_DATA)
 		{
+			DiagState();
 			printf("this sql is error:%s\n", pSql);
 			return false;
 		}
@@ -190,8 +191,26 @@ void ODBCInterface::DiagState()
 	SQLINTEGER navError;
 	SQLCHAR SqlState[6];
 	SQLSMALLINT MsgLen;
-	SQLCHAR errorMsg[200];
-	SQLRETURN ret = SQLGetDiagRec( SQL_HANDLE_DBC, m_hDbc, i, SqlState, &navError, errorMsg, sizeof(errorMsg), &MsgLen);
+	SQLCHAR errorMsg[255];
+	memset( errorMsg, 0, sizeof(errorMsg));
+	while (SQLGetDiagRec( SQL_HANDLE_DBC, m_hDbc, i, SqlState, &navError, errorMsg, sizeof(errorMsg), &MsgLen) != SQL_NO_DATA)
+	{
+		i++;
+		if(!m_hDbc)
+		{
+			printf("hdc is null\n");
+			break;
+		}
+	}
+
+	errorMsg[254] = '\0';
+
+	if (strlen((const char*)errorMsg) == 0)
+		m_result = SQLError( m_hEnv, m_hDbc, m_hStmt, SqlState, &navError, errorMsg, sizeof(errorMsg), &MsgLen);
+
+	m_errorCode = navError;
+
+	printf("ErrorSql:ErrorCode = %d\nErrorMsg = %s", m_errorCode, errorMsg);
 
 	printf("Mysql Error %s\n", SqlState);
 }
@@ -394,7 +413,7 @@ bool ODBCConnectionManager::Init(const char* dbName, const char* user, const cha
 {
 	bool bError = false;
 
-	for (int32 i = 0; i < m_con;)
+	for (int32 i = 0; i < m_con; ++i)
 	{
 		ODBCInterface* temp = new ODBCInterface();
 		if(!temp)
