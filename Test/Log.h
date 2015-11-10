@@ -5,6 +5,8 @@
 #define DEFAULT_LOG_CACHE_SIZE 1024*1024*4
 
 void CacheLog(int32 nLogID, int32 nDomainID, const char* msg, va_list arg);
+int sFormatLog( char* szBuffer, size_t bufferLen, 
+	const char* szFmt, va_list argPtr, const char* szPrefix);
 void LogSystem_Flush();
 
 

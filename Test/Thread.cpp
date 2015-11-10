@@ -6,7 +6,7 @@
 
 #define MS_VC_EXCEPTION 0x406D1388
 
-Thread::Thread(const char* strName) : m_strName("")
+Thread::Thread(const char* strName) : m_strName(strName)
 {
 	m_threadID = 0;
 	SetStatus(eThread_Ready);
@@ -55,7 +55,7 @@ void Thread::Start()
 	}
 
 	SetStatus(eThread_Running);
-	MyLog::message("Thread[%s] START!\n", m_strName.c_str());
+	MyLog::message("Thread[%s] START!", m_strName.c_str());
 }
 
 void Thread::Stop()
@@ -68,7 +68,7 @@ void Thread::Stop()
 
 	m_threadID = 0;
 	SetStatus(eThread_Exiting);
-	MyLog::message("Thread[%s] STOP!\n", m_strName.c_str());
+	MyLog::message("Thread[%s] STOP!", m_strName.c_str());
 }
 
 void Thread::Wait()
@@ -82,7 +82,7 @@ void Thread::Wait()
 	m_threadID = 0;
 	SetStatus(eThread_Ready);
 
-	MyLog::message("Thread[%s] STOP!\n", m_strName.c_str());
+	MyLog::message("Thread[%s] STOP!", m_strName.c_str());
 }
 
 bool Thread::IsInThisThread()

@@ -4,6 +4,7 @@
 #include "MyLog.h"
 
 #define MAX_LOG_NAME_LEN	32
+#define LOG_BUFF_LENGTH		8192
 
 LogBase* g_pLog = NULL;
 
@@ -17,9 +18,61 @@ void LogSystem_Flush()
 
 void CacheLog(int32 nLogID, int32 nDomainID, const char* msg, va_list arg)
 {
-	assert( nLogID >= 0 && nLogID < LOG_COUNT);
+	if(!g_pLog)
+		return;
 
-	g_pLog->CacheLog( nLogID, msg);
+	assert( nLogID >= 0 && nLogID < LOG_COUNT);
+	if( nLogID < 0 || nLogID >= LOG_COUNT )
+		return;
+
+	char szLogBuffer[LOG_BUFF_LENGTH];
+	if(sFormatLog( szLogBuffer, sizeof(szLogBuffer), msg, arg, "[LogInfo]") > 0)
+		g_pLog->CacheLog( nLogID, szLogBuffer);
+}
+
+int sFormatLog( char* szBuffer, size_t bufferLen, 
+	const char* szFmt, va_list argPtr, const char* szPrefix)
+{
+	assert( szBuffer && bufferLen > 10 && szFmt && szPrefix);
+
+	int32 nWriteLen = 0;
+	size_t nCurrPos = 0;
+
+	nWriteLen = _snprintf( szBuffer, bufferLen-1, "%s", szPrefix);
+
+	if(nWriteLen < 0)
+	{
+		printf("********error log***********\n");
+	}
+
+	// buffer is full
+	if(nWriteLen >= (int32)bufferLen - 1)
+	{
+		szBuffer[bufferLen-2] = '\n';
+		szBuffer[bufferLen-1] = '\0';
+	}
+
+	nCurrPos = nWriteLen;
+
+	// Ð´ÏûÏ¢ÄÚÈÝ
+	nWriteLen = _vsnprintf( szBuffer + nCurrPos, bufferLen - nCurrPos, szFmt, argPtr);
+	if(nWriteLen < 0)
+	{
+		printf("*****************error write log <msg>*****************");
+		nWriteLen = (int32)(bufferLen - nCurrPos);
+	}
+
+	nCurrPos += nWriteLen;
+
+	// add \n
+	if( nCurrPos >= bufferLen -1)
+		nCurrPos = bufferLen - 2;
+
+	szBuffer[nCurrPos++] = '\n';
+	szBuffer[nCurrPos] = '\0';
+	assert( nCurrPos < bufferLen);
+
+	return (int32)nCurrPos;
 }
 
 void myInvalidParameterHandler(
@@ -159,5 +212,5 @@ void Log::FlushLog_All()
 
 void LogBase::DisplayLog(const char* szMsg)
 {
-	printf("%s\n", szMsg);
+	printf("%s", szMsg);
 }

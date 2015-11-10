@@ -91,13 +91,13 @@ bool LoadInfo::CheckLoad()
 {
 	if(!m_pTemplate)
 	{
-		MyLog::message("Can't load template [%s]!\n", m_strTemplate.c_str());
+		MyLog::message("Can't load template [%s]!", m_strTemplate.c_str());
 		return false;
 	}
 
 	if (m_batchID < 0 || m_batchID >= MAXBATCHCOUNT)
 	{
-		MyLog::message("BatchID is invalid	[%s] is [%d]\n", m_strTemplate.c_str(), m_batchID);
+		MyLog::message("BatchID is invalid	[%s] is [%d]", m_strTemplate.c_str(), m_batchID);
 		return false;
 	}
 

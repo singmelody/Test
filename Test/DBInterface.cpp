@@ -79,7 +79,7 @@ bool DBInterface::LoadTable(const char* pTableName, DBTable& table)
 	if( TRUE == ExecuteSql( strSql.c_str(), table))
 		return false;
 
-	MyLog::message("Failed to load table\n", pTableName);
+	MyLog::warning("Failed to load table!", pTableName);
 	return false;
 }
 

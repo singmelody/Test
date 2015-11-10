@@ -29,19 +29,19 @@ bool LoadTemplate::LoadData()
 		{
 			try
 			{
-				MyLog::message("start load %s from db\n", m_strName.c_str());
+				MyLog::message("start load %s from db", m_strName.c_str());
 				bSucceed = LoadDataFromDB( pConn->m_pInterface );
 				pConn->m_mutex.Unlock();
 
 				if ( bSucceed )
-					MyLog::message("LoadTempate:%s from DB Success\n", m_strName.c_str());
+					MyLog::message("LoadTempate:%s from DB Success", m_strName.c_str());
 				else
-					MyLog::message("LoadTempate:%s from DB Failed\n", m_strName.c_str());
+					MyLog::message("LoadTempate:%s from DB Failed", m_strName.c_str());
 			}
 			catch (...)
 			{
 				pConn->m_mutex.Unlock();
-				MyLog::message("LoadTempate:%s from DB Exception\n", m_strName.c_str());
+				MyLog::message("LoadTempate:%s from DB Exception", m_strName.c_str());
 			}
 		}
 	}
