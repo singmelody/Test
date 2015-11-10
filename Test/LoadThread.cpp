@@ -2,6 +2,7 @@
 #include "LoadThread.h"
 #include "LoadTemplateManager.h"
 #include "Timer.h"
+#include "MyLog.h"
 
 LoadThread::LoadThread(LoadTemplateManager* pMgr, LoadBatch* pBatch, int32 nThreadIdx) 
 	: m_pMgr(pMgr), m_pLoadBatch(pBatch), m_nThreadIdx(nThreadIdx)
@@ -90,19 +91,19 @@ bool LoadInfo::CheckLoad()
 {
 	if(!m_pTemplate)
 	{
-		printf("Can't load template [%s]!\n", m_strTemplate.c_str());
+		MyLog::message("Can't load template [%s]!\n", m_strTemplate.c_str());
 		return false;
 	}
 
 	if (m_batchID < 0 || m_batchID >= MAXBATCHCOUNT)
 	{
-		printf("BatchID is invalid	[%s] is [%d]\n", m_strTemplate.c_str(), m_batchID);
+		MyLog::message("BatchID is invalid	[%s] is [%d]\n", m_strTemplate.c_str(), m_batchID);
 		return false;
 	}
 
 	if( m_pTemplate->IsLoaded())
 	{
-		printf("Don't loadtemplate:	[%s] batchID:[%d] again\n", m_strTemplate.c_str(), m_batchID);
+		MyLog::message("Don't loadtemplate:	[%s] batchID:[%d] again\n", m_strTemplate.c_str(), m_batchID);
 		return false;
 	}
 

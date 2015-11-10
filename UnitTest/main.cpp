@@ -16,25 +16,23 @@ int _tmain(int argc, _TCHAR* argv[])
 	MyLog::Create( "log.txt");
 	LogThread::Instance().Start();
 
-	MyLog::warning("TEST");
+	CommonConfig::DBType	= eDBType_DBC;
+	CommonConfig::DBCName	= "testdb";
+	CommonConfig::DBCUser	= "root";
+	CommonConfig::DBCPwd= "123456";
+	
+	unsigned int tt = UtilID::CreateFromString("wangyanbin");
+	assert(tt == 65398277);
+	
+	FACTORY_NEWOBJ(DBRow);
+	FACTORY_NEWOBJ(DBRow);
+	
+	LoadTemplateManager templateMgr;
+	
+	templateMgr.AddTemplate("TestODBCManager", TestODBCManager::Instance());
+	templateMgr.Load("NodeServer");
 
-// 	CommonConfig::DBType	= eDBType_DBC;
-// 	CommonConfig::DBCName	= "testdb";
-// 	CommonConfig::DBCUser	= "root";
-// 	CommonConfig::DBCPwd= "123456";
-// 	
-// 	unsigned int tt = UtilID::CreateFromString("wangyanbin");
-// 	assert(tt == 65398277);
-// 	
-// 	FACTORY_NEWOBJ(DBRow);
-// 	FACTORY_NEWOBJ(DBRow);
-// 	
-// 	LoadTemplateManager templateMgr;
-// 	
-// 	templateMgr.AddTemplate("TestODBCManager", TestODBCManager::Instance());
-// 	templateMgr.Load("NodeServer");
-// 
-// 	printf("I am here waiting for u\n");
+	MyLog::message("I am here waiting for u");
 
 	
 

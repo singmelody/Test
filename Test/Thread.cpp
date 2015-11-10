@@ -2,6 +2,7 @@
 #include "Thread.h"
 #include <process.h>
 #include <assert.h>
+#include "MyLog.h"
 
 #define MS_VC_EXCEPTION 0x406D1388
 
@@ -54,7 +55,7 @@ void Thread::Start()
 	}
 
 	SetStatus(eThread_Running);
-	printf("Thread[%s] START!\n", m_strName.c_str());
+	MyLog::message("Thread[%s] START!\n", m_strName.c_str());
 }
 
 void Thread::Stop()
@@ -67,7 +68,7 @@ void Thread::Stop()
 
 	m_threadID = 0;
 	SetStatus(eThread_Exiting);
-	printf("Thread[%s] STOP!\n", m_strName.c_str());
+	MyLog::message("Thread[%s] STOP!\n", m_strName.c_str());
 }
 
 void Thread::Wait()
@@ -81,7 +82,7 @@ void Thread::Wait()
 	m_threadID = 0;
 	SetStatus(eThread_Ready);
 
-	printf("Thread[%s] STOP!\n", m_strName.c_str());
+	MyLog::message("Thread[%s] STOP!\n", m_strName.c_str());
 }
 
 bool Thread::IsInThisThread()

@@ -2,6 +2,7 @@
 #include "LoadTemplate.h"
 #include "DBInterface.h"
 #include "LoadTemplateManager.h"
+#include "MyLog.h"
 
 LoadTemplate::LoadTemplate(void)
 {
@@ -28,19 +29,19 @@ bool LoadTemplate::LoadData()
 		{
 			try
 			{
-				printf("start load %s from db\n", m_strName.c_str());
+				MyLog::message("start load %s from db\n", m_strName.c_str());
 				bSucceed = LoadDataFromDB( pConn->m_pInterface );
 				pConn->m_mutex.Unlock();
 
 				if ( bSucceed )
-					printf("LoadTempate:%s from DB Success\n", m_strName.c_str());
+					MyLog::message("LoadTempate:%s from DB Success\n", m_strName.c_str());
 				else
-					printf("LoadTempate:%s from DB Failed\n", m_strName.c_str());
+					MyLog::message("LoadTempate:%s from DB Failed\n", m_strName.c_str());
 			}
 			catch (...)
 			{
 				pConn->m_mutex.Unlock();
-				printf("LoadTempate:%s from DB Exception\n", m_strName.c_str());
+				MyLog::message("LoadTempate:%s from DB Exception\n", m_strName.c_str());
 			}
 		}
 	}

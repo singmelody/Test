@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "ODBCInterface.h"
+#include "MyLog.h"
 
 ODBCInterface::ODBCInterface()
 {
@@ -46,7 +47,7 @@ bool ODBCInterface::ConnectDB(const char* pConnectStr, const char* pUsername, co
 
 	if( m_result != SQL_SUCCESS && m_result != SQL_SUCCESS_WITH_INFO )
 	{
-		printf("ErrorSql:ConnectDBError %s@%s, %s\n", pConnectStr, pUsername, pPassword);
+		MyLog::message("ErrorSql:ConnectDBError %s@%s, %s\n", pConnectStr, pUsername, pPassword);
 		DiagState();
 
 		return false;
@@ -79,20 +80,20 @@ bool ODBCInterface::ExecuteSqlInternal(const char* pSql, DBTable* pTable)
 		if (m_result != SQL_SUCCESS && m_result != SQL_SUCCESS_WITH_INFO && m_result != SQL_NO_DATA)
 		{
 			DiagState();
-			printf("this sql is error:%s\n", pSql);
+			MyLog::message("this sql is error:%s\n", pSql);
 			return false;
 		}
 
 		m_rowCount = m_colCount = 0;
 		if (SQL_SUCCESS != SQLRowCount(m_hStmt, &m_rowCount))
 		{
-			printf("sql row count failed");
+			MyLog::message("sql row count failed");
 			return false;
 		}
 
 		if (SQL_SUCCESS != SQLNumResultCols(m_hStmt, &m_colCount))
 		{
-			printf("sql col count failed");
+			MyLog::message("sql col count failed");
 			return false;
 		}
 
@@ -179,7 +180,7 @@ bool ODBCInterface::ExecuteSqlInternal(const char* pSql, DBTable* pTable)
 	}
 	catch (...)
 	{
-		printf("something bad happen\n");
+		MyLog::message("something bad happen");
 	}
 
 	return true;
@@ -198,7 +199,7 @@ void ODBCInterface::DiagState()
 		i++;
 		if(!m_hDbc)
 		{
-			printf("hdc is null\n");
+			MyLog::message("hdc is null");
 			break;
 		}
 	}
@@ -210,9 +211,9 @@ void ODBCInterface::DiagState()
 
 	m_errorCode = navError;
 
-	printf("ErrorSql:ErrorCode = %d\nErrorMsg = %s", m_errorCode, errorMsg);
+	MyLog::message("ErrorSql:ErrorCode = %d\nErrorMsg = %s", m_errorCode, errorMsg);
 
-	printf("Mysql Error %s\n", SqlState);
+	MyLog::message("Mysql Error %s\n", SqlState);
 }
 
 void ODBCInterface::Clear()
@@ -231,7 +232,7 @@ bool ODBCInterface::CloseDB()
 			SQLFreeStmt(m_hStmt, SQL_UNBIND);
 			SQLFreeHandle(SQL_HANDLE_STMT, m_hStmt);
 			m_hStmt = NULL;
-			printf("DBA Close Database Connection\n");
+			MyLog::message("DBA Close Database Connection");
 		}
 		catch (...)
 		{

@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "DBInterface.h"
 #include <assert.h>
-
+#include "MyLog.h"
 
 DBColumn::DBColumn()
 {
@@ -71,7 +71,7 @@ bool DBInterface::LoadTable(const char* pTableName, DBTable& table)
 {
 	if(!pTableName)
 	{
-		printf("should not load empty table\n");
+		MyLog::message("should not load empty table");
 		return false;
 	}
 
@@ -79,7 +79,7 @@ bool DBInterface::LoadTable(const char* pTableName, DBTable& table)
 	if( TRUE == ExecuteSql( strSql.c_str(), table))
 		return false;
 
-	printf("Failed to load table\n", pTableName);
+	MyLog::message("Failed to load table\n", pTableName);
 	return false;
 }
 

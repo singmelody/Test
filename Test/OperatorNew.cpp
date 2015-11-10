@@ -3,6 +3,7 @@
 #include "DLAllocator.h"
 #include "DLMalloc.h"
 #include <assert.h>
+#include "MyLog.h"
 
 std::new_handler SetNewHandler(std::new_handler pfnHandler) throw()
 {
@@ -64,7 +65,7 @@ void operator delete(void* ptr)
 {
 	if(!s_pAlloc)
 	{
-		printf("Bad ::delete, Global Allocator is NULL");
+		MyLog::message("Bad ::delete, Global Allocator is NULL");
 		return;
 	}
 

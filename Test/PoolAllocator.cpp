@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "PoolAllocator.h"
 #include "DLMalloc.h"
+#include "MyLog.h"
 
 PoolAllocator::PoolAllocator()
 {
@@ -110,14 +111,14 @@ void PoolAllocator::PushMemory( void* ptr)
 	MemoryCell* pCell = (MemoryCell*)((char*)ptr - sizeof(MemoryHead));
 	if(pCell->info.AllocInfo != m_info.AllocInfo)
 	{
-		printf("Pool Allocator Push Memory Failed, Wrong AllocInfo\n");
+		MyLog::message("Pool Allocator Push Memory Failed, Wrong AllocInfo");
 		dlfree((void*)pCell);
 		return;
 	}
 
 	if((pCell->info.MemInfo & 0x80000000) == 0)
 	{
-		printf("Free Unused Memory\n");
+		MyLog::message("Free Unused Memory");
 		return;
 	}
 

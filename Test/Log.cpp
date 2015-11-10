@@ -1,6 +1,7 @@
 #include "StdAfx.h"
 #include "Log.h"
 #include <assert.h>
+#include "MyLog.h"
 
 #define MAX_LOG_NAME_LEN	32
 
@@ -158,5 +159,5 @@ void Log::FlushLog_All()
 
 void LogBase::DisplayLog(const char* szMsg)
 {
-
+	printf("%s\n", szMsg);
 }

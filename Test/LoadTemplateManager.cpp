@@ -5,6 +5,7 @@
 #include <sstream>
 #include "ODBCInterface.h"
 #include "CommonConfig.h"
+#include "MyLog.h"
 
 DBConnectionManager* DBLoader::m_pDBMgr = NULL;
 std::string DBLoader::m_strDBFile;
@@ -60,7 +61,7 @@ void LoadTemplateManager::Load(const char* pModule)
 {
 	if(!DBLoader::OpenDB(MaxConnect))
 	{
-		printf("LoadTemplateManager::Load Failed\n");
+		MyLog::message("LoadTemplateManager::Load Failed");
 		return;
 	}
 
@@ -72,7 +73,7 @@ void LoadTemplateManager::Load(const char* pModule)
 		DBInterface* pDBI = pConn->m_pInterface;
 		if(!pDBI)
 		{
-			printf("Load LoadModules data failed!\n");
+			MyLog::message("Load LoadModules data failed!");
 			return;
 		}
 
@@ -82,7 +83,7 @@ void LoadTemplateManager::Load(const char* pModule)
 		DBTable table;
 		if ( !pDBI->ExecuteSql( sstr.str().c_str(), table))
 		{
-			printf("Load LoadModules Data Failed\n");
+			MyLog::message("Load LoadModules Data Failed");
 			return;
 		}
 
@@ -135,7 +136,7 @@ void LoadTemplateManager::Load(DBInterface* pDBI, int32 nModuleID, int32 nThread
 	DBTable table;
 	if (!pDBI->ExecuteSql( sstr.str().c_str(), table))
 	{
-		printf("LoadTemplate Data Failed\n");
+		MyLog::message("LoadTemplate Data Failed");
 		return;
 	}
 
@@ -191,7 +192,7 @@ void LoadTemplateManager::LoadDependence(DBInterface* pDBI, int32 nModuleID)
 	DBTable table;
 	if (!pDBI->ExecuteSql( textBuff, table))
 	{
-		printf("Load LoadDependence data failed!\n");
+		MyLog::message("Load LoadDependence data failed!");
 		return;
 	}
 
@@ -222,7 +223,7 @@ void LoadTemplateManager::LoadDependence(DBInterface* pDBI, int32 nModuleID)
 		LoadTemplate* pDepand = GetTemplate( strDepend.c_str() );
 		if(!pDepand)
 		{
-			printf("Can't find DependTemplate [%s]->[%s]\n", strTemplate.c_str(), strDepend.c_str());
+			MyLog::message("Can't find DependTemplate [%s]->[%s]\n", strTemplate.c_str(), strDepend.c_str());
 			continue;
 		}
 
