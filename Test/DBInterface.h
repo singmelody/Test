@@ -111,8 +111,8 @@ public:
 		m_columns.push_back( columnFlag | pos );
 	}
 
-	template <class T, class T2>
-	void Fill(T& obj, int32 nColumnID, T2 defaultValue)
+	template <class T, class T1>
+	void Fill(T& obj, int32 nColumnID, T1 defaultValue)
 	{
 		if( nColumnID < 0 || nColumnID >= (int32)m_columns.size())	
 		{
