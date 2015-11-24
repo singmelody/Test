@@ -6,6 +6,8 @@
 
 #include "openssl/pem.h"
 #include "openssl/rsa.h"
+#include "openssl/evp.h"
+#include "openssl/err.h"
 
 RSAipher::RSAipher(RSA* pRsa, bool bPublic) 
 	: m_pKey(pRsa), m_bPublic(bPublic), m_ptr0(NULL), m_ptr1(NULL)
@@ -39,9 +41,7 @@ RSAipher* RSAipher::Create( FILE* pFile, bool bPublic)
 	if(!pFile)
 		return NULL;
 
-	RSA* pKey = RSA_new();
-	
-	pKey = bPublic ? PEM_read_RSA_PUBKEY( pFile, &pKey, NULL, NULL) : PEM_read_RSAPrivateKey( pFile, &pKey, NULL, NULL);
+	RSA* pKey = bPublic ? PEM_read_RSA_PUBKEY( pFile, NULL, NULL, NULL) : PEM_read_RSAPrivateKey( pFile, NULL, NULL, NULL);
 
 	if(!pKey)
 	{

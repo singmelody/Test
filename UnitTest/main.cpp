@@ -10,6 +10,8 @@
 // unit test
 #include "TestODBCManager.h"
 
+#include "RSAipher.h"
+
 int _tmain(int argc, _TCHAR* argv[])
 {
 	g_pLog = new Log();
@@ -34,8 +36,18 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	MyLog::message("I am here waiting for u");
 
-	
 
+	FILE* pFile = fopen( "my.public", "r");
+	RSAipher* pPtr = RSAipher::Create( pFile, true);
+	RSAipher::Destroy( pPtr );
+	pPtr = NULL;
+	fclose(pFile);	
+
+	pFile = fopen( "my.private", "r");
+	pPtr = RSAipher::Create( pFile, false);
+	RSAipher::Destroy( pPtr );
+	pPtr = NULL;
+	fclose(pFile);
 	return 0;
 }
 
