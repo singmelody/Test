@@ -14,6 +14,7 @@
 
 int _tmain(int argc, _TCHAR* argv[])
 {
+	int32 nK = 0x12345678;
 	g_pLog = new Log();
 	MyLog::Create( "log.txt");
 	LogThread::Instance().Start();

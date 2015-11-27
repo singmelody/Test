@@ -230,6 +230,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Allocator.h" />
+    <ClInclude Include="AreaManager.h" />
     <ClInclude Include="CommonConfig.h" />
     <ClInclude Include="DBInterface.h" />
     <ClInclude Include="DLAllocator.h" />
@@ -259,10 +260,12 @@
     <ClInclude Include="Thread.h" />
     <ClInclude Include="Time.h" />
     <ClInclude Include="Timer.h" />
+    <ClInclude Include="Math.h" />
     <ClInclude Include="UtilID.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Allocator.cpp" />
+    <ClCompile Include="AreaManager.cpp" />
     <ClCompile Include="CommonConfig.cpp" />
     <ClCompile Include="DBInterface.cpp" />
     <ClCompile Include="DLAllocator.cpp" />
@@ -320,6 +323,7 @@
     </ClInclude>
     <ClCompile Include="Thread.cpp" />
     <ClCompile Include="Time.cpp" />
+    <ClCompile Include="Math.cpp" />
     <ClCompile Include="UtilID.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
