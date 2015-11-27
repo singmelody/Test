@@ -6,6 +6,6 @@ public:
 	AreaManager(void);
 	~AreaManager(void);
 
-	InitAreaSpace();
+	void InitAreaSpace();
 };
 

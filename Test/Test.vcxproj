@@ -247,6 +247,7 @@
     <ClInclude Include="LogThread.h" />
     <ClInclude Include="MyFile.h" />
     <ClInclude Include="MyMutex.h" />
+    <ClInclude Include="MyVector.h" />
     <ClInclude Include="NoCopyable.h" />
     <ClInclude Include="ODBCInterface.h" />
     <ClInclude Include="OperatorNew.h" />
@@ -260,7 +261,7 @@
     <ClInclude Include="Thread.h" />
     <ClInclude Include="Time.h" />
     <ClInclude Include="Timer.h" />
-    <ClInclude Include="Math.h" />
+    <ClInclude Include="MyMath.h" />
     <ClInclude Include="UtilID.h" />
   </ItemGroup>
   <ItemGroup>
@@ -290,6 +291,7 @@
     <ClCompile Include="LogThread.cpp" />
     <ClCompile Include="MyFile.cpp" />
     <ClCompile Include="MyMutex.cpp" />
+    <ClCompile Include="MyVector.cpp" />
     <ClCompile Include="ODBCInterface.cpp" />
     <ClCompile Include="OperatorNew.cpp" />
     <ClCompile Include="PoolAllocator.cpp" />
@@ -323,7 +325,7 @@
     </ClInclude>
     <ClCompile Include="Thread.cpp" />
     <ClCompile Include="Time.cpp" />
-    <ClCompile Include="Math.cpp" />
+    <ClCompile Include="MyMath.cpp" />
     <ClCompile Include="UtilID.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
