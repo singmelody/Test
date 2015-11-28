@@ -27,19 +27,31 @@ public:
 	virtual bool ParamCompare( char* pParamBuff, char* pBuffer) = 0;
 
 	int32 TypeID() { return m_typeid; }
+
 	int32 Index(){ return m_index; }
+	void Index(int32 nIdx) { m_index = nIdx; }
+	
 	int32 ID() { return m_id; }
-	const char* Name() { return m_name.c_str();}
+	void ID(int32 nID) { m_id = nID; }
+
+
+	virtual const char* Name() = 0;
+	virtual void Name(const char* pName) = 0;
 
 	virtual int32 ParamSize() = 0;
+
+	inline int32 CID() { return m_cid;}
+	inline void CID(int32 nCID) { m_cid = nCID; }
+
+
 protected:
 	int32	m_typeid;
 
 	int32	m_id;		// editor define id
 	int32	m_index;	// after sort index
+	int32	m_cid;		// util id
 	uint32	m_flag;
 
-	std::string m_name;
 };
 
 template <class T>
@@ -64,6 +76,9 @@ public:
 		m_minValue = value;
 	}
 
+	virtual const char* Name() { return m_name.c_str(); }
+	virtual void Name(const char* pName) { m_name = pName; }
+
 	virtual int32 ParamSize() { return ClassMember<T>::Size();}
 
 	void GetStringValue( void* pClassObj, char* pBuffer, int32 nCount)
@@ -83,6 +98,8 @@ protected:
 
 	bool m_bMinValue;
 	T m_minValue;
+
+	std::string m_name;
 
 	std::string m_stringValue;
 };

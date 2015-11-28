@@ -89,6 +89,16 @@ ParamBase* ParamDefManager::CreateParam(const char* sParamType, const char* sDft
 		Param_Int64* pParam = new Param_Int64();
 		InitValue_atoi<int64>( pParam, sDft, sMax, 0x7fffffffffffffff, ~0x7fffffffffffffff)
 	}
+	if(sParamType == "int64")
+	{
+		Param_Int64* pParam = new Param_Int64();
+		InitValue_atoi<int64>( pParam, sDft, sMax, 0x7fffffffffffffff, ~0x7fffffffffffffff)
+	}
+	if(sParamType == "int64")
+	{
+		Param_Int64* pParam = new Param_Int64();
+		InitValue_atoi<int64>( pParam, sDft, sMax, 0x7fffffffffffffff, ~0x7fffffffffffffff)
+	}
 }
 
 bool ParamDefManager_LoadHelper::LoadFromDB(ParamDefManager* pMgr, DBInterface* pDBI)
@@ -144,7 +154,12 @@ bool ParamDefManager_LoadHelper::InitParamColumn(ParamDefManager* pMgr, DBInterf
 		return false;
 
 	static int32 nCol_ParamID = table.GetColumnIdx("ParamID");
-	
+	static int32 nCol_MemberIdx = table.GetColumnIdx("MemberID");
+	static int32 nCol_Name = table.GetColumnIdx("Name");
+	static int32 nCol_Type = table.GetColumnIdx("Type");
+	static int32 nCol_Dft = table.GetColumnIdx("Default");
+	static int32 nCol_Min = table.GetColumnIdx("Min");
+	static int32 nCol_Max = table.GetColumnIdx("Max");
 
 	DBRowList::iterator itr = table.m_rowList.begin();
 	for (; itr != table.m_rowList.end(); ++itr)
@@ -161,7 +176,31 @@ bool ParamDefManager_LoadHelper::InitParamColumn(ParamDefManager* pMgr, DBInterf
 		if(!pDef)
 			continue;
 
-		
+		int32 nMemberIdx;
+		std::string sParamName, sType, sDft, sMax, sMin;
+		row.Fill( nMemberIdx, nCol_MemberIdx, -1);
+		row.Fill( sParamName, nCol_Name, "");
+		row.Fill( sType, nCol_Type, "");
+		row.Fill( sDft, nCol_Dft, "");
+		row.Fill( sMax, nCol_Min, "");
+		row.Fill( sMin, nCol_Max, "");
+
+		ParamBase* pBase = pMgr->CreateParam( sType.c_str(), sDft.c_str(), sMax.c_str(), sMin.c_str());
+
+		int32 nParamUID = UtilID::CreateFromString(sParamName.c_str());
+		pBase->CID(nParamUID);
+		pBase->ID(nMemberIdx);
+		pBase->Index(nMemberIdx);
+		pBase->Name(sParamName.c_str());
+
+		pDef->AddParam(pBase);
+
+		(*itr)->Release();
+	}
+
+	// sort process
+	for ()
+	{
 	}
 }
 

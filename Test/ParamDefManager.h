@@ -36,9 +36,9 @@ public:
 	void AddParamDef(int32 nIdx, ParamDef* pDef);
 
 	ParamBase* GetParamBase( int32 nParam);
+	ParamBase* CreateParam( const char* sParamType, const char* sDft, const char* sMax, const char* sMin);
 protected:
 	void InitParamMD5();
-	ParamBase* CreateParam( const char* sParamType, const char* sDft, const char* sMax, const char* sMin);
 
 	typedef std::map< int32, ParamDef*> ParamMap;
 	typedef ParamMap::iterator ParamMapItr;
