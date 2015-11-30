@@ -30,9 +30,6 @@
     <ClInclude Include="ODBCInterface.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="BaseType.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="Factory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -121,6 +118,27 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MyMath.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneContentNpc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneContentItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ParamDef.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ParamDefManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ParamEx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MyClass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -213,6 +231,24 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="MyMath.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneContentNpc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneContentItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ParamDef.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ParamDefManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ParamEx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
