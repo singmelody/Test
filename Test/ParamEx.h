@@ -3,7 +3,18 @@
 #include "ParamEx.h"
 #include "MyClass.h"
 
+#include "DBInterface.h"
+
 class ParamPool;
+
+enum ParamFlagType
+{
+	ePF_Server		= 1 << 0,
+	ePF_ClientSelf	= 1 << 3,
+	ePF_ClientAll	= 1 << 4,
+	ePF_Save		= 1 << 5,
+	ePF_Callback	= 1 << 8,
+};
 
 class ParamBase
 {
@@ -11,15 +22,63 @@ public:
 	ParamBase();
 	virtual ~ParamBase();
 
+	inline bool CheckFlag(uint32 flag) { return (m_flag & flag) != 0 ? true : false; }
+
+	virtual bool ParamCompare( char* pParamBuff, char* pBuffer) = 0;
+
+	int32 GetTypeID() { return m_typeid; }
+	int32 GetIndex(){ return m_index; }
 protected:
-	int32 m_typeid;
+	int32	m_typeid;
+
+	int32	m_id;		// editor define id
+	int32	m_index;	// after sort index
+	uint32	m_flag;
 };
 
 template <class T>
 class Param : public ParamBase, public ClassMember<T>
 {
-	
+public:
+	void SetValue( void* pClassObj, T value)
+	{
+		if( !pClassObj)
+			return;
+	}
+
+	inline void SetMaxValue(T value)
+	{
+		m_bMaxValue = true;
+		m_maxValue = value;
+	}
+
+	inline void SetMinValue(T value)
+	{
+		m_bMaxValue = true;
+		m_minValue = value;
+	}
+
+	void GetStringValue( void* pClassObj, char* pBuffer, int32 nCount)
+	{
+		ClassMember<T>::Value2String( pClassObj, pBuffer, nCount);
+	}
+
+	bool ParamCompare( char* pParamBuff, char* pBuff)
+	{
+		return ClassMember<T>::Compare( pParamBuff, pBuff);
+	}
+protected:
+	T m_defaultValue;
+
+	bool m_bMaxValue;
+	T m_maxValue;
+
+	bool m_bMinValue;
+	T m_minValue;
+
+	std::string m_stringValue;
 };
+
 
 class Param_Int64 : public Param<int64>
 {

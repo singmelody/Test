@@ -133,7 +133,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(ProjectDir)thirdparty\openssl\include</AdditionalIncludeDirectories>
     </ClCompile>
@@ -248,6 +248,7 @@
     <ClInclude Include="LogThread.h" />
     <ClInclude Include="MyFile.h" />
     <ClInclude Include="MyMutex.h" />
+    <ClInclude Include="MyString.h" />
     <ClInclude Include="MyVector.h" />
     <ClInclude Include="NoCopyable.h" />
     <ClInclude Include="ODBCInterface.h" />
@@ -255,6 +256,7 @@
     <ClInclude Include="ParamDef.h" />
     <ClInclude Include="ParamDefManager.h" />
     <ClInclude Include="ParamEx.h" />
+    <ClInclude Include="ParamPool.h" />
     <ClInclude Include="PoolAllocator.h" />
     <ClInclude Include="PoolAllocatorEx.h" />
     <ClInclude Include="RSAipher.h" />
@@ -298,12 +300,14 @@
     <ClCompile Include="LogThread.cpp" />
     <ClCompile Include="MyFile.cpp" />
     <ClCompile Include="MyMutex.cpp" />
+    <ClCompile Include="MyString.cpp" />
     <ClCompile Include="MyVector.cpp" />
     <ClCompile Include="ODBCInterface.cpp" />
     <ClCompile Include="OperatorNew.cpp" />
     <ClCompile Include="ParamDef.cpp" />
     <ClCompile Include="ParamDefManager.cpp" />
     <ClCompile Include="ParamEx.cpp" />
+    <ClCompile Include="ParamPool.cpp" />
     <ClCompile Include="PoolAllocator.cpp" />
     <ClCompile Include="PoolAllocatorEx.cpp" />
     <ClCompile Include="RSAipher.cpp" />

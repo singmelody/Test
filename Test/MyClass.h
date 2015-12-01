@@ -11,7 +11,8 @@ enum TypeBaseFlag
 
 enum TypeBasic
 {
-	eTB_bool = 0,
+	eTB_Null = 0,
+	eTB_Bool,
 	eTB_UInt8,
 	eTB_Int8,
 	eTB_UInt16,
@@ -44,7 +45,7 @@ public:
 
 	inline const char* Name() { return mName.c_str(); }
 
- 	void InitType(bool) { m_classType = eTB_bool; }
+ 	void InitType(bool) { m_classType = eTB_Bool; }
   	void InitType(uint8) { m_classType = eTB_UInt8; }
 	void InitType(int8) { m_classType = eTB_Int8; }
 	void InitType(uint16) { m_classType = eTB_UInt16; }
@@ -64,7 +65,7 @@ public:
 	{
 		switch(m_classType)
 		{
-			case eTB_bool: 
+			case eTB_Bool: 
 				return "bool";
 			case eTB_UInt8: 
 				return "uint8";
@@ -121,15 +122,15 @@ public:
 		return TypeBase::TypeName();
 	}
 
-	T* GetValue()
-	{
-		return m_val;
-	}
-
-	void SetValue(T& value)
-	{
-		m_val = value;
-	}
+// 	T* GetValue()
+// 	{
+// 		return m_val;
+// 	}
+// 
+// 	void SetValue(T& value)
+// 	{
+// 		m_val = value;
+// 	}
 
 protected:
 	T m_val;
@@ -138,5 +139,28 @@ protected:
 template <typename T>
 class ClassMember : public TAnyType<T>
 {
+public:
+	ClassMember(){}
+	virtual ~ClassMember(){}
 
+	T& GetValue(void* pClassObj)
+	{
+		return *((T*)((char*)pClassObj) + this->m_offset);
+	}
+
+	void SetValue( void* pClassObj, T value)
+	{
+		*((T*)((char*)pClassObj) + this->m_offset) = value;
+	}
+
+	bool Compare( char* pBuff1, char* pBuff2)
+	{
+		if(!pBuff1 || !pBuff2)
+			return false;
+
+		T value1 = *((T*)(pBuff1 + this->m_offset));
+		T value2 = *((T*)(pBuff2 + this->m_offset));
+
+		return value1 == value2;
+	}
 };

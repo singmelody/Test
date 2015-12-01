@@ -59,3 +59,20 @@ public:
 	virtual int32 GetCellSize() { return 0; }
 };
 
+static bool IsValidMemory(void* ptr)
+{
+	if(!ptr)
+		return false;
+
+	MemoryHead* pHead = (MemoryHead*)((char*)ptr - sizeof(MemoryHead));
+	return (pHead->MemInfo & 0x80000000) ? true : false;
+}
+
+static int32 GetAllocInfo(void* ptr)
+{
+	if(!ptr)
+		return -1;
+
+	MemoryHead* pHead = (MemoryHead*)((char*)ptr - sizeof(MemoryHead));
+	return pHead->AllocInfo;
+}
