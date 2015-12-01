@@ -40,3 +40,13 @@ public:
 	bool SetValueString( ParamPool* pPool, char* pValue, bool bDirty);
 
 };
+
+class Param_Int16 : public Param<int16>
+{
+public:
+	Param_Int16();
+
+	void LoadRowValue( void* pClassObj, DBRow& row, int32 nCol);
+	bool SetValueString( ParamPool* pPool, char* pValue, bool bDirty);
+
+};

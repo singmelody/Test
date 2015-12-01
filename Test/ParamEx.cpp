@@ -50,3 +50,23 @@ bool Param_Int32::SetValueString(ParamPool* pPool, char* pValue, bool bDirty)
 	int64 nValue = String::ToValue<int32>(pValue);
 	pPool->SetValue<int64>( this, value, bDirty);
 }
+
+Param_Int16::Param_Int16()
+{
+	m_typeid = eTB_Int32;
+}
+
+void Param_Int16::LoadRowValue(void* pClassObj, DBRow& row, int32 nCol)
+{
+	int32 nValue = GetRowValue( row, col, int32(0));
+	SetValue( pClassObj, nValue);
+}
+
+bool Param_Int16::SetValueString(ParamPool* pPool, char* pValue, bool bDirty)
+{
+	if(!pPool)
+		return;
+
+	int64 nValue = String::ToValue<int32>(pValue);
+	pPool->SetValue<int64>( this, value, bDirty);
+}

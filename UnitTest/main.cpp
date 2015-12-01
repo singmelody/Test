@@ -16,6 +16,8 @@
 
 int _tmain(int argc, _TCHAR* argv[])
 {
+
+	int k = -2147483647;
 	Vector2 t(3,4);
 	t.Normalize();
 
