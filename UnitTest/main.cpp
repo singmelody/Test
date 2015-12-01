@@ -13,6 +13,7 @@
 #include "RSAipher.h"
 
 #include "MyVector.h"
+#include "MyMath.h"
 
 int _tmain(int argc, _TCHAR* argv[])
 {
@@ -24,8 +25,23 @@ int _tmain(int argc, _TCHAR* argv[])
 	assert(t.x > (0.6000 - 0.000001f) && t.x < (0.6000 + 0.000001f));
 	assert(t.y > (0.8000 - 0.000001f) && t.y < (0.8000 + 0.000001f));
 
+	ShapeLine2D line0,line1;
+
+	line0.p0.x = 1.0f;
+	line0.p0.y = 2.0f;
+	line0.p1.x = 3.0f;
+	line0.p1.y = 3.0f;
+
+	line1.p0.x = 1.0f;
+	line1.p0.y = 0.0f;
+	line1.p1.x = 3.0f;
+	line1.p1.y = 2.0f;
+
+	bool b = Math::LineCross( line0, line1);
+	assert(b == false);
 
 	return 0;
+
 	int32 nK = 0x12345678;
 	g_pLog = new Log();
 	MyLog::Create( "log.txt");
