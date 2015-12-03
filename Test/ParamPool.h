@@ -4,6 +4,9 @@
 #include <assert.h>
 #include <bitset>
 
+#define PARAM_ID(typeid) (typeid >> 24)
+#define PARAM_DATA_ID(typeid) (typeid & 0x00ffffff)
+
 typedef FunctionBase_Arg2<ParamPool*, ParamBase*> ParamCallback;
 
 class ParamDef;
@@ -109,6 +112,14 @@ public:
 protected:
 	std::bitset<MAXINDEX> m_defaultBits;
 	std::bitset<MAXINDEX> m_dirtyBits;
+};
+
+class ParamSet : public ParamPoolEx<1024>
+{
+	DECLARE_FACTORY_ARG0( ParamSet, -1, new PoolAllocator);
+public:
+	static ParamPool* CreateNew( int32 nParamType, char* pBuff = 0);
+	static ParamPool* CreateNew( int32 nDefID, int32 nDataID, char* pBuff = 0);
 };
 
 template <class T>

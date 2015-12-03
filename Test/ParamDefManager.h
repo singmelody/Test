@@ -5,6 +5,14 @@
 class ParamBase;
 class ParamDef;
 
+class ParamDefManager_LoadHelper : public LoadTemplate
+{
+public:
+	bool LoadFromDB( ParamDefManager* pMgr, DBInterface* pDBI);
+
+	bool InitParamDefine( ParamDefManager* pMgr, DBInterface* pDBI);
+};
+
 class ParamDefManager : public LoadTemplate
 {
 public:
@@ -18,6 +26,7 @@ public:
 
 	virtual bool LoadDataFromDB( DBInterface* pDBI);
 
+	ParamDef* GetParamDef( int32 nParamID );
 protected:
 	void InitParamMD5();
 	ParamBase* CreateParam( const char* sParamType, const char* sDft, const char* sMax, const char* sMin);

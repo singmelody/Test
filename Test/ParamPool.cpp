@@ -69,3 +69,31 @@ void ParamPool::UpdateParambit(ParamBase* pBase, bool bUpdateDirtyBit)
 		SetDefault( nIdx, bDefault);
 	}
 }
+
+FINISH_FACTORY_ARG0(ParamSet)
+ParamPool* ParamSet::CreateNew(int32 nParamType, char* pBuff /*= 0*/)
+{
+	int32 nDefID = PARAM_ID( nParamType );
+	int32 nDataID = PARAM_DATA_ID( nParamType );
+
+	return CreateNew( nDefID, nDataID, pBuff);
+}
+
+ParamPool* ParamSet::CreateNew(int32 nDefID, int32 nDataID, char* pBuff /*= 0*/)
+{
+	ParamDef* pDef = ParamDefManager::Instance().GetParamDef(nDefID);
+	if(!pDef)
+		return NULL;
+
+	ParamPool* pSet = (ParamPool*)FactoryManager::Instance().New( pDef->m_classParamSet.c_str());
+	if(!pSet)
+		return NULL;
+
+	if(!pSet->InitParamPool( pDef, nDataID, pBuff))
+	{
+		FACTORY_DELOBJ(pSet);
+		return NULL;
+	}
+
+	return pSet;
+}
