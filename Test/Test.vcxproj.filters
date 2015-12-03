@@ -147,6 +147,12 @@
     <ClInclude Include="ParamPool.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="NpcParamDef.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ParamSet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -262,6 +268,12 @@
     </ClCompile>
     <ClCompile Include="ParamPool.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="NpcParamDef.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ParamSet.cpp">
+      <Filter>Header Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

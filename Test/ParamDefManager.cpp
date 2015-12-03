@@ -1,10 +1,13 @@
 #include "StdAfx.h"
 #include "ParamDefManager.h"
+#include "ParamSet.h"
 #include <float.h>
 #include "NpcParamDef.h"
 
 ParamDefManager::ParamDefManager(void)
 {
+	m_paramDefClassType[eParam_Avatar] = "NpcParamDef";
+	m_paramDefClassType[eParam_Monster] = "MonsterParamDef";
 }
 
 
@@ -31,14 +34,33 @@ bool ParamDefManager::LoadDataFromDB(DBInterface* pDBI)
 	return true;
 }
 
-ParamDef* ParamDefManager::GetParamDef(int32 nParamID)
+ParamDef* ParamDefManager::GetParamDef(int32 nParamID, bool bCreate /*= false*/)
 {
 	auto itr = m_paramDefMap.find(nParamID);
 	if(itr == m_paramDefMap.end())
-		return NULL;
+	{
+		if(!bCreate)
+			return NULL;
+
+		ParamDef* pDef = NULL;
+
+		std::string& className = m_paramDefClassType[nParamID];
+		if(!className.empty())
+			pDef = (ParamDef*)FactoryManager::Instance().New( className.c_str() );
+
+		if(!pDef)
+			pDef = new ParamDef();
+
+		return pDef;
+	}
 
 	ParamDef* pDef = itr->second;
 	return pDef;
+}
+
+void ParamDefManager::AddParamDef(int32 nIdx, ParamDef* pDef)
+{
+	m_paramDefMap[nIdx] = pDef;
 }
 
 void ParamDefManager::InitParamMD5()
@@ -101,6 +123,14 @@ bool ParamDefManager_LoadHelper::InitParamDefine(ParamDefManager* pMgr, DBInterf
 		int32 nParamID;
 		row.Fill( nParamID, nCol_ParamID, -1);
 
-		ParamDef* pDef = pMgr->CreateParamDef( nParamID );
+		ParamDef* pDef = pMgr->GetParamDef( nParamID, true);
+		if(!pDef)
+			continue;
+
+		pDef->LoadParamDef( **itr );
+
+		pMgr->AddParamDef( pDef->Index(), );
 	}
+
+	return true;
 }

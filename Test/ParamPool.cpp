@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ParamPool.h"
-
+#include "ParamDefManager.h"
 
 ParamPool::ParamPool(void)
 {
@@ -85,7 +85,7 @@ ParamPool* ParamSet::CreateNew(int32 nDefID, int32 nDataID, char* pBuff /*= 0*/)
 	if(!pDef)
 		return NULL;
 
-	ParamPool* pSet = (ParamPool*)FactoryManager::Instance().New( pDef->m_classParamSet.c_str());
+	ParamPool* pSet = (ParamPool*)FactoryManager::Instance().New( pDef->ParamSetName().c_str());
 	if(!pSet)
 		return NULL;
 
