@@ -59,7 +59,8 @@ public:
 	void InitType(char) { m_classType = eTB_Char; }
 	void InitType(char*) { m_classType = eTB_String; }
 
-
+	inline int32 Size(){ return m_size; }
+	inline void Size(int32 nSize) { m_size = nSize; }
 
 	virtual const char* TypeName()
 	{

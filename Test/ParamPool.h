@@ -195,7 +195,7 @@ T ParamPool::GetValue(ParamBase* pBase)
 template <class T>
 T ParamPool::GetValueFromBuff(ParamBase* pBase, char* pBuffer)
 {
-	switch( pBase->GetTypeID() )
+	switch( pBase->TypeID() )
 	{
 	case eTB_Int16:
 		{

@@ -2,9 +2,11 @@
 #include "Singleton.h"
 #include "LoadTemplate.h"
 #include <map>
+#include "ParamDef.h"
 
 class ParamBase;
 class ParamDef;
+class ParamDefManager;
 
 class ParamDefManager_LoadHelper
 {
@@ -32,6 +34,8 @@ public:
 
 	ParamDef* GetParamDef( int32 nParamID, bool bCreate = false);
 	void AddParamDef(int32 nIdx, ParamDef* pDef);
+
+	ParamBase* GetParamBase( int32 nParam);
 protected:
 	void InitParamMD5();
 	ParamBase* CreateParam( const char* sParamType, const char* sDft, const char* sMax, const char* sMin);

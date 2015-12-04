@@ -23,7 +23,7 @@ bool ParamDefManager::LoadDataFromDB(DBInterface* pDBI)
 	ParamDefManager_LoadHelper helper;
 
 	bool bRes = helper.LoadFromDB( this, pDBI);
-	if(res)
+	if(bRes)
 	{
 		InitParamMD5();
 
@@ -128,9 +128,44 @@ bool ParamDefManager_LoadHelper::InitParamDefine(ParamDefManager* pMgr, DBInterf
 			continue;
 
 		pDef->LoadParamDef( **itr );
+		pMgr->AddParamDef( pDef->Index(), pDef);
 
-		pMgr->AddParamDef( pDef->Index(), );
+		(*itr)->Release();
 	}
 
 	return true;
+}
+
+bool ParamDefManager_LoadHelper::InitParamColumn(ParamDefManager* pMgr, DBInterface* pDBI)
+{
+	DBTable table;
+
+	if(!pDBI->ExecuteSql("selct * from ParamColumn", table))
+		return false;
+
+	static int32 nCol_ParamID = table.GetColumnIdx("ParamID");
+	
+
+	DBRowList::iterator itr = table.m_rowList.begin();
+	for (; itr != table.m_rowList.end(); ++itr)
+	{
+		if(!(*itr))
+			continue;
+
+		DBRow& row = **itr;
+		
+		int32 nParamID;
+		row.Fill( nParamID, nCol_ParamID, 0);
+
+		ParamDef* pDef = pMgr->GetParamDef( nParamID );
+		if(!pDef)
+			continue;
+
+		
+	}
+}
+
+bool ParamDefManager_LoadHelper::InitParamData(ParamDefManager* pMgr, DBInterface* pDBI)
+{
+
 }

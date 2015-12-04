@@ -39,7 +39,7 @@ void ParamPool::SaveOldValue(ParamBase* pBase)
 	if(!pBase)
 		return;
 
-	switch(pBase->GetTypeID())
+	switch(pBase->TypeID())
 	{
 	case eTB_Int16:
 		*((int16*)m_oldDataBuff) = GetValue<int16>(pBase);
@@ -58,7 +58,7 @@ void ParamPool::UpdateParambit(ParamBase* pBase, bool bUpdateDirtyBit)
 	if(!pBase)
 		return;
 
-	int32 nIdx = pBase->GetIndex();
+	int32 nIdx = pBase->Index();
 
 	if( pBase->CheckFlag( ePF_Server) && bUpdateDirtyBit )
 		SetParamDirty(nIdx);

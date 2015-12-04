@@ -22,7 +22,11 @@ public:
 	virtual void BindParamDefReferenceTemplates(){}
 
 	bool AddParam( ParamBase* pBase);
+
 	ParamBase* GetParam(int32 nIdx);
+	ParamBase* GetParam(const char* pName);
+
+	ParamBase* GetParamByID(int32 nIdx);
 
 	const std::string& ParamSetName() { return m_classParamSet; }
 
@@ -34,5 +38,13 @@ protected:
 	std::string m_name;
 
 	std::string m_classParamSet;
+
+	int32 m_maxIdx;
+	int32 m_count;
+	int32 m_poolSize;
+
+	std::map<UtilID, ParamBase*>	m_paramMap;
+	std::vector<ParamBase*>			m_paramList;
+	std::vector<ParamBase*>			m_paramListByID;
 };
 
