@@ -6,6 +6,8 @@
 #include "ParamEx.h"
 #include "MyString.h"
 
+#define MD5_SIZE 32
+
 class ParamBase;
 class ParamDef;
 class ParamDefManager;
@@ -47,6 +49,8 @@ public:
 	const ParamMap& GetDefMap(){ return m_paramDefMap; }
 protected:
 	void InitParamMD5();
+	char sParamMD5[MD5_SIZE];
+
 	ParamMap m_paramDefMap;
 
 	std::string m_paramDefClassType[eParam_Count];

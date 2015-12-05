@@ -4,6 +4,7 @@
 #include <float.h>
 #include "NpcParamDef.h"
 #include <sstream>
+#include "MyLog.h"
 
 ParamDefManager::ParamDefManager(void)
 {
@@ -90,10 +91,30 @@ void ParamDefManager::InitParamMD5()
 		paramValString << pDef->Name();
 
 		int32 nParamCount = pDef->MaxParamIndex();
-		for (;;)
+		for (int32 i = 0; i < nParamCount; ++i)
 		{
+			ParamBase* pBase = pDef->GetParam(i);
+			if(!pBase)
+				continue;
+
+			paramValString<< pBase->Name();
 		}
 	}
+
+	int32 nBuffLen = (int32)paramValString.str().length();
+	//CMD5 md5;
+	md5.Init();
+	md5.Update(paramValString.str().c_str(), nBuffLen);
+	md5.Final();
+
+	const byte* res = md5.GetDigestStream();
+	char pwdhash[MD5_SIZE+1];
+	for (int32 i = 0;  i < MD5_SIZE/2; ++i)
+		sprintf( pwdhash + i*2, "%.2x", *(res+i));
+
+	memcpy( ParamMD5, pwdhash, MD5_SIZE);
+	sParamMD5 = pwdhash;
+	MyLog::message( "Param MD5:%s", pwdhash);
 }
 
 ParamBase* ParamDefManager::CreateParam(const char* sParamType, const char* sDft, const char* sMax, const char* sMin)
