@@ -153,6 +153,12 @@
     <ClInclude Include="ParamSet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ParamDebugHelper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DataBuffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -274,6 +280,12 @@
     </ClCompile>
     <ClCompile Include="ParamSet.cpp">
       <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ParamDebugHelper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DataBuffer.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

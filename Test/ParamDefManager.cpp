@@ -133,12 +133,12 @@ bool ParamDefManager_LoadHelper::InitParamDefine(ParamDefManager* pMgr, DBInterf
 		int32 nParamID;
 		row.Fill( nParamID, nCol_ParamID, -1);
 
-		ParamDef* pDef = pMgr->GetParamDef( nParamID, true);
+		ParamDef* pDef = ParamDefManager::Instance().GetParamDef( nParamID, true);
 		if(!pDef)
 			continue;
 
 		pDef->LoadParamDef( **itr );
-		pMgr->AddParamDef( pDef->Index(), pDef);
+		ParamDefManager::Instance().AddParamDef( pDef->Index(), pDef);
 
 		(*itr)->Release();
 	}
@@ -146,7 +146,7 @@ bool ParamDefManager_LoadHelper::InitParamDefine(ParamDefManager* pMgr, DBInterf
 	return true;
 }
 
-bool ParamDefManager_LoadHelper::InitParamColumn(ParamDefManager* pMgr, DBInterface* pDBI)
+bool ParamDefManager_LoadHelper::InitParamColumn(DBInterface* pDBI)
 {
 	DBTable table;
 
@@ -172,7 +172,7 @@ bool ParamDefManager_LoadHelper::InitParamColumn(ParamDefManager* pMgr, DBInterf
 		int32 nParamID;
 		row.Fill( nParamID, nCol_ParamID, 0);
 
-		ParamDef* pDef = pMgr->GetParamDef( nParamID );
+		ParamDef* pDef = ParamDefManager::Instance().GetParamDef( nParamID );
 		if(!pDef)
 			continue;
 
@@ -185,7 +185,7 @@ bool ParamDefManager_LoadHelper::InitParamColumn(ParamDefManager* pMgr, DBInterf
 		row.Fill( sMax, nCol_Min, "");
 		row.Fill( sMin, nCol_Max, "");
 
-		ParamBase* pBase = pMgr->CreateParam( sType.c_str(), sDft.c_str(), sMax.c_str(), sMin.c_str());
+		ParamBase* pBase = ParamDefManager::Instance().CreateParam( sType.c_str(), sDft.c_str(), sMax.c_str(), sMin.c_str());
 
 		int32 nParamUID = UtilID::CreateFromString(sParamName.c_str());
 		pBase->CID(nParamUID);
@@ -199,8 +199,15 @@ bool ParamDefManager_LoadHelper::InitParamColumn(ParamDefManager* pMgr, DBInterf
 	}
 
 	// sort process
-	for ()
+	const ParamMap& map = ParamDefManager::Instance().GetDefMap();
+	for (auto itr = map.begin(); itr != map.end(); ++itr)
 	{
+		const ParamDef* pDef = itr->second;
+		if(!pDef)
+			continue;
+
+		pDef->RefreshOffset();
+		pDef->MatchClassType();
 	}
 }
 

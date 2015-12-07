@@ -232,6 +232,7 @@
     <ClInclude Include="Allocator.h" />
     <ClInclude Include="AreaManager.h" />
     <ClInclude Include="CommonConfig.h" />
+    <ClInclude Include="DataBuffer.h" />
     <ClInclude Include="DBInterface.h" />
     <ClInclude Include="DLAllocator.h" />
     <ClInclude Include="DLMalloc.h" />
@@ -254,6 +255,7 @@
     <ClInclude Include="NpcParamDef.h" />
     <ClInclude Include="ODBCInterface.h" />
     <ClInclude Include="OperatorNew.h" />
+    <ClInclude Include="ParamDebugHelper.h" />
     <ClInclude Include="ParamDef.h" />
     <ClInclude Include="ParamDefManager.h" />
     <ClInclude Include="ParamEx.h" />
@@ -278,6 +280,7 @@
     <ClCompile Include="Allocator.cpp" />
     <ClCompile Include="AreaManager.cpp" />
     <ClCompile Include="CommonConfig.cpp" />
+    <ClCompile Include="DataBuffer.cpp" />
     <ClCompile Include="DBInterface.cpp" />
     <ClCompile Include="DLAllocator.cpp" />
     <ClCompile Include="DLMalloc.cpp">
@@ -307,6 +310,7 @@
     <ClCompile Include="NpcParamDef.cpp" />
     <ClCompile Include="ODBCInterface.cpp" />
     <ClCompile Include="OperatorNew.cpp" />
+    <ClCompile Include="ParamDebugHelper.cpp" />
     <ClCompile Include="ParamDef.cpp" />
     <ClCompile Include="ParamDefManager.cpp" />
     <ClCompile Include="ParamEx.cpp" />

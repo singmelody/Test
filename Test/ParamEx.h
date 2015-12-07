@@ -34,6 +34,7 @@ public:
 	int32 ID() { return m_id; }
 	void ID(int32 nID) { m_id = nID; }
 
+	virtual void Offset(int32 nOffset) = 0;
 
 	virtual const char* Name() = 0;
 	virtual void Name(const char* pName) = 0;
@@ -43,7 +44,7 @@ public:
 	inline int32 CID() { return m_cid;}
 	inline void CID(int32 nCID) { m_cid = nCID; }
 
-
+	virtual void SetDftValue(void *pClasObj) = 0;
 protected:
 	int32	m_typeid;
 
@@ -81,6 +82,16 @@ public:
 
 	virtual int32 ParamSize() { return ClassMember<T>::Size();}
 
+	virtual void SetDftValue(void *pClasObj)
+	{
+		ClassMember<T>::SetValue( pClasObj, m_defaultValue);
+	}
+
+	virtual void Offset(int32 nOffset)
+	{
+		ClassMember<T>::ClassOffset(nOffset);
+	}
+
 	void GetStringValue( void* pClassObj, char* pBuffer, int32 nCount)
 	{
 		ClassMember<T>::Value2String( pClassObj, pBuffer, nCount);
@@ -90,6 +101,7 @@ public:
 	{
 		return ClassMember<T>::Compare( pParamBuff, pBuff);
 	}
+
 protected:
 	T m_defaultValue;
 

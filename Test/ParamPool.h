@@ -1,11 +1,15 @@
 #pragma once
 #include "ParamEx.h"
 #include "FunctionBase.h"
+#include "ParamDebugHelper.h"
 #include <assert.h>
 #include <bitset>
 
 #define PARAM_ID(typeid) (typeid >> 24)
 #define PARAM_DATA_ID(typeid) (typeid & 0x00ffffff)
+
+#define MAX_PARAM_COUNT_IN_POOL 1024
+#define MAX_PARAM_COUNT_IN_BLOCK (sizeof(uint32)*8)
 
 typedef FunctionBase_Arg2<ParamPool*, ParamBase*> ParamCallback;
 
@@ -35,6 +39,10 @@ public:
 	void PreSetValue( ParamBase* pBase, bool bSaveOldValue);
 	void PostSetValue( ParamBase* pBase );
 
+	bool InitParamPool( int32 nParamID, int32 nDataID, char* pBuff = NULL);
+	bool InitParamPool( ParamDef* pDef, int32 nDataID, char* pBuff = NULL);
+	bool InitParamPool( int32 nDataID );
+
 	void SaveOldValue( ParamBase* pBase);
 
 	virtual bool ParamDirtyCheck(int32 nParamIdx) = 0;
@@ -47,15 +55,23 @@ public:
 	virtual void SetAllDefault() = 0;
 	virtual bool DefaultCheck(int32 nParamIdx) = 0;
 	virtual void SetDefault( int32 nParamIdx, bool bDefault) = 0;
+
+	void SetParamDefine(ParamDef* pDef);
+	void SetParamBuffer(char* pBuff);
+	bool AllocParamBuffer();
 protected:
 	template <class T>
 	T GetValueFromBuff(ParamBase* pBase, char* pBuffer);
 
 	int32			m_initDataID;
 	int32			m_paramBuffSize;
+	int32			m_paramBlockCount;
 
+	bool			m_bUserBuff;
 	char*			m_pParamBuffer;
 	char*			m_pTemplateBuffer;
+
+	ParamDebugUion	m_debugBuffer;
 
 	ParamDef*		m_pDef;
 

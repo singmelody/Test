@@ -62,6 +62,9 @@ public:
 	inline int32 Size(){ return m_size; }
 	inline void Size(int32 nSize) { m_size = nSize; }
 
+	inline int32 ClassOffset() { return m_offset;}
+	inline void ClassOffset(int32 nOffset) { m_offset = nOffset; }
+
 	virtual const char* TypeName()
 	{
 		switch(m_classType)

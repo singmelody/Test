@@ -13,14 +13,18 @@ class ParamDefManager_LoadHelper
 public:
 	bool LoadFromDB( ParamDefManager* pMgr, DBInterface* pDBI);
 
-	bool InitParamDefine( ParamDefManager* pMgr, DBInterface* pDBI);
-	bool InitParamColumn( ParamDefManager* pMgr, DBInterface* pDBI);
-	bool InitParamData( ParamDefManager* pMgr, DBInterface* pDBI);
+	bool InitParamDefine( DBInterface* pDBI);
+	bool InitParamColumn( DBInterface* pDBI);
+	bool InitParamData( DBInterface* pDBI);
 
 };
 
+typedef std::map< int32, ParamDef*> ParamMap;
+typedef ParamMap::iterator ParamMapItr;
+
 class ParamDefManager : public LoadTemplate, public Singleton<ParamDefManager>
 {
+
 public:
 	struct IListener{
 		virtual ~IListener(){}
@@ -37,11 +41,10 @@ public:
 
 	ParamBase* GetParamBase( int32 nParam);
 	ParamBase* CreateParam( const char* sParamType, const char* sDft, const char* sMax, const char* sMin);
+
+	const ParamMap& GetDefMap(){ return m_paramDefMap; }
 protected:
 	void InitParamMD5();
-
-	typedef std::map< int32, ParamDef*> ParamMap;
-	typedef ParamMap::iterator ParamMapItr;
 	ParamMap m_paramDefMap;
 
 	std::string m_paramDefClassType[eParam_Count];

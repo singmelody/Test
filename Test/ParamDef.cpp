@@ -84,3 +84,148 @@ ParamBase* ParamDef::GetParamByID(int32 nIdx)
 	ParamBase* pBase = m_paramListByID[nIdx];
 	return pBase;
 }
+
+void ParamDef::OrderBySize()
+{
+	std::vector<ParamBase*> vSize8, vSize4, vSize2, vSize1, vSizeOther;
+
+	for (int32 i = 0; i <= m_maxIdx; ++i)
+	{
+		ParamBase* pParam = m_paramList[i];
+		if(!pParam)
+			continue;
+
+		int32 nPSize = pParam->ParamSize();
+		if(nPSize == 8)
+			vSize8.push_back(pParam);
+		else if(nPSize == 4)
+			vSize4.push_back(pParam);
+		else if(nPSize == 2)
+			vSize1.push_back(pParam);
+		else if(nPSize == 1)
+			vSize1.push_back(pParam);
+		else
+			vSizeOther.push_back(pParam);
+	}
+
+	for (int32 i = 0; i <= m_maxIdx; ++i)
+	{
+		ParamBase* pParam = m_paramList[i];
+		if(!pParam)
+			continue;
+		m_paramList[i] = NULL;
+	}
+
+	m_maxIdx = -1;	// 设置-1,让AddParam的时候不断更新maxidx
+	m_poolSize = 0;
+	m_count = 0;
+	m_paramMap.clear();
+
+	int32 nParamIdx = 0;
+	for (int32 i = 0; i < (int32)vSize8.size(); ++i)
+	{
+		ParamBase* pParam = vSize8[i];
+		pParam->Index(nParamIdx);
+		AddParam(pParam);
+		++nParamIdx;
+	}
+
+	for (int32 i = 0; i < (int32)vSize4.size(); ++i)
+	{
+		ParamBase* pParam = vSize4[i];
+		pParam->Index(nParamIdx);
+		AddParam(pParam);
+		++nParamIdx;
+	}
+
+	for (int32 i = 0; i < (int32)vSize2.size(); ++i)
+	{
+		ParamBase* pParam = vSize2[i];
+		pParam->Index(nParamIdx);
+		AddParam(pParam);
+		++nParamIdx;
+	}
+
+	for (int32 i = 0; i < (int32)vSize1.size(); ++i)
+	{
+		ParamBase* pParam = vSize1[i];
+		pParam->Index(nParamIdx);
+		AddParam(pParam);
+		++nParamIdx;
+	}
+
+	for (int32 i = 0; i < (int32)vSizeOther.size(); ++i)
+	{
+		ParamBase* pParam = vSizeOther[i];
+		pParam->Index(nParamIdx);
+		AddParam(pParam);
+		++nParamIdx;
+	}
+}
+
+void ParamDef::RefreshOffset()
+{
+	OrderBySize();
+
+	int32 nCurOff = 0;
+	for (int32 i = 0; i <= m_maxIdx; ++i)
+	{
+		ParamBase* pBase = m_paramList[i];
+		if(!pBase)
+			continue;
+
+		pBase->Offset(nCurOff);
+		nCurOff += pBase->ParamSize();
+	}
+}
+
+void ParamDef::MatchClassType()
+{
+	if( CheckClassType( 10, "ParamSet10", "ParamSetEx10"))
+		return;
+
+	if( CheckClassType( 20, "ParamSet20", "ParamSetEx20"))
+		return;
+
+	if( CheckClassType( 30, "ParamSet30", "ParamSetEx30"))
+		return;
+}
+
+void ParamDef::InitDftValues(void* pClassObj)
+{
+	for (int32 i = 0; i <= m_maxIdx; ++i)
+	{
+		ParamBase* pParam = m_paramList[i];
+		if(!pParam)
+			continue;
+
+		pParam->SetDftValue( pClassObj );
+	}
+}
+
+char* ParamDef::MakeBuffer()
+{
+	if(!m_pBufferAlloc)
+		return NULL;
+
+	return (char*)m_pBufferAlloc->TMalloc(Size() + ExtraSize());
+}
+
+void ParamDef::FreeBuffer(char* pBuffer)
+{
+	if(!m_pBufferAlloc)
+		return;
+	
+	m_pBufferAlloc->TFree(pBuffer);
+}
+
+bool ParamDef::CheckClassType(int32 nValue, const char* pClassType, char* pClassTypeEx)
+{
+	if( m_maxIdx >= nValue )
+		return false;
+
+	m_classParamSet = pClassType;
+	m_classParamSetEx = pClassTypeEx;
+
+	return true;
+}
