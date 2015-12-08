@@ -3,6 +3,7 @@
 #include "DBInterface.h"
 
 class ParamBase;
+class DataBufferBase;
 
 enum ParamType
 {
@@ -48,6 +49,9 @@ public:
 	char* MakeBuffer();
 	void FreeBuffer(char* pBuffer);
 
+	DataBufferBase* GetItem(int32 nDataID);
+	void SetItem( int32 nDataID, DataBufferBase* pBase);
+
 	bool IsLoadData() { return m_loadData; }
 	int32 GetMaxIndex() { return m_maxIdx; }
 protected:
@@ -70,5 +74,7 @@ protected:
 	std::map<UtilID, ParamBase*>	m_paramMap;
 	std::vector<ParamBase*>			m_paramList;
 	std::vector<ParamBase*>			m_paramListByID;
+
+	std::map< int32, DataBufferBase*> m_bufferMap;
 };
 

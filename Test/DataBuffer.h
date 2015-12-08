@@ -46,7 +46,7 @@ public:
 		SAFE_DELETE(m_pBuffer);
 	}
 
-	char* GetBuffer() { m_pBuffer; }
+	char* GetBuffer() { return m_pBuffer; }
 
 	void InitBuffer(int32 nSize)
 	{

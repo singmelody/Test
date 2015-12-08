@@ -14,6 +14,7 @@
 typedef FunctionBase_Arg2<ParamPool*, ParamBase*> ParamCallback;
 
 class ParamDef;
+class DataBufferBase;
 
 class ParamPool
 {
@@ -59,9 +60,18 @@ public:
 	void SetParamDefine(ParamDef* pDef);
 	void SetParamBuffer(char* pBuff);
 	bool AllocParamBuffer();
+
+	int32 GetDataID() { return m_initDataID; }
+	void SetDataID(int32 nID) { m_initDataID = nID; }
+
 protected:
+	char* Data2Buffer(char* pBuffer);
+	char* Buffer2Data(char* pBuffer);
+
 	template <class T>
 	T GetValueFromBuff(ParamBase* pBase, char* pBuffer);
+
+	void UpdateParambit( ParamBase* pBase, bool bUpdateDirtyBit);
 
 	int32			m_initDataID;
 	int32			m_paramBuffSize;
@@ -77,7 +87,6 @@ protected:
 
 	ParamCallback*	m_callback;
 
-	void UpdateParambit( ParamBase* pBase, bool bUpdateDirtyBit);
 
 	uint8			m_oldDataBuff[8];
 };
@@ -126,9 +135,11 @@ public:
 		m_defaultBits.set( nParamIdx, bDefault);
 	}
 protected:
+
 	std::bitset<MAXINDEX> m_defaultBits;
 	std::bitset<MAXINDEX> m_dirtyBits;
 };
+
 
 class ParamSet : public ParamPoolEx<1024>
 {

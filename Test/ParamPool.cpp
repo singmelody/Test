@@ -3,6 +3,7 @@
 #include "ParamDefManager.h"
 #include "MyLog.h"
 #include <assert.h>
+#include "DataBuffer.h"
 
 ParamPool::ParamPool(void)
 {
@@ -141,6 +142,28 @@ bool ParamPool::AllocParamBuffer()
 	assert( IsValidMemory(m_pParamBuffer));
 	memset( m_pParamBuffer, 0, m_pDef->Size() + m_pDef->ExtraSize());
 	return true;
+}
+
+char* ParamPool::Data2Buffer(char* pBuffer)
+{
+	if(!pBuffer)
+		return NULL;
+
+	assert( IsValidMemory(m_pParamBuffer) );
+
+	memcpy( pBuffer, m_pParamBuffer, m_paramBuffSize);
+	return pBuffer + m_paramBuffSize;
+}
+
+char* ParamPool::Buffer2Data(char* pBuffer)
+{
+	if(!pBuffer)
+		return NULL;
+
+	assert( IsValidMemory(m_pParamBuffer) );
+
+	memcpy( m_pParamBuffer, pBuffer, m_paramBuffSize);
+	return pBuffer + m_paramBuffSize;
 }
 
 void ParamPool::UpdateParambit(ParamBase* pBase, bool bUpdateDirtyBit)

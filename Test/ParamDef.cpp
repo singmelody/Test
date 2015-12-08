@@ -219,6 +219,21 @@ void ParamDef::FreeBuffer(char* pBuffer)
 	m_pBufferAlloc->TFree(pBuffer);
 }
 
+DataBufferBase* ParamDef::GetItem(int32 nDataID)
+{
+	auto itr = m_bufferMap.find(nDataID);
+	if( itr == m_bufferMap.end() )
+		return NULL;
+
+	DataBufferBase* ptr = itr->second;
+	return ptr;
+}
+
+void ParamDef::SetItem(int32 nDataID, DataBufferBase* pBase)
+{
+	m_bufferMap[nDataID] = pBase;
+}
+
 bool ParamDef::CheckClassType(int32 nValue, const char* pClassType, char* pClassTypeEx)
 {
 	if( m_maxIdx >= nValue )
