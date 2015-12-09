@@ -3,6 +3,8 @@
 #include "LoadTemplate.h"
 #include <map>
 #include "ParamDef.h"
+#include "ParamEx.h"
+#include "MyString.h"
 
 class ParamBase;
 class ParamDef;
@@ -50,3 +52,27 @@ protected:
 	std::string m_paramDefClassType[eParam_Count];
 };
 
+template <class T>
+void InitValue_A2Num(Param<T>* pParam, const std::string& sDft, const std::string& sMax, T maxValue, const std::string &sMin, T minVal)
+{
+	T dftValue = MyString::ToValue<T>(sDft.c_str());
+	pParam->SetDftValue(dftValue);
+
+	if(!sMax.empty())
+	{
+		T temp = MyString::ToValue<T>(sMax.c_str());
+		if( temp < maxValue )
+			maxValue = (T)temp;
+	}
+
+	pParam->SetMaxValue(maxValue);
+
+	if(!sMin.empty())
+	{
+		T temp = MyString::ToValue<T>(sMin.c_str());
+		if(temp > minVal)
+			minVal = (T)temp;
+	}
+
+	pParam->SetMinValue(minVal);
+}

@@ -163,7 +163,7 @@ void ParamDef::OrderBySize()
 	}
 }
 
-void ParamDef::RefreshOffset()
+void ParamDef::RefreshOffset() const
 {
 	OrderBySize();
 

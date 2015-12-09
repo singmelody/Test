@@ -164,7 +164,7 @@ void ParamPool::SetValue( ParamBase* pBase, T val, bool bDirty)
 
 	PreSetValue( pBase, false);
 
-	switch(pBase->m_typeid)
+	switch(pBase->TypeID())
 	{
 	case eTB_Int16:
 		{
@@ -175,7 +175,7 @@ void ParamPool::SetValue( ParamBase* pBase, T val, bool bDirty)
 	case eTB_Int32:
 		{
 			Param_Int32* pVal = (Param_Int32*)(pBase);
-			pVal->SetValue( m_pParamBuffer, (int64)val);
+			pVal->SetValue( m_pParamBuffer, (int32)val);
 			break;
 		}
 	case eTB_Int64:

@@ -76,8 +76,9 @@ inline uint16 MyString::ToValue<uint16>(const char* valStr)
 template<>
 inline int64 MyString::ToValue<int64>(const char* valStr)
 {
-	int64 value = 0;
-	scanf( valStr, "%I64i", &value);
+	int64 nValue = 0;
+	scanf( valStr, "%I64i", &nValue);
+	return nValue;
 }
 
 template<>
@@ -85,5 +86,21 @@ inline uint64 MyString::ToValue<uint64>(const char* valStr)
 {
 	uint64 nVal;
 	sscanf( valStr, "%I64u", &nVal);
+	return nVal;
+}
+
+template<>
+inline f32 MyString::ToValue<f32>(const char* valStr)
+{
+	f32 nVal;
+	nVal = (f32)atof(valStr);
+	return nVal;
+}
+
+template<>
+inline double MyString::ToValue<double>(const char* valStr)
+{
+	double nVal;
+	nVal = (double)atof(valStr);
 	return nVal;
 }

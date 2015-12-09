@@ -40,6 +40,8 @@ public:
 	int32 ExtraSize() { return m_poolExtraSize; }
 	void ExtraSize(int32 nSize) { m_poolExtraSize = nSize; }
 
+	int32 MaxParamIndex() { return m_maxIdx; }
+
 	void OrderBySize();
 	void RefreshOffset();
 	void MatchClassType();

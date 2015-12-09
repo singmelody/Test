@@ -35,7 +35,7 @@ bool Param_Int64::SetValueString(ParamPool* pPool, char* pValue, bool bDirty)
 		return false;
 
 	int64 nValue = MyString::ToValue<int64>(pValue);
-	pPool->SetValue<int64>( this, pValue, bDirty);
+	pPool->SetValue<int64>( this, nValue, bDirty);
 }
 
 Param_Int32::Param_Int32()
@@ -53,10 +53,11 @@ void Param_Int32::LoadRowValue(void* pClassObj, DBRow& row, int32 nCol)
 bool Param_Int32::SetValueString(ParamPool* pPool, char* pValue, bool bDirty)
 {
 	if(!pPool)
-		return;
+		return false;
 
-	int64 nValue = MyString::ToValue<int32>(pValue);
-	pPool->SetValue<int32>( this, pValue, bDirty);
+	int32 nValue = MyString::ToValue<int32>(pValue);
+	pPool->SetValue<int32>( this, nValue, bDirty);
+	return true;
 }
 
 Param_Int16::Param_Int16()
@@ -75,8 +76,9 @@ void Param_Int16::LoadRowValue(void* pClassObj, DBRow& row, int32 nCol)
 bool Param_Int16::SetValueString(ParamPool* pPool, char* pValue, bool bDirty)
 {
 	if(!pPool)
-		return;
+		return false;
 
-	int64 nValue = MyString::ToValue<int32>(pValue);
-	pPool->SetValue<int16>( this, pValue, bDirty);
+	int16 nValue = MyString::ToValue<int16>(pValue);
+	pPool->SetValue<int16>( this, nValue, bDirty);
+	return true;
 }

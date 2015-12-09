@@ -3,6 +3,7 @@
 #include "ParamSet.h"
 #include <float.h>
 #include "NpcParamDef.h"
+#include <sstream>
 
 ParamDefManager::ParamDefManager(void)
 {
@@ -65,7 +66,7 @@ void ParamDefManager::AddParamDef(int32 nIdx, ParamDef* pDef)
 
 void ParamDefManager::InitParamMD5()
 {
-	uint32 nDefMaxIndex = 0;
+	int32 nDefMaxIndex = 0;
 	
 	ParamMapItr itr = m_paramDefMap.begin();
 
@@ -79,7 +80,20 @@ void ParamDefManager::InitParamMD5()
 			nDefMaxIndex = pDef->Index();
 	}
 
-	std::stringstream 
+	std::stringstream paramValString;
+	for (int32 i = 0; i <= nDefMaxIndex; ++i)
+	{
+		ParamDef* pDef = GetParamDef(i);
+		if(!pDef)
+			continue;
+
+		paramValString << pDef->Name();
+
+		int32 nParamCount = pDef->MaxParamIndex();
+		for (;;)
+		{
+		}
+	}
 }
 
 ParamBase* ParamDefManager::CreateParam(const char* sParamType, const char* sDft, const char* sMax, const char* sMin)
@@ -87,31 +101,43 @@ ParamBase* ParamDefManager::CreateParam(const char* sParamType, const char* sDft
 	if(sParamType == "int64")
 	{
 		Param_Int64* pParam = new Param_Int64();
-		InitValue_atoi<int64>( pParam, sDft, sMax, 0x7fffffffffffffff, ~0x7fffffffffffffff)
+		InitValue_A2Num<int64>( pParam, sDft, sMax, 0x7fffffffffffffff, sMin, ~0x7fffffffffffffff);
+		return pParam;
 	}
-	if(sParamType == "int64")
+// 	else if(sParamType == "uint64")
+// 	{
+// 		Param_UInt64* pParam = new Param_UInt64();
+// 		InitValue_A2Num<uint64>( pParam, sDft, sMax, 0x7fffffffffffffff, sMin, ~0x7fffffffffffffff);
+// 	}
+	else if(sParamType == "int32")
 	{
-		Param_Int64* pParam = new Param_Int64();
-		InitValue_atoi<int64>( pParam, sDft, sMax, 0x7fffffffffffffff, ~0x7fffffffffffffff)
+		Param_Int32* pParam = new Param_Int32();
+		InitValue_A2Num<int32>( pParam, sDft, sMax, MAXINT32, sMin, MININT32);
+		return pParam;
 	}
-	if(sParamType == "int64")
+	else if(sParamType == "int16")
 	{
-		Param_Int64* pParam = new Param_Int64();
-		InitValue_atoi<int64>( pParam, sDft, sMax, 0x7fffffffffffffff, ~0x7fffffffffffffff)
+		Param_Int16* pParam = new Param_Int16();
+		InitValue_A2Num<int16>( pParam, sDft, sMax, MAXINT16, sMin, MININT16);
+		return pParam;
 	}
+
+	return NULL;
 }
 
 bool ParamDefManager_LoadHelper::LoadFromDB(ParamDefManager* pMgr, DBInterface* pDBI)
 {
-	InitParamDefine( pMgr, pDBI);
-	InitParamColumn( pMgr, pDBI);
-	InitParamData( pMgr, pDBI);
+	InitParamDefine( pDBI);
+	InitParamColumn( pDBI);
+	InitParamData(pDBI);
 
 	ParamSet10 set10;
 	ParamSet20 set20;
+
+	return true;
 }
 
-bool ParamDefManager_LoadHelper::InitParamDefine(ParamDefManager* pMgr, DBInterface* pDBI)
+bool ParamDefManager_LoadHelper::InitParamDefine(DBInterface* pDBI)
 {
 	NpcParamDef npcDef;
 
@@ -202,16 +228,18 @@ bool ParamDefManager_LoadHelper::InitParamColumn(DBInterface* pDBI)
 	const ParamMap& map = ParamDefManager::Instance().GetDefMap();
 	for (auto itr = map.begin(); itr != map.end(); ++itr)
 	{
-		const ParamDef* pDef = itr->second;
+		ParamDef* pDef = itr->second;
 		if(!pDef)
 			continue;
 
 		pDef->RefreshOffset();
 		pDef->MatchClassType();
 	}
+
+	return true;
 }
 
-bool ParamDefManager_LoadHelper::InitParamData(ParamDefManager* pMgr, DBInterface* pDBI)
+bool ParamDefManager_LoadHelper::InitParamData(DBInterface* pDBI)
 {
-
+	return true;
 }

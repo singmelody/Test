@@ -34,16 +34,15 @@ public:
 	int32 ID() { return m_id; }
 	void ID(int32 nID) { m_id = nID; }
 
+	int32 CID() { return m_cid;}
+	void CID(int32 nCID) { m_cid = nCID; }
+
 	virtual void Offset(int32 nOffset) = 0;
 
 	virtual const char* Name() = 0;
 	virtual void Name(const char* pName) = 0;
 
 	virtual int32 ParamSize() = 0;
-
-	inline int32 CID() { return m_cid;}
-	inline void CID(int32 nCID) { m_cid = nCID; }
-
 	virtual void SetDftValue(void *pClasObj) = 0;
 protected:
 	int32	m_typeid;
@@ -87,6 +86,8 @@ public:
 		ClassMember<T>::SetValue( pClasObj, m_defaultValue);
 	}
 
+	inline void SetDftValue(T val) { m_defaultValue = val; }
+
 	virtual void Offset(int32 nOffset)
 	{
 		ClassMember<T>::ClassOffset(nOffset);
@@ -124,8 +125,16 @@ public:
 
 	void LoadRowValue( void* pClassObj, DBRow& row, int32 nCol);
 	bool SetValueString( ParamPool* pPool, char* pValue, bool bDirty);
-
 };
+
+// class Param_UInt64 : public Param<int64>
+// {
+// public:
+// 	Param_Int64();
+// 
+// 	void LoadRowValue( void* pClassObj, DBRow& row, int32 nCol);
+// 	bool SetValueString( ParamPool* pPool, char* pValue, bool bDirty);
+// };
 
 class Param_Int32 : public Param<int32>
 {
