@@ -1,6 +1,20 @@
 #pragma once
 #include <stdlib.h>
 
+
+typedef unsigned long long uint64;
+typedef long long int64;
+typedef char Char;
+typedef float f32;
+typedef double f64;
+
+typedef unsigned char uint8;
+typedef signed char	int8;
+typedef unsigned short uint16;
+typedef signed short int16;
+typedef unsigned int uint32;
+typedef signed int int32;
+
 class MyString
 {
 public:
@@ -11,62 +25,63 @@ public:
 	static T ToValue(const char* valStr);
 };
 
+
 template<>
-inline int8 MyString::ToValue(const char* valStr)
-{
-	int8 nVal;
-	nVal = (int8)MyString<int32>::ToValue(valStr);
-	return nVal;
-}
-
-template <>
-inline uint8 MyString::ToValue(const char* valStr)
-{
-	uint8 nVal;
-	nVal = (uint8)MyString<uint32>::ToValue(valStr);
-	return nVal;
-}
-
-template <>
-inline int16 MyString::ToValue(const char* valStr)
-{
-	int16 nVal;
-	nVal = (int16)MyString<int32>::ToValue(valStr);
-	return nVal;
-}
-
-template <>
-inline uint16 MyString::ToValue(const char* valStr)
-{
-	uint16 nVal;
-	nVal = (uint16)MyString<uint32>::ToValue(valStr);
-	return nVal;
-}
-
-template <>
-inline int32 MyString::ToValue(const char* valStr)
+inline int32 MyString::ToValue<int32>(const char* valStr)
 {
 	int32 nVal = atoi(valStr);
 	return nVal;
 }
 
-template <>
-inline uint32 MyString::ToValue(const char* valStr)
+template<>
+inline uint32 MyString::ToValue<uint32>(const char* valStr)
 {
 	uint32 nVal;
 	sscanf( valStr, "%u", &nVal);
 	return nVal;
 }
 
-template <>
-inline int64 MyString::ToValue(const char* valStr)
+template<>
+inline int8 MyString::ToValue<int8>(const char* valStr)
 {
-	int64 value = 0;
-	scanf( value, "%I64i", &value);
+	int8 nVal;
+	nVal = (int8)MyString::ToValue<int32>(valStr);
+	return nVal;
 }
 
-template <>
-inline uint64 MyString::ToValue(const char* valStr)
+template<>
+inline uint8 MyString::ToValue<uint8>(const char* valStr)
+{
+	uint8 nVal;
+	nVal = (uint8)MyString::ToValue<uint32>(valStr);
+	return nVal;
+}
+
+template<>
+inline int16 MyString::ToValue<int16>(const char* valStr)
+{
+	int16 nVal;
+	nVal = (int16)MyString::ToValue<int32>(valStr);
+	return nVal;
+}
+
+template<>
+inline uint16 MyString::ToValue<uint16>(const char* valStr)
+{
+	uint16 nVal;
+	nVal = (uint16)MyString::ToValue<uint32>(valStr);
+	return nVal;
+}
+
+template<>
+inline int64 MyString::ToValue<int64>(const char* valStr)
+{
+	int64 value = 0;
+	scanf( valStr, "%I64i", &value);
+}
+
+template<>
+inline uint64 MyString::ToValue<uint64>(const char* valStr)
 {
 	uint64 nVal;
 	sscanf( valStr, "%I64u", &nVal);
