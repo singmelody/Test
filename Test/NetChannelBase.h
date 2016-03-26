@@ -1,8 +1,11 @@
 #pragma once
 #include "NetEventHandler.h"
 #include "MySocket.h"
+#include "MYEvent.h"
+#include "PacketList.h"
 #include <WinSock2.h>
 #include "PacketBase.h"
+#include "CircularBufferEx.h"
 
 typedef uint16 BlockHeadT;
 
@@ -54,10 +57,10 @@ protected:
 
 	PacketList	m_queueSendingPacket;	// 私有数据包队列
 
-	CircularBuffEx m_StreamIn;
-	CircularBuffEx m_StreamOut;
+	CircularBufferEx		m_StreamIn;
+	CircularBufferEx		m_StreamOut;
 
-	class LZOCompressor* m_pLZOCompressor;
+	class LZOCompressor*	m_pLZOCompressor;
 
 	int32		m_ID;
 	uint32		m_PacketIdx;

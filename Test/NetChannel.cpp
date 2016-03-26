@@ -1,5 +1,6 @@
 #include "StdAfx.h"
 #include "NetChannel.h"
+#include "NetManager.h"
 #include <assert.h>
 
 NetChannel::NetChannel(void)
@@ -24,7 +25,7 @@ NetChannel::~NetChannel(void)
 	SAFE_DELETE_ARRAY( m_pRecvBuffer );
 }
 
-bool NetChannel::InitChannel(NetManager* pMgr, int32 nSockRcBuffSize, int32 nStreamRcSize, int32 nSockSnBuffSize, int32 nStreamSnSize,Socket* pSocket = 0)
+bool NetChannel::InitChannel(NetManager* pMgr, int32 nSockRcBuffSize, int32 nStreamRcSize, int32 nSockSnBuffSize, int32 nStreamSnSize,Socket* pSocket)
 {
 	if(!NetChannelBase::InitChannel( pMgr, nSockRcBuffSize, nStreamRcSize, nSockSnBuffSize, nStreamSnSize, pSocket))
 		return false;
@@ -175,7 +176,7 @@ void NetChannel::TryStartSending()
 {
 	AUTOLOCK( m_MutexSending );
 
-	if(m_queueSendingPacket.getCount() > 0)
+	if(m_queueSendingPacket.GetCount() > 0)
 	{
 		if(!m_bHasStartSending)
 		{

@@ -231,6 +231,8 @@
   <ItemGroup>
     <ClInclude Include="Allocator.h" />
     <ClInclude Include="AreaManager.h" />
+    <ClInclude Include="Atomic.h" />
+    <ClInclude Include="CircularBufferEx.h" />
     <ClInclude Include="CommonConfig.h" />
     <ClInclude Include="DataBuffer.h" />
     <ClInclude Include="DBInterface.h" />
@@ -289,6 +291,8 @@
   <ItemGroup>
     <ClCompile Include="Allocator.cpp" />
     <ClCompile Include="AreaManager.cpp" />
+    <ClCompile Include="Atomic.cpp" />
+    <ClCompile Include="CircularBufferEx.cpp" />
     <ClCompile Include="CommonConfig.cpp" />
     <ClCompile Include="DataBuffer.cpp" />
     <ClCompile Include="DBInterface.cpp" />
