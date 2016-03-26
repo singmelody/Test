@@ -5,6 +5,7 @@
 #include "NpcParamDef.h"
 #include <sstream>
 #include "MyLog.h"
+#include "MyMD5.h"
 
 ParamDefManager::ParamDefManager(void)
 {
@@ -102,7 +103,7 @@ void ParamDefManager::InitParamMD5()
 	}
 
 	int32 nBuffLen = (int32)paramValString.str().length();
-	//CMD5 md5;
+	MyMD5 md5;
 	md5.Init();
 	md5.Update(paramValString.str().c_str(), nBuffLen);
 	md5.Final();

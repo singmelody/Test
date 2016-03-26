@@ -49,7 +49,9 @@ public:
 	const ParamMap& GetDefMap(){ return m_paramDefMap; }
 protected:
 	void InitParamMD5();
-	char sParamMD5[MD5_SIZE];
+
+	std::string sParamMD5;
+	char ParamMD5[MD5_SIZE];
 
 	ParamMap m_paramDefMap;
 
