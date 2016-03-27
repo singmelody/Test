@@ -1,4 +1,6 @@
 #pragma once
+#include "Time.h"
+#include <WinSock2.h>
 
 class NetReactor;
 
@@ -16,7 +18,22 @@ public:
 	virtual void HandleTick(const Time& now) = 0;
 	virtual void HandleClose() = 0;
 
-	void SetEventMask();
+	void SetReactor(NetReactor* pReacter) { m_pReactor = pReacter; }
+	NetReactor* GetReactor() { return m_pReactor; }
+
+	void SetEventMask(uint32 mask)
+	{
+		m_NetEvent = mask;
+	}
+
+	uint32 GetEventMask() const
+	{
+		return m_NetEvent;
+	}
+
+
+	uint64 GetTimeout() const { return m_Timeout; }
+	void SetTimeout(uint64 nTime) { m_Timeout = nTime; }
 protected:
 	NetReactor* m_pReactor;
 	int32		m_NetEvent;

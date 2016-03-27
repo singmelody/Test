@@ -47,7 +47,7 @@ bool ODBCInterface::ConnectDB(const char* pConnectStr, const char* pUsername, co
 
 	if( m_result != SQL_SUCCESS && m_result != SQL_SUCCESS_WITH_INFO )
 	{
-		MyLog::message("ErrorSql:ConnectDBError %s@%s, %s\n", pConnectStr, pUsername, pPassword);
+		MyLog::message("ErrorSql:ConnectDBError %s@%s, %s", pConnectStr, pUsername, pPassword);
 		DiagState();
 
 		return false;
@@ -80,7 +80,7 @@ bool ODBCInterface::ExecuteSqlInternal(const char* pSql, DBTable* pTable)
 		if (m_result != SQL_SUCCESS && m_result != SQL_SUCCESS_WITH_INFO && m_result != SQL_NO_DATA)
 		{
 			DiagState();
-			MyLog::message("this sql is error:%s\n", pSql);
+			MyLog::message("this sql is error:%s", pSql);
 			return false;
 		}
 
@@ -213,7 +213,7 @@ void ODBCInterface::DiagState()
 
 	MyLog::message("ErrorSql:ErrorCode = %d\nErrorMsg = %s", m_errorCode, errorMsg);
 
-	MyLog::message("Mysql Error %s\n", SqlState);
+	MyLog::message("Mysql Error %s", SqlState);
 }
 
 void ODBCInterface::Clear()

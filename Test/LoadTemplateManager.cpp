@@ -223,7 +223,7 @@ void LoadTemplateManager::LoadDependence(DBInterface* pDBI, int32 nModuleID)
 		LoadTemplate* pDepand = GetTemplate( strDepend.c_str() );
 		if(!pDepand)
 		{
-			MyLog::message("Can't find DependTemplate [%s]->[%s]\n", strTemplate.c_str(), strDepend.c_str());
+			MyLog::message("Can't find DependTemplate [%s]->[%s]", strTemplate.c_str(), strDepend.c_str());
 			continue;
 		}
 

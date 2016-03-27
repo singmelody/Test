@@ -180,6 +180,12 @@
     <ClInclude Include="MySockAddr.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="MYEvent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PacketBase.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -324,6 +330,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="MySocket.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MYEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PacketBase.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

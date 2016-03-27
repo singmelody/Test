@@ -103,7 +103,7 @@ bool LoadInfo::CheckLoad()
 
 	if( m_pTemplate->IsLoaded())
 	{
-		MyLog::message("Don't loadtemplate:	[%s] batchID:[%d] again\n", m_strTemplate.c_str(), m_batchID);
+		MyLog::message("Don't loadtemplate:	[%s] batchID:[%d] again", m_strTemplate.c_str(), m_batchID);
 		return false;
 	}
 

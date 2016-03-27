@@ -241,6 +241,7 @@
     <ClInclude Include="FactoryManagerBase.h" />
     <ClInclude Include="FunctionBase.h" />
     <ClInclude Include="MyClass.h" />
+    <ClInclude Include="MYEvent.h" />
     <ClInclude Include="MyLog.h" />
     <ClInclude Include="LoadTemplate.h" />
     <ClInclude Include="LoadTemplateManager.h" />
@@ -262,6 +263,7 @@
     <ClInclude Include="NpcParamDef.h" />
     <ClInclude Include="ODBCInterface.h" />
     <ClInclude Include="OperatorNew.h" />
+    <ClInclude Include="PacketBase.h" />
     <ClInclude Include="ParamDebugHelper.h" />
     <ClInclude Include="ParamDef.h" />
     <ClInclude Include="ParamDefManager.h" />
@@ -304,6 +306,7 @@
     <ClCompile Include="FactoryManagerBase.cpp" />
     <ClCompile Include="FunctionBase.cpp" />
     <ClCompile Include="MyClass.cpp" />
+    <ClCompile Include="MYEvent.cpp" />
     <ClCompile Include="MyLog.cpp" />
     <ClCompile Include="LoadTemplate.cpp" />
     <ClCompile Include="LoadTemplateManager.cpp" />
@@ -323,6 +326,7 @@
     <ClCompile Include="NpcParamDef.cpp" />
     <ClCompile Include="ODBCInterface.cpp" />
     <ClCompile Include="OperatorNew.cpp" />
+    <ClCompile Include="PacketBase.cpp" />
     <ClCompile Include="ParamDebugHelper.cpp" />
     <ClCompile Include="ParamDef.cpp" />
     <ClCompile Include="ParamDefManager.cpp" />
