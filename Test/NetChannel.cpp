@@ -78,6 +78,37 @@ void NetChannel::CloseChannel()
 	m_hExitSending.Wait();
 }
 
+bool NetChannel::FillPackets2Block(DataBufferArg& arg)
+{
+	const uint32 cbHeader = sizeof(BlockHeadT);
+
+	uint32 cbBuffer = CBBUFF;
+	if( arg.cbBuffer < cbBuffer )
+		cbBuffer = arg.cbBuffer;
+
+
+	if( cbBuffer > BLOCK_SIZE_MASK )
+		cbBuffer = BLOCK_SIZE_MASK;
+
+	if( cbBuffer > SOCKET_MY_MAX_DATA_BLOCK_SIZE )
+		cbBuffer = SOCKET_MY_MAX_DATA_BLOCK_SIZE;
+
+	char* pBuffer = m_sendPacketBuffer + cbHeader;
+	char* pBuffer2 = m_SendPacketBuffer2 + cbHeader;
+	cbBuffer -= cbHeader;
+
+	uint32 cbData = 0;
+
+	// 开始合并数据包处理
+	bool bFirstPacket = true;
+	bool bEncrypt = true;
+
+	PacketList& list = m_queueSendingPacket;
+
+	int64 nPacketSend = 0;
+	PacketBase* pPkt = list.Pop_Head();
+}
+
 bool NetChannel::OnAsynSendComplete(DWORD dwTransed)
 {
 	if( dwTransed > 0 )
@@ -110,14 +141,66 @@ void NetChannel::OnPacketParsed(PacketBase* pPkt)
 
 }
 
-void NetChannel::TryStartSending()
+void NetChannel::AsynSend(PBYTE pData, long lDataSize)
+{
+	MYOVERLAPPED& olp = m_OLPSend;
+
+	WSABUF wsaBuf;
+	wsaBuf.buf = LPSTR(pData);
+	wsaBuf.len = lDataSize;
+
+	DWORD dwTransed = 0;
+	DWORD dwFlags = 0;
+
+	int32 nResult = WSASend( m_socket.GetSocket(), &wsaBuf, 1, &dwTransed, dwFlags, (LPWSAOVERLAPPED)&olp, NULL);
+	if( nResult != 0)
+	{
+		if( WSAGetLastError() != WSA_IO_PENDING )
+		{
+			OnExitSending();
+			DisConnect();
+			return;
+		}
+	}
+
+	m_pMgr->BytesSend().Add(int64(lDataSize));
+}
+
+bool NetChannel::AsynRecv(PBYTE pData, long lDataSize)
 {
 
 }
 
+void NetChannel::TryStartSending()
+{
+	AUTOLOCK( m_MutexSending );
+
+	if(m_queueSendingPacket.getCount() > 0)
+	{
+		if(!m_bHasStartSending)
+		{
+			m_bHasStartSending = true;
+			m_hExitSending.ResetEvent();
+			AsynSend( NULL, 0);
+		}
+	}
+}
+
 bool NetChannel::TryAysnSendPackets()
 {
+	DataBufferArg arg;
+	arg.cbBuffer = CBBUFF;
 
+	if( !FillPackets2Block(arg) )
+		return false;
+
+	m_pSendBuffer = (PBYTE)arg.pBuffer;
+	m_cbData2Send = arg.cbData;
+	m_cbDataSended = 0;
+
+	AsynSend( m_pSendBuffer, m_cbData2Send);
+
+	m_totalSendByte += arg.cbData;
 }
 
 void NetChannel::OnExitSending()

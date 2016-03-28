@@ -264,6 +264,7 @@
     <ClInclude Include="ODBCInterface.h" />
     <ClInclude Include="OperatorNew.h" />
     <ClInclude Include="PacketBase.h" />
+    <ClInclude Include="PacketList.h" />
     <ClInclude Include="ParamDebugHelper.h" />
     <ClInclude Include="ParamDef.h" />
     <ClInclude Include="ParamDefManager.h" />
@@ -327,6 +328,7 @@
     <ClCompile Include="ODBCInterface.cpp" />
     <ClCompile Include="OperatorNew.cpp" />
     <ClCompile Include="PacketBase.cpp" />
+    <ClCompile Include="PacketList.cpp" />
     <ClCompile Include="ParamDebugHelper.cpp" />
     <ClCompile Include="ParamDef.cpp" />
     <ClCompile Include="ParamDefManager.cpp" />
