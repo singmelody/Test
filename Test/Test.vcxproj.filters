@@ -195,6 +195,18 @@
     <ClInclude Include="CircularBufferEx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="PacketFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MyNetWork.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NetReactor1.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CircularListEx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -354,6 +366,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CircularBufferEx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PacketFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MyNetWork.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="NetReactor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CircularListEx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

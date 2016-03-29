@@ -26,7 +26,19 @@ public:
 	int32 GetID() const { return m_ID;}
 	void SetID(int32 nID) { m_ID = nID; }
 
+	virtual bool OnWritePackets2Stream(PacketBase& pkt) { return false; }
+	virtual bool OnParsePacketsFromStream() = 0;
+
+	virtual bool FlushStream();
+	bool Fetch2Stream();
 protected:
+	void AppendData2Stream(char* pBuff, int32 nLen);
+
+	virtual void HandleInput();
+	virtual void HandleOutput();
+	virtual void HandleException();
+	virtual void HandleClose();
+
 	enum
 	{
 		CBBUFF = SOCKET_MY_MAX_DATA_BLOCK_SIZE * 4

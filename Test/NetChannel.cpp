@@ -1,6 +1,7 @@
 #include "StdAfx.h"
 #include "NetChannel.h"
 #include "NetManager.h"
+#include "PacketFactory.h"
 #include <assert.h>
 
 NetChannel::NetChannel(void)
@@ -32,6 +33,8 @@ bool NetChannel::InitChannel(NetManager* pMgr, int32 nSockRcBuffSize, int32 nStr
 
 	m_hExitSending.CreateEvent( true, true);
 	m_hExitReceiving.CreateEvent( true, false);
+
+	return true;
 }
 
 bool NetChannel::StartChannel()
@@ -108,6 +111,46 @@ bool NetChannel::FillPackets2Block(DataBufferArg& arg)
 
 	int64 nPacketSend = 0;
 	PacketBase* pPkt = list.Pop_Head();
+	while ( pPkt != NULL )
+	{
+		pPkt->IsUseIndex( m_pMgr->UseIndexWhenSend() );
+		pPkt->SetPacketIndex( m_nIndexOfSend );
+
+		const uint32 PacketAttr = pPkt->GetStaticAttribute();
+		if( PacketBase::IsDisconnectCommand( PacketAttr ) )
+		{
+			DisConnect();
+			FACTORY_DEL_PACKET( pPkt );
+			return false;
+		}
+
+		if( bFirstPacket )
+		{
+			bEncrypt = PacketBase::ShouldEncrypt( PacketAttr );
+			bFirstPacket = false;
+		}
+		else
+		{
+			if( bEncrypt != PacketBase::ShouldEncrypt( PacketAttr ) )
+				break;
+		}
+
+		char pktContent[PACKET_MAX_SIZE];
+		size_t nPktSize = pPkt->WritePacket( pktContent )  - pktContent;
+		assert( nPktSize < PACKET_MAX_SIZE && nPktSize > 0);
+
+		if(cbData + nPktSize > cbBuffer)
+			break;
+
+		memcpy( pBuffer + cbData, pktContent, nPktSize);
+		nPacketSend++;
+
+		++m_nIndexOfSend;
+
+		cbData += (uint32)nPktSize;
+		FACTORY_DEL_PACKET( pPkt );
+		pPkt = list.Pop_Head();
+	}
 }
 
 bool NetChannel::OnAsynSendComplete(DWORD dwTransed)

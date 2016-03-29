@@ -114,6 +114,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>$(VCInstallDir)include;$(VCInstallDir)atlmfc\include;$(WindowsSdkDir)include;$(FrameworkSDKDir)\include;</IncludePath>
+    <OutDir>$(SolutionDir)lib\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)\tmp\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Itanium'">
     <LinkIncremental>true</LinkIncremental>
@@ -153,8 +155,9 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WINDOWS;WIN32;_DEBUG;_CONSOLE;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(ProjectDir)thirdparty\openssl\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -233,6 +236,7 @@
     <ClInclude Include="AreaManager.h" />
     <ClInclude Include="Atomic.h" />
     <ClInclude Include="CircularBufferEx.h" />
+    <ClInclude Include="CircularListEx.h" />
     <ClInclude Include="CommonConfig.h" />
     <ClInclude Include="DataBuffer.h" />
     <ClInclude Include="DBInterface.h" />
@@ -253,6 +257,7 @@
     <ClInclude Include="MyFile.h" />
     <ClInclude Include="MyMD5.h" />
     <ClInclude Include="MyMutex.h" />
+    <ClInclude Include="MyNetWork.h" />
     <ClInclude Include="MySockAddr.h" />
     <ClInclude Include="MySocket.h" />
     <ClInclude Include="MyString.h" />
@@ -261,11 +266,13 @@
     <ClInclude Include="NetChannelBase.h" />
     <ClInclude Include="NetEventHandler1.h" />
     <ClInclude Include="NetManager.h" />
+    <ClInclude Include="NetReactor1.h" />
     <ClInclude Include="NoCopyable.h" />
     <ClInclude Include="NpcParamDef.h" />
     <ClInclude Include="ODBCInterface.h" />
     <ClInclude Include="OperatorNew.h" />
     <ClInclude Include="PacketBase.h" />
+    <ClInclude Include="PacketFactory.h" />
     <ClInclude Include="PacketList.h" />
     <ClInclude Include="ParamDebugHelper.h" />
     <ClInclude Include="ParamDef.h" />
@@ -293,6 +300,7 @@
     <ClCompile Include="AreaManager.cpp" />
     <ClCompile Include="Atomic.cpp" />
     <ClCompile Include="CircularBufferEx.cpp" />
+    <ClCompile Include="CircularListEx.cpp" />
     <ClCompile Include="CommonConfig.cpp" />
     <ClCompile Include="DataBuffer.cpp" />
     <ClCompile Include="DBInterface.cpp" />
@@ -321,6 +329,7 @@
     <ClCompile Include="MyFile.cpp" />
     <ClCompile Include="MyMD5.cpp" />
     <ClCompile Include="MyMutex.cpp" />
+    <ClCompile Include="MyNetWork.cpp" />
     <ClCompile Include="MySocket.cpp" />
     <ClCompile Include="MyString.cpp" />
     <ClCompile Include="MyVector.cpp" />
@@ -328,10 +337,12 @@
     <ClCompile Include="NetChannelBase.cpp" />
     <ClCompile Include="NetEventHandler.cpp" />
     <ClCompile Include="NetManager.cpp" />
+    <ClCompile Include="NetReactor.cpp" />
     <ClCompile Include="NpcParamDef.cpp" />
     <ClCompile Include="ODBCInterface.cpp" />
     <ClCompile Include="OperatorNew.cpp" />
     <ClCompile Include="PacketBase.cpp" />
+    <ClCompile Include="PacketFactory.cpp" />
     <ClCompile Include="PacketList.cpp" />
     <ClCompile Include="ParamDebugHelper.cpp" />
     <ClCompile Include="ParamDef.cpp" />
