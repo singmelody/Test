@@ -171,9 +171,6 @@
     <ClInclude Include="NetChannelBase.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="NetEventHandler1.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="MySocket.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -201,10 +198,13 @@
     <ClInclude Include="MyNetWork.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="NetReactor1.h">
+    <ClInclude Include="CircularListEx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CircularListEx.h">
+    <ClInclude Include="SocketAccept.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DataSerialization.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -378,6 +378,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CircularListEx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SocketAccept.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DataSerialization.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MySockAddr.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

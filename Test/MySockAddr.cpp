@@ -1,5 +1,5 @@
 #include "StdAfx.h"
-#include "SockAddr.h"
+#include "MySockAddr.h"
 
 
 SockAddr::SockAddr(void)

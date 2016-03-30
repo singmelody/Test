@@ -22,11 +22,10 @@ public:
 	virtual bool Open( uint32 nMaxNumOfHandler, uint32 tickInter = 1000) = 0;
 	virtual void Close() = 0;
 
-	virtual bool Register(NetEventHandler* pEvent, int32 events = eNEM_ALL) = 0;
+	virtual bool RegisterHandler(NetEventHandler* pEvent, int32 events = eNEM_ALL) = 0;
 	virtual void RemoveHandler(NetEventHandler* pEvent, int32 events = eNEM_ALL) = 0;
 
-	virtual bool HandleEvent(const Time& now) = 0;
-	virtual int32 GetNumOfHandler() const = 0
-
+	virtual bool HandleEvents(const Time& now) = 0;
+	virtual int32 GetNumOfHandler() const = 0;
 };
 

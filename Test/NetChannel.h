@@ -18,8 +18,6 @@ public:
 
 	static void CALLBACK AsynIoCompleteProc( DWORD dwErrCode, DWORD dwTransed, LPOVERLAPPED param);
 
-
-
 	virtual void CloseChannel();
 	virtual void AppendPacket(PacketBase* pPkt);
 	virtual void OnPacketParsed(PacketBase* pPkt);

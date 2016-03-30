@@ -15,7 +15,7 @@ public:
 	virtual void HandleOutput() = 0;
 	virtual void HandleException() = 0;
 
-	virtual void HandleTick(const Time& now) = 0;
+	virtual void HandleTick(const Time& now){}
 	virtual void HandleClose() = 0;
 
 	void SetReactor(NetReactor* pReacter) { m_pReactor = pReacter; }

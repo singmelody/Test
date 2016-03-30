@@ -10,7 +10,7 @@ public:
 
 	void CreateEvent(bool bManualReset, bool bInitState);
 
-	bool SendEvent();
+	bool SetEvent();
 	bool ResetEvent();
 
 	bool Wait(int32 millisecond = -1);

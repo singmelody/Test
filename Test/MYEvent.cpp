@@ -1,6 +1,7 @@
 #include "StdAfx.h"
 #include "MYEvent.h"
-
+#include "MyLog.h"
+#include <assert.h>
 
 MYEvent::MYEvent(void) : m_bValid(false)
 {
@@ -14,7 +15,7 @@ MYEvent::~MYEvent(void)
 	::CloseHandle(hEvent);
 }
 
-bool MYEvent::SendEvent()
+bool MYEvent::SetEvent()
 {
 	if(!m_bValid)
 	{

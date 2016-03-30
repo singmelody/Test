@@ -5,6 +5,9 @@
 #include <string>
 #include <deque>
 #include "CircularListEx.h"
+#include "SocketAccept.h"
+#include "PacketBase.h"
+#include "MyMutex.h"
 
 #define MY_SOCKET_LIST_SIZE		2048
 
@@ -33,10 +36,31 @@ public:
 	void Accept( char* sAddr, int32 nPort, bool bSrv);
 	int32 Connect( char* sAddr, int32 nPort, bool bSingleThread = false);
 
+	void CloseChannel(int32 nChannel);
+	virtual void OnDisconnect(NetChannelBase* s);
+	virtual void OnChannelStart(NetChannelBase* pChannel){}
+
+	int32 AddChannel(NetChannelBase* pBase);
+	int32 AddNewConnection(NetChannelBase* pBase, bool bSocketIsAccepted, bool bWait);
+	void FreeChannel(NetChannelBase* pBase);
+
+	NetChannelBase* GetChannel(int32 nSocketID);
+
 	AtomicInt64& BytesSend() { return m_nBytesSend; }
 	AtomicInt64& BytesRecv() { return m_nBytesRecv; }
 	AtomicInt64& PacketsSend() { return m_nPacketsSend; }
 	AtomicInt64& PacketsRecv() { return m_nPacketsRecv; }
+
+#if PACKET_USE_INDEX_DATA
+	inline void UseIndexWhenSend(bool b) { m_bUseIndexWhenSend = b; }
+	inline void UseIndexWhenRecv(bool b) { m_bUseIndexWhenRecv = b; }
+
+	inline bool UseIndexWhenSend() const { return m_bUseIndexWhenSend; }
+	inline bool UseIndexWhenRecv() const { return m_bUseIndexWhenRecv; }
+#endif
+
+	void SetDisconnectFun(FunctionBase_Arg1<int32>* funcDisconn) { m_DisconnectCallBack = funcDisconn; }
+
 protected:
 	NetChannelBase* CreateNewChannel();
 
@@ -44,9 +68,17 @@ protected:
 	void ProcPendingClose();
 	void ProcPendingDestroy();
 
+	Mutex				m_mutexChannels;
+	Mutex				m_destroyQueueLock;
+	Mutex				m_closingQueueLock;
+
+	std::deque<NetChannelBase*>	m_newSocketQueue;
+	std::deque<NetChannelBase*> m_destroyQueue;
+	std::deque<int32>			m_closingQueue;
+
 	bool				m_bLzoCompress;
 	Time				m_timer;
-	Mutex				m_MutexChannels;
+
 	CircularListEx<NetChannelBase*> m_ChannelList;
 
 
@@ -61,7 +93,7 @@ protected:
 	FunctionBase_Arg1<int32>*	m_ConnectCallBack;
 	FunctionBase_Arg1<int32>*	m_DisconnectCallBack;
 
-	std::deque<NetChannelBase*>	m_newSocketQueue;
+
 
 	AtomicInt64			m_nBytesSend;
 	AtomicInt64			m_nBytesRecv;
@@ -69,6 +101,9 @@ protected:
 	AtomicInt64			m_nPacketsRecv;
 	std::string			m_strName;
 	uint64				m_lstStatisticTime;
+
+	bool				m_bUseIndexWhenSend;
+	bool				m_bUseIndexWhenRecv;
 };
 
 

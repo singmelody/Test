@@ -31,6 +31,9 @@ public:
 
 	virtual bool FlushStream();
 	bool Fetch2Stream();
+
+	inline bool GetAddr(SockAddr& addr) { return m_socket.GetSockAddr(addr); }
+	inline bool GetRemoteAddr(SockAddr& addr) { return m_socket.GetPeerAddr(addr); }
 protected:
 	void AppendData2Stream(char* pBuff, int32 nLen);
 

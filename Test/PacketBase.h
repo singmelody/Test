@@ -1,5 +1,7 @@
 #pragma once
 
+#include "BaseType.h"
+
 #define PACKET_BASE_SIZE					(2*sizeof(int32) + sizeof(uint8))
 
 #define PACKET_EX_SIZE						(sizeof(uint16) + PACKET_BASE_SIZE)
@@ -13,6 +15,8 @@
 #define PACKET_SEND_LIST_BUFFER_SIZE		512
 
 #define SOCKET_MY_MAX_DATA_BLOCK_SIZE		(PACKET_MAX_SIZE * 2)
+
+#define PACKET_USE_INDEX_DATA				1
 
 
 class PacketPack;
@@ -38,9 +42,36 @@ public:
 #define _BIT32_(X) (1<<X)
 	static const uint32 PktAttr_IsClient2Srv	=	_BIT32_(0);
 	static const uint32 PktAttr_ShouldEncrypt	= 	_BIT32_(1);
+
+	static const uint32 PktAttr_IsEvent			=	_BIT32_(2);
+	static const uint32 PktAttr_Disconnect		=	_BIT32_(3);
+
+	static const uint32 PktAttr_IsClient2Node	=	_BIT32_(4);
+	static const uint32 PktAttr_IsClient2World	=   _BIT32_(5);
+	static const uint32 PktAttr_IsClient2Login	=	_BIT32_(6);
+
+	static const uint32	PktAttr_NoNeedLZOSend	=	_BIT32_(7);
 #undef  _BIT32_
 
+	char* ReadPacket(char* buffer);
+
+#if PACKET_USE_INDEX_DATA
+	inline void IsUseIndex(bool v) { m_bUseIdx = v; }
+	inline bool IsUseIndex() const { return m_bUseIdx; }
+	inline void SetPacketIndex(uint16 n) { m_nIdx = n; }
+	inline uint16 GetPacketIndex() { return m_nIdx; }
+#endif
+
+	virtual bool IsClient2Srv() { return false; }
+
+	virtual uint32 GetStaticAttribute() const { return PktAttr_ShouldEncrypt; }
+
+	static bool IsClient2Srv(uint32 attr) { return 0 != (attr & PktAttr_IsClient2Srv); }
+	static bool ShouldEncrypt(uint32 attr) { return 0 != (attr & PktAttr_ShouldEncrypt); }
+	static bool IsEvent(uint32 attr) { return 0 != (attr & PktAttr_IsEvent); }
+	static bool IsDisconnectCommand(uint32 attr) { return 0 != ( attr & PktAttr_Disconnect);}
 protected:
+
 	int32		m_PacketID;
 	int32		m_AvatarID;
 	int32		m_SocketID;
