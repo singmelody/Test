@@ -4,7 +4,12 @@
 #include "MYEvent.h"
 #include "MyMutex.h"
 
+#define LZO_COMPRESS 1
+#define USE_MY_BLOWFISH 0
+
 class PacketBase;
+class LZOCompressor;
+class BlowFishCipher;
 
 class NetChannel : public NetChannelBase
 {
@@ -27,6 +32,8 @@ public:
 
 	void TryStartSending();
 	bool TryAysnSendPackets();
+
+	bool OnParsePacketsFromStream();
 
 	virtual void OnExitSending();
 	virtual void OnExitReceiving();
@@ -91,5 +98,13 @@ protected:
 
 	MYOVERLAPPED	m_OLPRecv;
 	MYOVERLAPPED	m_OLPSend;
+
+#if LZO_COMPRESS
+	LZOCompressor*		m_pGLZOCompressor;
+#endif
+
+#if USE_MY_BLOWFISH
+	BlowFishCipher*		m_pBlowFishCipher;
+#endif
 };
 

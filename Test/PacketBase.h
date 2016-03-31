@@ -53,7 +53,8 @@ public:
 	static const uint32	PktAttr_NoNeedLZOSend	=	_BIT32_(7);
 #undef  _BIT32_
 
-	char* ReadPacket(char* buffer);
+	virtual char* ReadPacket(char* buffer);
+	virtual char* WritePacket(char* buffer);
 
 #if PACKET_USE_INDEX_DATA
 	inline void IsUseIndex(bool v) { m_bUseIdx = v; }

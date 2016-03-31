@@ -2,6 +2,8 @@
 #include "NetChannel.h"
 #include "NetManager.h"
 #include "PacketFactory.h"
+#include "LZOCompressor.h"
+#include "MyLog.h"
 #include <assert.h>
 
 NetChannel::NetChannel(void)
@@ -151,6 +153,68 @@ bool NetChannel::FillPackets2Block(DataBufferArg& arg)
 		FACTORY_DEL_PACKET( pPkt );
 		pPkt = list.Pop_Head();
 	}
+
+	m_pMgr->PacketsSend().Add(nPacketSend);
+
+	if(pPkt != NULL)
+		list.Push_Head(pPkt);
+
+	if( cbData == 0 )
+		return false;
+
+	bool bCompress = false;
+	BlockHeadT blockFlag = 0;
+
+#if LZO_COMPRESS
+	if( m_pGLZOCompressor )
+	{
+		if( bCompress && cbData > 56 )
+		{
+			uint32 dstLen = cbBuffer;
+			if(!m_pGLZOCompressor->Compress( pBuffer, cbData, pBuffer2, dstLen) )
+			{
+				assert(false);
+				MyLog::error("Socket send packet size error, Compress Fail! sockid=[%d] size=[%u]!Will disconnect", GetID(), cbData);
+				DisConnect();
+				return false;
+			}
+
+			if( dstLen < cbData )
+			{
+				blockFlag |= BLOCK_FLAG_LZO;
+				std::swap( pBuffer, pBuffer2);
+				cbData = dstLen;
+			}
+		}
+	}
+#endif
+
+#if USE_MY_BLOWFISH
+	if(m_pBlowFishCipher)
+	{
+		if(bEncrypt)
+		{
+			blockFlag |= Block_FLAG_ENC;
+			m_pBlowFishCipher->Encrypt( pBuffer, pBuffer2, nDataLen);
+			std::swap( pBuffer, pBuffer2);
+		}
+	}
+#endif
+
+	if( cbData > BLOCK_SIZE_MASK )
+	{
+		MyLog::error("NetChannel::FillPackets2Block() Error , cbData > BLOCK_SIZE_MASK\n");
+	}
+
+	arg.pBuffer = pBuffer - cbHeader;
+	arg.cbData = cbHeader + cbData;
+
+	BlockHeadT blockHead = (BlockHeadT)(cbData);
+	blockHead |= blockFlag;
+
+	memcpy( arg.pBuffer, &blockHead, cbHeader);
+
+	return true;
 }
 
 bool NetChannel::OnAsynSendComplete(DWORD dwTransed)
@@ -168,6 +232,14 @@ bool NetChannel::OnAsynSendComplete(DWORD dwTransed)
 	}
 
 	// 发送正常
+	m_pSendBuffer = NULL;
+	m_cbData2Send = 0;
+	m_cbDataSended = 0;
+
+	if( !TryAysnSendPackets() )
+		return false;
+
+	return true;
 }
 
 bool NetChannel::OnAsynRecvComplete(DWORD dwTransed)
@@ -176,13 +248,48 @@ bool NetChannel::OnAsynRecvComplete(DWORD dwTransed)
 		return false;
 
 	m_cbDataRecved += dwTransed;
+
+	MYOVERLAPPED* pMyOLP = &m_OLPRecv;
+	if( m_cbDataRecved < m_cbData2Recv )
+	{
+		DWORD cbLeft = m_cbData2Recv - m_cbDataRecved;
+		PBYTE pBuffer = m_pRecvBuffer + m_cbDataRecved;
+		AsynRecv( pBuffer, cbLeft);
+	}
+	else
+	{
+		if (m_BlockHead == 0)
+		{
+			m_BlockHead = *((BlockHeadT*)m_pRecvBuffer);
+			uint32 nBlockSize = ( m_BlockHead & BLOCK_SIZE_MASK);
+
+			if( nBlockSize > (uint32)m_sockRcBuffSize)
+				return false;
+
+			if( nBlockSize == 0 )
+				return false;
+
+			StartNewRecv( nBlockSize );
+		}
+		else
+		{
+			ParsePacketsInBlock( m_BlockHead, (char*)m_pRecvBuffer, m_cbData2Recv);
+			m_BlockHead = 0;
+			StartNewRecv( sizeof(BlockHeadT) );
+		}
+	}
+
+	return true;
 }
 
 
 
 void NetChannel::OnPacketParsed(PacketBase* pPkt)
 {
+	if( !m_pMgr)
+		return;
 
+	m_pMgr->OnReceivedPacket( this, pPkt);
 }
 
 void NetChannel::AsynSend(PBYTE pData, long lDataSize)
@@ -212,7 +319,30 @@ void NetChannel::AsynSend(PBYTE pData, long lDataSize)
 
 bool NetChannel::AsynRecv(PBYTE pData, long lDataSize)
 {
+	if( pData == NULL || lDataSize <= 0)
+		return false;
 
+	MYOVERLAPPED& olp = m_OLPRecv;
+
+	WSABUF wsabuf;
+	wsabuf.buf = LPSTR( pData );
+	wsabuf.len = lDataSize;
+
+	DWORD dwTransed = 0;
+	DWORD dwFlags = 0;
+
+	if ( WSARecv( m_socket.GetSocket(), &wsabuf, 1, &dwTransed, &dwFlags, (LPWSAOVERLAPPED)&olp, NULL ) != 0)
+	{
+		int32 nError = WSAGetLastError();
+		if( nError != WSA_IO_PENDING )
+		{
+			OnExitReceiving();
+			return false;
+		}
+	}
+
+	m_pMgr->BytesRecv().Add(lDataSize);
+	return true;
 }
 
 void NetChannel::TryStartSending()
@@ -247,16 +377,25 @@ bool NetChannel::TryAysnSendPackets()
 	m_totalSendByte += arg.cbData;
 }
 
+bool NetChannel::OnParsePacketsFromStream()
+{
+	while(FetchBlockFromStreamAndProcess());
+
+	return false;
+}
+
 void NetChannel::OnExitSending()
 {
 	AUTOLOCK( m_MutexSending );
 
-
+	m_bHasStartSending = false;
+	m_hExitSending.SetEvent();
 }
 
 void NetChannel::OnExitReceiving()
 {
-
+	m_hExitReceiving.SetEvent();
+	DisConnect();
 }
 
 void CALLBACK NetChannel::AsynIoCompleteProc( DWORD dwErrCode, DWORD dwTransed, LPOVERLAPPED param)
@@ -273,6 +412,8 @@ void CALLBACK NetChannel::AsynIoCompleteProc( DWORD dwErrCode, DWORD dwTransed, 
 			if( dwErrCode != 0 || !pChannel->OnAsynSendComplete(dwTransed) )
 			{
 				pChannel->OnExitSending();
+
+				// 有小概率发生发送队列还有数据包的情况，再检查一次
 				pChannel->TryStartSending();
 			}
 		}

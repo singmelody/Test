@@ -5,8 +5,8 @@
 #include "Singleton.h"
 #include "UtilID.h"
 
-#define FACTORY_NEWOBJ(className) (className*)FactoryManagerBase::Instance().New(#className);
-#define FACTORY_DELOBJ( pObj) { if(pObj) { FactoryManagerBase::Instance().Delete( pObj); pObj = NULL; }}
+#define FACTORY_NEWOBJ(className) (className*)FactoryManager::Instance().New(#className);
+#define FACTORY_DELOBJ( pObj) { if(pObj) { FactoryManager::Instance().Delete( pObj); pObj = NULL; }}
 
 class Allocator;
 
@@ -92,7 +92,7 @@ protected:
 	Allocator* m_pAlloc;
 };
 
-class FactoryManagerBase : public Singleton < FactoryManagerBase >
+class FactoryManagerBase
 {
 public:
 	FactoryManagerBase() {}
@@ -114,7 +114,7 @@ protected:
 	FactoryMap	m_FuncName_Arg0;
 };
 
-class FactoryManager : public FactoryManagerBase
+class FactoryManager : public FactoryManagerBase, public Singleton<FactoryManager>
 {
 public:
 	FactoryManager(){}

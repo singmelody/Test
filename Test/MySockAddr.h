@@ -30,9 +30,9 @@ public:
 	uint16 GetPort() { return m_port; }
 	void SetPort(uint16 port) { m_port = port; }
 
-	const std::string& GetIP(const std::string& ip)
+	const std::string& GetIP()
 	{
-		m_IP = ip;
+		return m_IP;
 	}
 
 	void SetIP(const std::string& ip)

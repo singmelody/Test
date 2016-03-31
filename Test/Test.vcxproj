@@ -235,6 +235,7 @@
     <ClInclude Include="Allocator.h" />
     <ClInclude Include="AreaManager.h" />
     <ClInclude Include="Atomic.h" />
+    <ClInclude Include="BlowFishCipher.h" />
     <ClInclude Include="CircularBufferEx.h" />
     <ClInclude Include="CircularListEx.h" />
     <ClInclude Include="CommonConfig.h" />
@@ -247,6 +248,10 @@
     <ClInclude Include="Factory.h" />
     <ClInclude Include="FactoryManagerBase.h" />
     <ClInclude Include="FunctionBase.h" />
+    <ClInclude Include="LZOCompressor.h" />
+    <ClInclude Include="lzoconf.h" />
+    <ClInclude Include="lzodefs.h" />
+    <ClInclude Include="minilzo.h" />
     <ClInclude Include="MyClass.h" />
     <ClInclude Include="MYEvent.h" />
     <ClInclude Include="MyLog.h" />
@@ -299,6 +304,7 @@
     <ClCompile Include="Allocator.cpp" />
     <ClCompile Include="AreaManager.cpp" />
     <ClCompile Include="Atomic.cpp" />
+    <ClCompile Include="BlowFishCipher.cpp" />
     <ClCompile Include="CircularBufferEx.cpp" />
     <ClCompile Include="CircularListEx.cpp" />
     <ClCompile Include="CommonConfig.cpp" />
@@ -319,6 +325,8 @@
     <ClCompile Include="Factory.cpp" />
     <ClCompile Include="FactoryManagerBase.cpp" />
     <ClCompile Include="FunctionBase.cpp" />
+    <ClCompile Include="LZOCompressor.cpp" />
+    <ClCompile Include="minilzo.c" />
     <ClCompile Include="MyClass.cpp" />
     <ClCompile Include="MYEvent.cpp" />
     <ClCompile Include="MyLog.cpp" />
