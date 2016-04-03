@@ -74,7 +74,7 @@ public:
 	void Des(const char* str) { mDes = str; }
 
 	inline void SetTypeFlag(uint32 flag) { m_typeFlag = flag; }
-	inline bool CheckTypeFlag(uint32 flag) { return m_typeFlag & flag; }
+	inline bool CheckTypeFlag(uint32 flag) { return (m_typeFlag & flag) != 0; }
 
 	virtual char* Read(void* pClassObj, char* pBuffer);
 	virtual char* Read(void* pClassObj, char* pBuffer, bool& dirty);
@@ -319,7 +319,7 @@ public:
 	ClassMember_Char(int32 nSize)
 	{
 		this->m_size = nSize + sizeof(uint16);
-		m_charSize = Size;
+		m_charSize = nSize;
 		m_classType = eTB_String;
 	}
 
@@ -346,7 +346,7 @@ public:
 		if(!value)
 			return;
 
-		int32 nLen = strlen(value);
+		int32 nLen = (int32)strlen(value);
 		nLen = ( nLen > (m_charSize-1) ) ? (m_charSize -1) : nLen;
 
 		if(nLen <= 0)
@@ -359,8 +359,58 @@ public:
 	virtual char* Read( void* pClassObj, char* pBuffer)
 	{
 		if(!pClassObj || !pBuffer)
-			return;
+			return pBuffer;
+
+		int32 nLen = *((uint16*)pBuffer);
+		char* tmpBuf = pBuffer + sizeof(uint16);
+		nLen = nLen > m_charSize ? m_charSize : nLen;
+		memset( (char*)pClassObj + this->m_offset, 0, m_charSize);
+		memcpy( ((char*)pClassObj + this->m_offset), tmpBuf, nLen);
+
+		return tmpBuf + nLen;
 	}
+
+	virtual char* Read( void* pClassObj, char* pBuffer, bool& bDirty)
+	{
+		bDirty = false;
+		if( !pBuffer || !pClassObj)
+			return pBuffer;
+
+		int32 nLen = *( (uint16*)pBuffer);
+		char* tmpBuf = pBuffer + sizeof(uint16);
+		nLen = nLen > m_charSize ? m_charSize : nLen;
+
+		bool bChange = false;
+		if( nLen != m_charSize)
+			bChange = true;
+		else
+		{
+			if(memcpy( tmpBuf, ((char*)pClassObj + this->m_offset), nLen) != 0)
+				bChange = true;
+		}
+
+		if(bChange)
+		{
+			memset( (char*)pClassObj + this->m_offset, 0, m_charSize);
+			memcpy( (char*)pClassObj + this->m_offset, tmpBuf, nLen);
+			bDirty= true;
+		}
+
+		return tmpBuf + nLen;
+	}
+
+	virtual char* Write( void* pClassObj, char* pBuffer)
+	{
+		if(!pClassObj || !pBuffer)
+			return pBuffer;
+
+		*(uint16*)pBuffer = m_charSize;
+		char* tmpBuf = pBuffer + sizeof(uint16);
+		memcpy( tmpBuf, (char*)pClassObj + this->m_offset, m_charSize);
+
+		return tmpBuf + m_charSize;
+	}
+
 protected:
 	uint16	m_charSize;
 };

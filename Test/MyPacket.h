@@ -37,5 +37,5 @@
 #define ADD_PACKET_MEMBER( member, type, des) \
 	__Add_Ref_Member__( member, type, eTB_Flag_Sec, des, MyClassMemberEx);
 
-#define ADD_PACKET_MEMBER_STR( member, type, des) \
+#define ADD_PACKET_MEMBER_STR( member, size, des) \
 	Add_Ref_Member_String( member, size, eTB_Flag_Sec, des);

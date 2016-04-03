@@ -249,6 +249,12 @@
     <ClInclude Include="ModuleBase.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ServerGrp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerGrpInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -462,6 +468,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ModuleBase.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ServerGrp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ServerGrpInfo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

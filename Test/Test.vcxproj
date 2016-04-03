@@ -299,6 +299,8 @@
     <ClInclude Include="SceneContentItem.h" />
     <ClInclude Include="SceneContentNpc.h" />
     <ClInclude Include="ServerConfig.h" />
+    <ClInclude Include="ServerGrp.h" />
+    <ClInclude Include="ServerGrpInfo.h" />
     <ClInclude Include="SocketAccept.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
@@ -382,6 +384,8 @@
     <ClCompile Include="RSAipher.cpp" />
     <ClCompile Include="SceneContentItem.cpp" />
     <ClCompile Include="SceneContentNpc.cpp" />
+    <ClCompile Include="ServerGrp.cpp" />
+    <ClCompile Include="ServerGrpInfo.cpp" />
     <ClCompile Include="SocketAccept.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

@@ -19,6 +19,13 @@
 #define PACKET_USE_INDEX_DATA				1
 
 
+enum 
+{
+	ePacketType_Default			= 0,
+	ePacketType_BroadCast		= 1 << 2,
+	ePacketType_GateProc		= 1 << 3
+};
+
 class PacketPack;
 class MyClass;
 
@@ -77,6 +84,9 @@ public:
 	virtual void SetPacketID(int32 nID) { m_PacketID = nID; }
 
 	virtual MyClass* GetClass() { return NULL; }
+
+	inline void SetPacketType(int8 type) { m_SendType |= type; }
+	inline void UnSetPacketType(int8 type) { m_SendType &= ~type; }
 protected:
 
 	int32		m_PacketID;
