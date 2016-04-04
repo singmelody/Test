@@ -254,6 +254,7 @@
     <ClInclude Include="minilzo.h" />
     <ClInclude Include="MyClass.h" />
     <ClInclude Include="MYEvent.h" />
+    <ClInclude Include="MyFactory.h" />
     <ClInclude Include="MyLog.h" />
     <ClInclude Include="LoadTemplate.h" />
     <ClInclude Include="LoadTemplateManager.h" />
@@ -264,6 +265,7 @@
     <ClInclude Include="MyMD5.h" />
     <ClInclude Include="MyMutex.h" />
     <ClInclude Include="MyNetWork.h" />
+    <ClInclude Include="MyPacket.h" />
     <ClInclude Include="MySockAddr.h" />
     <ClInclude Include="MySocket.h" />
     <ClInclude Include="MyString.h" />
@@ -277,7 +279,10 @@
     <ClInclude Include="OperatorNew.h" />
     <ClInclude Include="PacketBase.h" />
     <ClInclude Include="PacketFactory.h" />
+    <ClInclude Include="PacketImpl.h" />
     <ClInclude Include="PacketList.h" />
+    <ClInclude Include="PacketProcessor.h" />
+    <ClInclude Include="PacketSender.h" />
     <ClInclude Include="ParamDebugHelper.h" />
     <ClInclude Include="ParamDef.h" />
     <ClInclude Include="ParamDefManager.h" />
@@ -329,6 +334,7 @@
     <ClCompile Include="minilzo.c" />
     <ClCompile Include="MyClass.cpp" />
     <ClCompile Include="MYEvent.cpp" />
+    <ClCompile Include="MyFactory.cpp" />
     <ClCompile Include="MyLog.cpp" />
     <ClCompile Include="LoadTemplate.cpp" />
     <ClCompile Include="LoadTemplateManager.cpp" />
@@ -339,6 +345,7 @@
     <ClCompile Include="MyMD5.cpp" />
     <ClCompile Include="MyMutex.cpp" />
     <ClCompile Include="MyNetWork.cpp" />
+    <ClCompile Include="MyPacket.cpp" />
     <ClCompile Include="MySockAddr.cpp" />
     <ClCompile Include="MySocket.cpp" />
     <ClCompile Include="MyString.cpp" />
@@ -353,7 +360,10 @@
     <ClCompile Include="OperatorNew.cpp" />
     <ClCompile Include="PacketBase.cpp" />
     <ClCompile Include="PacketFactory.cpp" />
+    <ClCompile Include="PacketImpl.cpp" />
     <ClCompile Include="PacketList.cpp" />
+    <ClCompile Include="PacketProcessor.cpp" />
+    <ClCompile Include="PacketSender.cpp" />
     <ClCompile Include="ParamDebugHelper.cpp" />
     <ClCompile Include="ParamDef.cpp" />
     <ClCompile Include="ParamDefManager.cpp" />

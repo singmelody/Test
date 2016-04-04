@@ -168,3 +168,51 @@ public:
 		return value1 == value2;
 	}
 };
+
+#define Ref_BaseClass_Begin(className) \
+private: \
+class _TClass_##className : public TClass \
+{ \
+public: \
+	_TClass_##className(){} \
+	_TClass_##className(){ \
+		ClassName(#className); \
+		TClassManager::Instance().AddClass(this); \
+		className* pClassObj; pClassObj = NULL;
+
+#define Ref_BaseClass_End(className) \
+	}}; \
+	static _TClass_##className mClass_##className; \
+public:\
+	static TClass* GetClassStatic() { return (TClass*)&mClass_##className; } \
+	virtual TClass* GetClass() { return (TClass*)&mClass_##className; } \
+	virtual char* Read(char* buffer, int32 nFlag = TypeBase_Flag_Ser) {return mClass_##className.Read( (void*)this, buffer, nFlag); } \
+	virtual char* Write(char* buffer, int32 nFlag = TypeBase_Flag_Ser) { return mClass_##className.Write( (void*)this, buffer, nFlag); } \
+private:\
+	char* Read##className( char* buffer, int32 nFlag = TypeBase_Flag_Ser) { return mClass_##className.Read( (void*)this, buffer, nFlag); } \
+	char* Write##className( char* buffer, int32 nFlag = TypeBase_Flag_Ser) { return mClass_##className.Write( (void*)this, buffer, nFlag); }
+
+class MyClass
+{
+	typedef std::map<UtilID, TypeBase*> MemberMap;
+
+public:
+	MyClass();
+	virtual ~MyClass();
+
+	bool IsChild(int32 nClassID);
+	bool IsChild(char* className);
+	bool IsChild(MyClass* pClass);
+	void AddMember( TypeBase* pType);
+	inline MyClass* Parent() { return _parent; }
+	inline void Parent(MyClass* pParent) { _parent = pParent; }
+
+protected:
+	int32 nClassID;
+	int32 nClassSize;
+	int32 nClassSerSize;
+
+	MyClass*	_parent;
+	MemberMap	mMemberMap;
+	std::string	mClassName;
+};

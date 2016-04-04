@@ -8,6 +8,7 @@ enum
 	eAlloc_DL,
 	eAlloc_Pool,
 	eAlloc_Pool_Ex,
+	eAlloc_Pool_Packet,
 	eAlloc_Pool_SHM,
 	eAlloc_Count
 };

@@ -71,6 +71,10 @@ public:
 	static bool ShouldEncrypt(uint32 attr) { return 0 != (attr & PktAttr_ShouldEncrypt); }
 	static bool IsEvent(uint32 attr) { return 0 != (attr & PktAttr_IsEvent); }
 	static bool IsDisconnectCommand(uint32 attr) { return 0 != ( attr & PktAttr_Disconnect);}
+
+
+	virtual int32 GetPacketID() const { return m_PacketID; }
+	virtual int32 SetPacketID(int32 nID) { m_PacketID = nID; }
 protected:
 
 	int32		m_PacketID;
@@ -81,4 +85,59 @@ protected:
 	PacketBase* _prev;
 	bool		m_bUseIdx;
 	uint16		m_nIdx;
+};
+
+class PacketSender;
+class SyncPackArg;
+class CasterTrunkGate;
+
+class PacketPackBase : public PacketBase
+{
+public:
+	enum
+	{
+		MaxCnt = 100,
+		MaxContentSize = PACKET_MAX_SIZE - PACKET_EX_BUFFER_MAX_SIZE - MaxCnt*4,
+	};
+
+	PacketPackBase();
+	virtual ~PacketPackBase();
+
+	virtual char* ReadPacket(char* buffer);
+	virtual char* WritePacket(char* buffer);
+
+	bool AddupPacket(PacketBase* pPkt);
+	void Reset();
+
+	bool IsEmpty() { return m_PacketCnt == 0; }
+
+	int8 GetPacketCnt() { return m_PacketCnt; }
+
+	PacketBase* GetPacket(int8 index)
+	{
+		if( index < 0 || index >= m_PacketCnt)
+			return NULL;
+
+		return m_pPacket[index];
+	}
+
+	bool FillPacket( PacketBase* pPkt);
+	void SendPacket();
+
+
+	SyncPackArg*	m_pSyncPacketArg;
+	
+	void	SetSyncArg( SyncPacketArg* pArg);
+	
+	void	SetDBASyncArg( PacketSender* pSender);
+	void	SetWorldSyncArg( PacketSender* pSender);	
+	void	SetGateSyncArg( PacketSender* pSender, CasterTrunkGate* pTrunk);	
+	void	SetNodeSyncArg( PacketSender* pSender, int32 nNodeSrvID);
+	void	SetCltSyncArg( PacketSender* pSender);
+
+protected:
+	int8			m_PacketCnt;
+	PacketBase*		m_pPacket[MaxCnt];
+
+	int32			m_ContentSize;	// 合并子包大小
 };

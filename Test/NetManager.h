@@ -60,7 +60,7 @@ public:
 #endif
 
 	void SetDisconnectFun(FunctionBase_Arg1<int32>* funcDisconn) { m_DisconnectCallBack = funcDisconn; }
-
+	virtual void OnReceivedPacket( NetChannelBase* pChannel, PacketBase* pPkt);
 protected:
 	NetChannelBase* CreateNewChannel();
 

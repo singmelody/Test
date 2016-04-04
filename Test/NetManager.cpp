@@ -128,6 +128,14 @@ NetChannelBase* NetManager::GetChannel(int32 nSocketID)
 	return pChannel;
 }
 
+void NetManager::OnReceivedPacket(NetChannelBase* pChannel, PacketBase* pPkt)
+{
+	if(!m_pProcessor)
+		return;
+
+	m_pProcessor->OnPacketReceived( pPkt );
+}
+
 NetChannelBase* NetManager::CreateNewChannel()
 {
 	return new NetChannel();
