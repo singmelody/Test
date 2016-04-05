@@ -1,7 +1,9 @@
 #pragma once
 
 #include "BaseType.h"
+#include "UtilID.h"
 #include <string>
+#include <map>
 
 enum TypeBaseFlag
 {
@@ -64,6 +66,12 @@ public:
 
 	inline int32 ClassOffset() { return m_offset;}
 	inline void ClassOffset(int32 nOffset) { m_offset = nOffset; }
+
+	inline bool CheckTypeFlag(uint32 flag) { return m_typeFlag & flag; }
+
+	virtual char* Read(void* pClassObj, char* pBuffer);
+	virtual char* Read(void* pClassObj, char* pBuffer, bool& dirty);
+	virtual char* Write(void* pClassObj, char* pBuffer);
 
 	virtual const char* TypeName()
 	{
@@ -195,7 +203,6 @@ private:\
 class MyClass
 {
 	typedef std::map<UtilID, TypeBase*> MemberMap;
-
 public:
 	MyClass();
 	virtual ~MyClass();
@@ -206,7 +213,32 @@ public:
 	void AddMember( TypeBase* pType);
 	inline MyClass* Parent() { return _parent; }
 	inline void Parent(MyClass* pParent) { _parent = pParent; }
+	
+	inline const char* ClassName() { return mClassName.c_str(); }
+	inline void ClassName(const char* sName)
+	{
+		if(!sName)
+			return;
 
+		mClassName = sName;
+		nClassID = UtilID::CreateFromString(sName);
+	}
+
+	inline int32 ClassID() { return nClassID; }
+	inline void ClassID(int32 classID) { nClassID = classID; }
+
+	inline int32 GetClassSize() { return nClassSize; }
+	inline void SetClassSize(int32 nSize) { nClassSize = nSize; }
+
+	inline int32 GetClassSerSize() { return nClassSerSize; }
+	inline void SetClassSerSize(int32 nSize) { nClassSerSize = nSize; }
+
+	inline int32 MemberCount() { return (int32)mMemberMap.size(); }
+	TypeBase* GetMember(int32 nIdx);
+	TypeBase* GetMember(char* sName);
+
+	char* Read( void* pClassObj, char* buffer, int32 nFlag = eTB_Flag_Sec);
+	char* Write( void* pClassObj, char* buffer, int32 nFlag = eTB_Flag_Sec);
 protected:
 	int32 nClassID;
 	int32 nClassSize;

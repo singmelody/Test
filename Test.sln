@@ -5,6 +5,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Test", "Test\Test.vcxproj",
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FuncUnit", "FuncUnit\FuncUnit.vcxproj", "{A56784AF-B678-469A-9197-2777EA447D2D}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestMiniLzo", "TestMiniLzo\TestMiniLzo.vcxproj", "{723DA1F0-4A7E-4971-AFB3-73BE7C254EBD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -27,6 +29,12 @@ Global
 		{A56784AF-B678-469A-9197-2777EA447D2D}.Release|Win32.ActiveCfg = Release|Win32
 		{A56784AF-B678-469A-9197-2777EA447D2D}.Release|Win32.Build.0 = Release|Win32
 		{A56784AF-B678-469A-9197-2777EA447D2D}.Release|x64.ActiveCfg = Release|Win32
+		{723DA1F0-4A7E-4971-AFB3-73BE7C254EBD}.Debug|Win32.ActiveCfg = Debug|Win32
+		{723DA1F0-4A7E-4971-AFB3-73BE7C254EBD}.Debug|Win32.Build.0 = Debug|Win32
+		{723DA1F0-4A7E-4971-AFB3-73BE7C254EBD}.Debug|x64.ActiveCfg = Debug|Win32
+		{723DA1F0-4A7E-4971-AFB3-73BE7C254EBD}.Release|Win32.ActiveCfg = Release|Win32
+		{723DA1F0-4A7E-4971-AFB3-73BE7C254EBD}.Release|Win32.Build.0 = Release|Win32
+		{723DA1F0-4A7E-4971-AFB3-73BE7C254EBD}.Release|x64.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

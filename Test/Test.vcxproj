@@ -253,6 +253,7 @@
     <ClInclude Include="lzodefs.h" />
     <ClInclude Include="minilzo.h" />
     <ClInclude Include="MyClass.h" />
+    <ClInclude Include="MyClassManager.h" />
     <ClInclude Include="MYEvent.h" />
     <ClInclude Include="MyFactory.h" />
     <ClInclude Include="MyLog.h" />
@@ -333,6 +334,7 @@
     <ClCompile Include="LZOCompressor.cpp" />
     <ClCompile Include="minilzo.c" />
     <ClCompile Include="MyClass.cpp" />
+    <ClCompile Include="MyClassManager.cpp" />
     <ClCompile Include="MYEvent.cpp" />
     <ClCompile Include="MyFactory.cpp" />
     <ClCompile Include="MyLog.cpp" />

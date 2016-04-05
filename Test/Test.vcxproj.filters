@@ -237,6 +237,9 @@
     <ClInclude Include="PacketSender.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="MyClassManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -441,6 +444,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PacketSender.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MyClassManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
