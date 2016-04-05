@@ -67,6 +67,10 @@ public:
 	inline int32 ClassOffset() { return m_offset;}
 	inline void ClassOffset(int32 nOffset) { m_offset = nOffset; }
 
+	inline uint32 GetTypeFlag() { return m_typeFlag; }
+
+	const char* Des() { return mDes.c_str(); }
+
 	inline bool CheckTypeFlag(uint32 flag) { return m_typeFlag & flag; }
 
 	virtual char* Read(void* pClassObj, char* pBuffer);
@@ -177,28 +181,31 @@ public:
 	}
 };
 
+#define Ref_Class(className) \
+	className::_MyClass_##className className::mClass_##className;
+
 #define Ref_BaseClass_Begin(className) \
 private: \
-class _TClass_##className : public TClass \
+class _MyClass_##className : public MyClass \
 { \
 public: \
-	_TClass_##className(){} \
-	_TClass_##className(){ \
+	~_MyClass_##className(){} \
+	_MyClass_##className(){ \
 		ClassName(#className); \
-		TClassManager::Instance().AddClass(this); \
+		MyClassManager::Instance().AddClass(this); \
 		className* pClassObj; pClassObj = NULL;
 
 #define Ref_BaseClass_End(className) \
 	}}; \
-	static _TClass_##className mClass_##className; \
+	static _MyClass_##className mClass_##className; \
 public:\
-	static TClass* GetClassStatic() { return (TClass*)&mClass_##className; } \
-	virtual TClass* GetClass() { return (TClass*)&mClass_##className; } \
-	virtual char* Read(char* buffer, int32 nFlag = TypeBase_Flag_Ser) {return mClass_##className.Read( (void*)this, buffer, nFlag); } \
-	virtual char* Write(char* buffer, int32 nFlag = TypeBase_Flag_Ser) { return mClass_##className.Write( (void*)this, buffer, nFlag); } \
+	static MyClass* GetClassStatic() { return (MyClass*)&mClass_##className; } \
+	virtual MyClass* GetClass() { return (MyClass*)&mClass_##className; } \
+	virtual char* Read(char* buffer, int32 nFlag = eTB_Flag_Sec) {return mClass_##className.Read( (void*)this, buffer, nFlag); } \
+	virtual char* Write(char* buffer, int32 nFlag = eTB_Flag_Sec) { return mClass_##className.Write( (void*)this, buffer, nFlag); } \
 private:\
-	char* Read##className( char* buffer, int32 nFlag = TypeBase_Flag_Ser) { return mClass_##className.Read( (void*)this, buffer, nFlag); } \
-	char* Write##className( char* buffer, int32 nFlag = TypeBase_Flag_Ser) { return mClass_##className.Write( (void*)this, buffer, nFlag); }
+	char* Read##className( char* buffer, int32 nFlag = eTB_Flag_Sec) { return mClass_##className.Read( (void*)this, buffer, nFlag); } \
+	char* Write##className( char* buffer, int32 nFlag = eTB_Flag_Sec) { return mClass_##className.Write( (void*)this, buffer, nFlag); }
 
 class MyClass
 {

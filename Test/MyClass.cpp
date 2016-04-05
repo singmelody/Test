@@ -52,6 +52,8 @@ char* MyClass::Read(void* pClassObj, char* buffer, int32 nFlag /*= eTB_Flag_Sec*
 
 		++itr;
 	}
+
+	return tmp;
 }
 
 char* MyClass::Write(void* pClassObj, char* buffer, int32 nFlag /*= eTB_Flag_Sec*/)

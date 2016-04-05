@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include "Singleton.h"
 
 class MyClass;
 
@@ -22,7 +23,7 @@ protected:
 	std::vector<MyClass*> m_vClass;
 };
 
-class MyClassManager
+class MyClassManager : public MyClassManagerBase, public Singleton<MyClassManager>
 {
 public:
 	MyClassManager(void);

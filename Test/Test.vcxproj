@@ -157,7 +157,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_WINDOWS;WIN32;_DEBUG;_CONSOLE;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ProjectDir)thirdparty\openssl\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)thirdparty\openssl\include;$(ProjectDir)thirdparty\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -271,6 +271,7 @@
     <ClInclude Include="MySocket.h" />
     <ClInclude Include="MyString.h" />
     <ClInclude Include="MyVector.h" />
+    <ClInclude Include="MyXml.h" />
     <ClInclude Include="NetChannel.h" />
     <ClInclude Include="NetChannelBase.h" />
     <ClInclude Include="NetManager.h" />

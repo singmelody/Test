@@ -20,6 +20,7 @@
 
 
 class PacketPack;
+class MyClass;
 
 class PacketBase
 {
@@ -72,9 +73,10 @@ public:
 	static bool IsEvent(uint32 attr) { return 0 != (attr & PktAttr_IsEvent); }
 	static bool IsDisconnectCommand(uint32 attr) { return 0 != ( attr & PktAttr_Disconnect);}
 
-
 	virtual int32 GetPacketID() const { return m_PacketID; }
-	virtual int32 SetPacketID(int32 nID) { m_PacketID = nID; }
+	virtual void SetPacketID(int32 nID) { m_PacketID = nID; }
+
+	virtual MyClass* GetClass() { return NULL; }
 protected:
 
 	int32		m_PacketID;
@@ -127,7 +129,7 @@ public:
 
 	SyncPackArg*	m_pSyncPacketArg;
 	
-	void	SetSyncArg( SyncPacketArg* pArg);
+	void	SetSyncArg( SyncPackArg* pArg);
 	
 	void	SetDBASyncArg( PacketSender* pSender);
 	void	SetWorldSyncArg( PacketSender* pSender);	

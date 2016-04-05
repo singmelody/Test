@@ -15,13 +15,12 @@
 	static ClassFactory_##classObj m_FactoryArg0_##classObj;
 
 
-#define DECLARE_FACTORY_ARG0_Ex( classObj, classID, allocator, mgr) \
-	private:	\
+#define DECLARE_FACTORY_ARG0_Ex( classObj, classID, alloc, mgr) \
+	private:\
 	class ClassFactory_##classObj : public Factory_Arg0<classObj> \
-	{	\
-	public: \
-		ClassFactory_##classObj() : Factory_Arg0<classObj>(allocator) \
-		{ \
+	{\
+	public:\
+		ClassFactory_##classObj() : Factory_Arg0<classObj>(new PoolPacketAllocator()) {\
 			ClassID(classID); ClassName(#classObj); mgr.AddFactory(this); \
 		} \
 		~ClassFactory_##classObj() {} \
