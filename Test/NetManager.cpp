@@ -1,14 +1,35 @@
 #include "StdAfx.h"
+
 #include "NetManager.h"
 #include "NetChannel.h"
 #include "NetReactor.h"
 #include <assert.h>
 #include "MyLog.h"
+#include "PacketProcessor.h"
 
-NetManager::NetManager(void)
+
+NetManager::NetManager(
+	bool bLZOCompress, 
+	int32 nSockRcBufSize, 
+	int32 nRcBufSize, 
+	int32 nSockSnBufSize, 
+	int32 nSnBufSize, 
+	FunctionBase_Arg1<int32>* funcAccept, 
+	FunctionBase_Arg1<int32>* funcCon, 
+	FunctionBase_Arg1<int32>* funcDiscon,
+	int32 MAX_SOCKETS)
+	:m_pProcessor(NULL)
+	,m_ChannelList(MAX_SOCKETS)
+	,m_bLzoCompress(bLZOCompress)
+	,m_pIRecvPacketFilter(0)
+	,m_bUseIndexWhenSend(false)
+	,m_bUseIndexWhenRecv(false)
 {
+	m_nSockRcBufSize = nSockRcBufSize;
+	m_nRcBufSize = nRcBufSize;
+	m_nSockRnBufSize = nSockSnBufSize;
+	m_nSnBufSize = nSnBufSize;
 }
-
 
 NetManager::~NetManager(void)
 {
@@ -54,6 +75,29 @@ int32 NetManager::Connect( char* sAddr, int32 nPort, bool bSingleThread)
 	FreeChannel( pBase );
 
 	return nChannelID;
+}
+
+void NetManager::CloseChannel(int32 nChannel)
+{
+	NetChannelBase* pChannel = NULL;
+
+	m_mutexChannels.Lock();
+
+	pChannel = m_ChannelList.XGet( nChannel );
+
+	m_ChannelList.remove( nChannel);
+
+	m_mutexChannels.Unlock();
+
+	if( pChannel == NULL || pChannel->GetSocket() == INVALID_SOCKET )
+		return;
+
+	if(m_DisconnectCallBack)
+		(*m_DisconnectCallBack)(nChannel);
+
+	OnDisconnect(pChannel);
+	pChannel->CloseChannel();
+	FreeChannel(pChannel);
 }
 
 int32 NetManager::AddChannel(NetChannelBase* pBase)
@@ -281,9 +325,4 @@ void NetManagerReactor::OnDisconnect(NetChannelBase* pChannel)
 	m_pReactor->RemoveHandler(pHandler);
 
 	NetManager::OnDisconnect(pChannel);
-}
-
-NetManagerIOCP::NetManagerIOCP(bool bLZOCompress, int32 nSockRcBuffSize, int32 nRcBufferSize, int32 nSnBufferSize, FunctionBase_Arg1<int32>* funcAccept /*= NULL*/, FunctionBase_Arg1<int32>* funcCon /*= NULL*/, FunctionBase_Arg1<int32>* funcDiscon /*= NULL*/, int32 MAX_SOCKETS /*= MY_SOCKET_LIST_SIZE */)
-{
-
 }

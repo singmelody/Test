@@ -13,6 +13,12 @@ typedef signed short int16;
 typedef unsigned int uint32;
 typedef signed int int32;
 
+
+#define SrvID_NULL	-1
+#define IPLEN		32
+
 #define SAFE_DELETE(p) if(p) { delete (p); p = NULL; }
 #define SAFE_DELETE_ARRAY(p) if(p) { delete[] (p); p = NULL; }
 #define SAFE_RELEASE(p) if(p) { p.Release(); p = NULL; }
+
+#define _WINSOCKAPI_

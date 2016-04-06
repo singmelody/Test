@@ -229,6 +229,23 @@ bool Socket::SetRecvBuffSize(int32 nLen)
 	return setsockopt( m_Sock, SOL_SOCKET, SO_RCVBUF, (char*)&nLen, vallen) == 0;
 }
 
+int32 Socket::GetSendBuffSize() const
+{
+	int32 nVal = 0;
+	socklen_t len = sizeof(nVal);
+	if(getsockopt( m_Sock, SOL_SOCKET, SO_SNDBUF, (char*)&nVal, &len) >= 0)
+		return nVal;
+
+	return -1;
+}
+
+bool Socket::SetSendBuffSize(int32 nLen)
+{
+	socklen_t vallen = sizeof(nLen);
+
+	return setsockopt( m_Sock, SOL_SOCKET, SO_SNDBUF, (char*)&nLen, vallen);
+}
+
 int32 Socket::GetSockError() const
 {
 	int32 nError = 0;
@@ -248,3 +265,11 @@ bool Socket::IsValid()
 {
 	return m_Sock != INVALID_SOCKET;
 }
+
+void Socket::Shift(Socket& sock)
+{
+	Close();
+	m_Sock = sock.m_Sock;
+	sock.m_Sock = INVALID_SOCKET;
+}
+

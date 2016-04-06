@@ -1,4 +1,5 @@
 #pragma once
+#include "MyClass.h"
 
 #include "ServerConfig.h"
 #include "MyFactory.h"
@@ -33,3 +34,8 @@
 	Ref_Class(packet) \
 	FINISH_FACTORY_ARG0(packet)
 
+#define ADD_PACKET_MEMBER( member, type, des) \
+	__Add_Ref_Member__( member, type, eTB_Flag_Sec, des, MyClassMemberEx);
+
+#define ADD_PACKET_MEMBER_STR( member, type, des) \
+	Add_Ref_Member_String( member, size, eTB_Flag_Sec, des);

@@ -46,6 +46,7 @@ public:
 	virtual ~TypeBase(){}
 
 	inline const char* Name() { return mName.c_str(); }
+	inline void Name( const char* sName) { mName = sName; }
 
  	void InitType(bool) { m_classType = eTB_Bool; }
   	void InitType(uint8) { m_classType = eTB_UInt8; }
@@ -70,7 +71,9 @@ public:
 	inline uint32 GetTypeFlag() { return m_typeFlag; }
 
 	const char* Des() { return mDes.c_str(); }
+	void Des(const char* str) { mDes = str; }
 
+	inline void SetTypeFlag(uint32 flag) { m_typeFlag = flag; }
 	inline bool CheckTypeFlag(uint32 flag) { return m_typeFlag & flag; }
 
 	virtual char* Read(void* pClassObj, char* pBuffer);
@@ -255,3 +258,131 @@ protected:
 	MemberMap	mMemberMap;
 	std::string	mClassName;
 };
+
+template <class T>
+class MyClassMember : public TAnyType<T>
+{
+public:
+	MyClassMember(){}
+	virtual ~MyClassMember(){}
+
+	T& GetValue( void* pClassObj)
+	{
+		return *((T*)( ((char*)pClassObj) + this->m_offset ));
+	}
+
+	void SetValue( void* pClassObj, T value)
+	{
+		*((T*)( ((char*)pClassObj) + this->m_offset )) = value;
+	}
+
+	virtual char* Read( void* pClassObj, char* pBuffer)
+	{
+		if(!pBuffer || !pClassObj)
+			return pBuffer;
+
+		memcpy( ( ((char*)pClassObj) + this->m_offset), pBuffer, this->m_size);
+		return pBuffer + this->m_size;
+	}
+
+	virtual char* Read( void* pClassObj, char* pBuffer, bool& bDirty)
+	{
+		bDirty = false;
+		if(!pBuffer || !pClassObj)
+			return pBuffer;
+
+		T dstValue = GetValue(pClassObj);
+		T srcValue = *((T*)pBuffer);
+
+		if( dstValue != srcValue )
+		{
+			memcpy( ( ((char*)pClassObj) + this->m_offset), pBuffer, this->m_size);
+			bDirty = true;
+		}
+
+		return pBuffer + this->m_size;
+	}
+
+	virtual char* Write( void* pClassObj, char* pBuffer)
+	{
+		if(!pClassObj || !pBuffer)
+			return pBuffer;
+
+		memcpy( pBuffer, ( ((char*)pClassObj) + this->m_offset), this->m_size);
+		return pBuffer + this->m_size;
+	}
+};
+
+class ClassMember_Char : public TypeBase
+{
+public:
+	ClassMember_Char(int32 nSize)
+	{
+		this->m_size = nSize + sizeof(uint16);
+		m_charSize = Size;
+		m_classType = eTB_String;
+	}
+
+	ClassMember_Char()
+	{
+		this->m_size = 0;
+		m_charSize = this->m_size;
+	}
+
+	virtual ~ClassMember_Char(){}
+
+	const char* TypeName()
+	{
+		return "String";
+	}
+
+	char* GetValue(void* pClassObj)
+	{
+		return ((char*)pClassObj + this->m_offset);
+	}
+
+	void SetValue(void* pClassObj, const char* value)
+	{
+		if(!value)
+			return;
+
+		int32 nLen = strlen(value);
+		nLen = ( nLen > (m_charSize-1) ) ? (m_charSize -1) : nLen;
+
+		if(nLen <= 0)
+			return;
+
+		memset( (char*)pClassObj + this->m_offset, 0, m_charSize);
+		memcpy( (char*)pClassObj + this->m_offset, value, nLen);
+	}
+
+	virtual char* Read( void* pClassObj, char* pBuffer)
+	{
+		if(!pClassObj || !pBuffer)
+			return;
+	}
+protected:
+	uint16	m_charSize;
+};
+
+template <class T>
+class MyClassMemberEx : public MyClassMember<T>
+{
+
+};
+
+#define __Add_Ref_Member__( member, type, flag, des, MY_CLASS_MEMBER_CLASS) \
+	MY_CLASS_MEMBER_CLASS<type>* pMem_##member = new MY_CLASS_MEMBER_CLASS<type>(); \
+	pMem_##member->ClassOffset( static_cast<int32>( reinterpret_cast<int64>( &pClassObj->member)) ); \
+	pMem_##member->Name(#member); \
+	pMem_##member->Des(#des); \
+	pMem_##member->SetTypeFlag(flag); \
+	AddMember(pMem_##member); 
+
+#define Add_Ref_Member_String( member, size, flag, des) \
+	ClassMember_Char* pMem_##member = new ClassMember_Char(size); \
+	pMem_##member->ClassOffset( static_cast<int32>( reinterpret_cast<int64>( &pClassObj->member)) ); \
+	pMem_##member->Name(#member); \
+	pMem_##member->Des(#des); \
+	pMem_##member->SetTypeFlag(flag); \
+	AddMember(pMem_##member);

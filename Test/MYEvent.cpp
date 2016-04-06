@@ -23,7 +23,7 @@ bool MYEvent::SetEvent()
 		return false;
 	}
 
-	return 
+	return TRUE == ::SetEvent(hEvent);
 }
 
 

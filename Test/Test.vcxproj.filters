@@ -243,6 +243,12 @@
     <ClInclude Include="MyXml.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="PeerModuleBase.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleBase.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -450,6 +456,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="MyClassManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PeerModuleBase.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleBase.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

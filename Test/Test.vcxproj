@@ -252,6 +252,7 @@
     <ClInclude Include="lzoconf.h" />
     <ClInclude Include="lzodefs.h" />
     <ClInclude Include="minilzo.h" />
+    <ClInclude Include="ModuleBase.h" />
     <ClInclude Include="MyClass.h" />
     <ClInclude Include="MyClassManager.h" />
     <ClInclude Include="MYEvent.h" />
@@ -291,6 +292,7 @@
     <ClInclude Include="ParamEx.h" />
     <ClInclude Include="ParamPool.h" />
     <ClInclude Include="ParamSet.h" />
+    <ClInclude Include="PeerModuleBase.h" />
     <ClInclude Include="PoolAllocator.h" />
     <ClInclude Include="PoolAllocatorEx.h" />
     <ClInclude Include="RSAipher.h" />
@@ -334,6 +336,7 @@
     <ClCompile Include="FunctionBase.cpp" />
     <ClCompile Include="LZOCompressor.cpp" />
     <ClCompile Include="minilzo.c" />
+    <ClCompile Include="ModuleBase.cpp" />
     <ClCompile Include="MyClass.cpp" />
     <ClCompile Include="MyClassManager.cpp" />
     <ClCompile Include="MYEvent.cpp" />
@@ -373,6 +376,7 @@
     <ClCompile Include="ParamEx.cpp" />
     <ClCompile Include="ParamPool.cpp" />
     <ClCompile Include="ParamSet.cpp" />
+    <ClCompile Include="PeerModuleBase.cpp" />
     <ClCompile Include="PoolAllocator.cpp" />
     <ClCompile Include="PoolAllocatorEx.cpp" />
     <ClCompile Include="RSAipher.cpp" />

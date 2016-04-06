@@ -1,10 +1,12 @@
 #pragma once
 
+#include <assert.h>
+
 template <class T>
 class CircularListEx
 {
 public:
-	CircularListEx(void) : m_pos(0), m_count(0), ELEMENTCOUNT(ELEMENTCOUNT_), m_pElements(NULL), m_DefVal(T())
+	CircularListEx(int32 ELEMENTCOUNT_) : m_pos(0), m_count(0), ELEMENTCOUNT(ELEMENTCOUNT_), m_pElements(NULL), m_DefVal(T())
 	{
 
 	}
@@ -55,14 +57,14 @@ public:
 		}
 
 		m_pElements[m_pos] = val;
-		res = m_pos;
+		nRes = m_pos;
 		m_pos++;
 		m_count++;
 
 		if(m_pos >= ELEMENTCOUNT)
 			m_pos = 0;
 
-		return res;
+		return nRes;
 	}
 
 	inline T XGet(int32 nIdx)

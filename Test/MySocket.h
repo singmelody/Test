@@ -7,6 +7,7 @@ class SockAddr;
 
 class Socket : private NoCopyable
 {
+	friend class NetChannelBase;
 public:
 	Socket();
 	explicit Socket(SOCKET sock);
@@ -40,7 +41,11 @@ public:
 	int32 GetRecvBuffSize() const;
 	bool SetRecvBuffSize(int32 nLen);
 
+	int32 GetSendBuffSize() const;
+	bool SetSendBuffSize(int32 nLen);
+
 	SOCKET GetSocket() const { return m_Sock; }
+	void Shift(Socket& sock);
 protected:
 	int32 GetSockError() const;
 	static int32 GetSysError();

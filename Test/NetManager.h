@@ -24,11 +24,21 @@
 class NetChannelBase;
 class NetReactor;
 class PacketProcessor;
+struct IRecvPacketFilter;
 
 class NetManager
 {
 public:
-	NetManager(void);
+	NetManager(
+		bool bLZOCompress,
+		int32 nSockRcBufSize,
+		int32 nRcBufSize,
+		int32 nSockSnBufSize,
+		int32 nSnBufSize,
+		FunctionBase_Arg1<int32>* funcAccept,
+		FunctionBase_Arg1<int32>* funcCon,
+		FunctionBase_Arg1<int32>* funcDiscon,
+		int32 MAX_SOCKETS);
 	~NetManager(void);
 
 	void NetRun();
@@ -61,6 +71,7 @@ public:
 
 	void SetDisconnectFun(FunctionBase_Arg1<int32>* funcDisconn) { m_DisconnectCallBack = funcDisconn; }
 	virtual void OnReceivedPacket( NetChannelBase* pChannel, PacketBase* pPkt);
+	bool Compressable() const { return m_bLzoCompress; }
 protected:
 	NetChannelBase* CreateNewChannel();
 
@@ -104,6 +115,11 @@ protected:
 
 	bool				m_bUseIndexWhenSend;
 	bool				m_bUseIndexWhenRecv;
+
+
+	IRecvPacketFilter*	m_pIRecvPacketFilter;
+
+
 };
 
 

@@ -26,7 +26,11 @@ public:
 	int32 GetID() const { return m_ID;}
 	void SetID(int32 nID) { m_ID = nID; }
 
-	virtual bool OnWritePackets2Stream(PacketBase& pkt) { return false; }
+
+	virtual bool OnWritePackets2Stream();
+	virtual bool OnWritePacket2Stream(PacketBase& pkt) { return false; }
+
+
 	virtual bool OnParsePacketsFromStream() = 0;
 
 	virtual bool FlushStream();
@@ -36,6 +40,8 @@ public:
 	inline bool GetRemoteAddr(SockAddr& addr) { return m_socket.GetPeerAddr(addr); }
 protected:
 	void AppendData2Stream(char* pBuff, int32 nLen);
+
+	int32 RecvData( char* buffer, int32 nLen);
 
 	virtual void HandleInput();
 	virtual void HandleOutput();

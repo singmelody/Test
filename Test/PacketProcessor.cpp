@@ -2,6 +2,7 @@
 #include "PacketProcessor.h"
 #include "MyLog.h"
 #include "PacketBase.h"
+#include "PacketImpl.h"
 
 PacketProcessor::PacketProcessor()
 {

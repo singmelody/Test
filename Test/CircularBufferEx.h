@@ -20,7 +20,7 @@ public:
 	inline uint32 GetSpaceAfterData() const { return uint32(m_bufferEnd - m_dataEnd); }
 
 	void MoveData2Head();
-	void* ReserveForWrite( uint32 bytes, bool bMoveHeadIfNeed);
+	void* ReserveForWrite( uint32 bytes, bool bMoveHeadIfNeed = false);
 private:
 	uint8*	m_buffer;
 	uint8*	m_bufferEnd;
