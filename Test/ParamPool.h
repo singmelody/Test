@@ -37,6 +37,11 @@ public:
 	template <class T>
 	T GetValue( ParamBase* pBase );
 
+	const char* GetValueString( int32 nIdx, const char* defVal);
+	const char* GetValueString( const char* sName, const char* defVal);
+	const char* GetValueString( ParamBase* pParam, const char* defVal);
+
+
 	void PreSetValue( ParamBase* pBase, bool bSaveOldValue);
 	void PostSetValue( ParamBase* pBase );
 
@@ -64,6 +69,9 @@ public:
 	int32 GetDataID() { return m_initDataID; }
 	void SetDataID(int32 nID) { m_initDataID = nID; }
 
+	ParamDef* GetParamDef() const;
+
+	int32 GetParamTypeID();
 protected:
 	char* Data2Buffer(char* pBuffer);
 	char* Buffer2Data(char* pBuffer);

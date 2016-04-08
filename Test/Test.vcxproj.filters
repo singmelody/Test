@@ -255,6 +255,15 @@
     <ClInclude Include="ServerGrpInfo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SHMManager_DBA.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SHMManagerBase.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ParamPool2SqlProcessor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -474,6 +483,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ServerGrpInfo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SHMManager_DBA.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SHMManagerBase.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ParamPool2SqlProcessor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -6,6 +6,9 @@ ParamDef::ParamDef(void)
 {
 	m_maxIdx = -1;
 	m_count = 0;
+	m_nExtraPoolSize = 0;
+
+	m_pIParamPool2SqlProcessor = NULL;
 }
 
 
@@ -232,6 +235,14 @@ DataBufferBase* ParamDef::GetItem(int32 nDataID)
 void ParamDef::SetItem(int32 nDataID, DataBufferBase* pBase)
 {
 	m_bufferMap[nDataID] = pBase;
+}
+
+void ParamDef::SetIParamPool2SqlProcessor(IParamPool2SqlProcessor* p)
+{
+	assert( !m_pIParamPool2SqlProcessor && p);
+
+	m_pIParamPool2SqlProcessor = p;
+	m_nExtraPoolSize = m_pIParamPool2SqlProcessor->GetExtraSize();
 }
 
 bool ParamDef::CheckClassType(int32 nValue, const char* pClassType, char* pClassTypeEx)

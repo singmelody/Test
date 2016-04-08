@@ -1,0 +1,77 @@
+#include "StdAfx.h"
+#include "DBASqlHelper.h"
+#include "ParamTypeDef.h"
+#include <assert.h>
+#include "ParamDef.h"
+#include "ParamPool.h"
+#include <sstream>
+
+DBASqlHelper::DBASqlHelper(void)
+{
+}
+
+
+DBASqlHelper::~DBASqlHelper(void)
+{
+}
+
+void DBASqlHelper::GetInsertString(ParamPool* pParamSet, ParamBase* pParam, std::stringstream& sqlTemplateHead)
+{
+
+}
+
+void DBASqlHelper::GetInsertString(ParamDef* pDef, ParamPool* pParamPool, std::stringstream& sqlTemplateHead, std::stringstream& sqlTemplateBack, std::string& res)
+{
+	sqlTemplateHead << pParam->Name() << ",";
+
+	sParam2String( pParamSet, pParam, sqlTemplateBack);
+	sqlTemplateBack<<",";
+}
+
+std::string DBASqlHelper::GetProcString(ParamDef* pDef, ParamPool* pPool, bool bForInsert /*= true*/)
+{
+	if( !pDef || !pDef)
+		assert(false);
+
+	std::stringstream ss;
+
+	for (uint32 i = 0; i <= pDef->MaxParamIndex(); ++i)
+	{
+		ParamBase* pParam = pDef->GetParam(i);
+		int32 tmp = 0;
+		if( !pParam || !pParam->CheckFlag(eParamFlag_Save))
+			continue;
+
+		if(!bForInsert && pParam->CheckFlag(eParamFlag_NoUpdate))
+			continue;
+
+		if(bForInsert && !pParam->SqlFlag_IsInsertProcParam())
+			continue;
+
+		sParam2String( pParamSet, pParam, ss);
+		ss<<',';
+	}
+}
+
+void sParam2String(ParamPool* pParamSet, ParamBase* pParam, std::stringstream& sqlTemplate)
+{
+	switch (pParam->TypeID())
+	{
+	case eTypeID_int64: sqlTemplate << pParamSet->GetValue( pParam, int64(0)); break;
+	case eTypeID_uint64: sqlTemplate << pParamSet->GetValue( pParam, uint64(0)); break;
+
+	case eTypeID_int32: sqlTemplate << pParam->GetValue( pParam, int32(0)); break;
+	case eTypeID_uint32: sqlTemplate << pParam->GetValue( pParam, uint32(0)); break;
+
+	case eTypeID_int16: sqlTemplate << pParam->GetValue( pParam, int16(0)); break;
+	case eTypeID_uint16: sqlTemplate << pParam->GetValue( pParam, uint16(0)); break;
+
+	case eTypeID_int8: sqlTemplate << pParam->GetValue( pParam, int8(0)); break;
+	case eTypeID_uint8: sqlTemplate << pParam->GetValue( pParam, uint8(0)); break;
+
+	case eTypeID_f64: sqlTemplate << pParam->GetValue( pParam, f64(0)); break;
+	case eTypeID_f32: sqlTemplate << pParam->GetValue( pParam, f32(0)); break;
+
+	case eTypeID_str: sqlTemplate << "\'"<< pParam->GetValueString( pParam, "No") <<"\'"; break;
+	}
+}

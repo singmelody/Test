@@ -4,6 +4,7 @@
 
 class ParamBase;
 class DataBufferBase;
+class IParamPool2SqlProcessor;
 
 enum ParamType
 {
@@ -54,6 +55,9 @@ public:
 	DataBufferBase* GetItem(int32 nDataID);
 	void SetItem( int32 nDataID, DataBufferBase* pBase);
 
+	void SetIParamPool2SqlProcessor( IParamPool2SqlProcessor* p);
+	IParamPool2SqlProcessor* GetIParamPool2SqlProcessor() const { return m_pIParamPool2SqlProcessor; }
+
 	bool IsLoadData() { return m_loadData; }
 	int32 GetMaxIndex() { return m_maxIdx; }
 protected:
@@ -69,9 +73,12 @@ protected:
 
 	int32 m_maxIdx;
 	int32 m_count;
+	int32 m_nExtraPoolSize;
 	int32 m_poolSize;
 	int32 m_poolExtraSize;
 	Allocator*	m_pBufferAlloc;
+
+	IParamPool2SqlProcessor*		m_pIParamPool2SqlProcessor;
 
 	std::map<UtilID, ParamBase*>	m_paramMap;
 	std::vector<ParamBase*>			m_paramList;

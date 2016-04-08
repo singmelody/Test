@@ -26,6 +26,7 @@ public:
 typedef std::map< int32, ParamDef*> ParamMap;
 typedef ParamMap::iterator ParamMapItr;
 
+
 class ParamDefManager : public LoadTemplate, public Singleton<ParamDefManager>
 {
 
@@ -81,4 +82,23 @@ void InitValue_A2Num(Param<T>* pParam, const std::string& sDft, const std::strin
 	}
 
 	pParam->SetMinValue(minVal);
+}
+
+template < class T>
+InitValue_A2Float(Param<T>* pParam, const std::string& sDft, const std::string& sMax, const std::string &sMin)
+{
+	T defVal = (T)atof( sDft.c_str() );
+	pParam->SetDftValue( defVal );
+
+	if( sMax.length() > 0 )
+	{
+		T max = (T)atof(sMax.c_str());
+		pParam->SetMaxValue(max);
+	}
+
+	if( sMin.length() > 0 )
+	{
+		T min = (T)atof(sMin.c_str());
+		pParam->SetMinValue(min);
+	}
 }

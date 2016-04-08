@@ -144,6 +144,16 @@ bool ParamPool::AllocParamBuffer()
 	return true;
 }
 
+ParamDef* ParamPool::GetParamDef() const
+{
+	return m_pDef;
+}
+
+int32 ParamPool::GetParamTypeID()
+{
+	return MAKE_TYPE_ID( GetParamDefineIndex(), GetDataID() );
+}
+
 char* ParamPool::Data2Buffer(char* pBuffer)
 {
 	if(!pBuffer)
@@ -209,4 +219,33 @@ ParamPool* ParamSet::CreateNew(int32 nDefID, int32 nDataID, char* pBuff /*= 0*/)
 	}
 
 	return pSet;
+}
+
+
+const char* ParamPool::GetValueString(int32 nIdx, const char* defVal)
+{
+	if(!m_pDef)
+		return defVal;
+
+	ParamBase* pParam = m_pDef->GetParam( nIdx );
+	return GetValue( pParam, defVal);
+}
+
+const char* ParamPool::GetValueString(const char* sName, const char* defVal)
+{
+	if(!m_pDef)
+		return defVal;
+
+	ParamBase* pParam = m_pDef->GetParam(sName);
+	return GetValue( pParam, defVal);
+}
+
+const char* ParamPool::GetValueString(ParamBase* pParam, const char* defVal)
+{
+	assert( IsValidMemory(pParam) );
+
+	if(!m_pDef || !defVal)
+		return defVal;
+
+	return pParam->GetValueString(m_pParamBuffer);
 }

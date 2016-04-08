@@ -21,4 +21,10 @@ typedef signed int int32;
 #define SAFE_DELETE_ARRAY(p) if(p) { delete[] (p); p = NULL; }
 #define SAFE_RELEASE(p) if(p) { p.Release(); p = NULL; }
 
+#define MAKE_TYPE_ID( paramid, dataid) \
+	( (paramid) << 24 + (dataid) & 0xffffff )
+
+#define MAKE_LOGIC_ID( paramid, dataid) \
+	( (paramid) << 8 + (dataid) & 0xff )
+
 #define _WINSOCKAPI_
