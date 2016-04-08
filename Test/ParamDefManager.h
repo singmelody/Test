@@ -8,6 +8,13 @@
 
 #define MD5_SIZE 32
 
+enum ParamType
+{
+	eParamType_Avatar = 0,
+	eParamType_Monster = 1,
+}
+
+
 class ParamBase;
 class ParamDef;
 class ParamDefManager;

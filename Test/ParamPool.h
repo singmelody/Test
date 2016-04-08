@@ -11,6 +11,9 @@
 #define MAX_PARAM_COUNT_IN_POOL 1024
 #define MAX_PARAM_COUNT_IN_BLOCK (sizeof(uint32)*8)
 
+#define PARAM_GET_VALUE( paramPtr, paramName, defVal) \
+	paramPtr->GetValue( ParamNameIndexHelper::GetParamIndex( paramPtr->GetParamDefineIndex(), param_name_##paramName), defVal)
+
 typedef FunctionBase_Arg2<ParamPool*, ParamBase*> ParamCallback;
 
 class ParamDef;

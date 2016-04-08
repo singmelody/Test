@@ -15,17 +15,42 @@ DBASqlHelper::~DBASqlHelper(void)
 {
 }
 
-void DBASqlHelper::GetInsertString(ParamPool* pParamSet, ParamBase* pParam, std::stringstream& sqlTemplateHead)
-{
-
-}
-
-void DBASqlHelper::GetInsertString(ParamDef* pDef, ParamPool* pParamPool, std::stringstream& sqlTemplateHead, std::stringstream& sqlTemplateBack, std::string& res)
+void DBASqlHelper::GetInsertString(ParamPool* pParamSet, ParamBase* pParam, 
+	std::stringstream& sqlTemplateHead, std::stringstream& sqlTemplateBack)
 {
 	sqlTemplateHead << pParam->Name() << ",";
 
 	sParam2String( pParamSet, pParam, sqlTemplateBack);
-	sqlTemplateBack<<",";
+	sqlTemplateBack<<',';
+}
+
+void DBASqlHelper::GetInsertString(ParamDef* pDef, ParamPool* pParamSet, std::stringstream& sqlTemplateHead, std::stringstream& sqlTemplateBack, std::string& res)
+{
+	if(!pParamSet)
+		return;
+
+	if(!pDef)
+		pDef = pParamSet->GetParamDef();
+
+	if(!pDef)
+		return;
+
+	for (int32 i = 0; i <= pDef->MaxParamIndex(); ++i)
+	{
+		ParamBase* pParam = pDef->GetParam(i);
+
+		if(!pParam || !pParam->CheckFlag(eParamFlag_Save))
+			continue;
+
+		if(strcmp( pParam->Name(), "avatardid") == 0)
+			continue;
+
+		GetInsertString( pParamSet, pParam, sqlTemplateHead, sqlTemplateBack);
+	}
+
+	res.clear();
+	res = sqlTemplateHead.str().substr( 0, sqlTemplateHead.str().length() -1);
+	res = res + ") " + sqlTemplateBack.str().substr( 0, sqlTemplateBack.str().length()-1) + ");";
 }
 
 std::string DBASqlHelper::GetProcString(ParamDef* pDef, ParamPool* pPool, bool bForInsert /*= true*/)
@@ -51,6 +76,16 @@ std::string DBASqlHelper::GetProcString(ParamDef* pDef, ParamPool* pPool, bool b
 		sParam2String( pParamSet, pParam, ss);
 		ss<<',';
 	}
+}
+
+bool DBASqlHelper::GetUpdateSqlString(ParamPool* pParamSet, ParamBase* pParam, std::stringstream& sqlTemplate)
+{
+
+}
+
+bool DBASqlHelper::GetUpdateSqlString(ParamDef* pParamDef, ParamPool* pParamSet, std::string& sql)
+{
+
 }
 
 void sParam2String(ParamPool* pParamSet, ParamBase* pParam, std::stringstream& sqlTemplate)
