@@ -57,6 +57,9 @@
     <ClInclude Include="SHMAvatar.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="DBThreadPool.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -93,6 +96,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SHMAvatar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DBThreadPool.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

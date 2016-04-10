@@ -11,6 +11,8 @@ enum ParamType
 	eParam_Min = -1,
 	eParam_Avatar = 0,
 	eParam_Monster = 1,
+	eParam_Skill = 2,
+	eParam_Coin = 3,
 
 	eParam_Max,	
 

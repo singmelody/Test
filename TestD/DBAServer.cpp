@@ -3,6 +3,8 @@
 #include "GameUtil.h"
 #include "DBAConfig.h"
 #include "DBAAvatarManager.h"
+#include "MyLog.h"
+#include "Thread.h"
 
 DBAServer::DBAServer(void)
 {
@@ -72,6 +74,11 @@ void DBAServer::Exit()
 	}
 
 	DBABase::Exit();
+}
+
+void DBAServer::Send2World(PacketBase& pkt)
+{
+
 }
 
 void DBAServer::OnWorldDisconnect(ServerInfo* pInfo)

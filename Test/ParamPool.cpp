@@ -149,9 +149,29 @@ ParamDef* ParamPool::GetParamDef() const
 	return m_pDef;
 }
 
+int32 ParamPool::GetParamDefineIndex()
+{
+	if(!m_pDef)
+		return -1;
+
+	return m_pDef->Index();
+}
+
 int32 ParamPool::GetParamTypeID()
 {
 	return MAKE_TYPE_ID( GetParamDefineIndex(), GetDataID() );
+}
+
+void* ParamPool::SHMGetExtraMemory()
+{
+	assert( m_pDef && m_pParamBuffer);
+	if( NULL == m_pDef->GetIParamPool2SqlProcessor())
+		return NULL;
+
+	if( NULL == m_pDef->ExtraSize())
+		return NULL;
+
+	return m_pParamBuffer + m_paramBuffSize;
 }
 
 char* ParamPool::Data2Buffer(char* pBuffer)

@@ -12,10 +12,10 @@ class DBTaskAvatar;
 
 enum DBATaskLevel
 {
-	eDTL_0 = 0,
-	eDTL_1,
-	eDTL_2,
-	eDTL_MAX
+	eDBATL_0 = 0,
+	eDBATL_1,
+	eDBATL_2,
+	eDBATL_MAX
 };
 
 class DBAAvatarManagerEx : public DBAFuncManager, public Singleton<DBAAvatarManagerEx>
@@ -30,6 +30,7 @@ public:
 
  	Mutex* GetMutex() { return &m_AvatarHashTableLock; }
  	AvatarSHM* GetAvatar(int64 nDID) const;
+	void ProcExitedAvatars();
 protected:
 	static const uint32 MAX_AVATAR_HASH_TABLE = 4096;
 

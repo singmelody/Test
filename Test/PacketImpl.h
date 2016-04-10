@@ -10,13 +10,13 @@
 #include "Singleton.h"
 #include "Factory.h"
 
-
-
-
 PACKET( PacketPack, PacketPackBase)
 START_ADD_PACKET_MEMBER(PacketPack)
 PACKET_END(PacketPack)
 
+PACKET( PacketAvatarDecommision, PacketBase)
+START_ADD_PACKET_MEMBER(PacketAvatarDecommision)
+PACKET_END(PacketAvatarDecommision)
 
 PACKET( PacketAddSrvInfo, PacketBase)
 int32 nSrvType;

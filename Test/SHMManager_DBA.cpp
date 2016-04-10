@@ -13,27 +13,7 @@ SHMManager_DBA::~SHMManager_DBA(void)
 
 void SHMManager_DBA::Sync2DB()
 {
-	LOCK_THIS_AVATAR();
-	if( m_state != EState_Gaming )
-		return;
 
-	IParamPool2SqlProcessor* pProcessor = DBAServer::Instance().GetParam2SqlProcessor(Param_avatar);
-	assert(pProcessor);
-
-	std::string strSql;
-	if(pProcessor->GetSqlString(*m_pPool, strSql))
-	{
-		ScheduleSavingTask(strSql);
-
-		SParamPoolExInfo_DBA_Avatar* pExInfo = (SParamPoolExInfo_DBA_Avatar*)m_pPool->SHMGetExtraMemory();
-		assert(pExInfo);
-		pExInfo->SetLoaded();
-	}
-
-	for (int32 i = eParam_Min + 1; i < eParam_Max; ++i)
-	{
-		Idx2CommonDataMap& theMap = m_arrMapIdx2ComonData[i];
-	}
 }
 
 void SHMManager_DBA::InitParamPool2SqlProcessors(bool bUseSHM)
@@ -41,12 +21,20 @@ void SHMManager_DBA::InitParamPool2SqlProcessors(bool bUseSHM)
 	if(bUseSHM)
 	{
 		// avatar data
-		AddParam2SqlProcessor( eParamType_Avatar, new SHMParamPool2SqlProcessor_DBA_Avatar);
+		AddParam2SqlProcessor( eParam_Avatar, new SHMParamPool2SqlProcessor_DBA_Avatar);
+
+		// avatar commondata
+		AddParam2SqlProcessor( eParam_Skill, new SHMParamPool2SqlProcessor_DBA_Avatar_CommonData);
+		AddParam2SqlProcessor( eParam_Coin, new SHMParamPool2Sqlprocessor_DBA_Avatar_CommonData);
 	}
 	else
 	{
 		// avatar data
-		AddParam2SqlProcessor( eParamType_Avatar, new ParamPool2SqlProcessor_DBA_Avatar);
+		AddParam2SqlProcessor( eParam_Avatar, new ParamPool2SqlProcessor_DBA_Avatar);
+
+		// avatar commondata
+		AddParam2SqlProcessor( eParam_Skill, new ParamPool2Sqlprocessor_DBA_Avatar_CommonData);
+		AddParam2SqlProcessor( eParam_Coin, new ParamPool2Sqlprocessor_DBA_Avatar_CommonData);
 	}
 
 }

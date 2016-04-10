@@ -12,6 +12,8 @@ enum Status
 	eThread_Exiting,
 };
 
+class FunctionBase_Arg0;
+
 class Thread
 {
 public:
@@ -40,4 +42,21 @@ protected:
 	static unsigned int __stdcall ThreadProcess(void* pThread);
 
 	const std::string m_strName;
+};
+
+class MyThread : public Thread
+{
+public:
+	explicit MyThread(const std::string& strName = std::string());
+	virtual ~MyThread();
+
+	void Init( FunctionBase_Arg0* pFunc);
+
+	inline void Exit() { m_bExit = true; }
+	inline bool ShouldExit() const { return m_bExit; }
+protected:
+	virtual void Run();
+
+	FunctionBase_Arg0*	m_pUpdateFunc;
+	volatile bool		m_bExit;
 };

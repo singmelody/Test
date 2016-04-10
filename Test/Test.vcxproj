@@ -260,6 +260,7 @@
     <ClInclude Include="MyClassManager.h" />
     <ClInclude Include="MYEvent.h" />
     <ClInclude Include="MyFactory.h" />
+    <ClInclude Include="MyListNode.h" />
     <ClInclude Include="MyLog.h" />
     <ClInclude Include="LoadTemplate.h" />
     <ClInclude Include="LoadTemplateManager.h" />
@@ -355,6 +356,7 @@
     <ClCompile Include="MyClassManager.cpp" />
     <ClCompile Include="MYEvent.cpp" />
     <ClCompile Include="MyFactory.cpp" />
+    <ClCompile Include="MyListNode.cpp" />
     <ClCompile Include="MyLog.cpp" />
     <ClCompile Include="LoadTemplate.cpp" />
     <ClCompile Include="LoadTemplateManager.cpp" />

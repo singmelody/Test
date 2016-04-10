@@ -9,6 +9,15 @@
 class ParamPool;
 class DBTaskAvatar;
 
+enum DBAAvatarState
+{
+	eDAS_Init		= 1,
+	eDAS_Loading	= 1 << 1,
+	eDAS_Gaming		= 1 << 2,
+	eDAS_Exiting	= 1 << 3,
+	eDAS_Exited		= 1 << 4
+};
+
 class AvatarSHM
 {
 	DECLARE_FACTORY_ARG0( AvatarSHM, -1, new PoolAllocatorEx);
@@ -21,7 +30,11 @@ public:
 
 	void Sync2DB(bool bExit = false);
 	bool ScheduleTask( DBTaskAvatar* pDBTask, DBATaskLevel taskLevel);
+
+	inline void SetAvatarID(int32 nID) { m_avatarID = nID; }
+	inline int32 GetAvatarID() const { return m_avatarID; }
 protected:
+
 	long DecPendingTaskCount();
 	long IncPendingTaskCount();
 

@@ -109,3 +109,29 @@ unsigned int __stdcall Thread::ThreadProcess(void* ptr)
 	::_endthreadex(0);
 	return 0;
 }
+
+
+MyThread::MyThread(const std::string& strName /*= std::string()*/)
+	: Thread(strName)
+	, m_bUpdateFunc(NULL)
+	, m_bExit(false)
+{
+
+}
+
+MyThread::~MyThread()
+{
+	SAFE_DELETE(m_pUpdateFunc);
+}
+
+void MyThread::Init(FunctionBase_Arg0* pFunc)
+{
+	assert(!m_pUpdateFunc);
+
+	m_pUpdateFunc = pFunc;
+}
+
+void MyThread::Run()
+{
+
+}

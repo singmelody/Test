@@ -80,6 +80,9 @@ public:
 	static bool IsEvent(uint32 attr) { return 0 != (attr & PktAttr_IsEvent); }
 	static bool IsDisconnectCommand(uint32 attr) { return 0 != ( attr & PktAttr_Disconnect);}
 
+	int32 GetAvatarID() const { return m_AvatarID; }
+	void SetAvatarID(int32 nID) { m_AvatarID = nID; }
+
 	virtual int32 GetPacketID() const { return m_PacketID; }
 	virtual void SetPacketID(int32 nID) { m_PacketID = nID; }
 

@@ -67,6 +67,7 @@ public:
 
 	ParamDef* GetParamDef() const;
 
+	int32 GetParamDefineIndex();
 	int32 GetParamTypeID();
 
 	virtual bool ParamDirtyCheck( int32 nParamIdx) = 0;
@@ -76,6 +77,8 @@ public:
 	virtual bool DirtyCheck() = 0;
 	virtual void ClearDirty() = 0;
 	virtual void SetAllParamDirty() = 0;
+
+	void* SHMGetExtraMemory();
 protected:
 	char* Data2Buffer(char* pBuffer);
 	char* Buffer2Data(char* pBuffer);

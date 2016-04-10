@@ -5,4 +5,6 @@
 
 PACKET_IMPL(PacketPack)
 
+PACKET_IMPL(PacketAvatarDecommision)
+
 PACKET_IMPL(PacketAddSrvInfo)

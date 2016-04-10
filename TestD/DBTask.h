@@ -21,14 +21,14 @@ class DBTask
 public:
 	DBTask(void) : nSockID(-1), nAvatarID(0), nFlag(0), nTableNum(0), nAvatarDID(0)
 	{
-		//vListNode.Set(this);
+
 	}
 
 	~DBTask(void) { pInterface = NULL; }
 
 	virtual void Execute(DBTable& table){}
 	void SetDBInterface( DBInterface* ptr) { pInterface = ptr; }
-	//TListNode<DBTask>& GetListNode() { return &_list_node; }
+	const std::list<DBTask*>& GetListNode() { return vListNode; }
 	virtual bool DoAction(DBInterface* ptr) ;
 	void Send2World( PacketBase& pkt);
 
@@ -44,6 +44,6 @@ protected:
 	int64				nAvatarDID;
 	std::string			sqlTemplate;
 	DBInterface*		pInterface;
-	//std::list<DBTask*>	vListNode;
+	std::list<DBTask*>	vListNode;
 };
 

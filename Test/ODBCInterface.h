@@ -3,6 +3,40 @@
 #include "DBInterface.h"
 #include "sql.h"
 #include "sqlext.h"
+
+class DB_Static_DS;
+
+struct DB_DS : public NoCopyable
+{
+public:
+	DB_DS() : m_bRecordSqlStatics(false)
+	{
+		Reset();
+	}
+
+	~DB_DS();
+
+	void Reset();
+	void AddDB_DS(DB_DS& ds, bool bReset);
+	void DoStatic(const char* szSql, int32 timeuse);
+	void ToString( std::string& str, const std::string& strHeader);
+
+	void EnableRecord()
+	{
+		m_bRecordSqlStatics = true;
+	}
+
+private:
+	Mutex m_lock;
+	typedef std::map< uint32, DB_Static_DS*> HashID2StaticMap;
+	HashID2StaticMap m_mapHashID2Statics;
+	int32 nTotalCount;
+	int32 nTotalTimeUse;
+
+	bool m_bEnableSqlStatics;
+	bool m_bRecordSqlStatics;	
+};
+
 class ODBCInterface : public DBInterface
 {
 	static const int MAXCOL = 500;
@@ -26,6 +60,7 @@ public:
 	virtual bool IsConnect() { return m_connected; }
 
 	void DiagState();
+	DB_DS& GetDBDS() { return m_db_static; }
 protected:
 	void Clear();
 
@@ -45,6 +80,8 @@ protected:
 	char		m_databuffer[MAX_COLUMN_BUFFER];
 	SQLINTEGER	m_dataLength;
 	SQLINTEGER	m_errorCode;
+
+	DB_DS		m_db_static;
 };
 
 class ODBCConnectionManager : public DBConnectionManager

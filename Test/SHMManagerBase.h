@@ -3,7 +3,7 @@
 #include "ParamDefManager.h"
 #include "ParamPool2SqlProcessor.h"
 
-//class ShareMemory;
+class ShareMemory;
 
 class SHMManagerBase : public ParamDefManager::IListener, public ParamPool2SqlProcessorManagerBase
 {

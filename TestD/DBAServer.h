@@ -18,6 +18,7 @@ public:
 	SHMManager_DBA& GetSHMMgr() { return m_shmMgr; }
 
 	void Send2World(PacketBase& pkt);
+	void Send2LocalWorld(PacketBase& pkt);
 
 	void OnWorldDisconnect(ServerInfo* pInfo);
 protected:
