@@ -3,6 +3,7 @@
 #include "BaseType.h"
 #include "Singleton.h"
 #include "DBAFuncManager.h"
+#include "MyMutex.h"
 #include <deque>
 #include <hash_map>
 
@@ -15,7 +16,7 @@ enum DBATaskLevel
 	eDTL_1,
 	eDTL_2,
 	eDTL_MAX
-}
+};
 
 class DBAAvatarManagerEx : public DBAFuncManager, public Singleton<DBAAvatarManagerEx>
 {
@@ -27,13 +28,13 @@ public:
 	void SnapshotAllAvatars();
 	bool ScheduleAvatarTask( DBTaskAvatar* pDbTask, DBATaskLevel taskLevel);
 
-	Mutex* GetMutex() { return &m_AvatarHashTableLock; }
-	AvatarSHM* GetAvatar(int64 nDID) const;
+ 	Mutex* GetMutex() { return &m_AvatarHashTableLock; }
+ 	AvatarSHM* GetAvatar(int64 nDID) const;
 protected:
 	static const uint32 MAX_AVATAR_HASH_TABLE = 4096;
 
 	Mutex				m_AvatarHashTableLock;
-	typedef	hash_map<int64, AvatarSHM*>	AvatarHashMap;
+	typedef	std::hash_map< int64, AvatarSHM*> AvatarHashMap;
 	AvatarHashMap		m_avatarHashMap;
 
 	int32				m_nAccTimeSyncPlayer;

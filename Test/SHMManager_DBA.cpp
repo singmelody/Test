@@ -30,7 +30,7 @@ void SHMManager_DBA::Sync2DB()
 		pExInfo->SetLoaded();
 	}
 
-	for (int32 i = CommonData_Min + 1; i < CommonData_Max; ++i)
+	for (int32 i = eParam_Min + 1; i < eParam_Max; ++i)
 	{
 		Idx2CommonDataMap& theMap = m_arrMapIdx2ComonData[i];
 	}

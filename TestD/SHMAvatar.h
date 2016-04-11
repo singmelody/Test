@@ -4,8 +4,10 @@
 #include "Factory.h"
 #include "Allocator.h"
 #include "ParamDef.h"
+#include "DBAAvatarManager.h"
 
 class ParamPool;
+class DBTaskAvatar;
 
 class AvatarSHM
 {
@@ -17,6 +19,8 @@ public:
 	bool InitParamSet(int32 nDataID);
 	inline ParamPool* GetParamSet() { return m_pPool; }
 
+	void Sync2DB(bool bExit = false);
+	bool ScheduleTask( DBTaskAvatar* pDBTask, DBATaskLevel taskLevel);
 protected:
 	long DecPendingTaskCount();
 	long IncPendingTaskCount();

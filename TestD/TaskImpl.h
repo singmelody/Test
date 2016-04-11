@@ -2,6 +2,7 @@
 
 #include "DBTask.h"
 #include "Factory.h"
+#include <assert.h>
 
 class DBTaskAvatar : public DBTask
 {

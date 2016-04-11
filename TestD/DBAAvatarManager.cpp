@@ -2,6 +2,8 @@
 #include "DBAAvatarManager.h"
 #include "MyMutex.h"
 #include "TaskImpl.h"
+#include "MyLog.h"
+#include "SHMAvatar.h"
 
 DBAAvatarManagerEx::DBAAvatarManagerEx(void)
 {
@@ -46,18 +48,19 @@ void DBAAvatarManagerEx::SnapshotAllAvatars()
 	AutoLock tmpLock(GetMutex());
 	for (auto itr = m_avatarHashMap.begin(); itr != m_avatarHashMap.end(); ++itr)
 	{
-		m_syncQueue.push_back(itr->second);
+		m_syncQueue.push_back(itr->first);
 	}
 }
 
-bool DBAAvatarManagerEx::ScheduleAvatarTask(DBTaskAvatar* pDbTask, DBA_Task_Level taskLevel)
+bool DBAAvatarManagerEx::ScheduleAvatarTask(DBTaskAvatar* pDbTask, DBATaskLevel taskLevel)
 {
 	AutoLock tmpLock(GetMutex());
 
 	AvatarSHM* pAvatar = GetAvatar(pDbTask->GetAvatarDID());
 	if(!pAvatar)
 	{
-		MyLog::error("DBAAvatarManagerEx::ScheduleAvatarTask can not find avatar by did=[%lld], drop task [%s]", pDbTask->avatardid,  pDbTask->sqltemplate.c_str());
+		MyLog::error("DBAAvatarManagerEx::ScheduleAvatarTask can not find avatar by did=[%lld], drop task [%s]", 
+			pDbTask->GetAvatarDID(),  pDbTask->GetSqlTemplate());
 		return false;
 	}
 

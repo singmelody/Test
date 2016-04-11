@@ -1,6 +1,8 @@
 #include "StdAfx.h"
 #include "TaskImpl.h"
 #include "MyMutex.h"
+#include "MyLog.h"
+#include "DBAAvatarManager.h"
 
 FINISH_FACTORY_ARG0(DBTaskAvatar);
 
