@@ -30,6 +30,8 @@ bool ShareMemory::Open( const char* szPath, SM_KEY nKey, uint32 nSize, bool& bCr
 		m_SMName = std::string(szPath) + buf;
 	}
 
+	MyLog::message("OpenSHM path=[%s].key=[%d].size=[%u]", szPath, nKey, nSize);
 
+	m_SMSize = nSize;
 }
 

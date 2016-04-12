@@ -14,6 +14,7 @@ public:
 	static void SHMRM( const char* szPath, SM_KEY nKey);
 
 protected:
+	int32		m_SMSize;
 	SM_KEY		m_SMKey;
 	std::string m_SMName;
 };

@@ -58,6 +58,13 @@ bool SHMManagerBase::OpenSHMs()
 			std::string strPath = Path::MainPath();
 			strPath += m_strSHMPrefix;
 			strPath += pDef->Name();
+
+			if(ShouldDeleteOldSHMs())
+			{
+				ShareMemory::SHMRM( strPath.c_str(), 0);
+			}
+
+			const uint32 nUintSize = HEADER_SIZE_FOR_SHARED_MEMORY + sizeof() blablabla
 		}
 	}
 }
