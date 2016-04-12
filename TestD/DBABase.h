@@ -1,8 +1,9 @@
 #pragma once
 
 #include "ParamPool.h"
+#include "PeerModuleBase.h"
 
-class DBABase
+class DBABase : public PeerModuleBase
 {
 public:
 	DBABase(void);

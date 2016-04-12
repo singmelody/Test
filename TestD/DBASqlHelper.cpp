@@ -80,12 +80,44 @@ std::string DBASqlHelper::GetProcString(ParamDef* pDef, ParamPool* pPool, bool b
 
 bool DBASqlHelper::GetUpdateSqlString(ParamPool* pParamSet, ParamBase* pParam, std::stringstream& sqlTemplate)
 {
-
+	bool bRet = true;
+	sqlTemplate <<"`"<< pParam->Name() << "`=";
+	sParam2String( pParamSet, pParam, sqlTemplate);
+	sqlTemplate << ",";
+	return bRet;
 }
 
 bool DBASqlHelper::GetUpdateSqlString(ParamDef* pParamDef, ParamPool* pParamSet, std::string& sql)
 {
+	if(!pParamDef || !pParamSet)
+		return false;
 
+	std::stringstream sqlTemplate;
+	sqlTemplate << "update `t_"<< pParamDef->Name()<<"` set";
+
+	bool bRet = false;
+
+	for (uint32 i = 0; i <= pParamDef->GetMaxIndex(); ++i)
+	{
+		ParamBase* pParam = pParamDef->GetParam(i);
+
+		int32 nTemp = 0;
+		if(!nTemp || !pParam->CheckFlag(eParamFlag_Save | eParamFlag_NoUpdate) 
+			|| !pParam->ParamDirtyCheck(i) )
+			continue;
+
+		bool bRet = true;
+		if( !GetUpdateSqlString( pParamSet, pParam, sqlTemplate))
+		{
+			bRet = false;
+			break;
+		}
+	}
+
+	sql.clear();
+	sql = sqlTemplate.str().substr( 0, sqlTemplate.str().length() -1);
+
+	return bRet;
 }
 
 void sParam2String(ParamPool* pParamSet, ParamBase* pParam, std::stringstream& sqlTemplate)

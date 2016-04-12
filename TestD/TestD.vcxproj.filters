@@ -39,7 +39,7 @@
     <ClInclude Include="ParamTypeDef.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SHMManager_DBA.h">
+    <ClInclude Include="DBTask.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -62,7 +62,7 @@
     <ClCompile Include="DBASqlHelper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SHMManager_DBA.cpp">
+    <ClCompile Include="DBTask.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -4,6 +4,8 @@
 #include "Singleton.h"
 #include "SHMManager_DBA.h"
 
+class PacketBase;
+
 class DBAServer : public DBABase, public Singleton<DBAServer>
 {
 public:
@@ -15,6 +17,9 @@ public:
 	virtual void Exit();
 	SHMManager_DBA& GetSHMMgr() { return m_shmMgr; }
 
+	void Send2World(PacketBase& pkt);
+
+	void OnWorldDisconnect(ServerInfo* pInfo);
 protected:
 	SHMManager_DBA m_shmMgr;
 };
