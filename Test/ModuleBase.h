@@ -35,9 +35,12 @@ public:
 	inline void StopMainLoop(){ m_bExitLoop = true; }
 	inline bool IsExiting() const { return m_bExitLoop;}
 
+	typedef std::list<ParamPool*> DogDataList;
+
+	DogDataList m_listDogData;
 protected:
 	int8		m_RunState;
 	bool		m_bExitLoop;
-	ParamPool
+	ParamPool*	m_pModuleDogPool;
 };
 

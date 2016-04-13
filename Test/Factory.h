@@ -1,5 +1,7 @@
 #pragma once
 #include "FactoryManagerBase.h"
+#include "PoolAllocatorEx.h"
+
 
 #define DECLARE_FACTORY_ARG0( classObj, classID, allocator) \
 	private:	\
@@ -20,7 +22,7 @@
 	class ClassFactory_##classObj : public Factory_Arg0<classObj> \
 	{\
 	public:\
-		ClassFactory_##classObj() : Factory_Arg0<classObj>(new PoolPacketAllocator()) {\
+		ClassFactory_##classObj() : Factory_Arg0<classObj>(alloc) {\
 			ClassID(classID); ClassName(#classObj); mgr.AddFactory(this); \
 		} \
 		~ClassFactory_##classObj() {} \

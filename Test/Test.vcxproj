@@ -241,6 +241,7 @@
     <ClInclude Include="CommonConfig.h" />
     <ClInclude Include="DataBuffer.h" />
     <ClInclude Include="DataSerialization.h" />
+    <ClInclude Include="DBAConfig.h" />
     <ClInclude Include="DBInterface.h" />
     <ClInclude Include="DLAllocator.h" />
     <ClInclude Include="DLMalloc.h" />
@@ -248,6 +249,7 @@
     <ClInclude Include="Factory.h" />
     <ClInclude Include="FactoryManagerBase.h" />
     <ClInclude Include="FunctionBase.h" />
+    <ClInclude Include="GameUtil.h" />
     <ClInclude Include="LZOCompressor.h" />
     <ClInclude Include="lzoconf.h" />
     <ClInclude Include="lzodefs.h" />
@@ -296,6 +298,7 @@
     <ClInclude Include="PeerModuleBase.h" />
     <ClInclude Include="PoolAllocator.h" />
     <ClInclude Include="PoolAllocatorEx.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="RSAipher.h" />
     <ClInclude Include="SceneContentItem.h" />
     <ClInclude Include="SceneContentNpc.h" />
@@ -324,6 +327,7 @@
     <ClCompile Include="CommonConfig.cpp" />
     <ClCompile Include="DataBuffer.cpp" />
     <ClCompile Include="DataSerialization.cpp" />
+    <ClCompile Include="DBAConfig.cpp" />
     <ClCompile Include="DBInterface.cpp" />
     <ClCompile Include="DLAllocator.cpp" />
     <ClCompile Include="DLMalloc.cpp">
@@ -339,6 +343,7 @@
     <ClCompile Include="Factory.cpp" />
     <ClCompile Include="FactoryManagerBase.cpp" />
     <ClCompile Include="FunctionBase.cpp" />
+    <ClCompile Include="GameUtil.cpp" />
     <ClCompile Include="LZOCompressor.cpp" />
     <ClCompile Include="minilzo.c" />
     <ClCompile Include="ModuleBase.cpp" />
@@ -423,6 +428,9 @@
     <ClCompile Include="Time.cpp" />
     <ClCompile Include="MyMath.cpp" />
     <ClCompile Include="UtilID.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Test.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

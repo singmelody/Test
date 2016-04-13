@@ -4,12 +4,17 @@
 
 class ParamBase;
 class DataBufferBase;
-class IParamPool2SqlProcessor;
+struct IParamPool2SqlProcessor;
 
 enum ParamType
 {
 	eParam_Avatar = 0,
 	eParam_Monster = 1,
+
+	eParam_DBAInfo = 53,
+	eParam_LoginInfo = 54,
+	eParam_GateInfo = 55,
+
 	eParam_Count
 };
 

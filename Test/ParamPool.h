@@ -54,13 +54,6 @@ public:
 
 	void SaveOldValue( ParamBase* pBase);
 
-	virtual bool ParamDirtyCheck(int32 nParamIdx) = 0;
-	virtual void ClearParamDirty(int32 nParamIdx) = 0;
-	virtual bool DirtyCheck() = 0;
-	virtual void ClearDirty() = 0;
-	virtual void SetAllParamDirty() = 0;
-	virtual void SetParamDirty(int32 nParamIdx) = 0;
-
 	virtual void SetAllDefault() = 0;
 	virtual bool DefaultCheck(int32 nParamIdx) = 0;
 	virtual void SetDefault( int32 nParamIdx, bool bDefault) = 0;
@@ -75,6 +68,14 @@ public:
 	ParamDef* GetParamDef() const;
 
 	int32 GetParamTypeID();
+
+	virtual bool ParamDirtyCheck( int32 nParamIdx) = 0;
+	virtual void ClearParamDirty( int32 nParamIdx) = 0;
+	virtual void SetParamDirty( int32 nParamIdx) = 0;
+
+	virtual bool DirtyCheck() = 0;
+	virtual void ClearDirty() = 0;
+	virtual void SetAllParamDirty() = 0;
 protected:
 	char* Data2Buffer(char* pBuffer);
 	char* Buffer2Data(char* pBuffer);
@@ -114,6 +115,7 @@ public:
 
 	virtual ~ParamPoolEx(){}
 
+	virtual void SetParamDirty(int32 nParamIdx) { m_dirtyBits.set(nParamIdx); }
 	virtual bool ParamDirtyCheck(int32 nParamIdx) { return m_dirtyBits.test(nParamIdx); }
 	virtual void ClearParamDirty(int32 nParamIdx) { m_dirtyBits.reset(nParamIdx); }
 
@@ -130,11 +132,6 @@ public:
 	virtual void SetAllParamDirty()
 	{
 		m_dirtyBits.set();
-	}
-
-	virtual void SetParamDirty(int32 nParamIdx)
-	{
-		m_dirtyBits.set(nParamIdx);
 	}
 
 	virtual void SetAllDefault() { m_defaultBits.set(); }

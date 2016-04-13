@@ -4,6 +4,7 @@
 #include <map>
 #include "Singleton.h"
 #include "UtilID.h"
+#include "BaseType.h"
 
 #define FACTORY_NEWOBJ(className) (className*)FactoryManager::Instance().New(#className);
 #define FACTORY_DELOBJ( pObj) { if(pObj) { FactoryManager::Instance().Delete( pObj); pObj = NULL; }}

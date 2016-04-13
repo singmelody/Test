@@ -5,15 +5,9 @@
 #include "ParamDef.h"
 #include "ParamEx.h"
 #include "MyString.h"
+#include "ParamDef.h"
 
 #define MD5_SIZE 32
-
-enum ParamType
-{
-	eParamType_Avatar = 0,
-	eParamType_Monster = 1,
-}
-
 
 class ParamBase;
 class ParamDef;
@@ -55,6 +49,8 @@ public:
 	ParamBase* CreateParam( const char* sParamType, const char* sDft, const char* sMax, const char* sMin);
 
 	const ParamMap& GetDefMap(){ return m_paramDefMap; }
+
+	bool		m_bLockAllocator;
 protected:
 	void InitParamMD5();
 
@@ -92,7 +88,7 @@ void InitValue_A2Num(Param<T>* pParam, const std::string& sDft, const std::strin
 }
 
 template < class T>
-InitValue_A2Float(Param<T>* pParam, const std::string& sDft, const std::string& sMax, const std::string &sMin)
+void InitValue_A2Float(Param<T>* pParam, const std::string& sDft, const std::string& sMax, const std::string &sMin)
 {
 	T defVal = (T)atof( sDft.c_str() );
 	pParam->SetDftValue( defVal );
