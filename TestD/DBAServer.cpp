@@ -2,6 +2,7 @@
 #include "DBAServer.h"
 #include "GameUtil.h"
 #include "DBAConfig.h"
+#include "DBAAvatarManager.h"
 
 DBAServer::DBAServer(void)
 {

@@ -33,6 +33,8 @@ public:
 	void Send2World( PacketBase& pkt);
 
 	static void ScheduleSimpleTask(const std::string& strSql);
+
+	int64 GetAvatarDID() const { return nAvatarDID;}
 protected:
 	int32				nSockID;
 	int32				nAvatarID;

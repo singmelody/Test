@@ -8,8 +8,11 @@ struct IParamPool2SqlProcessor;
 
 enum ParamType
 {
+	eParam_Min = -1,
 	eParam_Avatar = 0,
 	eParam_Monster = 1,
+
+	eParam_Max,	
 
 	eParam_DBAInfo = 53,
 	eParam_LoginInfo = 54,
@@ -17,6 +20,7 @@ enum ParamType
 
 	eParam_Count
 };
+
 
 class ParamDef
 {

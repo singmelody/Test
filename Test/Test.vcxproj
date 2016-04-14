@@ -255,6 +255,7 @@
     <ClInclude Include="lzodefs.h" />
     <ClInclude Include="minilzo.h" />
     <ClInclude Include="ModuleBase.h" />
+    <ClInclude Include="ModuleFuncManager.h" />
     <ClInclude Include="MyClass.h" />
     <ClInclude Include="MyClassManager.h" />
     <ClInclude Include="MYEvent.h" />
@@ -305,6 +306,8 @@
     <ClInclude Include="ServerConfig.h" />
     <ClInclude Include="ServerGrp.h" />
     <ClInclude Include="ServerGrpInfo.h" />
+    <ClInclude Include="ServerManager.h" />
+    <ClInclude Include="ShareMemory.h" />
     <ClInclude Include="SHMManagerBase.h" />
     <ClInclude Include="SHMManager_DBA.h" />
     <ClInclude Include="SocketAccept.h" />
@@ -347,6 +350,7 @@
     <ClCompile Include="LZOCompressor.cpp" />
     <ClCompile Include="minilzo.c" />
     <ClCompile Include="ModuleBase.cpp" />
+    <ClCompile Include="ModuleFuncManager.cpp" />
     <ClCompile Include="MyClass.cpp" />
     <ClCompile Include="MyClassManager.cpp" />
     <ClCompile Include="MYEvent.cpp" />
@@ -395,6 +399,8 @@
     <ClCompile Include="SceneContentNpc.cpp" />
     <ClCompile Include="ServerGrp.cpp" />
     <ClCompile Include="ServerGrpInfo.cpp" />
+    <ClCompile Include="ServerManager.cpp" />
+    <ClCompile Include="ShareMemory.cpp" />
     <ClCompile Include="SHMManagerBase.cpp" />
     <ClCompile Include="SHMManager_DBA.cpp" />
     <ClCompile Include="SocketAccept.cpp" />
@@ -428,9 +434,6 @@
     <ClCompile Include="Time.cpp" />
     <ClCompile Include="MyMath.cpp" />
     <ClCompile Include="UtilID.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="Test.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
