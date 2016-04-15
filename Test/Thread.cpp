@@ -113,7 +113,7 @@ unsigned int __stdcall Thread::ThreadProcess(void* ptr)
 
 MyThread::MyThread(const std::string& strName /*= std::string()*/)
 	: Thread(strName)
-	, m_bUpdateFunc(NULL)
+	, m_pUpdateFunc(NULL)
 	, m_bExit(false)
 {
 

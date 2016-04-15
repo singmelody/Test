@@ -5,6 +5,7 @@
 #include <assert.h>
 #include "ODBCInterface.h"
 #include "Thread.h"
+#include "MyListNode.h"
 
 class DBTask;
 class DBConnectionManager;
@@ -34,8 +35,8 @@ public:
 	}
 
 protected:
-	typedef std::list<DBTask>		DBListNode;
-	typedef std::list<DBListNode>	DBTaskList;
+	typedef MyListNode<DBTask*>		DBListNode;
+	typedef std::list<DBListNode*>	DBTaskList;
 	DBTaskList		m_tasks[eDBATL_MAX];
 	Mutex			m_mutex;
 };
@@ -67,7 +68,7 @@ public:
 	void PrintDBStaticAndReset();
 	void Close();
 
-	bool ScheduleTaks( DBTask* pTask, int32 taskLevel = eDBATL_1);
+	bool ScheduleTaks( DBTask* pTask, DBATaskLevel taskLevel = eDBATL_1);
 	void SetDBInterface(DBConnectionManager* db) { m_pDBConMgr = db; }
 
 	TaskQueueWithLevel& GetTaskQueue() { return m_taskQueue; }

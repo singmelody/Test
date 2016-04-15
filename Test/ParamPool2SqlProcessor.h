@@ -18,8 +18,8 @@ struct IParamPool2SqlProcessor
 
 	virtual ~IParamPool2SqlProcessor(){}
 
-	virtual bool UseSHM() const = 0;
-	virtual uint32 GetExtraSize() const = 0;
+	virtual bool UseSHM() const { return false; }
+	virtual uint32 GetExtraSize() const { return 0; }
 
 	bool GetSqlString( ParamPool& pool, std::string& strSql) const;
 

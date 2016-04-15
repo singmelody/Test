@@ -65,7 +65,7 @@ class ParamPool2SqlProcessor_DBA_Avatar : public IParamPool2SqlProcessor
 	virtual bool GetSqlString_Delete( ParamPool& pool, std::string& strSql) const;
 };
 
-class ParamPool2Sqlprocessor_DBA_Avatar_CommonData : public IParamPool2SqlProcessor
+class ParamPool2Sqlprocessor_DBA_CommonData : public IParamPool2SqlProcessor
 {
 	virtual uint32 GetExtraSize() const { return sizeof(*this); }
 	virtual IParamPool2SqlProcessor::EDataState GetDataState(ParamPool& pool) const;

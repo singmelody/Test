@@ -1,6 +1,7 @@
 #include "StdAfx.h"
 #include "SHMManagerBase.h"
-
+#include "ShareMemory.h"
+#include "MyLog.h"
 
 SHMManagerBase::SHMManagerBase(void)
 {

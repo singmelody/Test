@@ -317,6 +317,7 @@
     <ClInclude Include="BaseType.h" />
     <ClInclude Include="Thread.h" />
     <ClInclude Include="Time.h" />
+    <ClInclude Include="TimeManager.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="MyMath.h" />
     <ClInclude Include="UtilID.h" />
@@ -435,6 +436,7 @@
     <ClCompile Include="Thread.cpp" />
     <ClCompile Include="Time.cpp" />
     <ClCompile Include="MyMath.cpp" />
+    <ClCompile Include="TimeManager.cpp" />
     <ClCompile Include="UtilID.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

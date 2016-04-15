@@ -2,7 +2,7 @@
 
 #include "ParamEx.h"
 #include "MyClass.h"
-
+#include <sstream>
 #include "DBInterface.h"
 
 class ParamPool;

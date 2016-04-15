@@ -86,7 +86,6 @@
     <ClInclude Include="DBASqlHelper.h" />
     <ClInclude Include="DBTask.h" />
     <ClInclude Include="DBThreadPool.h" />
-    <ClInclude Include="ParamPool2Sql_DBA.h" />
     <ClInclude Include="ParamTypeDef.h" />
     <ClInclude Include="SHMAvatar.h" />
     <ClInclude Include="stdafx.h" />
@@ -102,7 +101,6 @@
     <ClCompile Include="DBASqlHelper.cpp" />
     <ClCompile Include="DBTask.cpp" />
     <ClCompile Include="DBThreadPool.cpp" />
-    <ClCompile Include="ParamPool2Sql_DBA.cpp" />
     <ClCompile Include="SHMAvatar.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

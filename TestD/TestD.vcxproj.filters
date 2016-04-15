@@ -30,9 +30,6 @@
     <ClInclude Include="DBABase.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ParamPool2Sql_DBA.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="DBASqlHelper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -72,9 +69,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="DBABase.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ParamPool2Sql_DBA.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="DBASqlHelper.cpp">

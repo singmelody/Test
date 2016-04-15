@@ -1,6 +1,8 @@
 #include "StdAfx.h"
 #include "ShareMemory.h"
-
+#include "MyLog.h"
+#include "UtilID.h"
+#include <assert.h>
 
 ShareMemory::ShareMemory(void)
 {
@@ -33,5 +35,7 @@ bool ShareMemory::Open( const char* szPath, SM_KEY nKey, uint32 nSize, bool& bCr
 	MyLog::message("OpenSHM path=[%s].key=[%d].size=[%u]", szPath, nKey, nSize);
 
 	m_SMSize = nSize;
+
+	return true;
 }
 

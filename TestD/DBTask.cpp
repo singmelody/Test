@@ -17,6 +17,6 @@ bool DBTask::DoAction(DBInterface* ptr)
 
 void DBTask::Send2World(PacketBase& pkt)
 {
-	DBAServer::Instance().Send2World(&pkt);
+	DBAServer::Instance().Send2World(pkt);
 }
 

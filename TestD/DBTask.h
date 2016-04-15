@@ -3,6 +3,7 @@
 #include "FactoryManagerBase.h"
 #include "Singleton.h"
 #include "Factory.h"
+#include "MyListNode.h"
 
 class PacketBase;
 class DBInterface;
@@ -28,7 +29,7 @@ public:
 
 	virtual void Execute(DBTable& table){}
 	void SetDBInterface( DBInterface* ptr) { pInterface = ptr; }
-	const std::list<DBTask*>& GetListNode() { return vListNode; }
+	MyListNode<DBTask*>* GetListNode() { return &vListNode; }
 	virtual bool DoAction(DBInterface* ptr) ;
 	void Send2World( PacketBase& pkt);
 
@@ -44,6 +45,6 @@ protected:
 	int64				nAvatarDID;
 	std::string			sqlTemplate;
 	DBInterface*		pInterface;
-	std::list<DBTask*>	vListNode;
+	MyListNode<DBTask*>	vListNode;
 };
 

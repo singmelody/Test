@@ -5,7 +5,7 @@
 #include "DBThreadPool.h"
 #include "FunctionBase.h"
 #include "MyLog.h"
-
+#include "TimeManager.h"
 
 ODBCThread::ODBCThread(DBThreadPool& threadPool, const std::string& dbName, const std::string& user, const std::string& pwd)
 	: MyThread(std::string("ODBC")), m_threadPool(threadPool)
@@ -73,6 +73,7 @@ void TaskQueueWithLevel::PushTask(DBTask* pTask, DBATaskLevel taskLevel)
 	assert(pTask);
 	assert( taskLevel < eDBATL_MAX && taskLevel >= eDBATL_0);
 	AUTOLOCK(m_mutex);
+
 	m_tasks[taskLevel].push_back(pTask->GetListNode());
 }
 
@@ -91,7 +92,7 @@ void DBThreadPool::Close()
 	m_vThreads.clear();
 }
 
-bool DBThreadPool::ScheduleTaks(DBTask* pTask, int32 taskLevel /*= eDTL_1*/)
+bool DBThreadPool::ScheduleTaks(DBTask* pTask, DBATaskLevel taskLevel /*= eDTL_1*/)
 {
 	assert( pTask );
 	assert( taskLevel < eDBATL_MAX && taskLevel >= eDBATL_0);
