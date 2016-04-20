@@ -2,6 +2,15 @@
 #include "ServerManager.h"
 
 
+
+const char* GetSrvTitle(int32 nSrvType)
+{
+	if( nSrvType < 0 || nSrvType >= eSrv_Count )
+		nSrvType = 0;
+
+	return SrvTitle[nSrvType];
+}
+
 ServerManager::ServerManager(void)
 {
 	m_nZoneID = 0;

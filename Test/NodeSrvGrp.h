@@ -3,6 +3,7 @@
 #include <vector>
 #include "ServerGrp.h"
 #include "ServerGrpInfo.h"
+#include "BaseType.h"
 
 class Scene;
 
@@ -32,8 +33,6 @@ public:
 	virtual void SortList();
 
 	int32 GetLowSceneLoadNode( int32 exclude_ID = SERVERID_NULL);
-
-	virtual void SortList();
 protected:
 	NodeSrvList m_listByTrunkValue;
 	NodeSrvList m_listByLoadValue;

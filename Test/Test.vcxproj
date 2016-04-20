@@ -257,6 +257,7 @@
     <ClInclude Include="FunctionBase.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameUtil.h" />
+    <ClInclude Include="GateSrvGrp.h" />
     <ClInclude Include="IRecvPacketFilter.h" />
     <ClInclude Include="LZOCompressor.h" />
     <ClInclude Include="lzoconf.h" />
@@ -378,6 +379,7 @@
     <ClCompile Include="FunctionBase.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameUtil.cpp" />
+    <ClCompile Include="GateSrvGrp.cpp" />
     <ClCompile Include="LZOCompressor.cpp" />
     <ClCompile Include="minilzo.c" />
     <ClCompile Include="ModuleBase.cpp" />

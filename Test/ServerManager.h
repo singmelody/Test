@@ -3,6 +3,7 @@
 #include "Singleton.h"
 #include "ServerGrpInfo.h"
 #include "NodeSrvGrp.h"
+#include "GateSrvGrp.h"
 
 class PeerModuleBase;
 class ServerInfo;
@@ -32,8 +33,11 @@ enum SrvSegment
 	eSrvID_MaxGrpID		= ( 1 << eSrvID_GrpBits) - 1,
 	eSrvID_MaxTypeID	= ( 1 << eSrvID_TypeBits) - 1,
 	eSrvID_MaxIndexBits	= ( 1 << eSrvID_IndexBits) - 1,
-
 };
+
+
+
+const char* GetSrvTitle( int32 nSrvType);
 
 class PacketBase;
 

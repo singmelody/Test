@@ -1,5 +1,8 @@
 #pragma once
 #include "WorldState.h"
+
+class ParamPool;
+
 class WorldState_DataLoading : public WorldState, public Singleton<WorldState_DataLoading>
 {
 public:
