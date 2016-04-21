@@ -306,6 +306,12 @@
     <ClInclude Include="SrvPacketTestManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CommonDataOwner.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Avatar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -570,6 +576,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SrvPacketTestManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CommonDataOwner.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Avatar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

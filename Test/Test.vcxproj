@@ -235,10 +235,12 @@
     <ClInclude Include="Allocator.h" />
     <ClInclude Include="AreaManager.h" />
     <ClInclude Include="Atomic.h" />
+    <ClInclude Include="Avatar.h" />
     <ClInclude Include="BlowFishCipher.h" />
     <ClInclude Include="CircularBufferEx.h" />
     <ClInclude Include="CircularListEx.h" />
     <ClInclude Include="CommonConfig.h" />
+    <ClInclude Include="CommonDataOwner.h" />
     <ClInclude Include="DataBuffer.h" />
     <ClInclude Include="DataSerialization.h" />
     <ClInclude Include="DBAConfig.h" />
@@ -332,10 +334,12 @@
     <ClCompile Include="Allocator.cpp" />
     <ClCompile Include="AreaManager.cpp" />
     <ClCompile Include="Atomic.cpp" />
+    <ClCompile Include="Avatar.cpp" />
     <ClCompile Include="BlowFishCipher.cpp" />
     <ClCompile Include="CircularBufferEx.cpp" />
     <ClCompile Include="CircularListEx.cpp" />
     <ClCompile Include="CommonConfig.cpp" />
+    <ClCompile Include="CommonDataOwner.cpp" />
     <ClCompile Include="DataBuffer.cpp" />
     <ClCompile Include="DataSerialization.cpp" />
     <ClCompile Include="DBAConfig.cpp" />

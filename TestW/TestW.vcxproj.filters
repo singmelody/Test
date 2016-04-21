@@ -39,6 +39,9 @@
     <ClInclude Include="AvatarOnLineManager.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="WorldAvatarGroup.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -60,6 +63,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="AvatarOnLineManager.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldAvatarGroup.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
