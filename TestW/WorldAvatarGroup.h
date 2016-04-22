@@ -1,7 +1,7 @@
 #pragma once
 
 
-class WorldAvatarGroup
+class WorldAvatarGroup 
 {
 public:
 	WorldAvatarGroup(void);

@@ -44,6 +44,15 @@ public:
 	}
 };
 
+class WorldServer;
+class WorldStage;
+class PacketBase;
+
+WorldAvatar* GetWorldAvatar(int32 nAvatarID);
+WorldAvatar* GetWorldAvatar( PacketBase* pPkt);
+WorldAvatar* GetWorldAvatarByDID( int64 nAvatarDID);
+WorldAvatar* GetWorldAvatarByNameID( const char* name);
+
 class WorldAvatar : public WorldAvatarGroup
 {
 	DECLARE_FACTORY_ARG0( WorldAvatar, -1, new PoolAllocator)
@@ -89,20 +98,87 @@ public:
 	void Send2CurNode(PacketBase& pkt);
 
 	int32 GetAvatarNameID();
-	INT32 GetUserID();
+	int32 GetUserID();
 
 	virtual void SetParamPool(ParamPool* p);
 	WorldAvatarCommonData*	GetCommonDataManager() const;
 	WorldTalenTreeData*		GetTalentTreeData() { return m_pTalentTreeData; }
 
 	ParamPool*	GetRoleSet(int32 nIdx) { return Account.GetRoleSet(nIdx);}
+	bool CheckInStage(WorldStageID stageID) { return m_nCurStageID == stageID; }
+
+	bool IsGaming() { return m_nCurStageID == eWS_Gaming;}
+	bool IsExitingGame() { return m_nCurStageID == eWS_Exiting; }
+
+	void SetCurStage( WorldStageID newStateID );
+
+	bool PushAllData2CurNode();
+
+	void HandleCreateSceneResult( int32 nResult, WorldScene* pScene = NULL);
+
+	void OnEnterGameFailed();
+	void OnAvatarEnterGame();
+	bool CheckPlayerEnterScene(WorldScene* pScene);
+
+	void SyncAvatarData2DB(bool bExitGame, int32 nSyncFlag);
+
+	void SetDataLoadingFlags(int32 bit) { m_nDataLoadingFlags |= bit; }
+	void CheckDataLoadingFlags(int32 bit) { return (m_nDataLoadingFlags & bit) == bit; }
+
+	void			TickChatInternal(int32 nDeltaTime);
+	virtual void	SetChatInterval(int32 nChannel, int32 interval);
+	virtual int32	GetChatInterval(int32 nChannel);
+
+	void			TickComponent(int32 nDeltaTime);
+
+	bool			RequestBillingLogin();
+	void			NotifyBillingLogout();
+
+	bool			IsInBlackList( WorldAvatar* pAvatar);
+
+	void			HasGateAvatar(bool v) { m_bHasGateAvatar = v; }
+	bool			HasGateAvatar() const { return m_bHasGateAvatar; }
+
+	void			SetWorldArenaState(int8 state) { m_worldArenaState = state; }
+	int8			GetWorldArenaState() const { return m_worldArenaState; }
+
+	bool			CheckAvatarFlag(int32 nFlag) { return (nFlag & m_WorldAvatarFlag) != 0; }
+	void			SetAvatarFlag(int32 nFlag) { return m_WorldAvatarFlag |= nFlag; }
+	void			CancelAvatarFlag(int32 nFlag) { return m_WorldAvatarFlag &= (~nFlag); }
+
 protected:
-	Vector3	m_target_scene_point;
-	Vector3 m_target_scene_dir;
+	int32			m_charInterval[CC_MAX];
+
+	Vector3			m_target_scene_point;
+	Vector3			m_target_scene_dir;
 
 	WorldAccount	m_account;
 
-	bool	nTargetNodeAvatarCreated;
-	int32	nTargetNodeID;
-	int32	nTargetSceneID;
+	int32			m_nCurStageID;
+	WorldStage*		m_pCurStage;
+	WorldServer*	m_pWorld;
+
+	CurDataStage	m_curDataOnSide;
+
+	int32			m_nTargetNodeID;
+	int32			m_nTargetSceneID;
+
+	int32			m_nDataLoadingFlags;
+	int32			m_WorldAvatarFlag;
+
+	int8			m_worldArenaState;
+
+	bool			m_bIsDestroy;
+	bool			m_bStageChanging;
+	bool			m_bTargetNodeAvatarCreated;
+	bool			m_bAvatarDataDirty;
+	bool			m_bHasGateAvatar;
+	bool			m_bLastAvatarInfoValid;
+
+
+	WorldTalenTreeData*			m_pTalentTreeCom;
+	WorldRelationComponent*		m_pRelationCom;
+	WorldAbilityComponent*		m_pWorldAbilityCom;
+	WorldManufactureComponent*	m_pManufactureCom;
+	WorldArenaRankComponent*	m_pArenaRankComponent;
 };

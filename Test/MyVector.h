@@ -18,6 +18,8 @@ struct float3
 {
 	float3():x(0),y(0),z(0){}
 	float x,y,z;
+
+	void zero() { x=y=z=0; }
 };
 
 struct ShapeLine2D
