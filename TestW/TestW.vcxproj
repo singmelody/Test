@@ -78,6 +78,7 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="WorldBase.h" />
+    <ClInclude Include="WorldStage.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -86,6 +87,7 @@
     </ClCompile>
     <ClCompile Include="TestW.cpp" />
     <ClCompile Include="WorldBase.cpp" />
+    <ClCompile Include="WorldStage.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

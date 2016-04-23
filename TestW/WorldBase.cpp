@@ -72,5 +72,20 @@ void WorldBase::OnConfigLoaded()
 	SetSrvID( nSrvID );
 
 	m_strDBAIP = "127.0.0.1";
-	ConfigManager::GetConfigValue();
+	ConfigManager::GetConfigValue( "CommonConfig", "DBAIP", m_strDBAIP);
+
+	m_nDBAPort = 8888;
+	ConfigManager::GetConfigValue( "CommonConfig", "DBAPort", m_nDBAPort);
+
+	WORLDDOG_SET_STRING( DBAIP, m_strDBAIP.c_str());
+	WORLDDOG_SET_VALUE( DBAPORT, m_nDBAPort );
+	
+	WORLDDOG_SET_STRING( MotherIP, ServerConfig::MontherIP.c_str());
+	WORLDDOG_SET_VALUE( MotherPort, ServerConfig::MontherPort);
+
+}
+
+void WorldBase::UpdateDogPool(int32 nFrameTime)
+{
+
 }
