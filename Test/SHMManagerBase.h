@@ -17,9 +17,12 @@ public:
 	bool OpenSHMs();
 	void CloseSHMs();
 
-	bool EnableSHM() { return m_bEnableSHM; }
-
+	inline bool EnableSHM() { return m_bEnableSHM; }
+	inline bool ShouldCreateSHMs() { return EnableSHM() && m_bCreateSHM; }
+	inline bool ShouldDeleteOldSHMs() { return ShouldCreateSHMs() && m_bShouldDeleteOldSHM; }
 protected:
+	virtual void InitParamPool2SqlProcessors(bool bUseSHM) = 0;
+
 	struct TypeInfo
 	{
 		char*		m_pMemPtr;

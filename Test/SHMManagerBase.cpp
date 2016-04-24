@@ -2,6 +2,7 @@
 #include "SHMManagerBase.h"
 #include "ShareMemory.h"
 #include "MyLog.h"
+#include "GameUtil.h"
 
 SHMManagerBase::SHMManagerBase(void)
 {
@@ -56,7 +57,7 @@ bool SHMManagerBase::OpenSHMs()
 				continue;
 			}
 
-			std::string strPath = Path::MainPath();
+			std::string strPath = MyPath::MainPath();
 			strPath += m_strSHMPrefix;
 			strPath += pDef->Name();
 
@@ -65,7 +66,12 @@ bool SHMManagerBase::OpenSHMs()
 				ShareMemory::SHMRM( strPath.c_str(), 0);
 			}
 
-			const uint32 nUintSize = HEADER_SIZE_FOR_SHARED_MEMORY + sizeof() blablabla
+			const uint32 nUintSize = HEADER_SIZE_FOR_SHARED_MEMORY + sizeof(MemoryHead) + pDef->Size() + pIParamPool2SqlProcessor->GetExtraSize();
+			bool bCreate;
+			if(!pSHM->Open( strPath.c_str(), 0, nUintSize * pDef->SMUCount(), bCreate))
+			{
+
+			}
 		}
 	}
 }

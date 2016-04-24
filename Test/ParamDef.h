@@ -70,7 +70,10 @@ public:
 	IParamPool2SqlProcessor* GetIParamPool2SqlProcessor() const { return m_pIParamPool2SqlProcessor; }
 
 	bool IsLoadData() { return m_loadData; }
-	int32 GetMaxIndex() { return m_maxIdx; }
+	int32 GetMaxIndex() const { return m_maxIdx; }
+
+	void SMUCount(int32 nCount) { m_SMUCount = nCount; }
+	int32 SMUCount() const { return m_SMUCount; }
 protected:
 	bool CheckClassType( int32 nValue, const char* pClassType, char* pClassTypeEx);
 
@@ -87,6 +90,7 @@ protected:
 	int32 m_nExtraPoolSize;
 	int32 m_poolSize;
 	int32 m_poolExtraSize;
+	int32 m_SMUCount;
 	Allocator*	m_pBufferAlloc;
 
 	IParamPool2SqlProcessor*		m_pIParamPool2SqlProcessor;

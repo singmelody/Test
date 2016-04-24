@@ -72,8 +72,8 @@ public:
 	void SetDisconnectFun(FunctionBase_Arg1<int32>* funcDisconn) { m_DisconnectCallBack = funcDisconn; }
 	virtual void OnReceivedPacket( NetChannelBase* pChannel, PacketBase* pPkt);
 	bool Compressable() const { return m_bLzoCompress; }
-protected:
 	NetChannelBase* CreateNewChannel();
+protected:
 
 	void ProcNewConnection();
 	void ProcPendingClose();
