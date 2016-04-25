@@ -58,3 +58,19 @@ bool WorldBase::CreateDogPool()
 
 	return true;
 }
+
+void WorldBase::OnConfigLoaded()
+{
+	PeerModuleBase::OnConfigLoaded();
+
+	Servers.FillConfig();
+
+	WORLDDOG_SET_VALUE( ZoneID, Servers.m_nZoneID);
+	WORLDDOG_SET_VALUE( GroupID, Servers.m_nGroupID);
+
+	int32 nSrvID = Servers.MakeServerID( Srv_World, 0);
+	SetSrvID( nSrvID );
+
+	m_strDBAIP = "127.0.0.1";
+	ConfigManager::GetConfigValue();
+}
