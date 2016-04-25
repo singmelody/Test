@@ -250,6 +250,7 @@
     <ClInclude Include="FactoryManagerBase.h" />
     <ClInclude Include="FunctionBase.h" />
     <ClInclude Include="GameUtil.h" />
+    <ClInclude Include="IRecvPacketFilter.h" />
     <ClInclude Include="LZOCompressor.h" />
     <ClInclude Include="lzoconf.h" />
     <ClInclude Include="lzodefs.h" />
@@ -298,6 +299,7 @@
     <ClInclude Include="ParamPool2SqlProcessor.h" />
     <ClInclude Include="ParamSet.h" />
     <ClInclude Include="PeerModuleBase.h" />
+    <ClInclude Include="PeerSrvModuleBase.h" />
     <ClInclude Include="PoolAllocator.h" />
     <ClInclude Include="PoolAllocatorEx.h" />
     <ClInclude Include="resource.h" />
@@ -312,6 +314,7 @@
     <ClInclude Include="SHMManagerBase.h" />
     <ClInclude Include="SHMManager_DBA.h" />
     <ClInclude Include="SocketAccept.h" />
+    <ClInclude Include="SrvBase.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="BaseType.h" />
@@ -395,6 +398,7 @@
     <ClCompile Include="ParamPool2SqlProcessor.cpp" />
     <ClCompile Include="ParamSet.cpp" />
     <ClCompile Include="PeerModuleBase.cpp" />
+    <ClCompile Include="PeerSrvModuleBase.cpp" />
     <ClCompile Include="PoolAllocator.cpp" />
     <ClCompile Include="PoolAllocatorEx.cpp" />
     <ClCompile Include="RSAipher.cpp" />
@@ -407,6 +411,7 @@
     <ClCompile Include="SHMManagerBase.cpp" />
     <ClCompile Include="SHMManager_DBA.cpp" />
     <ClCompile Include="SocketAccept.cpp" />
+    <ClCompile Include="SrvBase.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
