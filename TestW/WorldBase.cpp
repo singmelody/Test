@@ -39,7 +39,7 @@ void WorldBase::ProcessConsole(int32 nFrameTime)
 			ResetStatistics();
 
 			WatchDog::Instance().NextStep(GAME_THREAD_WATCHDOG_ID);
-			MyLog::performance("[%s] Tick: %dms PlayerOnline: %d", m_strModuleTitle.c_str(), m_nAvgFrameTime, );
+			MyLog::performance("[%s] Tick: %dms PlayerOnline: %d", m_strModuleTitle.c_str(), m_nAvgFrameTime, m_olAvatarCount);
 
 		}
 	}

@@ -14,11 +14,11 @@ enum Status
 
 class FunctionBase_Arg0;
 
-class Thread
+class ThreadBase
 {
 public:
-	explicit Thread( const char* strName = "");
-	virtual ~Thread();
+	explicit ThreadBase( const char* strName = "");
+	virtual ~ThreadBase();
 	
 	void Start();
 	virtual void Run(){}
@@ -44,7 +44,7 @@ protected:
 	const std::string m_strName;
 };
 
-class MyThread : public Thread
+class MyThread : public ThreadBase
 {
 public:
 	explicit MyThread(const std::string& strName = std::string());

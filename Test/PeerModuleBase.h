@@ -1,11 +1,13 @@
 #pragma once
 
 #include <string>
+#include "ModuleBase.h"
+#include "PeerBase.h"
 
 class ServerInfo;
 class ParamPool;
 
-class PeerModuleBase
+class PeerModuleBase : public ModuleBase, public PeerBase
 {
 public:
 	PeerModuleBase(int32 nModuleType);

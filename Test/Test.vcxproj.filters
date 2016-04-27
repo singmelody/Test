@@ -297,6 +297,12 @@
     <ClInclude Include="IRecvPacketFilter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="PeerBase.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WatchDog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -552,6 +558,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SrvBase.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PeerBase.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WatchDog.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

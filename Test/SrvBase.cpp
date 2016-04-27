@@ -17,7 +17,29 @@ private:
 
 
 SrvBase::SrvBase(void)
+	: m_SrvNetThread("SrvNetWork")
+	, m_SrvNetThreadMinFrameTime(-1)
+	, m_bSrvEnableLZO(false)
+	, m_bSrvPacketUseIndexWhenRecv(false)
+	, m_bSrvPacketUseIndexWhenSend(false)
 {
+	m_CltPktProc = NULL;
+	m_SrvNetManager = NULL;
+
+	m_SrvUseIOCP = false;
+
+#ifdef USEIOCP
+	m_SrvUseIOCP = true;
+#endif
+
+	m_SrvSocketRcBufSize = 2048;
+	m_SrvCirRcBufSize = 2048*32;
+	m_SrvSocketRnBufSize = 2048;
+	m_SrvCirRnBufSize = 2048*32;
+	m_SrvIP = "127.0.0.1";
+	m_SrvPort = 10001;
+	m_SrvNetThreadFrameTime = 0;
+
 }
 
 

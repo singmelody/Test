@@ -27,4 +27,7 @@ typedef unsigned long SM_KEY;
 #define MAKE_LOGIC_ID( paramid, dataid) \
 	( (paramid) << 8 + (dataid) & 0xff )
 
+#define SERVER_TICK_TIME_SHOW		1000
+#define GAME_THREAD_WATCHDOG_ID		2
+
 #define _WINSOCKAPI_

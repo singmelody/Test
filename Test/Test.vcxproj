@@ -298,6 +298,7 @@
     <ClInclude Include="ParamPool.h" />
     <ClInclude Include="ParamPool2SqlProcessor.h" />
     <ClInclude Include="ParamSet.h" />
+    <ClInclude Include="PeerBase.h" />
     <ClInclude Include="PeerModuleBase.h" />
     <ClInclude Include="PeerSrvModuleBase.h" />
     <ClInclude Include="PoolAllocator.h" />
@@ -324,6 +325,7 @@
     <ClInclude Include="Timer.h" />
     <ClInclude Include="MyMath.h" />
     <ClInclude Include="UtilID.h" />
+    <ClInclude Include="WatchDog.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Allocator.cpp" />
@@ -397,6 +399,7 @@
     <ClCompile Include="ParamPool.cpp" />
     <ClCompile Include="ParamPool2SqlProcessor.cpp" />
     <ClCompile Include="ParamSet.cpp" />
+    <ClCompile Include="PeerBase.cpp" />
     <ClCompile Include="PeerModuleBase.cpp" />
     <ClCompile Include="PeerSrvModuleBase.cpp" />
     <ClCompile Include="PoolAllocator.cpp" />
@@ -421,6 +424,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Itanium'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Test.cpp" />
+    <ClCompile Include="WatchDog.cpp" />
     <ClInclude Include="Singleton.h">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>

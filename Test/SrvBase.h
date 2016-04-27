@@ -34,8 +34,15 @@ protected:
 	std::string		m_SrvIP;
 	int32			m_SrvPort;
 	int32			m_SrvSocketRcBufSize;
-	int32			m_SrvCirRcBufSize;
+	int32			m_SrvSocketRnBufSize;
 
+	int32			m_SrvCirRcBufSize;
+	int32			m_SrvCirRnBufSize;
 	
+	bool			m_bSrvEnableLZO;
+	bool			m_bSrvPacketUseIndexWhenSend;
+	bool			m_bSrvPacketUseIndexWhenRecv;
+
+	int32			m_SrvNetThreadFrameTime;
 };
 
