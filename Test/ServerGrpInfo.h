@@ -12,6 +12,7 @@ enum SrvType
 	eSrv_Gate,
 	eSrv_Node,
 	eSrv_NodeSHM,
+	eSrv_Collision,
 	eSrv_Count
 };
 

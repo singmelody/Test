@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include "PeerModuleBase.h"
 
 class ParamPool;
 class ServerInfo;

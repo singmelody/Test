@@ -1,9 +1,9 @@
 #include "StdAfx.h"
 #include "WorldBase.h"
-
+#include ""
 
 WorldBase::WorldBase(void)
-	: PeerModuleBase( Srv_World )
+	: PeerModuleBase( eSrv_World )
 {
 	m_olAvatarCount = 0;
 	m_bWarWorld = false;
@@ -83,9 +83,65 @@ void WorldBase::OnConfigLoaded()
 	WORLDDOG_SET_STRING( MotherIP, ServerConfig::MontherIP.c_str());
 	WORLDDOG_SET_VALUE( MotherPort, ServerConfig::MontherPort);
 
+			is there any code?
+
 }
 
 void WorldBase::UpdateDogPool(int32 nFrameTime)
 {
+			is there any code?
+}
 
+void WorldBase::InitDogParamPool(ServerInfo* pInfo)
+{
+	PeerModuleBase::InitDogParamPool(pInfo);
+
+	Servers.LocalNodeGroup.InitDogDetailsPool( this, pInfo->ServerID);
+}
+
+void WorldBase::BroadcastDogPool()
+{
+	PeerModuleBase::Broadcast2DogPool();
+	Servers.LocalNodeGroup.BroadcastDogDetailsPools(this);
+}
+
+void WorldBase::OnAddServerInfo(ServerInfo* pInfo)
+{
+	PeerModuleBase::OnAddServerInfo(pInfo);
+	OnServerInfoChanged(pInfo);
+}
+
+void WorldBase::OnRemoveServerInfo(ServerInfo* pInfo)
+{
+	PeerModuleBase::OnRemoveServerInfo(pInfo);
+	OnServerInfoChanged(pInfo);
+}
+
+void WorldBase::OnServerInfoChanged(ServerInfo* pInfo)
+{
+	switch(pInfo->nSrvType)
+	{
+	case eSrv_DBA:
+		WORLDDOG_SET_VALUE( DBAID, pInfo->nSrvID);
+		break;
+
+	case eSrv_Login:
+		WORLDDOG_SET_VALUE( LoginID, pInfo->nSrvID);
+		break;
+
+	case eSrv_Gate:
+		WORLDDOG_SET_VALUE( GateCnt, Servers.GateGroup.ServerCnt());
+		break;
+
+	case eSrv_Node:
+		WORLDDOG_SET_VALUE( LocalNodeCnt, Servers.LocalNodeGroup.ServerCnt() );
+		WORLDDOG_SET_VALUE( RemoteNodeCnt, Servers.RemoteNodeGroup.ServerCnt() );
+		break;
+
+	case eSrv_Collision;
+		break;
+		
+		is there any code?
+
+	}
 }
