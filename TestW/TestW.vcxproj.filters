@@ -30,6 +30,15 @@
     <ClInclude Include="WorldStage.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="WorldStage_Logining.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldAvatar.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="AvatarOnLineManager.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -42,6 +51,15 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="WorldStage.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldStage_Logining.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldAvatar.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="AvatarOnLineManager.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

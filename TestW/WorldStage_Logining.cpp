@@ -71,3 +71,47 @@ void WorldStage_Logining::OnEnterStage( WorldAvatar* pAvatar)
 
 	Send2DBA(PacketRoleListRequest);
 }
+
+
+void WorldStage_Logining::OnLeaveStage( WorldAvatar* pAvatar)
+{
+	WorldStage::OnLeaveStage(pAvatar);
+}
+
+void WorldStage_Logining::Tick(int32 nFrameTime)
+{
+	TickList& list = m_listAvatars;
+
+	PTICKNODE pNode = list.GetNext(NULL);
+
+	while (pNode != NULL)
+	{
+		WorldAvatar* pAvatar = (WorldAvatar*)(pNode->Get());
+		if(!pAvatar)
+		{
+			pNode = list.Remove(pNode);
+			continue;
+		}
+
+		pNode = list.GetNext(pNode);
+
+		int32 nPendTime = pAvatar->GetPendingTime();
+		if( nPendTime <= 0 )
+		{
+			MyLog::error("Delete Pending Avatar Data FRrom id=%d", pAvatar->GetAvatarID());
+
+			pNode = list.Remove(pNode);
+
+			DestroyAvatar(pAvatar);
+			continue;
+		}
+
+		pAvatar->SubPendingTime(nFrameTime);
+	}
+}
+
+void WorldStage_Logining::DestroyAvatar(WorldAvatar* pAvatar)
+{
+	AvatarOnLineManager::Instance().DelAccount(pAvatar);
+	WorldStage::DestroyAvatar(pAvatar);
+}
