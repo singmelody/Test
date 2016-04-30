@@ -96,7 +96,48 @@ void WorldStage_Logined::PktGate_CreateAvatar(class PacketCreateAvatar* pPkt)
 		}
 	}
 
-	balbalbala
+
+	pPkt->accountLen = uint8(pAvatar->Account.GetAccountName().size());
+	if(pPkt->accountLen > sizeof(pPkt->account))
+	{
+		MyLog::error("Bad Account Len = [%d]", pPkt->accountLen);
+		PacketCreateAvatarsRes pkt;
+		pkt.flag = CreateAvatarRes_Fail;
+		pkt.index = -1;
+		pAvatar->Send2Gate( &pkt, true);
+		return true;
+	}
+
+	const std::string strAccount( pPkt->account, pPkt->accountLen);
+
+	memcpy( pPkt->account, pAvatar->Account.GetAccountName(), pPkt->accountLen);
+
+	PARAM_SET_VALUE( pPool, faceid, pPkt->faceid, false);
+	PARAM_SET_VALUE( pPool, hairid, pPkt->hairid, false);
+	PARAM_SET_VALUE( pPool, eyeid, pPkt->eyeid, false);
+	PARAM_SET_VALUE( pPool, skincolor, pPkt->skincolor, false);
+	PARAM_SET_VALUE( pPool, tattoo, pPkt->tattoo, false);
+	PARAM_SET_VALUE( pPool, beard_eyeshadow, pPkt->beard_eyeshadow, false);
+	PARAM_SET_VALUE( pPool, morph_1, pPkt->morph_1, false);
+	PARAM_SET_VALUE( pPool, morph_2, pPkt->morph_2, false);
+	PARAM_SET_VALUE( pPool, morph_3, pPkt->morph_3, false);
+	PARAM_SET_VALUE( pPool, fashionid, pPkt->fashionid, false);
+	PARAM_SET_VALUE( pPool, fashioncolor, pPkt->fashioncolor, false);
+	PARAM_SET_VALUE( pPool, lipcolor, pPkt->lipcolor, false);
+
+	PARAM_SET_VALUE( pPool, title, strTitle.c_str(), false);
+	PARAM_SET_VALUE( pPool, accountname, strAccount.c_str(), false);
+
+	pPkt->AvatarDID = pAvatar->GenGalaxyUID();
+
+	PARAM_SET_VALUE( pPool, avatardid, pPkt->AvatarDID, false);
+	PARAM_SET_VALUE( pPool, create_time, Time::CurrentTime().Second(), false);
+
+	pPkt->index = resPos;
+	pAvatar->SetState( eGAS_Base_CltCreateAvatar);
+
+	// create avatar log
+	Send2DBA(pPkt);
 }
 
 void WorldStage_Logined::PktGate_CreateAvatarRes(class PacketCreateAvatarRes* pPkt)
@@ -220,7 +261,55 @@ void WorldStage_Logined::PktGate_CltSelectAvatar(class PacketCltSelectAvatar* pP
 	WorldAvatar* pAvatar = GetWorldAvatar(pPkt);
 	if(!pAvatar)
 	{
-		MyLog::error("");
+		MyLog::error("PktGate_CltSelectAvatar Can not find Avatar by id = [%d]", pPkt->GetAvatarID() );
+		nReason = uint8(PacketCltSelectAvatarFailed::eReason_Unkown);
+	}
+	else
+	{
+		if(!CheckInStage(pAvatar, "WorldStage_Logined::PktGate_CltSelectAvatar") )
+		{
+			nReason = uint8(PacketCltSelectAvatarFailed::eReason_Unkown);
+		}
+		else
+		{
+			ParamPool* pPool = pAvatar->Account.GetRoleSet( pPkt->avatarIndex );
+			if(!pPool)
+			{
+				nReason = uint8(PacketCltSelectAvatarFail::eReason_BadIndex);
+				MyLog::message("Avatar Req Enter Game Failed: Select UserDataParam Wrong account=[%s] index=[%d]", balad);
+			}
+			else
+			{
+				int64 nAvatarDID = PARAM_GET_VALUE( pPool, avatardid, (int64)0);
+				if(PARAM_GET_VALUE( pPool, ban_game_date, uint32(0)) > Time::CurrentTime().Second())
+				{
+					nReason = uint8(PacketCltSelectAvatarFail::eReason_AvatarBanded);
+					MyLog::message("Avatar Req Enter Game Failed avatar was banned account=[%s] avatardid = [%d]", abdfad);
+				}
+				else
+				{
+					pAvatar->Account.PickRoleSet( pPkt->avatarIndex );
+
+					pAvatar->SetParamPool( pPool );
+					pAvatar->SetAvatarDID(nAvatarDID);
+					pAvatar->SetCurStage( WS_DataLoading );
+				}
+			}
+		}
+	}
+
+	if( nReason != uint8(-1))
+	{
+		PacketCltSelectAvatarFail failPkt;
+		failPkt.SetAvatarID( pPkt->GetAvatarID() );
+		failPkt.reason = nReason;
+		failPkt.SetPacketType(PacketType_GateProc);
+		PeerSend( pPkt->GetSocketID(), &failPkt);
 	}
 }
 
+void WorldStage_Logined::DestroyAvatar(WorldAvatar* pAvatar)
+{
+	AvatarOnLineManager::Instance().DelAccount(pAvatar);
+	WorldStage::DestroyAvatar(pAvatar);
+}
