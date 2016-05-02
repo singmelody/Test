@@ -3,6 +3,7 @@
 #include <list>
 
 class ParamPool;
+class PacketBase;
 
 class ModuleBase
 {
@@ -38,7 +39,12 @@ public:
 	typedef std::list<ParamPool*> DogDataList;
 
 	DogDataList m_listDogData;
+
+	void Send2Login(PacketBase* pPkt);
+
 protected:
+	ServerManager& Servers;
+
 	int8		m_RunState;
 	bool		m_bExitLoop;
 	ParamPool*	m_pModuleDogPool;

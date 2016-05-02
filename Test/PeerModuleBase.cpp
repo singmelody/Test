@@ -1,7 +1,6 @@
 #include "StdAfx.h"
 #include "PeerModuleBase.h"
 
-
 PeerModuleBase::PeerModuleBase(void)
 {
 }

@@ -143,6 +143,8 @@
     <ClInclude Include="WorldAvatar.h" />
     <ClInclude Include="WorldAvatarGroup.h" />
     <ClInclude Include="WorldBase.h" />
+    <ClInclude Include="WorldFuncExManager.h" />
+    <ClInclude Include="WorldFuncManager.h" />
     <ClInclude Include="WorldStage.h" />
     <ClInclude Include="WorldStage_Logining.h" />
   </ItemGroup>
@@ -158,6 +160,8 @@
     <ClCompile Include="WorldAvatar.cpp" />
     <ClCompile Include="WorldAvatarGroup.cpp" />
     <ClCompile Include="WorldBase.cpp" />
+    <ClCompile Include="WorldFuncExManager.cpp" />
+    <ClCompile Include="WorldFuncManager.cpp" />
     <ClCompile Include="WorldStage.cpp" />
     <ClCompile Include="WorldStage_Logining.cpp" />
   </ItemGroup>

@@ -33,3 +33,11 @@ START_ADD_PACKET_MEMBER(PacketAddSrvInfo)
 	ADD_PACKET_MEMBER( nListenPortClt, int32, listenPortClt);
 	ADD_PACKET_MEMBER_STR( ListenIpClt, IPLEN, NetIPClt);
 PACKET_END(PacketAddSrvInfo)
+
+PACKET(PacketOnlineUserInfo)
+int32 nMaxCount;
+int32 nCount;
+START_ADD_PACKET_MEMBER(PacketOnlineUserInfo)
+	ADD_PACKET_MEMBER( nMaxCount, int32, nMaxCount);
+	ADD_PACKET_MEMBER( nCount, int32, nCount);
+PACKET_END(PacketOnlineUserInfo, PacketBase)

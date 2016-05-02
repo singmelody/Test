@@ -6,6 +6,7 @@
 
 class ServerInfo;
 class ParamPool;
+class ServerManager;
 
 class PeerModuleBase : public ModuleBase, public PeerBase
 {
@@ -30,5 +31,6 @@ public:
 
 	virtual void OnAllocateServerID( int32 nSrvType, int32 nSrvID, int32 nSocketID){}
 	virtual void OnAddServerInfo( ServerInfo* pInfo );
+protected:
 };
 

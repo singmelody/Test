@@ -8,3 +8,5 @@ PACKET_IMPL(PacketPack)
 PACKET_IMPL(PacketAvatarDecommision)
 
 PACKET_IMPL(PacketAddSrvInfo)
+
+PACKET_IMPL(PacketOnlineUserInfo)

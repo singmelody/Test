@@ -11,3 +11,13 @@ ModuleFuncManager::ModuleFuncManager(PeerModuleBase& peerModule)
 ModuleFuncManager::~ModuleFuncManager(void)
 {
 }
+
+void ModuleFuncManager::Send2Login(PacketBase& pkt)
+{
+	PeerModule.Send2Login(&pkt);
+}
+
+void ModuleFuncManager::Send2Login(PacketBase* pkt)
+{
+	PeerModule.Send2Login(pkt);
+}
