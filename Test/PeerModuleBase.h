@@ -31,6 +31,9 @@ public:
 
 	virtual void OnAllocateServerID( int32 nSrvType, int32 nSrvID, int32 nSocketID){}
 	virtual void OnAddServerInfo( ServerInfo* pInfo );
+
+	virtual void Send2Login( PacketBase* pPkt);
 protected:
+	ServerManager& Servers;
 };
 

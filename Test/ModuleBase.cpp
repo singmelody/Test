@@ -26,22 +26,3 @@ bool ModuleBase::Init(int32 nArgc, char* argv[])
 	MyLog::Create( logName.c_str() );
 	LogThread::Instance().Start();
 }
-
-void ModuleBase::Send2Login(PacketBase* pPkt)
-{
-	if(!pPkt)
-		return;
-
-	ServerInfo* pInfo = Servers.GetLoginInfo();
-	if(pInfo)
-		return;
-
-	PeerSend( pPkt, pInfo->nSocketID);
-
-	switch(m_nSrvType)
-	{
-	case eSrv_World:
-		W2LPacketCounter(pPkt->GetPacketID());
-		break;
-	}
-}
