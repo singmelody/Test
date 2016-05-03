@@ -310,6 +310,7 @@
     <ClInclude Include="RSAipher.h" />
     <ClInclude Include="SceneContentItem.h" />
     <ClInclude Include="SceneContentNpc.h" />
+    <ClInclude Include="SceneManager.h" />
     <ClInclude Include="ServerConfig.h" />
     <ClInclude Include="ServerGrp.h" />
     <ClInclude Include="ServerGrpInfo.h" />
@@ -414,6 +415,7 @@
     <ClCompile Include="RSAipher.cpp" />
     <ClCompile Include="SceneContentItem.cpp" />
     <ClCompile Include="SceneContentNpc.cpp" />
+    <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="ServerGrp.cpp" />
     <ClCompile Include="ServerGrpInfo.cpp" />
     <ClCompile Include="ServerManager.cpp" />

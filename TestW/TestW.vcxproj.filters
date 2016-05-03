@@ -42,6 +42,21 @@
     <ClInclude Include="WorldAvatarGroup.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="WorldFuncExManager.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldFuncManager.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldAvatarManager.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldSceneManager.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldAyncContextManager.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -66,6 +81,21 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="WorldAvatarGroup.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldFuncExManager.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldFuncManager.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldAvatarManager.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldSceneManager.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldAyncContextManager.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
