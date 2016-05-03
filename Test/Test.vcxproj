@@ -238,6 +238,7 @@
     <ClInclude Include="Avatar.h" />
     <ClInclude Include="BlowFishCipher.h" />
     <ClInclude Include="CircularBufferEx.h" />
+    <ClInclude Include="CircularList.h" />
     <ClInclude Include="CircularListEx.h" />
     <ClInclude Include="CommonConfig.h" />
     <ClInclude Include="CommonDataOwner.h" />
@@ -337,6 +338,7 @@
     <ClCompile Include="Avatar.cpp" />
     <ClCompile Include="BlowFishCipher.cpp" />
     <ClCompile Include="CircularBufferEx.cpp" />
+    <ClCompile Include="CircularList.cpp" />
     <ClCompile Include="CircularListEx.cpp" />
     <ClCompile Include="CommonConfig.cpp" />
     <ClCompile Include="CommonDataOwner.cpp" />
