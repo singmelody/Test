@@ -65,12 +65,6 @@ ADD_PACKET_MEMBER( nReason, uint8, nReason);
 ADD_PACKET_MEMBER( nParam, uint8, nParam);
 PACKET_END(PacketCltSelectAvatarFailed)
 
-PACKET(PacketCltSelectAvatar, PacketBase)
-uint8 nAvatarIdx;
-START_ADD_PACKET_MEMBER(PacketCltSelectAvatar)
-	ADD_PACKET_MEMBER( nAvatarIdx, uint8, nAvatarIdx);
-PACKET_END(PacketCltSelectAvatar)
-
 PACKET(PacketCommonDataInit, PacketBase)
 START_ADD_PACKET_MEMBER(PacketCommonDataInit)
 PACKET_END(PacketCommonDataInit)
@@ -91,3 +85,9 @@ START_ADD_PACKET_MEMBER(PacketCommonDataDelete)
 	ADD_PACKET_MEMBER( nDelFlag, uint8, nDelFlag);
 PACKET_END(PacketCommonDataDelete)
 
+// CLT 2 Gate
+PACKET_CLT_2_GATE(PacketCltSelectAvatar, PacketBase)
+uint8 nAvatarIdx;
+START_ADD_PACKET_MEMBER(PacketCltSelectAvatar)
+	ADD_PACKET_MEMBER( nAvatarIdx, uint8, nAvatarIdx);
+PACKET_END(PacketCltSelectAvatar)

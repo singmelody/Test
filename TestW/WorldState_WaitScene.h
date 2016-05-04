@@ -2,12 +2,12 @@
 
 #include "WorldState.h"
 #include "Singleton.h"
-`
-class WorldStateWaitScene : public WorldState, public Singleton<WorldStateWaitScene>
+
+class WorldState_WaitScene : public WorldState
 {
 public:
-	WorldStateWaitScene(void);
-	~WorldStateWaitScene(void);
+	WorldState_WaitScene(void);
+	virtual ~WorldState_WaitScene(void);
 
 	virtual int32 GetState() { return eWS_WaitScene; }
 	virtual void Tick( int32 nFrameTime );

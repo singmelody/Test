@@ -2,38 +2,38 @@
 #include "WorldState_Logined.h"
 
 
-WorldStateLogined::WorldStateLogined(void)
+WorldState_Logined::WorldState_Logined(void)
 {
 }
 
 
-WorldStateLogined::~WorldStateLogined(void)
+WorldState_Logined::~WorldState_Logined(void)
 {
 }
 
-void WorldStateLogined::OnEnterStage(WorldAvatar* pAvatar)
+void WorldState_Logined::OnEnterStage(WorldAvatar* pAvatar)
 {
 	WorldState::OnEnterState(pAvatar);
 }
 
-void WorldStateLogined::OnLeaveStage(WorldAvatar* pAvatar)
+void WorldState_Logined::OnLeaveStage(WorldAvatar* pAvatar)
 {
 	WorldState::OnLeaveStage(pAvatar);
 }
 
-void WorldStateLogined::RegPeerPktHandle(PacketProcessor* pProc)
+void WorldState_Logined::RegPeerPktHandle(PacketProcessor* pProc)
 {
-	REG_PACKET_HANDLER( pProc, PacketCreateAvatar, WorldStateLogined, PktGate_CreateAvatar);
-	REG_PACKET_HANDLER( pProc, PacketCreateAvatarRes, WorldStateLogined, PktGate_CreateAvatarRes);
+	REG_PACKET_HANDLER( pProc, PacketCreateAvatar, WorldState_Logined, PktGate_CreateAvatar);
+	REG_PACKET_HANDLER( pProc, PacketCreateAvatarRes, WorldState_Logined, PktGate_CreateAvatarRes);
 
-	REG_PACKET_HANDLER( pProc, PacketDelAvatar, WorldStateLogined, PktGate_DelAvatar);
-	REG_PACKET_HANDLER( pProc, PacketDelAvatarRes, WorldStateLogined, PktGate_DelAvatarRes);
+	REG_PACKET_HANDLER( pProc, PacketDelAvatar, WorldState_Logined, PktGate_DelAvatar);
+	REG_PACKET_HANDLER( pProc, PacketDelAvatarRes, WorldState_Logined, PktGate_DelAvatarRes);
 
-	REG_PACKET_HANDLER( pProc, PacketCltSelectAvatar, WorldStateLogined, PktGate_CltSelectAvatar);
+	REG_PACKET_HANDLER( pProc, PacketCltSelectAvatar, WorldState_Logined, PktGate_CltSelectAvatar);
 
 }
 
-void WorldStateLogined::PktGate_CreateAvatar(class PacketCreateAvatar* pPkt)
+void WorldState_Logined::PktGate_CreateAvatar(class PacketCreateAvatar* pPkt)
 {
 	if(!pPkt)
 		return;
@@ -140,7 +140,7 @@ void WorldStateLogined::PktGate_CreateAvatar(class PacketCreateAvatar* pPkt)
 	Send2DBA(pPkt);
 }
 
-void WorldStateLogined::PktGate_CreateAvatarRes(class PacketCreateAvatarRes* pPkt)
+void WorldState_Logined::PktGate_CreateAvatarRes(class PacketCreateAvatarRes* pPkt)
 {
 	if(!pPkt)
 		return;
@@ -191,7 +191,7 @@ void WorldStateLogined::PktGate_CreateAvatarRes(class PacketCreateAvatarRes* pPk
 	}
 }
 
-void WorldStateLogined::PktGate_DelAvatar(class PacketDelAvatar* pPkt)
+void WorldState_Logined::PktGate_DelAvatar(class PacketDelAvatar* pPkt)
 {
 	if(!pPkt || pPkt->index < 0 || pPkt->index >= MAX_AVATAR_COUNT_ONE_USER)
 		return;
@@ -220,7 +220,7 @@ void WorldStateLogined::PktGate_DelAvatar(class PacketDelAvatar* pPkt)
 	Send2DBA(&pkt);
 }
 
-void WorldStateLogined::PktGate_DelAvatarRes(class PacketDelAvatarRes* pPkt)
+void WorldState_Logined::PktGate_DelAvatarRes(class PacketDelAvatarRes* pPkt)
 {
 	if(!pPkt)
 		return;
@@ -251,7 +251,7 @@ void WorldStateLogined::PktGate_DelAvatarRes(class PacketDelAvatarRes* pPkt)
 	pAvatar->Send2Gate( pPkt,  true);
 }
 
-void WorldStateLogined::PktGate_CltSelectAvatar(class PacketCltSelectAvatar* pPkt)
+void WorldState_Logined::PktGate_CltSelectAvatar(class PacketCltSelectAvatar* pPkt)
 {
 	if(!pPkt)
 		return;
@@ -308,7 +308,7 @@ void WorldStateLogined::PktGate_CltSelectAvatar(class PacketCltSelectAvatar* pPk
 	}
 }
 
-void WorldStateLogined::DestroyAvatar(WorldAvatar* pAvatar)
+void WorldState_Logined::DestroyAvatar(WorldAvatar* pAvatar)
 {
 	AvatarOnLineManager::Instance().DelAccount(pAvatar);
 	WorldState::DestroyAvatar(pAvatar);

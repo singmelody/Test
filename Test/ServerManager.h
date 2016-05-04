@@ -52,9 +52,10 @@ public:
 
 	void SetPeerModule(PeerModuleBase* pPeerModule);
 
-
 	ServerInfo* GetLoginInfo();
 	ServerInfo* GetWarWorldInfo( PacketBase* pPkt);
+
+	void SetSrvType( SrvType nSrvType);
 protected:
 	int32			m_nZoneID;	// ¥Ûµÿ∑…”•
 	int32			m_nGrpID;	// ∑ÔªÀºØ
@@ -67,8 +68,10 @@ protected:
 	ServerInfo*		m_pDBA;
 	ServerInfo*		m_pGMI;
 
-
 	PeerModuleBase* m_pPeerModule;
 	SrvType			m_srvType;
+
+	NodeSrvGroup	m_LocalNodeGrp;
+	NodeSrvGroup	m_RemoteNodeGrp;
 };
 

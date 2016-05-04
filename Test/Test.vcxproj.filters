@@ -348,6 +348,12 @@
     <ClInclude Include="CommonDataCont.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="MyLoadTemplateManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NodeSrvGrp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -651,6 +657,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CommonDataCont.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MyLoadTemplateManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="NodeSrvGrp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

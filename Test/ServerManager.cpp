@@ -4,6 +4,29 @@
 
 ServerManager::ServerManager(void)
 {
+	m_nZoneID = 0;
+	m_nGrpID = 0;
+
+	m_pLocalWorld = NULL;
+	m_localWorldChannelID = -1;
+
+	m_pWarWorld = NULL;
+
+	m_pLogin = NULL;
+	m_pDBA = NULL;
+
+	m_srvType = eSrv_Unkown;
+
+	m_LocalNodeGrp.Init( this, eSrv_Node);
+	m_LocalNodeGrp.m_strSrvName = "LocalNode";
+	
+	m_RemoteNodeGrp.Init( this, eSrv_Node);
+	m_RemoteNodeGrp.m_strSrvName = "RemoteNode";
+
+	m_GateGrp.Init( this, eSrv_Gate);
+
+	m_RemoteWorldGrp.Init( this, eSrv_World);
+	m_NodeDataSyncGrp.Init( this, eSrv_NodeSHM);
 }
 
 
@@ -44,6 +67,11 @@ ServerInfo* ServerManager::GetLoginInfo()
 ServerInfo* ServerManager::GetWarWorldInfo(PacketBase* pPkt)
 {
 	return m_pWarWorld;
+}
+
+void ServerManager::SetSrvType(SrvType nSrvType)
+{
+	m_srvType = nSrvType;
 }
 
 // zoneid	groupid		type	index

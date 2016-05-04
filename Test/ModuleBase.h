@@ -1,15 +1,16 @@
 #pragma once
 
 #include <list>
-#include "BaseType.h"
+#include "ServerGrpInfo.h"
 
 class ParamPool;
 class LoadTemplateManager;
+class ServerManager;
 
 class ModuleBase
 {
 public:
-	ModuleBase(void);
+	ModuleBase(SrvType nSrvType);
 	virtual ~ModuleBase(void);
 
 	virtual bool Init(int32 nArgc, char* argv[]);
@@ -19,9 +20,6 @@ public:
 
 	virtual bool StartMainLoop( int32 nFrameInterval);
 	virtual bool CreateDogPool();
-
-	typedef std::list<ParamPool*>	DogDataList;
-	DogDataList	m_listDogData;
 
 	enum RunState
 	{
@@ -38,7 +36,6 @@ public:
 	inline bool IsExiting() const { return m_bExitLoop;}
 
 	typedef std::list<ParamPool*> DogDataList;
-
 	DogDataList m_listDogData;
 protected:
 	ServerManager& Servers;
@@ -47,5 +44,16 @@ protected:
 	int8		m_RunState;
 	bool		m_bExitLoop;
 	ParamPool*	m_pModuleDogPool;
+
+	const uint8	m_nSrvType;
+	int32		m_nSrvID;
+	std::string m_strModuelName;
+	int32		m_nFrameInterval;
+	bool		m_bDebug;
+
+	uint64		m_nLastFrameTicks;
+	uint64		m_nLastTime;
+
+	int8		m_nRunState;
 };
 

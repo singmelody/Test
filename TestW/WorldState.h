@@ -1,5 +1,7 @@
 #pragma once
 
+#include "WorldFuncExManager.h"
+
 class WorldAvatar;
 class PacketProcessor;
 

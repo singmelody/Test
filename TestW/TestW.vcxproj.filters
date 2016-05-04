@@ -27,9 +27,6 @@
     <ClInclude Include="WorldBase.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="WorldStage.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="WorldAvatar.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -72,10 +69,10 @@
     <ClInclude Include="WorldState_WaitScene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="WorldState_DataReady.h">
+    <ClInclude Include="WorldState_DataLoading.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="WorldState_DataLoading.h">
+    <ClInclude Include="WorldState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -87,9 +84,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="WorldBase.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="WorldStage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="WorldAvatar.cpp">
@@ -134,10 +128,10 @@
     <ClCompile Include="WorldState_Logined.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="WorldState_DataReady.cpp">
+    <ClCompile Include="WorldState_DataLoading.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="WorldState_DataLoading.cpp">
+    <ClCompile Include="WorldState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

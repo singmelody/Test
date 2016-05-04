@@ -1,22 +1,21 @@
 #include "StdAfx.h"
 #include "WorldState_WaitScene.h"
+#include "GameObject.h"
 
-
-WorldStateWaitScene::WorldStateWaitScene(void)
+WorldState_WaitScene::WorldState_WaitScene(void)
 {
 }
 
 
-WorldStateWaitScene::~WorldStateWaitScene(void)
+WorldState_WaitScene::~WorldState_WaitScene(void)
 {
 }
 
-void WorldStateWaitScene::Tick(int32 nFrameTime)
+void WorldState_WaitScene::Tick(int32 nFrameTime)
 {
 	TickList& list = m_listAvatars;
 
-	PTICKNODE pNode = list.GetNext(NULL);
-
+	TickNode* pNode = list.GetNext(NULL);
 	while (pNode != NULL)
 	{
 		WorldAvatar* pAvatar = (WorldAvatar*)(pNode->Get());
@@ -31,8 +30,8 @@ void WorldStateWaitScene::Tick(int32 nFrameTime)
 		int32 nPendTime = pAvatar->GetPendingTime();
 		if( nPendTime <= 0 )
 		{
-			PacketCltSelectAvatarFail tmpPkt;
-			tmpPkt.reason = PacketCltSelectAvatar::eReason_EnterSceneFailed;
+			PacketCltSelectAvatarFailed tmpPkt;
+			tmpPkt.reason = PacketCltSelectAvatarFailed::eReason_EnterSceneFailed;
 			pAvatar->Send2Gate(&tmpPkt, true);
 
 			AvatarMgr.RemoveWorldAvatar(pAvatar);

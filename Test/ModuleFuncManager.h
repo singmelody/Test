@@ -1,5 +1,7 @@
 #pragma once
 
+#include "BaseType.h"
+
 class PacketBase;
 class PeerModuleBase;
 class ServerManager;

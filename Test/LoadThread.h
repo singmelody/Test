@@ -49,7 +49,7 @@ public:
 	Mutex					m_mutex;
 };
 
-class LoadThread : public Thread
+class LoadThread : public ThreadBase
 {
 public:
 	LoadThread( LoadTemplateManager* pMgr, LoadBatch* pBatch, int32 nThreadIdx);

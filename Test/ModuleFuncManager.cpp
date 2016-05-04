@@ -1,6 +1,7 @@
 #include "StdAfx.h"
 #include "ModuleFuncManager.h"
 #include "ServerManager.h"
+#include "PeerModuleBase.h"
 
 ModuleFuncManager::ModuleFuncManager(PeerModuleBase& peerModule)
 	: Servers( ServerManager::Instance()), PeerModule( peerModule )

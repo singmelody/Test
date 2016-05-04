@@ -269,6 +269,7 @@
     <ClInclude Include="MYEvent.h" />
     <ClInclude Include="MyFactory.h" />
     <ClInclude Include="MyListNode.h" />
+    <ClInclude Include="MyLoadTemplateManager.h" />
     <ClInclude Include="MyLog.h" />
     <ClInclude Include="LoadTemplate.h" />
     <ClInclude Include="LoadTemplateManager.h" />
@@ -289,6 +290,7 @@
     <ClInclude Include="NetChannelBase.h" />
     <ClInclude Include="NetManager.h" />
     <ClInclude Include="NoCopyable.h" />
+    <ClInclude Include="NodeSrvGrp.h" />
     <ClInclude Include="NpcParamDef.h" />
     <ClInclude Include="ODBCInterface.h" />
     <ClInclude Include="OperatorNew.h" />
@@ -385,6 +387,7 @@
     <ClCompile Include="MYEvent.cpp" />
     <ClCompile Include="MyFactory.cpp" />
     <ClCompile Include="MyListNode.cpp" />
+    <ClCompile Include="MyLoadTemplateManager.cpp" />
     <ClCompile Include="MyLog.cpp" />
     <ClCompile Include="LoadTemplate.cpp" />
     <ClCompile Include="LoadTemplateManager.cpp" />
@@ -405,6 +408,7 @@
     <ClCompile Include="NetEventHandler.cpp" />
     <ClCompile Include="NetManager.cpp" />
     <ClCompile Include="NetReactor.cpp" />
+    <ClCompile Include="NodeSrvGrp.cpp" />
     <ClCompile Include="NpcParamDef.cpp" />
     <ClCompile Include="ODBCInterface.cpp" />
     <ClCompile Include="OperatorNew.cpp" />

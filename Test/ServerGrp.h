@@ -1,5 +1,7 @@
 #pragma once
 
+#include "MySockAddr.h"
+
 class ServerInfo;
 
 class ServerGrp

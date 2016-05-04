@@ -1,9 +1,26 @@
 #include "StdAfx.h"
 #include "ModuleBase.h"
 #include "Log.h"
+#include "ServerManager.h"
+#include "MyLoadTemplateManager.h"
 
-ModuleBase::ModuleBase(void)
+ModuleBase::ModuleBase(SrvType nSrvType)
+	: m_nSrvType( nSrvType), Servers(ServerManager::Instance()), Templates(MyLoadTemplateManager::Instance())
+	, m_bDebug(false)
 {
+	m_nRunState = eRS_Connecting;
+	m_nSrvID = -1;
+	m_strModuelName = GetSrvTitle( m_nSrvType );
+
+	m_nFrameInterval = 50;
+	m_bExitLoop = false;
+
+	m_nLastFrameTicks = 0;
+	m_nLastTime = 0;
+
+	m_pModuleDogPool = NULL;
+
+	Servers.SetSrvType( nSrvType );
 }
 
 

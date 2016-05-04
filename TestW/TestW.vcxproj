@@ -150,9 +150,9 @@
     <ClInclude Include="WorldFuncManager.h" />
     <ClInclude Include="WorldSceneManager.h" />
     <ClInclude Include="WorldServer.h" />
-    <ClInclude Include="WorldStage.h" />
+    <ClInclude Include="WorldState.h" />
     <ClInclude Include="WorldStateManager.h" />
-    <ClInclude Include="WorldState_DataReady.h" />
+    <ClInclude Include="WorldState_DataLoading.h" />
     <ClInclude Include="WorldState_Logined.h" />
     <ClInclude Include="WorldState_Logining.h" />
     <ClInclude Include="WorldState_WaitScene.h" />
@@ -176,9 +176,9 @@
     <ClCompile Include="WorldFuncManager.cpp" />
     <ClCompile Include="WorldSceneManager.cpp" />
     <ClCompile Include="WorldServer.cpp" />
-    <ClCompile Include="WorldStage.cpp" />
+    <ClCompile Include="WorldState.cpp" />
     <ClCompile Include="WorldStateManager.cpp" />
-    <ClCompile Include="WorldState_DataReady.cpp" />
+    <ClCompile Include="WorldState_DataLoading.cpp" />
     <ClCompile Include="WorldState_Logined.cpp" />
     <ClCompile Include="WorldState_Logining.cpp" />
     <ClCompile Include="WorldState_WaitScene.cpp" />
