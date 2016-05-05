@@ -1,25 +1,9 @@
 #pragma once
 
 #include "GameObject.h"
+#include "SceneInfo.h"
 
-class SceneCreateArg
-{
-public:
-	SceneCreateArg();
-
-	int16	m_SceneSID;
-	int32	m_SceneID;
-	int32	m_SceneLevel;
-	int32	m_NodeSrvID;
-	int32	m_ArenaID;
-
-	int64	m_nSceneProcessBits;
-	int64	m_nSceneCustomData;
-	uint64	m_nRequestTime;
-
-	int16	TemplateID();
-	int16	InstanceID();
-};
+class SceneCreateArg;
 
 class Scene : public GameObject
 {
@@ -29,5 +13,16 @@ public:
 
 	virtual void OnCreate( SceneCreateArg& arg);
 	virtual bool Tick( int32 nDeltaTime );
+
+	int32 GetSceneID() { return m_nSceneID; }
+	void SetSceneID(int32 nID) { m_nSceneID = nID; }
+
+	int32 Instance() { return SceneInfo::GetSceneInstanceID(m_nSceneID); }
+	const SceneInfo* GetSceneInfo() const { return m_pSceneInfo; }
+	int16 SceneSID() { return m_pSceneInfo->m_SceneSID; }
+protected:
+	int32		m_nNodeID;
+	int32		m_nSceneID;
+	SceneInfo*	m_pSceneInfo;
 };
 

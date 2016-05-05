@@ -3,13 +3,13 @@
 class WorldAvatar;
 class PacketProcessor;
 
-class WorldState : pubic WorldFuncExManager
+class WorldState : public WorldFuncExManager
 {
 public:
 	WorldState(void);
 	virtual ~WorldState(void);
 
-	virtual int32 GetState() { return WS_NULL; }
+	virtual int32 GetState() { return eWS_Null; }
 	virtual void OnEnterStage( WorldAvatar* pAvatar);
 	virtual void OnLeaveStage( WorldAvatar* pAvatar);
 
@@ -21,7 +21,7 @@ public:
 
 	virtual void OnGateClosed(int32 nSrvID);
 	virtual void OnNodeCrashed( int32 nSrvID, bool bUseSHM) {}
-	virtual void OnSceneClosed( MyScene* pScene) {}
+	virtual void OnSceneClosed( Scene* pScene) {}
 	virtual void OnPullAvatarDataFinish( WorldAvatar* pAvatar) {}
 
 	virtual void OnCreateNodeAvatarSucceed( WorldAvatar* pAvatar) {}

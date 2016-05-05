@@ -1,5 +1,7 @@
 #pragma once
-#include "parampoolowner.h"
+#include "ParamPoolOwner.h"
+#include "MyListNode.h"
+
 class GameObject : public ParamPoolOwner
 {
 public:
@@ -7,3 +9,5 @@ public:
 	virtual ~GameObject(void);
 };
 
+typedef MyListNode<GameObject*>		TickNode;
+typedef std::list<TickNode*>		TickList;

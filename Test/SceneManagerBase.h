@@ -11,10 +11,8 @@ public:
 	virtual ~SceneManagerBase(void);
 
 	const SceneInfo* GetSceneInfo(uint16 nSceneSID);
-
-
 protected:
-	typedef std::map<uint16, SceneInfo> SceneDataMap;
+	typedef std::map<uint16, SceneInfo*> SceneDataMap;
 	static SceneDataMap	SceneInfos;
 };
 

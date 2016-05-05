@@ -1,5 +1,6 @@
 #include "StdAfx.h"
 #include "WorldSceneManager.h"
+#include "SceneInfo.h"
 
 
 WorldSceneManager::WorldSceneManager(void)
@@ -67,7 +68,7 @@ SceneInfo* WorldSceneManager::CreateSceneInfo(int32 nSceneType, int32 nPlayerMax
 
 void WorldSceneManager::TickCreatingScenes(int32 nFrameTime)
 {
-	CreatingScenesMap& map = m_mapCreatingScenes;
+	CreatingSceneMap& map = m_mapCreatingScenes;
 
 	for (auto itr = map.beign(); itr != map.end(); ++itr)
 	{
@@ -83,6 +84,11 @@ void WorldSceneManager::TickCreatingScenes(int32 nFrameTime)
 		else
 			pScene->SetPendingTime( nPendingTime - nFrameTime );
 	}
+}
+
+void WorldSceneManager::TickClosingScenes(int32 nFrameTime)
+{
+
 }
 
 void WorldSceneManager::OnCreatingSceneTimeout(WorldScene* pScene)
@@ -102,6 +108,11 @@ void WorldSceneManager::OnCreatingSceneTimeout(WorldScene* pScene)
 	pkt.SceneID = pScene->GetSceneID();
 	Send2Node( &pkt, pScene->GetNodeID() );
 	DestroyScene( nSceneID );
+}
+
+void WorldSceneManager::NotifyCreateSceneResult(int32 nNodeID, int32 nAvatarID, int32 nResult, WorldScene* pScene /*= NULL*/)
+{
+
 }
 
 void WorldSceneManager::SyncParallelInfo2Node( int32 nNodeSrvID)
@@ -150,4 +161,9 @@ WorldScene* WorldSceneManager::CreateWorldScene( SceneCreateArg& obj)
 		return NULL;	// target srv not register  
 
 	balfadfa
+}
+
+void WorldSceneManager::OnNodeCrash(int32 nNodeID /*= SERVERID_NULL*/)
+{
+
 }
