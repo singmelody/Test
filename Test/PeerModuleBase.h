@@ -8,6 +8,7 @@
 class ServerInfo;
 class ParamPool;
 class ServerManager;
+class PacketAddSrvInfo;
 
 class ConnectionItem
 {
@@ -20,6 +21,22 @@ public:
 
 	int32 nListenPort;
 	char  listenIP[IPLEN];
+};
+
+class SrvItem
+{
+public:
+	SrvItem();
+
+	int32	nSrvType;
+	int32	nSrvID;
+	int32	nSocketID;
+
+	int32	listenPortPeer;
+	char	listenIpPeer[IPLEN];
+
+	int32	listenPortClt;
+	char	listenIpClt[IPLEN];
 };
 
 class PeerModuleBase : public ModuleBase, public PeerBase
@@ -64,13 +81,24 @@ public:
 
 	void StartConnectionThread();
 	void ConnectThreadProc();
+	void SendPacketSrvConnect(int32 nSocket);
+
+	void OnPeerConnected(SrvItem* pItem);
+	void OnPeerDisConnect(int32 nSocketID);
 
 	bool GetConnectionItem(class ConnectionItem& item);
 protected:
+	void SyncConnectServer(SrvItem* pInfo);
+
+	void OnRecvSrvInfoPkt(PacketAddSrvInfo* pPkt);
+	void OnSendPacketSrvConnect(class PacketSrvConnect& pkt);
+	void OnRecvSrvConnectPkt(class PacketSrvConnect* pPkt);
+
 	ServerManager& Servers;
 
 	#define THREADMAXCNT 4
 	CircularList<class MyThread*,THREADMAXCNT>	m_PeerThreadList;
-	bool m_bUseConnectionThread;
+	bool	m_bUseConnectionThread;
+
 };
 
