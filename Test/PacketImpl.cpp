@@ -18,3 +18,13 @@ PACKET_IMPL(PacketUserDataRegFinish)
 PACKET_IMPL(PacketCltSelectAvatarFailed)
 
 PACKET_IMPL(PacketCltSelectAvatar)
+
+PACKET_IMPL(PacketCommonDataInit)
+
+PACKET_IMPL(PacketCommonDataCreate)
+
+PACKET_IMPL(PacketCommonDataUpdate)
+
+PACKET_IMPL(PacketCommonDataDelete)
+
+

@@ -1,6 +1,8 @@
 #pragma once
 
 #include <string>
+#include "BaseType.h"
+#include "WorldAvatarGroup.h"
 
 enum DataLoadingFlag
 {
@@ -48,6 +50,7 @@ class WorldServer;
 class WorldState;
 class PacketBase;
 class Scene;
+class WorldAvatar;
 
 WorldAvatar* GetWorldAvatar(int32 nAvatarID);
 WorldAvatar* GetWorldAvatar( PacketBase* pPkt);

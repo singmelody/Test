@@ -58,16 +58,16 @@ void WorldState_Logining::OnEnterStage( WorldAvatar* pAvatar)
 	PacketSystemConfigRequest pktConfig;
 	pktConfig.SetAvatarID( pAvatar->GetAvatarID() );
 	pktConfig.AvatarID = pAvatar->GetAvatarID();
-	pktConfig.accountLen = uint8(pAvatar->Account.GetAccountName().size());
+	pktConfig.accountLen = uint8(pAvatar->m_account.GetAccountName().size());
 	assert(pktConfig.accountLen <= sizeof(pktConfig.account));
-	memcpy( pktConfig.account, pAvatar->Account.GetAccountName().c_str(), pktConfig.accountLen);
+	memcpy( pktConfig.account, pAvatar->m_account.GetAccountName().c_str(), pktConfig.accountLen);
 	Send2DBA(pktConfig);
 
 	PacketRoleListRequest pkt;
 	pkt.SetAvatarID( pAvatar->GetAvatarID() );
-	pkt.AccountNameLen = uint8(pAvatar->Account.GetAccountNmae().size());
+	pkt.AccountNameLen = uint8(pAvatar->m_account.GetAccountNmae().size());
 	assert( pkt.AccountNameLen <= sizeof(pkt.AccountName));
-	memcpy( pkt.AccountName, pAvatar->Account.GetAccountName().c_str(), pkt.AccountNameLen);
+	memcpy( pkt.AccountName, pAvatar->m_account.GetAccountName().c_str(), pkt.AccountNameLen);
 
 	Send2DBA(PacketRoleListRequest);
 }

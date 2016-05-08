@@ -1,10 +1,11 @@
 #pragma once
 
 #include "Avatar.h"
+#include "CommonDataCont.h"
+#include "PacketImpl.h"
 
 class CommonDataObject;
 class CommonDataManager;
-class CommonDataCont;
 class PacketCommonDataBase;
 
 class CommonDataOwner : public virtual Avatar

@@ -1,7 +1,8 @@
 #pragma once
 
+#include "AvatarSrvEx.h"
 
-class WorldAvatarGroup 
+class WorldAvatarGroup  : public AvatarSrvEx
 {
 public:
 	WorldAvatarGroup(void);

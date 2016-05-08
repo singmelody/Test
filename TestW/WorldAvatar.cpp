@@ -1,7 +1,9 @@
 #include "StdAfx.h"
 #include "WorldAvatar.h"
 #include "MyLog.h"
-
+#include "WorldAvatarManager.h"
+#include "WorldStateManager.h"
+#include "AvatarOnLineManager.h"
 
 WorldAvatar* GetWorldAvatar(int32 nAvatarID)
 {

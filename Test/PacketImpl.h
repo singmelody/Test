@@ -69,4 +69,25 @@ PACKET(PacketCltSelectAvatar, PacketBase)
 uint8 nAvatarIdx;
 START_ADD_PACKET_MEMBER(PacketCltSelectAvatar)
 	ADD_PACKET_MEMBER( nAvatarIdx, uint8, nAvatarIdx);
-PACKET_END(PacketCltSelectAvatar);
+PACKET_END(PacketCltSelectAvatar)
+
+PACKET(PacketCommonDataInit, PacketBase)
+START_ADD_PACKET_MEMBER(PacketCommonDataInit)
+PACKET_END(PacketCommonDataInit)
+
+PACKET(PacketCommonDataCreate, PacketBase)
+int32 nFlag;
+START_ADD_PACKET_MEMBER(PacketCommonDataCreate)
+	ADD_PACKET_MEMBER( nFlag, int32, nFlag);
+PACKET_END(PacketCommonDataCreate)
+
+PACKET(PacketCommonDataUpdate, PacketBase)
+START_ADD_PACKET_MEMBER(PacketCommonDataUpdate)
+PACKET_END(PacketCommonDataUpdate)
+
+PACKET(PacketCommonDataDelete, PacketBase)
+int32 nDelFlag;
+START_ADD_PACKET_MEMBER(PacketCommonDataDelete)
+	ADD_PACKET_MEMBER( nDelFlag, uint8, nDelFlag);
+PACKET_END(PacketCommonDataDelete)
+
