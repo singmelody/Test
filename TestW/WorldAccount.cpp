@@ -1,6 +1,7 @@
 #include "StdAfx.h"
 #include "WorldAccount.h"
 #include "PacketImpl.h"
+#include "ParamPool.h"
 
 WorldAccount::WorldAccount(void)
 	: m_bIsFCMAcount(false)
@@ -11,6 +12,8 @@ WorldAccount::WorldAccount(void)
 	, m_bHasBillingOlOnce(false)
 {
 	memset( m_pRoleDataSet, 0, sizeof(m_pRoleDataSet));
+
+	m_pRecentRoleSet = NULL;
 }
 
 
@@ -47,9 +50,30 @@ void WorldAccount::AddRoleSet(class PacketUserData* pPkt)
 		if(!pPool)
 			return;
 	}
+
+	pPkt->UpdateParamPool( pPool );
+
+	if(pPkt->nAvatarDID != -1)
+		pPool->SetValue( "avatardid", pPkt->nAvatarDID);
 }
 
 bool WorldAccount::SetRoleSet(int32 nIdx, ParamPool* pPool)
 {
+	if( nIdx < 0 || nIdx >= MAX_AVATAR_COUNT_ONE_USER)
+		return false;
 
+	ParamPool*& pSet = m_pRoleDataSet[nIdx];
+	if(!pSet)
+		return false;
+
+	pSet = pPool;
+	return true;
+}
+
+void WorldAccount::SetRecentRoleSet(ParamPool* pPool)
+{
+	if( m_pRecentRoleSet != pPool )
+		FACTORY_DELOBJ( m_pRecentRoleSet );
+
+	m_pRecentRoleSet = pPool;
 }

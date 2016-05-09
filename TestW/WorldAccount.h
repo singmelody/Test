@@ -21,8 +21,9 @@ public:
 	bool SetRoleSet( int32 nIdx, ParamPool* pPool);
 
 	void SetAccountName(const std::string& strAccount);
-	const std::string& GetAccountName() const { return &m_AccountName; }
+	const std::string& GetAccountName() const { return m_AccountName; }
 
+	void SetRecentRoleSet( ParamPool* pPool);
 protected:
 	ParamPool*	m_pRoleDataSet[MAX_AVATAR_COUNT_ONE_USER];
 	ParamPool*	m_pRecentRoleSet;

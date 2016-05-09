@@ -3,6 +3,11 @@
 
 #include "ServerConfig.h"
 #include "MyFactory.h"
+#include "Factory.h"
+#include "PacketFactory.h"
+#include "MyFactory.h"
+#include "MyClassManager.h"
+
 
 #define PACKET_EX( subPacket, basePacket, alloc) \
 	class subPacket : public basePacket\

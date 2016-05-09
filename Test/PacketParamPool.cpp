@@ -5,6 +5,9 @@
 #include "ParamPool.h"
 #include "ParamTypeDef.h"
 
+
+PACKET_IMPL(PacketParamPoolBase);
+
 PacketParamPool::PacketParamPool(void)
 {
 }
@@ -57,3 +60,26 @@ void PacketParamPool::SyncParamPool(SyncPacketArg& arg, ParamPool* pPool, uint32
 	if(bClearDirty)
 		pPool->ClearDirty();
 }
+
+bool PacketParamPool::UpdateParamPool(ParamPoolOwner* pPool, bool bDirty /*= false*/)
+{
+	if(!pPool)
+		return false;
+
+	return UpdateParamPool( pPool->GetParamPool(), bDirty);
+}
+
+bool PacketParamPool::UpdateParamPool(ParamPool* pPool, bool bDirty /*= false*/)
+{
+	if(!pPool)
+		return false;
+
+	char pBuffer[PACKET_EX_BUFF_SIZE];
+	int32 nSize = ReadBuffer( pBuffer, PACKET_EX_BUFF_SIZE);
+	if(nSize == 0)
+		return false;
+
+	pPool->Read( pBuffer, bDirty);
+	return true;
+}
+

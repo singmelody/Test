@@ -1,14 +1,7 @@
 #pragma once
 
 #include "PacketBase.h"
-#include "FactoryManagerBase.h"
-#include "MyFactory.h"
-#include "PacketFactory.h"
-#include "MyClass.h"
-#include "MyClassManager.h"
 #include "MyPacket.h"
-#include "Singleton.h"
-#include "Factory.h"
 
 PACKET(PacketParamPoolBase, PacketBaseEx<PACKET_EX_BUFF_SIZE>)
 uint32	m_ParamType;
@@ -20,6 +13,7 @@ PACKET_END(PacketParamPoolBase)
 
 class SyncPacketArg;
 class ParamPool;
+class ParamPoolOwner;
 
 
 class PacketParamPool : public PacketParamPoolBase
@@ -41,5 +35,8 @@ public:
 	bool CheckFlag(int8 flag) { }
 
 	void SyncParamPool( SyncPacketArg& arg, ParamPool* pPool, uint32 paramFlag, uint32 syncFlag, uint32 nParamFlagExclude);
+
+	bool UpdateParamPool( ParamPoolOwner* pPool, bool bDirty = false);
+	bool UpdateParamPool( ParamPool* pPool, bool bDirty = false);
 };
 
