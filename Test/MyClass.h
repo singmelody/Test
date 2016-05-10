@@ -172,6 +172,41 @@ public:
 		*((T*)((char*)pClassObj) + this->m_offset) = value;
 	}
 
+	virtual char* Read( void* pClassObj, char* pBuffer)
+	{
+		if( !pBuffer || !pClassObj)
+			return pBuffer;
+
+		memcpy( ((char*)pClassObj + this->m_offset), pBuffer, this->m_size);
+		return pBuffer + this->m_size;
+	}
+
+	virtual char* Read(void* pClassObj, char* pBuffer, bool& bDirty)
+	{
+		bDirty = false;
+		if(!pBuffer || !pClassObj)
+			return pBuffer;
+
+		T curValue = GetValue(pClassObj);
+		T tValue = *((T*)pBuffer);
+		if( curValue != tValue)
+		{
+			memcpy( ((char*)pClassObj + this->m_offset), pBuffer, this->m_size);
+			bDirty = true;
+		}
+
+		return pBuffer + this->m_size;
+	}
+
+	virtual char* Write(void* pClassObj, char* pBuffer)
+	{
+		if(!pBuffer || !pClassObj)
+			return pBuffer;
+
+		memcpy( pBuffer, ((char*)pClassObj + this->m_offset), this->m_size);
+		return pBuffer + this->m_size;
+	}
+
 	bool Compare( char* pBuff1, char* pBuff2)
 	{
 		if(!pBuff1 || !pBuff2)

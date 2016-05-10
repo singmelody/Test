@@ -181,9 +181,9 @@ public:
 		return tmp + m_buffSize;
 	}
 
-	virtual char* WritePacket( char* pBuffer)
+	virtual char* WritePacket( char* pBuff)
 	{
-		char* tmp = PacketBase:WritePacket(pBuff);
+		char* tmp = PacketBase::WritePacket(pBuff);
 		if( m_buffSize > nPacketSize)
 			m_buffSize = nPacketSize;
 
@@ -195,6 +195,9 @@ public:
 
 	template <class T>
 	char* WriteData()
+	{
+		
+	}
 
 	template < class T>
 	char* ReadData( char* pBuff, T& val)
@@ -220,11 +223,11 @@ public:
 		if( nReadSize > 0 && nReadSize < m_buffSize)
 			nRSize = nReadSize;
 
-		memcpy( pBuffer, m_Buffer, rSize);
+		memcpy( pBuffer, m_buffer, nRSize);
 		return m_buffSize;
 	}
 
-	int32 WriteBuffer(const char* pBuffer, size_t nSize) { return WriteBuffer( pBuffer, (int32)nSize);}
+	int32 WriteBuffer(const char* pBuffer, size_t nWriteSize) { return WriteBuffer( pBuffer, (int32)nWriteSize);}
 	int32 WriteBuffer( const char* pBuffer, int32 nSize)
 	{
 		if(!pBuffer || nSize < 0 )
@@ -233,7 +236,7 @@ public:
 		if( nSize > nPacketSize )
 			nSize = nPacketSize;
 
-		memcpy( m_pBuffer, pBuffer, nSize);
+		memcpy( m_buffer, pBuffer, nSize);
 		m_buffSize = nSize;
 		return nSize;
 	}

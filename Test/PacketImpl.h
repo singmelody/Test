@@ -9,6 +9,7 @@
 #include "MyPacket.h"
 #include "Singleton.h"
 #include "Factory.h"
+#include "PacketParamPool.h"
 
 PACKET( PacketPack, PacketPackBase)
 START_ADD_PACKET_MEMBER(PacketPack)

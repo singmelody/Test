@@ -63,6 +63,9 @@ public:
 
 	virtual const char* GetValueString(void* pClassObj) = 0;
 
+	virtual char* ParamRead( char* pParamBuff, char* pBuff, bool& bDirty) = 0;
+	virtual char* ParamWrite( char* pParamBuff, char* pBuff) = 0;
+
 	inline bool SqlFlag_IsInsertProcParam() const { return ( m_mysqlFlag & (uint32)eSqlFlag_NotInsertProcParam) == 0; }
 
 	enum SqlFlag
@@ -140,7 +143,15 @@ public:
 		return ClassMember<T>::Compare( pParamBuff, pBuff);
 	}
 
+	virtual char* ParamRead( char* pParamBuff, char* pBuff, bool& bDirty)
+	{
+		return ClassMember<T>::Read( pParamBuff, pBuff, bDirty);
+	}
 
+	virtual char* ParamWrite( char* pParamBuff, char* pBuff)
+	{
+		return ClassMember<T>::Write( pParamBuff, pBuff);
+	}
 
 protected:
 	T m_defaultValue;

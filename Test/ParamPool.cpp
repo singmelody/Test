@@ -4,6 +4,7 @@
 #include "MyLog.h"
 #include <assert.h>
 #include "DataBuffer.h"
+#include "ParamTypeDef.h"
 
 ParamPool::ParamPool(void)
 {
@@ -172,6 +173,104 @@ void* ParamPool::SHMGetExtraMemory()
 		return NULL;
 
 	return m_pParamBuffer + m_paramBuffSize;
+}
+
+// |count|idx 0|flag 0|data 0|idx 1|flag 1|data 1|........|idx n|flag n|data n|
+bool ParamPool::Write(char* pBuffer, int32& nBufferSize, int32& nStartParamPos, uint32 paramFlag, uint32 nSyncFlag, uint32 nParamFlagExclude /*= 0*/)
+{
+	assert( IsValidMemory(m_pParamBuffer) );
+	assert( pBuffer && nBufferSize > 0);
+
+	const int32 RESERVE_BUFF_SIZE = 4;
+
+	const char* const buffer_start = pBuffer;
+	const char* const buffer_end = pBuffer + nBufferSize;
+	nBufferSize = 0;
+
+	bool bAll = nSyncFlag & eParam_Sync_All;
+	bool bClearDirty = nSyncFlag & eParam_Sync_ClearDirty;
+	bool bIgnoreDft = nSyncFlag & eParam_Sync_IgnoreDft;
+
+	int32 nStartBlock = nStartParamPos / MAX_PARAM_COUNT_IN_BLOCK;
+	int32 nStartPosOfBlock = nStartParamPos % MAX_PARAM_COUNT_IN_BLOCK;
+
+	uint8& nCountBlocks = *(uint8*)buffer_start;
+	nCountBlocks = 0;
+	nBufferSize += sizeof(uint8);
+
+	int32 nBlockIdx = nStartBlock;
+	for (; nBlockIdx < m_paramBlockCount; ++nBlockIdx, nStartPosOfBlock = 0)
+	{
+		if( buffer_start + nBufferSize + ParamStreamInfo::Size() >= buffer_end)
+			break;
+
+		const int32 nOriBufferSize = nBufferSize;
+		ParamStreamInfo* pInfo = (ParamStreamInfo*)(buffer_start + nBufferSize);
+		nBufferSize += ParamStreamInfo::Size();
+
+		pInfo->nBlockFlag = nBlockIdx;
+		pInfo->nBlockFlag = 0;
+
+		int32 nParamIdxOfBlock = nStartPosOfBlock;
+		for (; nParamIdxOfBlock < MAX_PARAM_COUNT_IN_BLOCK; ++nParamIdxOfBlock)
+		{
+			nStartParamPos = nBlockIdx*MAX_PARAM_COUNT_IN_BLOCK + nParamIdxOfBlock;
+
+			ParamBase* pBase = m_pDef->GetParam( nStartParamPos );
+
+			if(!pBase)
+				continue;
+
+			if(!pBase->CheckFlag(paramFlag))
+				continue;
+
+			if( nParamFlagExclude != 0 && pBase->CheckFlag( nParamFlagExclude) )
+				continue;
+
+			if( bIgnoreDft && DefaultCheck(nStartParamPos))
+				continue;
+
+			if(!bAll && !ParamDirtyCheck(nStartParamPos))
+				continue;
+
+			if( buffer_start + nBufferSize + pBase->ParamSize() + RESERVE_BUFF_SIZE >= buffer_end )
+				break;
+
+			char* pTemp = pBase->ParamWrite( m_pParamBuffer, (char*)buffer_start + nBufferSize);
+			assert( pTemp < buffer_end );
+
+			pInfo->nBlockFlag |= (uint32(1) << nParamIdxOfBlock);
+			nBufferSize = pTemp - buffer_start;
+
+			// debug code
+			{
+				std::string strP = m_pDef->Name();
+				strP += "_";
+				strP += pBase->Name();
+				ParamSyncCounter::Instance().AddCount( strP.c_str(), paramFlag);
+			}
+		}
+
+		if(pInfo->nBlockFlag == 0)	// no param, minute the size just add (nBufferSize += ParamStreamInfo::Size())
+		{
+			nBufferSize -= ParamStreamInfo::Size();
+			assert( nOriBufferSize == nBufferSize);
+		}
+		else
+			nCountBlocks++;
+
+		if(nParamIdxOfBlock < MAX_PARAM_COUNT_IN_BLOCK) // NO SPACE FOR WRITE
+			break;
+	}
+
+	if(nCountBlocks == 0)
+	{
+		nStartParamPos = -1;
+		nBufferSize = 0;
+		return true;
+	}
+
+	return nBlockIdx >= m_paramBlockCount;	// is write already
 }
 
 char* ParamPool::Data2Buffer(char* pBuffer)

@@ -292,6 +292,7 @@
     <ClInclude Include="PacketFactory.h" />
     <ClInclude Include="PacketImpl.h" />
     <ClInclude Include="PacketList.h" />
+    <ClInclude Include="PacketParamPool.h" />
     <ClInclude Include="PacketProcessor.h" />
     <ClInclude Include="PacketSender.h" />
     <ClInclude Include="ParamDebugHelper.h" />
@@ -301,6 +302,7 @@
     <ClInclude Include="ParamPool.h" />
     <ClInclude Include="ParamPool2SqlProcessor.h" />
     <ClInclude Include="ParamSet.h" />
+    <ClInclude Include="ParamTypeDef.h" />
     <ClInclude Include="PeerBase.h" />
     <ClInclude Include="PeerModuleBase.h" />
     <ClInclude Include="PeerSrvModuleBase.h" />
@@ -398,6 +400,7 @@
     <ClCompile Include="PacketFactory.cpp" />
     <ClCompile Include="PacketImpl.cpp" />
     <ClCompile Include="PacketList.cpp" />
+    <ClCompile Include="PacketParamPool.cpp" />
     <ClCompile Include="PacketProcessor.cpp" />
     <ClCompile Include="PacketSender.cpp" />
     <ClCompile Include="ParamDebugHelper.cpp" />

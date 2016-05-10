@@ -22,6 +22,14 @@ class DataBufferBase;
 class ParamPool
 {
 public:
+	class ParamStreamInfo
+	{
+	public:
+		uint32	nBlockFlag;
+		uint8	nBlockIdx;
+		static int32 Size() { return sizeof(uint32) + sizeof(uint8); }
+	};
+
 	ParamPool(void);
 	~ParamPool(void);
 
@@ -79,6 +87,9 @@ public:
 	virtual void SetAllParamDirty() = 0;
 
 	void* SHMGetExtraMemory();
+
+	char* Read( char* pBuffer, bool bDirty = false);
+	bool Write( char* pBuffer, int32& nBufferSize, int32& nStartParamPos, uint32 paramFlag, uint32 nSyncFlag, uint32 nParamFlagExclude = 0);
 protected:
 	char* Data2Buffer(char* pBuffer);
 	char* Buffer2Data(char* pBuffer);
