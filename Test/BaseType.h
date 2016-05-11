@@ -32,4 +32,6 @@ typedef unsigned long SM_KEY;
 #define SCENE_ID_NULL				0
 #define SCENE_MAIN_LINE_ID			1
 
+#define MAX_AVATAR_COUNT_ONE_USER	3
+
 #define _WINSOCKAPI_

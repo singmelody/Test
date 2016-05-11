@@ -34,10 +34,19 @@ START_ADD_PACKET_MEMBER(PacketAddSrvInfo)
 	ADD_PACKET_MEMBER_STR( ListenIpClt, IPLEN, NetIPClt);
 PACKET_END(PacketAddSrvInfo)
 
-PACKET(PacketOnlineUserInfo)
+PACKET(PacketOnlineUserInfo, PacketBase)
 int32 nMaxCount;
 int32 nCount;
 START_ADD_PACKET_MEMBER(PacketOnlineUserInfo)
 	ADD_PACKET_MEMBER( nMaxCount, int32, nMaxCount);
 	ADD_PACKET_MEMBER( nCount, int32, nCount);
-PACKET_END(PacketOnlineUserInfo, PacketBase)
+PACKET_END(PacketOnlineUserInfo)
+
+
+PACKET(PacketUserData, PacketParamPool)
+int64 nAvatarDID;
+int32 nIndex;
+START_ADD_PACKET_MEMBER(PacketUserData)
+	ADD_PACKET_MEMBER( nAvatarDID, int64, nAvatarDID);
+	ADD_PACKET_MEMBER( nIndex, int32, nIndex);
+PACKET_END(PacketUserData)

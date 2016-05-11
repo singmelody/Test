@@ -10,3 +10,5 @@ PACKET_IMPL(PacketAvatarDecommision)
 PACKET_IMPL(PacketAddSrvInfo)
 
 PACKET_IMPL(PacketOnlineUserInfo)
+
+PACKET_IMPL(PacketUserData)

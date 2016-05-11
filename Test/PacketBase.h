@@ -8,9 +8,9 @@
 
 #define PACKET_EX_BUFF_SIZE					512
 
-#define PACKET_EX_BUFFER_MAX_SIZE			2048
+#define PACKET_EX_BUFF_MAX_SIZE				2048
 
-#define PACKET_MAX_SIZE						(PACKET_EX_SIZE + PACKET_EX_BUFFER_MAX_SIZE) * 2
+#define PACKET_MAX_SIZE						(PACKET_EX_SIZE + PACKET_EX_BUFF_MAX_SIZE) * 2
 
 #define PACKET_SEND_LIST_BUFFER_SIZE		512
 
@@ -112,7 +112,7 @@ public:
 	enum
 	{
 		MaxCnt = 100,
-		MaxContentSize = PACKET_MAX_SIZE - PACKET_EX_BUFFER_MAX_SIZE - MaxCnt*4,
+		MaxContentSize = PACKET_MAX_SIZE - PACKET_EX_BUFF_MAX_SIZE - MaxCnt*4,
 	};
 
 	PacketPackBase();
@@ -155,4 +155,105 @@ protected:
 	PacketBase*		m_pPacket[MaxCnt];
 
 	int32			m_ContentSize;	// 合并子包大小
+};
+
+template <int32 nPacketSize = PACKET_EX_BUFF_MAX_SIZE>
+class PacketBaseEx : public PacketBase
+{
+public:
+	PacketBaseEx() : m_buffSize(0)
+	{ memset( m_buffer, 0, sizeof(m_buffer)); }
+
+	virtual ~PacketBaseEx(){}
+
+	virtual char* ReadPacket( char* pBuff)
+	{
+		char* tmp = PacketBase::ReadPacket(pBuff);
+		m_buffSize = *((uint16*)tmp);
+		if( m_buffSize > (uint16)nPacketSize)
+		{
+			m_buffSize = (uint16)nPacketSize;
+			return tmp;
+		}
+
+		tmp += sizeof(uint16);
+		memcpy( m_buffer, tmp, m_buffSize);
+		return tmp + m_buffSize;
+	}
+
+	virtual char* WritePacket( char* pBuffer)
+	{
+		char* tmp = PacketBase:WritePacket(pBuff);
+		if( m_buffSize > nPacketSize)
+			m_buffSize = nPacketSize;
+
+		*((uint16*)tmp) = m_buffSize;
+		tmp += sizeof(uint16);
+		memcpy( tmp, m_buffer, m_buffSize);
+		return tmp + m_buffSize;
+	}
+
+	template <class T>
+	char* WriteData()
+
+	template < class T>
+	char* ReadData( char* pBuff, T& val)
+	{
+		if(!pBuff)
+			return 0;
+
+		int32 nValSize = sizeof(T);
+		if( (nValSize + m_buffSize) > nPacketSize)
+			return 0;
+
+		val = *((T*)pBuff);
+		return pBuff + nValSize;
+	}
+
+	int32 ReadBuffer( char* pBuffer, size_t nReadSize) { return ReadBuffer( pBuffer, (int32)nReadSize);}
+	int32 ReadBuffer( char* pBuffer, int32 nReadSize)
+	{
+		if(!pBuffer)
+			return 0;
+
+		int32 nRSize = m_buffSize;
+		if( nReadSize > 0 && nReadSize < m_buffSize)
+			nRSize = nReadSize;
+
+		memcpy( pBuffer, m_Buffer, rSize);
+		return m_buffSize;
+	}
+
+	int32 WriteBuffer(const char* pBuffer, size_t nSize) { return WriteBuffer( pBuffer, (int32)nSize);}
+	int32 WriteBuffer( const char* pBuffer, int32 nSize)
+	{
+		if(!pBuffer || nSize < 0 )
+			return 0;
+
+		if( nSize > nPacketSize )
+			nSize = nPacketSize;
+
+		memcpy( m_pBuffer, pBuffer, nSize);
+		m_buffSize = nSize;
+		return nSize;
+	}
+
+	int32 SetPacketSize( uint16 nSize )
+	{
+		assert( nSize < nPacketSize);
+		return m_buffSize = nSize;
+	}
+
+	char* GetPacketBuff(uint16 nOffset = 0)
+	{
+		assert( nOffset < nPacketSize);
+		return m_buffer + nOffset;
+	}
+
+	uint32 GetMaxBufferSize() { return nPacketSize; }
+	uint32 GetCurBufferSize() { return m_buffSize; }
+	uint32 GetBufferFreeSize() { return nPacketSize - m_buffSize; }
+protected:
+	char		m_buffer[nPacketSize];
+	uint16		m_buffSize;
 };
