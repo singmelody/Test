@@ -301,6 +301,7 @@
     <ClInclude Include="ParamEx.h" />
     <ClInclude Include="ParamPool.h" />
     <ClInclude Include="ParamPool2SqlProcessor.h" />
+    <ClInclude Include="ParamPoolOwner.h" />
     <ClInclude Include="ParamSet.h" />
     <ClInclude Include="ParamTypeDef.h" />
     <ClInclude Include="PeerBase.h" />
@@ -409,6 +410,7 @@
     <ClCompile Include="ParamEx.cpp" />
     <ClCompile Include="ParamPool.cpp" />
     <ClCompile Include="ParamPool2SqlProcessor.cpp" />
+    <ClCompile Include="ParamPoolOwner.cpp" />
     <ClCompile Include="ParamSet.cpp" />
     <ClCompile Include="PeerBase.cpp" />
     <ClCompile Include="PeerModuleBase.cpp" />

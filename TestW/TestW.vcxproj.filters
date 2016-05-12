@@ -54,10 +54,16 @@
     <ClInclude Include="WorldSceneManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="WorldAyncContextManager.h">
+    <ClInclude Include="WorldAccount.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="WorldAccount.h">
+    <ClInclude Include="WorldServer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldAsynContextManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldStateManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -98,10 +104,16 @@
     <ClCompile Include="WorldSceneManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="WorldAyncContextManager.cpp">
+    <ClCompile Include="WorldAccount.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="WorldAccount.cpp">
+    <ClCompile Include="WorldServer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldAsynContextManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldStateManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

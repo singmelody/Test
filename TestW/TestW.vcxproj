@@ -141,16 +141,18 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="WorldAccount.h" />
+    <ClInclude Include="WorldAsynContextManager.h" />
     <ClInclude Include="WorldAvatar.h" />
     <ClInclude Include="WorldAvatarGroup.h" />
     <ClInclude Include="WorldAvatarManager.h" />
-    <ClInclude Include="WorldAyncContextManager.h" />
     <ClInclude Include="WorldBase.h" />
     <ClInclude Include="WorldFuncExManager.h" />
     <ClInclude Include="WorldFuncManager.h" />
     <ClInclude Include="WorldSceneManager.h" />
+    <ClInclude Include="WorldServer.h" />
     <ClInclude Include="WorldStage.h" />
     <ClInclude Include="WorldStage_Logining.h" />
+    <ClInclude Include="WorldStateManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AvatarOnLineManager.cpp" />
@@ -162,16 +164,18 @@
     </ClCompile>
     <ClCompile Include="TestW.cpp" />
     <ClCompile Include="WorldAccount.cpp" />
+    <ClCompile Include="WorldAsynContextManager.cpp" />
     <ClCompile Include="WorldAvatar.cpp" />
     <ClCompile Include="WorldAvatarGroup.cpp" />
     <ClCompile Include="WorldAvatarManager.cpp" />
-    <ClCompile Include="WorldAyncContextManager.cpp" />
     <ClCompile Include="WorldBase.cpp" />
     <ClCompile Include="WorldFuncExManager.cpp" />
     <ClCompile Include="WorldFuncManager.cpp" />
     <ClCompile Include="WorldSceneManager.cpp" />
+    <ClCompile Include="WorldServer.cpp" />
     <ClCompile Include="WorldStage.cpp" />
     <ClCompile Include="WorldStage_Logining.cpp" />
+    <ClCompile Include="WorldStateManager.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

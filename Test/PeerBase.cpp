@@ -36,3 +36,9 @@ bool PeerBase::PeerExit()
 {
 
 }
+
+void PeerBase::PeerSend(PacketBase* pPkt, int32 nSocketID)
+{
+	assert( pPkt && m_pPeerNetManager);
+	m_pPeerNetManager->SendPacket( *pPkt, nSocketID);
+}

@@ -1,4 +1,7 @@
 #pragma once
+
+#include "WorldFuncManager.h"
+
 class WorldFuncExManager : public WorldFuncManager
 {
 public:

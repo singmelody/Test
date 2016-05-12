@@ -4,6 +4,7 @@
 #include "BaseType.h"
 
 class ParamPool;
+class LoadTemplateManager;
 
 class ModuleBase
 {
@@ -40,6 +41,9 @@ public:
 
 	DogDataList m_listDogData;
 protected:
+	ServerManager& Servers;
+	LoadTemplateManager& Templates;
+
 	int8		m_RunState;
 	bool		m_bExitLoop;
 	ParamPool*	m_pModuleDogPool;

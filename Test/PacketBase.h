@@ -137,7 +137,7 @@ public:
 	}
 
 	bool FillPacket( PacketBase* pPkt);
-	void SendPacket();
+	void SendPacket( PacketBase& pPkt, int32 nSocketID);
 
 
 	SyncPackArg*	m_pSyncPacketArg;

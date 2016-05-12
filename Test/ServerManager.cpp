@@ -36,6 +36,16 @@ void ServerManager::SetPeerModule(PeerModuleBase* pPeerModule)
 	m_pPeerModule = pPeerModule;
 }
 
+ServerInfo* ServerManager::GetLoginInfo()
+{
+	return m_pLogin;
+}
+
+ServerInfo* ServerManager::GetWarWorldInfo(PacketBase* pPkt)
+{
+	return m_pWarWorld;
+}
+
 // zoneid	groupid		type	index
 //	31-24	23 - 18	   17-13	
 //

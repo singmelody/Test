@@ -45,7 +45,7 @@ public:
 };
 
 class WorldServer;
-class WorldStage;
+class WorldState;
 class PacketBase;
 
 WorldAvatar* GetWorldAvatar(int32 nAvatarID);
@@ -155,7 +155,7 @@ protected:
 	WorldAccount	m_account;
 
 	int32			m_nCurStageID;
-	WorldStage*		m_pCurStage;
+	WorldState*		m_pCurStage;
 	WorldServer*	m_pWorld;
 
 	CurDataStage	m_curDataOnSide;

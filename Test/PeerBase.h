@@ -21,6 +21,7 @@ public:
 	virtual bool PeerExit();
 	virtual int PeerProcPacket();
 
+	void PeerSend( PacketBase* pPkt, int32 nSocketID);
 protected:
 	NetManager* m_pPeerNetManager;
 

@@ -3,11 +3,11 @@
 class WorldAvatar;
 class PacketProcessor;
 
-class WorldStage : pubic WorldFuncExManager
+class WorldState : pubic WorldFuncExManager
 {
 public:
-	WorldStage(void);
-	virtual ~WorldStage(void);
+	WorldState(void);
+	virtual ~WorldState(void);
 
 	virtual int32 GetState() { return WS_NULL; }
 	virtual void OnEnterStage( WorldAvatar* pAvatar);

@@ -34,6 +34,8 @@ enum SrvSegment
 
 };
 
+class PacketBase;
+
 class ServerManager : public Singleton<ServerManager>
 {
 public:
@@ -50,12 +52,16 @@ public:
 
 	void SetPeerModule(PeerModuleBase* pPeerModule);
 
+
+	ServerInfo* GetLoginInfo();
+	ServerInfo* GetWarWorldInfo( PacketBase* pPkt);
 protected:
 	int32			m_nZoneID;	// ¥Ûµÿ∑…”•
 	int32			m_nGrpID;	// ∑ÔªÀºØ
 
 	int32			m_localWorldChannelID;
 
+	ServerInfo*		m_pWarWorld;
 	ServerInfo*		m_pLocalWorld;
 	ServerInfo*		m_pLogin;
 	ServerInfo*		m_pDBA;

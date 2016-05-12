@@ -1,28 +1,28 @@
 #include "StdAfx.h"
-#include "WorldStage.h"
+#include "WorldState.h"
 
 
-WorldStage::WorldStage(void)
+WorldState::WorldState(void)
 {
 }
 
 
-WorldStage::~WorldStage(void)
+WorldState::~WorldState(void)
 {
 }
 
-void WorldStage::OnEnterStage(WorldAvatar* pAvatar)
+void WorldState::OnEnterStage(WorldAvatar* pAvatar)
 {
 	m_listAvatars.Add(pAvatar->GetTickNode());
 	pAvatar->SendPendingTime(Create_Avatar_Pending_Time);
 }
 
-void WorldStage::OnLeaveStage(WorldAvatar* pAvatar)
+void WorldState::OnLeaveStage(WorldAvatar* pAvatar)
 {
 	m_listAvatars.Remove(pAvatar->GetTickNode());
 }
 
-bool WorldStage::CheckInStage(WorldAvatar* pAvatar, const char* pSzErrorLocation)
+bool WorldState::CheckInStage(WorldAvatar* pAvatar, const char* pSzErrorLocation)
 {
 	assert(pSzErrorLocation);
 
@@ -39,12 +39,12 @@ bool WorldStage::CheckInStage(WorldAvatar* pAvatar, const char* pSzErrorLocation
 	return false;
 }
 
-void WorldStage::DestroyAvatar(WorldAvatar* pAvatar)
+void WorldState::DestroyAvatar(WorldAvatar* pAvatar)
 {
 	AvatarMgr::RemoveWorldAvatar(pAvatar);
 }
 
-void WorldStage::OnGateClosed(int32 nSrvID)
+void WorldState::OnGateClosed(int32 nSrvID)
 {
 	// gate invalid, login out player
 	if(nSrvID == SrvID_NULL)
@@ -69,7 +69,7 @@ void WorldStage::OnGateClosed(int32 nSrvID)
 	}
 }
 
-WorldAvatar* WorldStage::GetWorldAvatarAndCheckStage(int32 nAvatarID, const char* pSzaErrorLocation)
+WorldAvatar* WorldState::GetWorldAvatarAndCheckStage(int32 nAvatarID, const char* pSzaErrorLocation)
 {
 	assert( pSzaErrorLocation );
 

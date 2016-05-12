@@ -49,7 +49,7 @@ void WorldStage_Logining::PktDBA_UserDataReqFinish(class PacketUserDataRegFinish
 
 void WorldStage_Logining::OnEnterStage( WorldAvatar* pAvatar)
 {
-	WorldStage::OnEnterStage(pAvatar);
+	WorldState::OnEnterStage(pAvatar);
 
 	// enter the login state, request roll list from dba
 	// and reg player 2 online list
@@ -75,7 +75,7 @@ void WorldStage_Logining::OnEnterStage( WorldAvatar* pAvatar)
 
 void WorldStage_Logining::OnLeaveStage( WorldAvatar* pAvatar)
 {
-	WorldStage::OnLeaveStage(pAvatar);
+	WorldState::OnLeaveStage(pAvatar);
 }
 
 void WorldStage_Logining::Tick(int32 nFrameTime)
@@ -113,5 +113,5 @@ void WorldStage_Logining::Tick(int32 nFrameTime)
 void WorldStage_Logining::DestroyAvatar(WorldAvatar* pAvatar)
 {
 	AvatarOnLineManager::Instance().DelAccount(pAvatar);
-	WorldStage::DestroyAvatar(pAvatar);
+	WorldState::DestroyAvatar(pAvatar);
 }
