@@ -44,3 +44,29 @@ START_ADD_PACKET_MEMBER(PacketUserData)
 	ADD_PACKET_MEMBER( nAvatarDID, int64, nAvatarDID);
 	ADD_PACKET_MEMBER( nIndex, int32, nIndex);
 PACKET_END(PacketUserData)
+
+PACKET(PacketUserDataRegFinish, PacketBase)
+START_ADD_PACKET_MEMBER(PacketUserDataRegFinish)
+PACKET_END(PacketUserDataRegFinish)
+
+PACKET(PacketCltSelectAvatarFailed, PacketBase)
+uint8 nReason;
+uint8 nParam;
+enum FailedReason
+{
+	eFR_Unkown,
+	eFR_BadIndex,
+	eFR_AvatarBanded,
+	eFR_BillingFailed,
+	eFR_EnterSceneFailed
+};
+START_ADD_PACKET_MEMBER(PacketCltSelectAvatarFailed)
+ADD_PACKET_MEMBER( nReason, uint8, nReason);
+ADD_PACKET_MEMBER( nParam, uint8, nParam);
+PACKET_END(PacketCltSelectAvatarFailed)
+
+PACKET(PacketCltSelectAvatar, PacketBase)
+uint8 nAvatarIdx;
+START_ADD_PACKET_MEMBER(PacketCltSelectAvatar)
+	ADD_PACKET_MEMBER( nAvatarIdx, uint8, nAvatarIdx);
+PACKET_END(PacketCltSelectAvatar);

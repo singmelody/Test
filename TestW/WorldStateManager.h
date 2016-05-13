@@ -9,7 +9,13 @@ enum WorldStateID
 	eWS_Logining,		// login state
 	eWS_Logined,		// login finish
 	eWS_DataLoading,	// enter state, wait for the dba fetch finish
-	
+	eWS_DataReady,
+	eWS_WaitScene,
+	eWS_Decommission,
+	eWS_EnterScene,
+	eWS_Jumping,
+	eWS_Gaming,
+	eWS_ExitGame,
 	eWS_Count
 };
 

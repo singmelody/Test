@@ -14,6 +14,11 @@
 #define PARAM_GET_VALUE( paramPtr, paramName, defVal) \
 	paramPtr->GetValue( ParamNameIndexHelper::GetParamIndex( paramPtr->GetParamDefineIndex(), param_name_##paramName), defVal)
 
+#define PARAM_SET_VALUE( paramPtr, paramName, defVal, dirty) \
+	paramPtr->SetValue( ParamNameIndexHelper::GetParamIndex( paramPtr->GetParamDefineIndex(), param_name_##paramName), defVal, dirty);
+
+
+
 typedef FunctionBase_Arg2<ParamPool*, ParamBase*> ParamCallback;
 
 class ParamDef;

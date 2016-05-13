@@ -1,17 +1,17 @@
 #include "StdAfx.h"
-#include "WorldStage_WaitScene.h"
+#include "WorldState_WaitScene.h"
 
 
-WorldStage_WaitScene::WorldStage_WaitScene(void)
+WorldStateWaitScene::WorldStateWaitScene(void)
 {
 }
 
 
-WorldStage_WaitScene::~WorldStage_WaitScene(void)
+WorldStateWaitScene::~WorldStateWaitScene(void)
 {
 }
 
-void WorldStage_WaitScene::Tick(int32 nFrameTime)
+void WorldStateWaitScene::Tick(int32 nFrameTime)
 {
 	TickList& list = m_listAvatars;
 

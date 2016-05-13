@@ -1,48 +1,48 @@
 #include "StdAfx.h"
-#include "WorldStage_Logined.h"
+#include "WorldState_Logined.h"
 
 
-WorldStage_Logined::WorldStage_Logined(void)
+WorldStateLogined::WorldStateLogined(void)
 {
 }
 
 
-WorldStage_Logined::~WorldStage_Logined(void)
+WorldStateLogined::~WorldStateLogined(void)
 {
 }
 
-void WorldStage_Logined::OnEnterStage(WorldAvatar* pAvatar)
+void WorldStateLogined::OnEnterStage(WorldAvatar* pAvatar)
 {
-	WorldStage::OnEnterStage(pAvatar);
+	WorldState::OnEnterStage(pAvatar);
 }
 
-void WorldStage_Logined::OnLeaveStage(WorldAvatar* pAvatar)
+void WorldStateLogined::OnLeaveStage(WorldAvatar* pAvatar)
 {
-	WorldStage::OnLeaveStage(pAvatar);
+	WorldState::OnLeaveStage(pAvatar);
 }
 
-void WorldStage_Logined::RegPeerPktHandle(PacketProcessor* pProc)
+void WorldStateLogined::RegPeerPktHandle(PacketProcessor* pProc)
 {
-	REG_PACKET_HANDLER( pProc, PacketCreateAvatar, WorldStage_Logined, PktGate_CreateAvatar);
-	REG_PACKET_HANDLER( pProc, PacketCreateAvatarRes, WorldStage_Logined, PktGate_CreateAvatarRes);
+	REG_PACKET_HANDLER( pProc, PacketCreateAvatar, WorldStateLogined, PktGate_CreateAvatar);
+	REG_PACKET_HANDLER( pProc, PacketCreateAvatarRes, WorldStateLogined, PktGate_CreateAvatarRes);
 
-	REG_PACKET_HANDLER( pProc, PacketDelAvatar, WorldStage_Logined, PktGate_DelAvatar);
-	REG_PACKET_HANDLER( pProc, PacketDelAvatarRes, WorldStage_Logined, PktGate_DelAvatarRes);
+	REG_PACKET_HANDLER( pProc, PacketDelAvatar, WorldStateLogined, PktGate_DelAvatar);
+	REG_PACKET_HANDLER( pProc, PacketDelAvatarRes, WorldStateLogined, PktGate_DelAvatarRes);
 
-	REG_PACKET_HANDLER( pProc, PacketCltSelectAvatar, WorldStage_Logined, PktGate_CltSelectAvatar);
+	REG_PACKET_HANDLER( pProc, PacketCltSelectAvatar, WorldStateLogined, PktGate_CltSelectAvatar);
 
 }
 
-void WorldStage_Logined::PktGate_CreateAvatar(class PacketCreateAvatar* pPkt)
+void WorldStateLogined::PktGate_CreateAvatar(class PacketCreateAvatar* pPkt)
 {
 	if(!pPkt)
 		return;
 
-	WorldAvatar* pAvatar = GetWorldAvatarAndCheckStage( pPkt->GetAvatarID(), "WorldStage_Logined::PktGate_CreateAvatar() Called");
+	WorldAvatar* pAvatar = GetWorldAvatarAndCheckStage( pPkt->GetAvatarID(), "WorldState_Logined::PktGate_CreateAvatar() Called");
 	if(!pAvatar)
 		return;
 
-	if(pPkt->avatarTitleLen > sizeof(pPkt->avatgarTitle)) // pass the gate filter, can't be happen normal
+	if(pPkt->avatarTitleLen > sizeof(pPkt->avatarTitle)) // pass the gate filter, can't be happen normal
 	{
 		MyLog::error("PktGate_CreateAvatar Bad Title = [%d]", pPkt->avatartTitleLen);
 		return;
@@ -50,7 +50,7 @@ void WorldStage_Logined::PktGate_CreateAvatar(class PacketCreateAvatar* pPkt)
 
 	const std::string strTitle( pPkt->avatarTitle, pPkt->avatarTitleLen);
 
-	MyLog::message("User Req Create Avatar Account [%s] Title [%s]", pAvatar->Account.GetAccountName().c_str(), );
+	MyLog::message("User Req Create Avatar Account [%s] Title [%s]", pAvatar->m_account.GetAccountName().c_str(), );
 
 	int32 resPos = -1;
 	for (int32 i = 0; i < MAX_AVATAR_COUNT_ONE_USER; ++i)
@@ -58,7 +58,7 @@ void WorldStage_Logined::PktGate_CreateAvatar(class PacketCreateAvatar* pPkt)
 		ParamPool* pPool = pAvatar->getRoleSet(i);
 		if(pPool == NULL)
 		{
-			pAvatar->Account.CreateRoleSet( i, PARAM_ID(pPkt->paramTypeID), PARAM_DATA_ID(pPkt->paramTypeID));
+			pAvatar->m_account.CreateRoleSet( i, PARAM_ID(pPkt->paramTypeID), PARAM_DATA_ID(pPkt->paramTypeID));
 			resPos = i;
 			break;
 		}
@@ -97,7 +97,7 @@ void WorldStage_Logined::PktGate_CreateAvatar(class PacketCreateAvatar* pPkt)
 	}
 
 
-	pPkt->accountLen = uint8(pAvatar->Account.GetAccountName().size());
+	pPkt->accountLen = uint8(pAvatar->m_account.GetAccountName().size());
 	if(pPkt->accountLen > sizeof(pPkt->account))
 	{
 		MyLog::error("Bad Account Len = [%d]", pPkt->accountLen);
@@ -110,7 +110,7 @@ void WorldStage_Logined::PktGate_CreateAvatar(class PacketCreateAvatar* pPkt)
 
 	const std::string strAccount( pPkt->account, pPkt->accountLen);
 
-	memcpy( pPkt->account, pAvatar->Account.GetAccountName(), pPkt->accountLen);
+	memcpy( pPkt->account, pAvatar->m_account.GetAccountName(), pPkt->accountLen);
 
 	PARAM_SET_VALUE( pPool, faceid, pPkt->faceid, false);
 	PARAM_SET_VALUE( pPool, hairid, pPkt->hairid, false);
@@ -140,7 +140,7 @@ void WorldStage_Logined::PktGate_CreateAvatar(class PacketCreateAvatar* pPkt)
 	Send2DBA(pPkt);
 }
 
-void WorldStage_Logined::PktGate_CreateAvatarRes(class PacketCreateAvatarRes* pPkt)
+void WorldStateLogined::PktGate_CreateAvatarRes(class PacketCreateAvatarRes* pPkt)
 {
 	if(!pPkt)
 		return;
@@ -154,7 +154,7 @@ void WorldStage_Logined::PktGate_CreateAvatarRes(class PacketCreateAvatarRes* pP
 
 	if(pPkt->flag != CreateAvatarRes_Succ)
 	{
-		pAvatar->Account.DestroyRoleSet( pPkt->index);
+		pAvatar->m_account.DestroyRoleSet( pPkt->index);
 		pAvatar->Send2Gate( &pPkt, true);
 		return;
 	}
@@ -191,12 +191,12 @@ void WorldStage_Logined::PktGate_CreateAvatarRes(class PacketCreateAvatarRes* pP
 	}
 }
 
-void WorldStage_Logined::PktGate_DelAvatar(class PacketDelAvatar* pPkt)
+void WorldStateLogined::PktGate_DelAvatar(class PacketDelAvatar* pPkt)
 {
 	if(!pPkt || pPkt->index < 0 || pPkt->index >= MAX_AVATAR_COUNT_ONE_USER)
 		return;
 
-	WorldAvatar* pAvatar = GetWorldAvatarAndCheckStage( pPkt->GetAvatarID(), "WorldStage_Logined::PktGate_DelAvatar() Called");
+	WorldAvatar* pAvatar = GetWorldAvatarAndCheckStage( pPkt->GetAvatarID(), "WorldState_Logined::PktGate_DelAvatar() Called");
 	if(!pAvatar)
 		return;
 
@@ -220,7 +220,7 @@ void WorldStage_Logined::PktGate_DelAvatar(class PacketDelAvatar* pPkt)
 	Send2DBA(&pkt);
 }
 
-void WorldStage_Logined::PktGate_DelAvatarRes(class PacketDelAvatarRes* pPkt)
+void WorldStateLogined::PktGate_DelAvatarRes(class PacketDelAvatarRes* pPkt)
 {
 	if(!pPkt)
 		return;
@@ -241,7 +241,7 @@ void WorldStage_Logined::PktGate_DelAvatarRes(class PacketDelAvatarRes* pPkt)
 			int64 nAvatarDID = pPool->GetValue( "avatardid", int64(-1));
 			if( nAvatarDID == pPkt->avatarDID )
 			{
-				pAvatar->Account.DestroyRoleSet(i);
+				pAvatar->m_account.DestroyRoleSet(i);
 				break;
 			}
 
@@ -251,7 +251,7 @@ void WorldStage_Logined::PktGate_DelAvatarRes(class PacketDelAvatarRes* pPkt)
 	pAvatar->Send2Gate( pPkt,  true);
 }
 
-void WorldStage_Logined::PktGate_CltSelectAvatar(class PacketCltSelectAvatar* pPkt)
+void WorldStateLogined::PktGate_CltSelectAvatar(class PacketCltSelectAvatar* pPkt)
 {
 	if(!pPkt)
 		return;
@@ -262,20 +262,20 @@ void WorldStage_Logined::PktGate_CltSelectAvatar(class PacketCltSelectAvatar* pP
 	if(!pAvatar)
 	{
 		MyLog::error("PktGate_CltSelectAvatar Can not find Avatar by id = [%d]", pPkt->GetAvatarID() );
-		nReason = uint8(PacketCltSelectAvatarFailed::eReason_Unkown);
+		nReason = uint8(PacketCltSelectAvatarFailed::eFR_Unkown);
 	}
 	else
 	{
-		if(!CheckInStage(pAvatar, "WorldStage_Logined::PktGate_CltSelectAvatar") )
+		if(!CheckInStage(pAvatar, "WorldState_Logined::PktGate_CltSelectAvatar") )
 		{
-			nReason = uint8(PacketCltSelectAvatarFailed::eReason_Unkown);
+			nReason = uint8(PacketCltSelectAvatarFailed::eFR_Unkown);
 		}
 		else
 		{
-			ParamPool* pPool = pAvatar->Account.GetRoleSet( pPkt->avatarIndex );
+			ParamPool* pPool = pAvatar->m_account.GetRoleSet( pPkt->avatarIndex );
 			if(!pPool)
 			{
-				nReason = uint8(PacketCltSelectAvatarFail::eReason_BadIndex);
+				nReason = uint8(PacketCltSelectAvatarFailed::eFR_BadIndex);
 				MyLog::message("Avatar Req Enter Game Failed: Select UserDataParam Wrong account=[%s] index=[%d]", balad);
 			}
 			else
@@ -283,16 +283,16 @@ void WorldStage_Logined::PktGate_CltSelectAvatar(class PacketCltSelectAvatar* pP
 				int64 nAvatarDID = PARAM_GET_VALUE( pPool, avatardid, (int64)0);
 				if(PARAM_GET_VALUE( pPool, ban_game_date, uint32(0)) > Time::CurrentTime().Second())
 				{
-					nReason = uint8(PacketCltSelectAvatarFail::eReason_AvatarBanded);
+					nReason = uint8(PacketCltSelectAvatarFailed::eFR_AvatarBanded);
 					MyLog::message("Avatar Req Enter Game Failed avatar was banned account=[%s] avatardid = [%d]", abdfad);
 				}
 				else
 				{
-					pAvatar->Account.PickRoleSet( pPkt->avatarIndex );
+					pAvatar->m_account.PickRoleSet( pPkt->nAvatarIdx );
 
 					pAvatar->SetParamPool( pPool );
 					pAvatar->SetAvatarDID(nAvatarDID);
-					pAvatar->SetCurStage( WS_DataLoading );
+					pAvatar->SetCurStage( eWS_DataLoading );
 				}
 			}
 		}
@@ -308,8 +308,13 @@ void WorldStage_Logined::PktGate_CltSelectAvatar(class PacketCltSelectAvatar* pP
 	}
 }
 
-void WorldStage_Logined::DestroyAvatar(WorldAvatar* pAvatar)
+void WorldStateLogined::DestroyAvatar(WorldAvatar* pAvatar)
 {
 	AvatarOnLineManager::Instance().DelAccount(pAvatar);
-	WorldStage::DestroyAvatar(pAvatar);
+	WorldState::DestroyAvatar(pAvatar);
+}
+
+void WorldState_Logined::DestroyAvatar(WorldAvatar* pAvatar)
+{
+
 }

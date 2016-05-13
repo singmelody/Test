@@ -13,8 +13,7 @@ PACKET_END(PacketParamPoolBase)
 
 class SyncPacketArg;
 class ParamPool;
-//class ParamPoolOwner;
-
+class ParamPoolOwner;
 
 class PacketParamPool : public PacketParamPoolBase
 {

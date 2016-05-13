@@ -3,6 +3,10 @@
 #include "PacketList.h"
 #include <map>
 
+#define REG_PACKET_HANDLER( processor, packet, classobj, function) \
+	processor->RegPacketHandle( UtilID::CreateFromString(#packet), \
+	new FunctionPacket<classObj, packet*, PacketBase*>( this, &classobj::function)); packet tmppkt##packet;
+
 template < class T>
 class FunctionPacketBase
 {

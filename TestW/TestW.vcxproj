@@ -151,8 +151,10 @@
     <ClInclude Include="WorldSceneManager.h" />
     <ClInclude Include="WorldServer.h" />
     <ClInclude Include="WorldStage.h" />
-    <ClInclude Include="WorldStage_Logining.h" />
     <ClInclude Include="WorldStateManager.h" />
+    <ClInclude Include="WorldState_Logined.h" />
+    <ClInclude Include="WorldState_Logining.h" />
+    <ClInclude Include="WorldState_WaitScene.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AvatarOnLineManager.cpp" />
@@ -174,8 +176,10 @@
     <ClCompile Include="WorldSceneManager.cpp" />
     <ClCompile Include="WorldServer.cpp" />
     <ClCompile Include="WorldStage.cpp" />
-    <ClCompile Include="WorldStage_Logining.cpp" />
     <ClCompile Include="WorldStateManager.cpp" />
+    <ClCompile Include="WorldState_Logined.cpp" />
+    <ClCompile Include="WorldState_Logining.cpp" />
+    <ClCompile Include="WorldState_WaitScene.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

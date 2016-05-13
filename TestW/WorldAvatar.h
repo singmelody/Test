@@ -47,6 +47,7 @@ public:
 class WorldServer;
 class WorldState;
 class PacketBase;
+class Scene;
 
 WorldAvatar* GetWorldAvatar(int32 nAvatarID);
 WorldAvatar* GetWorldAvatar( PacketBase* pPkt);
@@ -102,15 +103,15 @@ public:
 
 	virtual void SetParamPool(ParamPool* p);
 	WorldAvatarCommonData*	GetCommonDataManager() const;
-	WorldTalenTreeData*		GetTalentTreeData() { return m_pTalentTreeData; }
+	//WorldTalenTreeData*		GetTalentTreeData() { return m_pTalentTreeData; }
 
 	ParamPool*	GetRoleSet(int32 nIdx) { return Account.GetRoleSet(nIdx);}
-	bool CheckInStage(WorldStageID stageID) { return m_nCurStageID == stageID; }
+	bool CheckInStage(WorldStateID stageID) { return m_nCurStageID == stageID; }
 
 	bool IsGaming() { return m_nCurStageID == eWS_Gaming;}
-	bool IsExitingGame() { return m_nCurStageID == eWS_Exiting; }
+	bool IsExitingGame() { return m_nCurStageID == eWS_ExitGame; }
 
-	void SetCurStage( WorldStageID newStateID );
+	void SetCurStage( WorldStateID newStateID );
 
 	bool PushAllData2CurNode();
 
@@ -146,13 +147,13 @@ public:
 	void			SetAvatarFlag(int32 nFlag) { return m_WorldAvatarFlag |= nFlag; }
 	void			CancelAvatarFlag(int32 nFlag) { return m_WorldAvatarFlag &= (~nFlag); }
 
+	WorldAccount	m_account;
 protected:
 	int32			m_charInterval[CC_MAX];
 
 	Vector3			m_target_scene_point;
 	Vector3			m_target_scene_dir;
 
-	WorldAccount	m_account;
 
 	int32			m_nCurStageID;
 	WorldState*		m_pCurStage;

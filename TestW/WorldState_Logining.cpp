@@ -1,29 +1,29 @@
 #include "StdAfx.h"
 
-#include "WorldStage_Logining.h"
+#include "WorldState_Logining.h"
 #include "AvatarOnLineManager.h"
 
-WorldStage_Logining::WorldStage_Logining(void)
+WorldState_Logining::WorldState_Logining(void)
 {
 }
 
 
-WorldStage_Logining::~WorldStage_Logining(void)
+WorldState_Logining::~WorldState_Logining(void)
 {
 }
 
-void WorldStage_Logining::RegPeerPktHandle(PacketProcessor* pProc)
+void WorldState_Logining::RegPeerPktHandle(PacketProcessor* pProc)
 {
-	REG_PACKET_HANDLER( pProc, PacketUserData, WorldStage_Logining, PktDBA_UserData);
-	REG_PACKET_HANDLER( pProc, PacketUserDataRegFinish, WorldStage_Logining, PktDBA_UserDataReqFinish);
+	REG_PACKET_HANDLER( pProc, PacketUserData, WorldState_Logining, PktDBA_UserData);
+	REG_PACKET_HANDLER( pProc, PacketUserDataRegFinish, WorldState_Logining, PktDBA_UserDataReqFinish);
 }
 
-void WorldStage_Logining::PktDBA_UserData(class PacketUserData* pPkt)
+void WorldState_Logining::PktDBA_UserData(class PacketUserData* pPkt)
 {
 	assert(pPkt);
 }
 
-void WorldStage_Logining::PktDBA_UserDataReqFinish(class PacketUserDataRegFinish* pPkt)
+void WorldState_Logining::PktDBA_UserDataReqFinish(class PacketUserDataRegFinish* pPkt)
 {
 	assert(pPkt);
 
@@ -47,7 +47,7 @@ void WorldStage_Logining::PktDBA_UserDataReqFinish(class PacketUserDataRegFinish
 	}
 }
 
-void WorldStage_Logining::OnEnterStage( WorldAvatar* pAvatar)
+void WorldState_Logining::OnEnterStage( WorldAvatar* pAvatar)
 {
 	WorldState::OnEnterStage(pAvatar);
 
@@ -73,12 +73,12 @@ void WorldStage_Logining::OnEnterStage( WorldAvatar* pAvatar)
 }
 
 
-void WorldStage_Logining::OnLeaveStage( WorldAvatar* pAvatar)
+void WorldState_Logining::OnLeaveStage( WorldAvatar* pAvatar)
 {
 	WorldState::OnLeaveStage(pAvatar);
 }
 
-void WorldStage_Logining::Tick(int32 nFrameTime)
+void WorldState_Logining::Tick(int32 nFrameTime)
 {
 	TickList& list = m_listAvatars;
 
@@ -110,7 +110,7 @@ void WorldStage_Logining::Tick(int32 nFrameTime)
 	}
 }
 
-void WorldStage_Logining::DestroyAvatar(WorldAvatar* pAvatar)
+void WorldState_Logining::DestroyAvatar(WorldAvatar* pAvatar)
 {
 	AvatarOnLineManager::Instance().DelAccount(pAvatar);
 	WorldState::DestroyAvatar(pAvatar);

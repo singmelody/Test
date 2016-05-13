@@ -79,7 +79,12 @@ int64 WorldAvatar::GenUID()
 	return uint64(hashcode) << 32 | uint64(second);
 }
 
-void WorldAvatar::SetCurStage( WorldStageID newStateID )
+Scene* WorldAvatar::GetScene()
+{
+	return WorldSceneManager::Instance().GetScene(m_SceneID);
+}
+
+void WorldAvatar::SetCurStage( WorldStateID newStateID )
 {
 	if( m_bStageChanging )
 	{
@@ -96,7 +101,7 @@ void WorldAvatar::SetCurStage( WorldStageID newStateID )
 		m_pCurStage->OnLeaveStage(this);
 
 	m_nCurStageID = newStateID;
-	m_pCurStage = WorldStageManager::Instance().GetStage(m_pCurStage);
+	m_pCurStage = WorldStateManager::Instance().GetStage(m_pCurStage);
 
 	if( m_pCurStage != NULL)
 		m_pCurStage->OnEnterStage(this);

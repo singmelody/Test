@@ -4,7 +4,7 @@
 #include "PacketSender.h"
 #include "ParamPool.h"
 #include "ParamTypeDef.h"
-
+#include "ParamPoolOwner.h"
 
 PACKET_IMPL(PacketParamPoolBase);
 

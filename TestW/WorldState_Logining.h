@@ -2,11 +2,11 @@
 
 class PacketProcessor;
 
-class WorldStage_Logining 
+class WorldState_Logining : public WorldState, public Singleton<WorldState_Logined>
 {
 public:
-	WorldStage_Logining(void);
-	~WorldStage_Logining(void);
+	WorldState_Logining(void);
+	~WorldState_Logining(void);
 
 	void RegPeerPktHandle( PacketProcessor* pProc);
 

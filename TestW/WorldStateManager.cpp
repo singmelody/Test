@@ -1,9 +1,11 @@
 #include "StdAfx.h"
 #include "WorldStateManager.h"
-
+#include "WorldState_Logining.h"
 
 WorldStateManager::WorldStateManager(void)
 {
+	m_worldState[eWS_Logining] = &WorldState_Logining::Instance();
+	m_worldState[eWS_Logined] = &WorldState_Logined::Instance();
 }
 
 
