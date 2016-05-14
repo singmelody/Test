@@ -28,6 +28,7 @@ typedef std::map< int32, ParamPool*> DogDataMap;
 class ServerInfo
 {
 public:
+	ServerInfo();
 	ServerInfo( int32 nSrvType, int32 nSrvID, int32 nSocketID, SockAddr& laddr);
 	virtual ~ServerInfo();
 

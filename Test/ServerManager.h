@@ -2,6 +2,7 @@
 
 #include "Singleton.h"
 #include "ServerGrpInfo.h"
+#include "NodeSrvGrp.h"
 
 class PeerModuleBase;
 class ServerInfo;
@@ -71,7 +72,12 @@ protected:
 	PeerModuleBase* m_pPeerModule;
 	SrvType			m_srvType;
 
-	NodeSrvGroup	m_LocalNodeGrp;
-	NodeSrvGroup	m_RemoteNodeGrp;
+	NodeSrvGrp		m_LocalNodeGrp;
+	NodeSrvGrp		m_RemoteNodeGrp;
+
+	GateSrvGrp		m_GateGrp;
+
+	ServerGrp		m_NodeDataSyncGrp;
+	ServerGrp		m_RemoteWorldGrp;
 };
 

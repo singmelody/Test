@@ -1,5 +1,6 @@
 #include "StdAfx.h"
 #include "ServerGrp.h"
+#include "ServerGrpInfo.h"
 
 
 ServerGrp::ServerGrp(void)

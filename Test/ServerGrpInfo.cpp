@@ -4,7 +4,8 @@
 #include "FactoryManagerBase.h"
 #include "PacketImpl.h"
 
-ServerInfo::ServerInfo(int32 nSrvType, int32 nSrvID, int32 nSocketID, SockAddr& laddr)
+
+ServerInfo::ServerInfo()
 {
 	nSrvType = eSrv_Unkown;
 	nSrvID = SrvID_NULL;
@@ -12,12 +13,27 @@ ServerInfo::ServerInfo(int32 nSrvType, int32 nSrvID, int32 nSocketID, SockAddr& 
 
 	nListenPortPeer = -1;
 	memset( ListenIPPeer, 0, IPLEN);
+
+	m_pParentGrp = NULL;
+	m_DogDataTimeStamp = 0;
+	m_pParamDetails = NULL;
+}
+
+ServerInfo::ServerInfo(int32 type, int32 id, int32 socketid, SockAddr& laddr)
+{
+	nSrvType = type;
+	nSrvID = id;
+	nSocketID = socketid;
+
+	nListenPortPeer = laddr.GetPort();
+	memset( ListenIPPeer, 0, IPLEN);
 	memcpy( ListenIPPeer, laddr.GetIP().c_str(), laddr.GetIP().length());
 
 	m_pParentGrp = NULL;
 	m_DogDataTimeStamp = 0;
 	m_pParamDetails = NULL;
 }
+
 
 ServerInfo::~ServerInfo()
 {

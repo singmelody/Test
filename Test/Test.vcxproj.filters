@@ -249,9 +249,6 @@
     <ClInclude Include="ModuleBase.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ServerGrp.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ServerGrpInfo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -352,6 +349,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="NodeSrvGrp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerGrp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -569,9 +569,6 @@
     <ClCompile Include="ModuleBase.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ServerGrp.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ServerGrpInfo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -663,6 +660,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="NodeSrvGrp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ServerGrp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
