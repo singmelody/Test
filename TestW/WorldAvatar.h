@@ -114,7 +114,7 @@ public:
 	bool IsGaming() { return m_nCurStageID == eWS_Gaming;}
 	bool IsExitingGame() { return m_nCurStageID == eWS_ExitGame; }
 
-	void SetCurStage( WorldStateID newStateID );
+	void SetCurState( WorldStateID newStateID );
 
 	bool PushAllData2CurNode();
 

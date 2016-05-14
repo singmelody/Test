@@ -86,7 +86,7 @@ Scene* WorldAvatar::GetScene()
 	return WorldSceneManager::Instance().GetScene(m_SceneID);
 }
 
-void WorldAvatar::SetCurStage( WorldStateID newStateID )
+void WorldAvatar::SetCurState( WorldStateID newStateID )
 {
 	if( m_bStageChanging )
 	{

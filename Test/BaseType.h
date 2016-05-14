@@ -32,6 +32,8 @@ typedef unsigned long SM_KEY;
 #define SCENE_ID_NULL				0
 #define SCENE_MAIN_LINE_ID			1
 #define SERVERID_NULL				-1
+#define	INVALID_TEAM_ID				-1
+#define SCENE_ID_DEFAULT			1
 
 #define MAX_AVATAR_COUNT_ONE_USER	3
 

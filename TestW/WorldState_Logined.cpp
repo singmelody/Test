@@ -292,7 +292,7 @@ void WorldStateLogined::PktGate_CltSelectAvatar(class PacketCltSelectAvatar* pPk
 
 					pAvatar->SetParamPool( pPool );
 					pAvatar->SetAvatarDID(nAvatarDID);
-					pAvatar->SetCurStage( eWS_DataLoading );
+					pAvatar->SetCurState( eWS_DataLoading );
 				}
 			}
 		}

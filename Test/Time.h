@@ -11,6 +11,11 @@ public:
 		return m_milliSec;
 	}
 
+	uint32 Second() const
+	{
+		return m_milliSec / 1000;
+	}
+
 	static Time CurrentTime();
 private:
 	uint64 m_milliSec;
