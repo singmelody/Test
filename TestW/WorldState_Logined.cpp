@@ -13,7 +13,7 @@ WorldStateLogined::~WorldStateLogined(void)
 
 void WorldStateLogined::OnEnterStage(WorldAvatar* pAvatar)
 {
-	WorldState::OnEnterStage(pAvatar);
+	WorldState::OnEnterState(pAvatar);
 }
 
 void WorldStateLogined::OnLeaveStage(WorldAvatar* pAvatar)

@@ -47,9 +47,9 @@ void WorldState_Logining::PktDBA_UserDataReqFinish(class PacketUserDataRegFinish
 	}
 }
 
-void WorldState_Logining::OnEnterStage( WorldAvatar* pAvatar)
+void WorldState_Logining::OnEnterState( WorldAvatar* pAvatar)
 {
-	WorldState::OnEnterStage(pAvatar);
+	WorldState::OnEnterState(pAvatar);
 
 	// enter the login state, request roll list from dba
 	// and reg player 2 online list

@@ -106,7 +106,7 @@ void WorldAvatar::SetCurState( WorldStateID newStateID )
 	m_pCurStage = WorldStateManager::Instance().GetStage(m_pCurStage);
 
 	if( m_pCurStage != NULL)
-		m_pCurStage->OnEnterStage(this);
+		m_pCurStage->OnEnterState(this);
 
 	m_bStageChanging = false;
 }

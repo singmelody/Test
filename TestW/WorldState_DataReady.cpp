@@ -11,9 +11,9 @@ WorldState_DataReady::~WorldState_DataReady(void)
 {
 }
 
-void WorldState_DataReady::OnEnterStage(WorldAvatar* pAvatar)
+void WorldState_DataReady::OnEnterState(WorldAvatar* pAvatar)
 {
-	WorldState::OnEnterStage(pAvatar);
+	WorldState::OnEnterState(pAvatar);
 
 	pAvatar->m_bAvatarDataDirty = false;	// enter this stage, think data the same with db
 

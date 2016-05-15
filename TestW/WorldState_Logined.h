@@ -12,7 +12,7 @@ public:
 	virtual int32 GetState() { return eWS_Logined; }
 	virtual void RegPeerPktHandle(PacketProcessor* pProc);
 	
-	virtual void OnEnterStage(WorldAvatar* pAvatar);
+	virtual void OnEnterState(WorldAvatar* pAvatar);
 	virtual void OnLeaveStage(WorldAvatar* pAvatar);
 	virtual void DestroyAvatar(WorldAvatar* pAvatar);
 
