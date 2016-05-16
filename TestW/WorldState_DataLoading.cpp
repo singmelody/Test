@@ -98,6 +98,46 @@ void WorldState_DataLoading::RequestAvatarDataFromDBA(WorldAvatar* pAvatar)
 	Send2DBA( pkt );
 }
 
+bool WorldState_DataLoading::CheckAvatarSceneInfo(WorldAvatar* pAvatar)
+{
+	if(!pAvatar)
+		return false;
+
+	ParamPool* pPool = pAvatar->GetParamPool();
+	if(!pPool)
+		return false;
+
+	int32 nTargetSceneID = pPool->GetValue( "sceneid", (int32)SCENE_ID_NULL);
+	int16 nSceneSID = SceneInfo::GetSceneSID(nTargetSceneID);
+
+	bool bRelocate = false;
+	const SceneInfo* pInfo = SceneMgr.GetSceneInfo(nSceneSID);
+
+	if(pInfo != NULL)
+	{
+		f32 x = pPool->GetValue( "downcorrdinatex", 0.0f);
+		f32 y = pPool->GetValue( "downcorrdinatey", 0.0f);
+		f32 z = pPool->GetValue( "downcorrdinatez", 0.0f);
+
+		if(FLOAT_EQUAL( x, 0.0f) && FLOAT_EQUAL( y, 0.0f) && FLOAT_EQUAL( z, 0.0f))
+			bRelocate = true;
+
+		else
+		{
+			f32 dx = pPool->GetValue( "dirx", 0.0f);
+			f32 dy = pPool->GetValue( "diry", 0.0f);
+			f32 dz = pPool->GetValue( "dirz", 0.0f);
+
+			pAvatar->SetTargetScenePoint( x, y, z);
+			pAvatar->SetTargetSceneDir( dx, dy, dz);
+		}
+	}
+	else
+	{
+
+	}
+}
+
 
 
 
