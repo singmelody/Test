@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "WorldState_DataLoading.h"
-
+#include "PacketProcessor.h"
 
 WorldState_DataLoading::WorldState_DataLoading(void)
 {
@@ -134,10 +134,91 @@ bool WorldState_DataLoading::CheckAvatarSceneInfo(WorldAvatar* pAvatar)
 	}
 	else
 	{
+		pInfo = SceneManager::GetSceneInfo( SCENE_ID_DEFAULT);
+		if(!pInfo)
+			return false;
 
+		nTargetSceneID = SceneInfo::GenSceneID( SCENE_ID_DEFAULT );
 	}
+
+	if(bRelocate)
+	{
+		// get default enter pos
+		const EnterPointInfo* pEnter = pInfo->GetEnterPointInfo(0);
+		if(!pEnter)
+		{
+			MyLog::message("Scene Enter Point Error SceneSID [%d]", nSceneSID);
+			return false;
+		}
+		
+		pAvatar->SetTargetScenePoint( pEnter->GetRandPos() );
+		pAvatar->SetTargetSceneDir( pEnter->Dir );
+	}
+
+	pAvatar->m_nTargetSceneID = nTargetSceneID;
+	return true;
 }
 
+void WorldState_DataLoading::RegPeerPktHandle(PacketProcessor* pProcessor)
+{
+	REG_PACKET_HANDLER( pProcessor, PacketUserSelectData, WorldState_DataLoading, PktDBA_SelectUserData);
+	REG_PACKET_HANDLER( pProcessor, PacketCommonDataInit, WorldState_DataLoading, PktDBA_CommonDataInit);
+	REG_PACKET_HANDLER( pProcessor, PacketCommonDataReqFinish, WorldState_DataLoading, PktDBA_CommonDataReqFinish);
+	REG_PACKET_HANDLER( pProcessor, PacketGateCreateAvatarRst, WorldState_DataLoading, PktDBA_CreateAvatarRes);
+	REG_PACKET_HANDLER( pProcessor, PacketManufactureDataInit, WorldState_DataLoading, PktDBA_ManufactureDataInit);
 
+}
 
+void WorldState_DataLoading::PktDBA_SelectUserData(class PacketUserSelectData* pPkt)
+{
+	assert( pPkt );
+
+	WorldAvatar* pAvatar = GetWorldAvatarAndCheckStage( pPkt->GetAvatarID(), "PktDBA_SelectUserData");
+	if(!pAvatar)
+		return;
+
+	pPkt->UpdateParamPool(pAvatar);
+
+	if( pPkt->IsLastPacket() )
+	{
+		if(!CheckAvatarSceneInfo(pAvatar))
+		{
+			DestroyAvatar(pAvatar);
+			MyLog::message("Avatar Req Enter Game Failed, Error SceneInfo.AvatarID[%d]", pAvatar->GetAvatarID());
+			return;
+		}
+
+		pAvatar->SetDataLoadingFlags( eDLF_Avatar );
+		pAvatar->OnAfterPullDataFromDBA();
+
+		int32 nAvatarID = pAvatar->GetAvatarID();
+		int32 nAvatarDID = pAvatar->GetAvatarDID();
+
+		{
+			pAvatar->m_CommonDataMaskFinish = 0;
+
+			PacketCommonDataRequest pkt;
+
+			pkt.SetAvatarID( nAvatarID);
+			pkt.nAvatarDID = nAvatarDID;
+
+			Send2DBA(pkt);
+		}
+
+		{
+			PacketNewPlayerMail pkt;
+			pkt.nAvatarDID = nAvatarDID;
+			pkt.SetAvatarID(nAvatarID);
+			Send2DBA(pkt);
+		}
+
+		{
+			PacketDeletgateQuestDataRequest pkt;
+			pkt.SetAvatarID( nAvatarID);
+			pkt.nAvatarDID = nAvatarDID;
+
+			Send2DBA(pkt);
+		}
+	}
+}
 
