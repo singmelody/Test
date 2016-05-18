@@ -15,7 +15,6 @@ public:
 	virtual void OnLeaveState(WorldAvatar* pAvatar);
 	virtual void DestroyAvatar( WorldAvatar* pAvatar);
 	virtual void Tick( int32 nFrameTime );
-
 protected:
 	void RequestAvatarDataFromDBA( WorldAvatar* pAvatar);
 

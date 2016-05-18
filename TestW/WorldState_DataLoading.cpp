@@ -1,6 +1,7 @@
 #include "StdAfx.h"
 #include "WorldState_DataLoading.h"
 #include "PacketProcessor.h"
+#include "AvatarOnLineManager.h"
 
 WorldState_DataLoading::WorldState_DataLoading(void)
 {
@@ -220,5 +221,32 @@ void WorldState_DataLoading::PktDBA_SelectUserData(class PacketUserSelectData* p
 			Send2DBA(pkt);
 		}
 	}
+}
+
+void WorldState_DataLoading::DestroyAvatar(WorldAvatar* pAvatar)
+{
+	AvatarOnLineManager::Instance().DelAccount(pAvatar);
+	WorldState::DestroyAvatar(pAvatar);
+}
+
+void WorldState_DataLoading::CreateGateAvatar(WorldAvatar& avatar, ParamPool& pool)
+{
+	const char* pSzAvatar = pool.GetValueString("title", NULL);
+	if(!pSzAvatar)
+	{
+		MyLog::error("WorldState_DataLoading::OnEnterState Failed to get pSzAvatar");
+		return;
+	}
+
+	PacketGateCreateAvatar newPkt;
+	newPkt.avatarTitleLen = uint8(strlen(pSzAvatar));
+	if( newPkt.avatarTitleLen > sizeof(newPkt.avatarTitle))
+	{
+		MyLog::error("WorldState_DataLoading::OnEnterState Bad TitleLen = [%d]", newPkt.avatarTitle);
+		return;
+	}
+
+	memcpy( newPkt.avatarTitle, pSzAvatar, newPkt.avatarTitleLen);
+	avatar.Send2Gate( &newPkt, true);
 }
 
