@@ -10,8 +10,8 @@ WorldStateManager::WorldStateManager(void)
 	m_worldState[eWS_Logined] = &WorldState_Logined::Instance();
 	m_worldState[eWS_DataLoading] = &WorldState_DataLoading::Instance();
 	m_worldState[eWS_DataReady] = &WorldState_DataReady::Instance();
-		m_worldState[eWS_WaitScene,
-		m_worldState[eWS_Decommission,
+	m_worldState[eWS_WaitScene] = &WorldState_WaitScene::Instance();
+	m_worldState[eWS_Decommission] = &
 		m_worldState[eWS_EnterScene,
 		m_worldState[eWS_Jumping,
 		m_worldState[eWS_Gaming,

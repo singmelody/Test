@@ -11,7 +11,7 @@ WorldState::~WorldState(void)
 {
 }
 
-void WorldState::OnEnterStage(WorldAvatar* pAvatar)
+void WorldState::OnEnterState(WorldAvatar* pAvatar)
 {
 	m_listAvatars.Add(pAvatar->GetTickNode());
 	pAvatar->SendPendingTime(Create_Avatar_Pending_Time);

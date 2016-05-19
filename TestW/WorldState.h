@@ -1,7 +1,9 @@
 #pragma once
 
 #include "WorldFuncExManager.h"
+#include "GameObject.h"
 
+class Scene;
 class WorldAvatar;
 class PacketProcessor;
 
@@ -12,7 +14,7 @@ public:
 	virtual ~WorldState(void);
 
 	virtual int32 GetState() { return eWS_Null; }
-	virtual void OnEnterStage( WorldAvatar* pAvatar);
+	virtual void OnEnterState( WorldAvatar* pAvatar);
 	virtual void OnLeaveStage( WorldAvatar* pAvatar);
 
 	virtual void RegPeerPktHandle( PacketProcessor* pProc){}

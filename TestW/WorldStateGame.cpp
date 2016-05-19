@@ -79,3 +79,13 @@ void WorldStateGame::OnNodeCrashed(int32 nSrvID, bool bUseSHM)
 	}
 }
 
+void WorldStateGameNode::NotifyChangeSceneFailed(WorldAvatar* pAvatar, int32 failReason)
+{
+	if(!pAvatar)
+		return;
+
+	PacketChangeSceneFail pkt;
+	pkt.SetAvatarID( pAvatar->GetAvatarID() );
+	pkt.errorID = failReason;
+	pAvatar->Send2CurNode(pkt);
+}

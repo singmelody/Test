@@ -34,3 +34,9 @@ protected:
 	int32 m_nAccFCMTickTime;
 };
 
+class WorldStateGameNode : public WorldStateGame
+{
+public:
+	void NotifyChangeSceneFailed( WorldAvatar* pAvatar, int32 failReason);
+};
+

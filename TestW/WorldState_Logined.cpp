@@ -11,7 +11,7 @@ WorldState_Logined::~WorldState_Logined(void)
 {
 }
 
-void WorldState_Logined::OnEnterStage(WorldAvatar* pAvatar)
+void WorldState_Logined::OnEnterState(WorldAvatar* pAvatar)
 {
 	WorldState::OnEnterState(pAvatar);
 }
