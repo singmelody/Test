@@ -11,17 +11,15 @@ WorldStateManager::WorldStateManager(void)
 	m_worldState[eWS_DataLoading] = &WorldState_DataLoading::Instance();
 	m_worldState[eWS_DataReady] = &WorldState_DataReady::Instance();
 	m_worldState[eWS_WaitScene] = &WorldState_WaitScene::Instance();
-	m_worldState[eWS_Decommission] = &
-		m_worldState[eWS_EnterScene,
-		m_worldState[eWS_Jumping,
-		m_worldState[eWS_Gaming,
-		m_worldState[eWS_ExitGame,
-		m_worldState[eWS_Count
-	m_worldState[
-
-
-
-
+	m_worldState[eWS_Decommission] = &WorldState_Decommission::Instance();
+	m_worldState[eWS_EnterGame] = &WorldState_EnterGame::Instance();
+	m_worldState[eWS_Jumping] = &WorldState_Jumping::Instance();
+	m_worldState[eWS_Gaming] = &WorldState_Gaming::Instance();
+	m_worldState[eWS_ExitGame] = &WorldState_ExitGame::Instance();
+	m_worldState[eWS_Billing] = &WorldState_Billing::Instance();
+	m_worldState[eWS_WaitingLogining] = &WorldState_WaitLogining::Instance();
+	m_worldState[eWS_WaitingNodeData] = &WorldState_WaitingNodeData::Instance();
+	m_worldState[eWS_WritingDBA] = &WorldState_WritingDBA::Instance();
 }
 
 
@@ -35,4 +33,18 @@ WorldState* WorldStateManager::GetState(WorldStateID nStateID)
 		return NULL;
 
 	return m_worldState[nStateID];
+}
+
+void WorldStateManager::RegPeerPktHandle(PacketProcessor* pProc)
+{
+	for (int32 i = 0; i < eWS_Count; ++i)
+	{
+		WorldState* pState = m_worldState[i];
+		if(!pState)
+			continue;
+
+		pState->RegPeerPktHandle( pProc);
+	}
+
+
 }

@@ -11,6 +11,22 @@ enum CreateSceneRst
 	eCreateSceneError_CreateTrunk,	// create other type except copy
 };
 
+enum ChangeSceneRst
+{
+	eChangeSceneSucceed = 0,		
+	eChangeSceneError_SceneIsFull,		// player max
+	eChangeSceneError_SceneIsClosing,
+	eChangeSceneError_SceneIsBlocking,	// scene is freezon block
+	eChangeSceneError_CheckEnterFailed,	
+	
+	eChangeSceneError_WarContext,
+	eChangeSceneError_SceneNotExist,
+
+	eChangeSceneError_CreateNodeAvatar,
+	eChangeSceneError_AddNodeAvatar,
+	eChangeSceneError_NodeID,
+};
+
 class SceneManager : public SceneManagerBase
 {
 public:

@@ -12,10 +12,14 @@ enum WorldStateID
 	eWS_DataReady,
 	eWS_WaitScene,
 	eWS_Decommission,
-	eWS_EnterScene,
+	eWS_EnterGame,
 	eWS_Jumping,
 	eWS_Gaming,
 	eWS_ExitGame,
+	eWS_Billing,
+	eWS_WaitingLogining,
+	eWS_WaitingNodeData,
+	eWS_WritingDBA,
 	eWS_Count
 };
 
@@ -30,6 +34,7 @@ public:
 	WorldState* GetState( WorldStateID nStateID);
 
 protected:
+	void RegPeerPktHandle( PacketProcessor* pProc);
 	WorldState*		m_worldState[eWS_Count];
 };
 
