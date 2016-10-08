@@ -11,7 +11,7 @@ class NodeSrvInfo : public ServerInfo
 {
 public:
 	NodeSrvInfo(int32 nSrvType, int32 nSrvID, int32 nSocketID, SockAddr& addr);
-	~NodeSrvInfo(void);
+	~NodeSrvInfo(void){}
 
 	virtual void UpdateDetailsPool();
 
@@ -34,7 +34,7 @@ public:
 
 	int32 GetLowSceneLoadNode( int32 exclude_ID = SERVERID_NULL);
 
-	int32 ServerCnt();
+	int32 ServerCnt() { return (int32)m_SrvMap.size(); }
 
 	NodeSrvList m_listByTrunkValue;
 	NodeSrvList m_listByLoadValue;

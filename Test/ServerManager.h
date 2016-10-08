@@ -84,6 +84,7 @@ public:
 	ServerInfo* AddWarWorld(int32 nSrvID, int32 nSocketID, SockAddr& laddr);
 
 	bool AddLocalWorld(int32 nSrvID, int32 nSocketID, SockAddr& addr);
+	ServerInfo* GetLocalWorldInfo();
 
 	ServerInfo* AddSrvInfo( class SrvItem* pItem);
 	void AddSrvInfo( ServerInfo* pInfo);

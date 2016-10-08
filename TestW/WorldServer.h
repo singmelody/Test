@@ -41,6 +41,9 @@ public:
 
 	static bool PreProcessShutdown( int32 nArgc, char* argv[]);
 
+	void SendServerInfos(int32 nSocketID, int32 nMask);
+	void SendServerInfo(int32 nSocketID, ServerInfo* pInfo);
+
 	static bool bUseBilling;
 protected:
 	enum ShutDownStage

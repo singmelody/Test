@@ -76,6 +76,18 @@ bool PeerModuleBase::ProcessPacket()
 	return PeerProcPacket() > 0;
 }
 
+void PeerModuleBase::InitDogParamPool(ServerInfo* pInfo)
+{
+	for (DogDataList::iterator itr = m_listDogData.begin(); itr != m_listDogData.end(); ++itr)
+	{
+		ParamPool* pPool = *itr;
+
+		PacketDogData pkt;
+		pkt.nParamType = pPool->GetParamTypeID();
+		pkt.SyncParam2Dog( this, pInfo->nSrvID, pPool, eParam_Flag_Server, eParam_Sync_All);
+	}
+}
+
 void PeerModuleBase::Broadcast2Dogs(ParamPool* pPool)
 {
 	if(pPool != NULL)

@@ -142,3 +142,32 @@ bool WorldServer::PreProcessShutdown(int32 nArgc, char* argv[])
 {
 	return true;
 }
+
+void WorldServer::SendServerInfos(int32 nSocketID, int32 nMask)
+{
+	if( nMask & eSM_World )
+		SendServerInfo( nSocketID, Servers.GetLocalWorldInfo());
+
+	if( nMask & eSM_Login )
+		SendServerInfo( nSocketID, Servers.GetLoginInfo() );
+
+	if( nMask & eSM_LocalNode)
+		Servers.m_LocalNodeGrp.SyncGroupInfo(nSocketID);
+
+	if( nMask &	eSM_RemoteNode)	
+		Servers.m_RemoteNodeGrp.SyncGroupInfo(nSocketID);
+
+	if( nMask &	eSM_Gate)
+		Servers.m_GateGrp.SyncGroupInfo(nSocketID);
+}
+
+void WorldServer::SendServerInfo(int32 nSocketID, ServerInfo* pInfo)
+{
+	if( pInfo == NULL)
+		return;
+
+	PacketAddSrvInfo pkt;
+	pInfo->FillPacket(&pkt);
+
+	PeerSend( &pkt, nSocketID);
+}

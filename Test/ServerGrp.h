@@ -34,6 +34,8 @@ public:
 	void BroadcastDogDetailsPools(class ModuleBase* pModule);
 	void UpdateDogDetailsPools();
 
+	void SyncGroupInfo(int32 nSocketID);
+
 	SrvInfoMap		m_SrvMap;
 
 	ServerManager*	m_pMgr;

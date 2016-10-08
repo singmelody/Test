@@ -172,6 +172,11 @@ bool ServerManager::AddLocalWorld(int32 nSrvID, int32 nSocketID, SockAddr& addr)
 	return true;
 }
 
+ServerInfo* ServerManager::GetLocalWorldInfo()
+{
+	return m_pLocalWorld;
+}
+
 ServerInfo* ServerManager::AddDBA(int32 nSrvID, int32 nSocketID, SockAddr& laddr)
 {
 	if(m_pDBA != NULL)

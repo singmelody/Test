@@ -101,6 +101,11 @@ void NetManager::CloseChannel(int32 nChannel)
 	FreeChannel(pChannel);
 }
 
+void NetManager::OnDisconnect(NetChannelBase* s)
+{
+
+}
+
 int32 NetManager::AddChannel(NetChannelBase* pBase)
 {
 	AUTOLOCK(m_mutexChannels);

@@ -34,6 +34,7 @@ public:
 	virtual NetManager* CreatePeerNetManager( bool bLZOCompress, int32 nSockRcBufSize, int32 nRcBufferSize, int32 nSockSnBuffSize, int32 SnBufferSize,
 		FunctionBase_Arg1<int32>* funcAccpet = NULL, FunctionBase_Arg1<int32>* funcCon = NULL, FunctionBase_Arg1<int32>* funcDiscon = NULL, int32 MAX_SOCKETS = MY_SOCKET_LIST_SIZE);
 
+	void PeerNetOperation( int32 nSocketID, int32 nNetEvent);
 protected:
 	void Run();
 

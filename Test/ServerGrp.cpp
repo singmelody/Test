@@ -139,3 +139,16 @@ void ServerGrp::UpdateDogDetailsPools()
 		pInfo->UpdateDetailsPool();
 	}
 }
+
+void ServerGrp::SyncGroupInfo(int32 nSocketID)
+{
+	PacketAddSrvInfo pkt;
+
+	for (SrvInfoMap::iterator itr = m_SrvMap.begin(); itr != m_SrvMap.end(); ++itr)
+	{
+		ServerInfo* pInfo = itr->second;
+
+		pInfo->FillPacket( &pkt );
+		PeerSend( nSocketID, &pkt);
+	}
+}

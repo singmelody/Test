@@ -120,7 +120,16 @@ void WorldServerNormal::OnWorldConnect(int32 nSrvID, int32 nSocketID, bool bWarG
 
 void WorldServerNormal::OnWorldDisconnect(ServerInfo* pInfo)
 {
+	MyLog::error("<<--Server Manager Remove War World!");
 
+	AUTOLOCK(m_lockLoginWar);
+
+	m_nConnectWarState = eCWS_Waiting;
+	Servers.m_pWarWorld = NULL;
+
+	SetModuleName("World");
+
+	WorldGuildManager::Instance().OnDisconnectWarWorld();
 }
 
 void WorldServerNormal::OnRecvSrvInfoPkt(PacketAddSrvInfo* pPkt)
@@ -144,4 +153,11 @@ void WorldServerNormal::OnAddNodeInfo(ServerInfo* pInfo)
 	WorldSceneManager::Instance().SyncParallelInfo2Node( pInfo->nSrvID );
 
 
+}
+
+void WorldServerNormal::OnAddGateInfo(ServerInfo* pInfo)
+{
+	WorldServer::OnAddGateInfo(pInfo);
+
+	SendServerInfos( pInfo->nSocketID, eSM_Login | eSM_LocalNode | eSM_RemoteNode);
 }

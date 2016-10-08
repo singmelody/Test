@@ -199,6 +199,46 @@ void* ParamPool::SHMGetExtraMemory()
 	return m_pParamBuffer + m_paramBuffSize;
 }
 
+char* ParamPool::Read(char* pBuffer, bool bDirty /*= false*/)
+{
+	if(!pBuffer || !m_pDef)
+		return NULL;
+
+	uint8 nCount = *pBuffer;
+	char* pTempBuff = pBuffer + sizeof(uint8);
+
+	for (uint8 i = 0; i < nCount; ++i)
+	{
+		ParamStreamInfo* pInfo = (ParamStreamInfo*)pTempBuff;
+		pTempBuff += ParamStreamInfo::Size();
+
+		for (int32 j = 0; j < MAX_PARAM_COUNT_IN_BLOCK; ++j)
+		{
+			if( pInfo->nBlockFlag & (uint32(1) << j))
+			{
+				int32 cPos = pInfo->nBlockIdx * MAX_PARAM_COUNT_IN_BLOCK + j;
+
+				ParamBase* pBase = m_pDef->GetParam(cPos);
+				if(!pBase)
+					continue;
+
+				PreSetValue( pBase, true);
+
+				bool bChange = false;
+				pTempBuff = pBase->ParamRead( m_pParamBuffer, pTempBuff, bChange);
+
+				if(bChange)
+				{
+					PostSetValue(pBase);
+					UpdateParambit( pBase, bDirty);
+				}
+			}
+		}
+	}
+
+	return pTempBuff;
+}
+
 // |count|idx 0|flag 0|data 0|idx 1|flag 1|data 1|........|idx n|flag n|data n|
 bool ParamPool::Write(char* pBuffer, int32& nBufferSize, int32& nStartParamPos, uint32 paramFlag, uint32 nSyncFlag, uint32 nParamFlagExclude /*= 0*/)
 {

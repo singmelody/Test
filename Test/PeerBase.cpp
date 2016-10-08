@@ -8,6 +8,7 @@
 #include "MyPacketProc.h"
 #include "PacketProcessor.h"
 #include "GameUtil.h"
+#include "PacketImpl.h"
 
 PeerBase::PeerBase(void)
 	: m_bPeerEnableLZO(false)
@@ -179,6 +180,20 @@ NetManager* PeerBase::CreatePeerNetManager(
 		SnBufferSize, funcAccpet, funcCon, funcDiscon, MAX_SOCKETS);	
 }
 
+void PeerBase::PeerNetOperation(int32 nSocketID, int32 nNetEvent)
+{
+	PacketNetEvent* pPkt = (PacketNetEvent*)PacketFactory::Instance().New(PacketNetEvent::GetClassStatic()->ClassID());
+	if(!pPkt)
+	{
+		MyLog::error("PeerBase::PeerNetOperation New Error [%d]", PacketNetEvent::GetClassStatic()->ClassID());
+		return;
+	}
+	
+	pPkt->nSocketID = nSocketID;
+	pPkt->nFlag = nNetEvent;
+	m_PeerPktProc->PushPacket(pPkt);
+}
+
 void PeerBase::Run()
 {
 	WatchDog::Instance().NextStep(PEER_THREAD_WATCHDOG_ID);
@@ -218,6 +233,22 @@ int32 PeerBase::PeerConnect(char* sIP, int32 nPort, bool bDirty /*= false*/)
 	}
 
 	return -1;
+}
+
+void PeerBase::PeerOnAccept(int32 nSocketID)
+{
+	PeerNetOperation( nSocketID, eNetEvent_Accept);
+}
+
+void PeerBase::PeerOnConnect(int32 nSocketID)
+{
+	PeerNetOperation( nSocketID, eNetEvent_Connect);
+}
+
+void PeerBase::PeerOnDisconnect(int32 nSocketID)
+{
+	PeerNetOperation( nSocketID, eNetEvent_Disconnect);
+	MyLog::message("Lost Peer Connection. SocketID = %d\n", nSocketID);
 }
 
 void PeerBase::RegPeerPktHandle(PacketProcessor* pProc)

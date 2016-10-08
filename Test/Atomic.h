@@ -8,7 +8,7 @@ class AtomicInt64
 {
 public:
 	AtomicInt64(void):m_val(0), m_addTimes(0){}
-	~AtomicInt64(void);
+	~AtomicInt64(void){}
 
 	void Add(int64 nVal);
 	void Reset();
