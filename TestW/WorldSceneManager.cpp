@@ -114,7 +114,7 @@ void WorldSceneManager::OnCreatingSceneTimeout(WorldScene* pScene)
 	pInfo->OnSceneCreateFailed( pScene, eCreateSceneError_Timeout);
 
 	PacketDestroyScene pkt;
-	pkt.SceneID = pScene->GetSceneID();
+	pkt.nSceneID = pScene->GetSceneID();
 	Send2Node( &pkt, pScene->GetNodeID() );
 	DestroyScene( nSceneID );
 }

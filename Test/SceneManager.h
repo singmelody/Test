@@ -46,6 +46,7 @@ public:
 
 	SceneInstanceMgr* GetSceneMap(uint16 nSceneSID);
 	virtual Scene* CreateScene( SceneCreateArg& arg);
+	virtual bool DestroyScene(int32 nSceneID);
 
 	virtual void OnSceneCreated( Scene* pScene);
 	virtual void OnSceneDestroy( Scene* pScene);

@@ -2,6 +2,7 @@
 #include "SceneManager.h"
 #include "ParamDef.h"
 #include "Scene.h"
+#include "MyLog.h"
 
 SceneManager::SceneManager(void)
 {
@@ -58,6 +59,46 @@ Scene* SceneManager::CreateScene(SceneCreateArg& arg)
 	OnSceneCreated(pScene);
 
 	return pScene;
+}
+
+bool SceneManager::DestroyScene(int32 nSceneID)
+{
+	uint16 nSceneSID = SceneInfo::GetSceneSID( nSceneID);
+
+	SceneInfoEx* pSI = (SceneInfoEx*)GetSceneInfo(nSceneSID);
+	if(!pSI)
+		return false;
+
+	SceneInstanceMgr* pMap = GetSceneMap( nSceneSID );
+	if(!pMap)
+	{
+		MyLog::error("Warning Scene[%d, %d] Destroy Not Exist", nSceneSID, nSceneID);
+		return false;
+	}
+
+	SceneInstanceMgr::iterator itr = pMap->find(nSceneID);
+	if( itr == pMap->end() )
+	{
+		MyLog::error("Warning Scene[%d, %d] Destroy Not Exist", nSceneSID, nSceneID);
+		return false;
+	}
+
+	MyLog::message("Scene Manager Free Scene [%d, %d] Memory", nSceneSID, nSceneID);
+
+	Scene* pScene = itr->second;
+	if(!pScene)
+	{
+		pMap->erase(itr);
+		return false;
+	}
+
+	pMap->erase(itr);
+	pSI->OnSceneDestroy(pScene);
+	OnSceneDestroy(pScene);
+
+	FACTORY_DELOBJ(pScene);
+
+	return true;
 }
 
 void SceneManager::OnSceneCreated(Scene* pScene)

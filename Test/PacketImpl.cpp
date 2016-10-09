@@ -106,3 +106,5 @@ PACKET_IMPL(PacketCreateSceneRequest);
 PACKET_IMPL(PacketParallelInfo);
 
 PACKET_IMPL(PacketCreateSceneResult);
+
+PACKET_IMPL(PacketDestroyScene);
