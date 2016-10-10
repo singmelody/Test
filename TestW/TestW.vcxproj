@@ -141,6 +141,7 @@
     <ClInclude Include="WorldAccount.h" />
     <ClInclude Include="WorldAsynContextManager.h" />
     <ClInclude Include="WorldAvatar.h" />
+    <ClInclude Include="WorldAvatarCommonData.h" />
     <ClInclude Include="WorldAvatarGroup.h" />
     <ClInclude Include="WorldAvatarManager.h" />
     <ClInclude Include="WorldBase.h" />
@@ -185,6 +186,7 @@
     <ClCompile Include="WorldAccount.cpp" />
     <ClCompile Include="WorldAsynContextManager.cpp" />
     <ClCompile Include="WorldAvatar.cpp" />
+    <ClCompile Include="WorldAvatarCommonData.cpp" />
     <ClCompile Include="WorldAvatarGroup.cpp" />
     <ClCompile Include="WorldAvatarManager.cpp" />
     <ClCompile Include="WorldBase.cpp" />

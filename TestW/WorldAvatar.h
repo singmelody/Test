@@ -114,10 +114,12 @@ public:
 	class WorldAvatarCommonData*	GetCommonDataManager() const;
 	//WorldTalenTreeData*		GetTalentTreeData() { return m_pTalentTreeData; }
 
+	void NoticeBillingLogout(bool bExitGame);
+
 	ParamPool*	GetRoleSet(int32 nIdx) { return Account.GetRoleSet(nIdx);}
 	WorldAccount Account;
 
-	bool CheckInStage(WorldStateID stageID) { return m_nCurStageID == stageID; }
+	bool CheckInState(WorldStateID stageID) { return m_nCurStageID == stageID; }
 
 	bool IsGaming() { return m_nCurStageID == eWS_Gaming;}
 	bool IsExitingGame() { return m_nCurStageID == eWS_ExitGame; }
@@ -130,6 +132,7 @@ public:
 
 	void OnEnterGameFailed();
 	void OnAvatarEnterGame();
+	void OnAvatarLeaveGame();
 	bool CheckPlayerEnterScene(WorldScene* pScene);
 
 	void SyncAvatarData2DB(bool bExitGame, int32 nSyncFlag);

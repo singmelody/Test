@@ -88,3 +88,13 @@ PACKET_IMPL(PacketCltSceneReq);
 PACKET_IMPL(PacketChangeSceneNotify);
 
 PACKET_IMPL(PacketDestroyAvatar);
+
+PACKET_IMPL(PacketNodeDataSyncAvatar);
+
+PACKET_IMPL(PacketNodeDataSyncCommonData);
+
+PACKET_IMPL(PacketNodeDataSyncFin);
+
+PACKET_IMPL(PacketNodeDataSyncAllFinish);
+
+PACKET_IMPL(PacketNodeDataSyncAllFinishRet);

@@ -275,7 +275,7 @@ void WorldState_Logined::PktGate_CltSelectAvatar(class PacketCltSelectAvatar* pP
 	}
 	else
 	{
-		if(!CheckInStage(pAvatar, "WorldState_Logined::PktGate_CltSelectAvatar") )
+		if(!CheckInState(pAvatar, "WorldState_Logined::PktGate_CltSelectAvatar") )
 		{
 			nReason = uint8(PacketCltSelectAvatarFailed::eFR_Unkown);
 		}

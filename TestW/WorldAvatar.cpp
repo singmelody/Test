@@ -11,6 +11,7 @@
 #include "ArenaDefine.h"
 #include <sstream>
 #include "WorldServer.h"
+#include "MyLog.h"
 
 WorldAvatar* GetWorldAvatar(int32 nAvatarID)
 {
@@ -107,6 +108,49 @@ void WorldAvatar::Send2Gate(PacketBase* pPkt, bool bGateProc)
 	m_pWorld->Send2Gate( pPkt, m_nGateSrvID, bGateProc);
 }
 
+void WorldAvatar::NoticeBillingLogout(bool bExitGame)
+{
+	if(!WorldServer::bUseBilling)
+		return;
+
+	if(!Account.HasBillingOlOnce())
+		return;
+
+	if(!m_bLastAvatarInfoValid)
+	{
+		MyLog::error("WorldAvatar::NoticeBillingLogout Failed LastAvatarInfo Not Valid");
+		return;
+	}
+
+
+	if(bExitGame)
+	{
+		//WorldBillingManager
+	}
+	else
+	{
+		if(Account.GetRecentRoleSet())
+		{
+			m_nLastAvatarLevel = PARAM_GET_VALUE( Account.GetRecentRoleSet(), level, uint(8));
+		}
+
+		PacketNoticeBillingLeaveGame pkt;
+		pkt.nAvatarLevel = m_nLastAvatarLevel;
+		pkt.bSwitchRole = 1;
+		pkt.UseAccountLen = uint8(Account.GetAccountName().size());
+
+		if( pkt.m_UserAccountLen <= sizeof(pkt.m_UserAccount))
+		{
+			memcpy( pkt.m_UserAccount, Account.GetAccountName().c_str(), pkt.m_UserAccountLen);
+			Send2Login(&pkt);
+		}
+		else
+		{
+			MyLog::error("WorldAvatar::NoticeBillingLogout Bad AccoutLen = [%d]", pkt.m_UserAccountLen);
+		}
+	}
+}
+
 void WorldAvatar::SetCurState( WorldStateID newStateID )
 {
 	if( m_bStageChanging )
@@ -130,6 +174,16 @@ void WorldAvatar::SetCurState( WorldStateID newStateID )
 		m_pCurStage->OnEnterState(this);
 
 	m_bStageChanging = false;
+}
+
+void WorldAvatar::OnAvatarLeaveGame()
+{
+	int32 nAvatarID = GetAvatarID();
+
+	// mgr handle offline here
+
+
+	m_nComState = 0;
 }
 
 bool WorldAvatar::Tick(int32 nDelaTime)

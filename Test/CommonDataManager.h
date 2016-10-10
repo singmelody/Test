@@ -37,3 +37,8 @@ protected:
 	CommonDataOwner*	m_pCommonDataOwner;
 	CommonDataCont*		m_pCont[eCommonData_Max];
 };
+
+class CommonDataManagerGame : public CommonDataManager
+{
+
+};

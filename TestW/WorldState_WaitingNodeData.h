@@ -16,7 +16,7 @@ public:
 
 	virtual void Tick(int32 nFrameTime);
 
-	virtual void Destroy(WorldAvatar* pAvatar);
+	virtual void DestroyAvatar(WorldAvatar* pAvatar);
 
 protected:
 	void PktNodeDataSync_AvatarData(class PacketNodeDataSyncAvatar* pPkt);

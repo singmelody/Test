@@ -385,6 +385,39 @@ START_ADD_PACKET_MEMBER(PacketDestroyAvatar)
 	ADD_PACKET_MEMBER( nAvatarID, int32, "");
 PACKET_END(PacketDestroyAvatar)
 
+
+//----------------------------------------
+// NodeDataSync->WorldServer
+PACKET(PacketNodeDataSyncAvatar, PacketBaseEx<PACKET_EX_BUFF_MAX_SIZE>)
+int64 nAvatarDID;
+START_ADD_PACKET_MEMBER(PacketNodeDataSyncAvatar)
+ADD_PACKET_MEMBER( nAvatarDID, int64, "");
+PACKET_END(PacketNodeDataSyncAvatar)
+
+PACKET(PacketNodeDataSyncCommonData, PacketBaseEx<PACKET_EX_BUFF_MAX_SIZE>)
+int64 nAvatarDID;
+int32 nDataType;
+int32 nIdx;
+START_ADD_PACKET_MEMBER(PacketNodeDataSyncCommonData)
+	ADD_PACKET_MEMBER( nAvatarDID, int64, "");
+	ADD_PACKET_MEMBER( nDataType, int32, "");
+	ADD_PACKET_MEMBER( nIdx, int32, "");
+PACKET_END(PacketNodeDataSyncCommonData)
+
+PACKET(PacketNodeDataSyncFin, PacketBase)
+int64 nAvatarDID;
+START_ADD_PACKET_MEMBER(PacketNodeDataSyncFin)
+	ADD_PACKET_MEMBER( nAvatarDID, int64, "");
+PACKET_END(PacketNodeDataSyncFin)
+
+PACKET(PacketNodeDataSyncAllFinish, PacketBase)
+START_ADD_PACKET_MEMBER(PacketNodeDataSyncAllFinish)
+PACKET_END(PacketNodeDataSyncAllFinish)
+
+PACKET(PacketNodeDataSyncAllFinishRet, PacketBase)
+START_ADD_PACKET_MEMBER(PacketNodeDataSyncAllFinishRet)
+PACKET_END(PacketNodeDataSyncAllFinishRet)
+
 PACKET_EX(PacketMulticast2Avatar, PacketBroadCastBase<int32>, new PoolPacketAllocator(40960))
 START_ADD_PACKET_MEMBER(PacketMulticast2Avatar)
 PACKET_END(PacketMulticast2Avatar)

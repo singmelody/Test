@@ -22,7 +22,7 @@ void WorldState::OnLeaveState(WorldAvatar* pAvatar)
 	m_listAvatars.Remove(pAvatar->GetTickNode());
 }
 
-bool WorldState::CheckInStage(WorldAvatar* pAvatar, const char* pSzErrorLocation)
+bool WorldState::CheckInState(WorldAvatar* pAvatar, const char* pSzErrorLocation)
 {
 	assert(pSzErrorLocation);
 
@@ -80,7 +80,7 @@ WorldAvatar* WorldState::GetWorldAvatarAndCheckStage(int32 nAvatarID, const char
 		return 0;
 	}
 
-	if(!CheckInStage( pAvatar, pSzaErrorLocation))
+	if(!CheckInState( pAvatar, pSzaErrorLocation))
 		return 0;
 
 	return pAvatar;

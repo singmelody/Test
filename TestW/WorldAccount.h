@@ -23,6 +23,8 @@ public:
 	void SetAccountName(const std::string& strAccount);
 	const std::string& GetAccountName() const { return m_AccountName; }
 
+	inline bool HasBillingOlOnce() const { return m_bHasBillingOlOnce; }
+
 	void SetRecentRoleSet( ParamPool* pPool);
 
 	void SetUserIp( uint32 nIP) { m_nUserIP = nIP; }

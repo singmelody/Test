@@ -23,7 +23,7 @@ public:
 
 	virtual void Tick(int32 nFrameTime) {}
 
-	virtual bool CheckInStage( WorldAvatar* pAvatar, const char* pSzErrorLocation);
+	virtual bool CheckInState( WorldAvatar* pAvatar, const char* pSzErrorLocation);
 
 	virtual void OnGateClosed(int32 nSrvID);
 	virtual void OnNodeCrashed( int32 nSrvID, bool bUseSHM) {}

@@ -26,7 +26,7 @@ void WorldState_WaitLogining::Tick(int32 nFrameTime)
 			continue;
 		}
 
-		pNode = pNode->next();
+		pNode = list.GetNext(pNode);
 
 		int32 nAvatarID = -1;
 		int32 nRet = AvatarMgr.CheckAccountOnline( pAvatar->Account.GetAccountName().c_str(), nAvatarID);
