@@ -78,3 +78,5 @@ PACKET_IMPL(PacketConnectGateSrv);
 PACKET_IMPL(PacketCltReady);
 
 PACKET_IMPL(PacketLogout2Login);
+
+PACKET_IMPL(PacketShortChangeScene);

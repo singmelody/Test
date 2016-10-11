@@ -299,15 +299,32 @@ uint8 userCNLen;
 char userCN[MAX_ACCOUNT];
 char key[KEY_LENGTH];
 IMPLE_GetStaticAttribute(PktAttr_IsClt2Srv)
-	START_ADD_PACKET_MEMBER(PacketConnectGateSrv)
+START_ADD_PACKET_MEMBER(PacketConnectGateSrv)
 	ADD_PACKET_MEMBER( userCNLen, uint8, userCNLen);
-ADD_PACKET_MEMBER_STR( userCN, MAX_ACCOUNT, "");
-ADD_PACKET_MEMBER_STR( key, KEY_LENGTH, "");
+	ADD_PACKET_MEMBER_STR( userCN, MAX_ACCOUNT, "");
+	ADD_PACKET_MEMBER_STR( key, KEY_LENGTH, "");
 PACKET_END(PacketConnectGateSrv)
 
 PACKET(PacketNewConnectioRet, PacketBase)
 START_ADD_PACKET_MEMBER(PacketNewConnectioRet)
 PACKET_END(PacketNewConnectioRet)
+
+PACKET(PacketShortChangeScene, PacketBase)
+int32 info;
+int32 targetScene;
+f32 x,y,z;
+f32 dx,dy,dz;
+START_ADD_PACKET_MEMBER(PacketShortChangeScene)
+ADD_PACKET_MEMBER( info, int32, info);
+ADD_PACKET_MEMBER( targetScene, int32, "");
+ADD_PACKET_MEMBER( x, f32, "");
+ADD_PACKET_MEMBER( y, f32, "");
+ADD_PACKET_MEMBER( z, f32, "");
+ADD_PACKET_MEMBER( dx, f32, "");
+ADD_PACKET_MEMBER( dy, f32, "");
+ADD_PACKET_MEMBER( dz, f32, "");
+PACKET_END(PacketShortChangeScene)
+
 
 PACKET_EX(PacketMulticast2Avatar, PacketBroadCastBase<int32>, new PoolPacketAllocator(40960))
 START_ADD_PACKET_MEMBER(PacketMulticast2Avatar)

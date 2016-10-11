@@ -34,5 +34,6 @@ enum
 
 	param_name_permanent	= 308,
 	param_name_ServerID		= 679,
+	param_name_SceneLoadValue = 708,
 	param_name_CltCnt		= 734,
 };

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include "BaseType.h"
 
 class DBInterface;
 class MyFile;

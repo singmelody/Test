@@ -1,6 +1,9 @@
 #include "StdAfx.h"
 #include "WorldEnterManager.h"
 #include "WorldSceneInfo.h"
+#include "PacketImpl.h"
+#include "WorldScene.h"
+#include "WorldStateManager.h"
 
 WorldEnterManager::WorldEnterManager(void)
 {
@@ -17,7 +20,7 @@ bool WorldEnterManager::HandleEnterScene(WorldAvatar* pAvatar, WorldScene* pScen
 		return false;
 
 	int32 nTarNodeID = pScene->GetNodeID();
-	int32 nTarSceneID = pScene->m_SceneID;
+	int32 nTarSceneID = pScene->GetSceneID();
 
 	WorldSceneInfo* pInfo = (WorldSceneInfo*)( pScene->GetSceneInfo() );
 	if(!pInfo)

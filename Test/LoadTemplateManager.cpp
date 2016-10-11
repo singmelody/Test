@@ -6,6 +6,7 @@
 #include "ODBCInterface.h"
 #include "CommonConfig.h"
 #include "MyLog.h"
+#include "GameUtil.h"
 
 DBConnectionManager* DBLoader::m_pDBMgr = NULL;
 std::string DBLoader::m_strDBFile;
@@ -265,7 +266,7 @@ void LoadTemplateManager::InternalLoadTemplates(LoadBatch& list, int32 nThreadCo
 			m_pLoadCallback();
 
 		// wait all thread exit
-		GSleep(10);
+		GameUtil::Sleep(10);
 	}
 
 	threads.WaitAllThreadExit();

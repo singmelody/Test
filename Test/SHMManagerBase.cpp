@@ -4,6 +4,7 @@
 #include "MyLog.h"
 #include "GameUtil.h"
 #include "StaticMemoryPool.h"
+#include "SHMAllocator.h"
 
 SHMManagerBase::SHMManagerBase(void)
 {

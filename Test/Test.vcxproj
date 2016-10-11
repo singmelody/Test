@@ -352,6 +352,7 @@
     <ClInclude Include="ServerGrpInfo.h" />
     <ClInclude Include="ServerManager.h" />
     <ClInclude Include="ShareMemory.h" />
+    <ClInclude Include="SHMAllocator.h" />
     <ClInclude Include="SHMManagerBase.h" />
     <ClInclude Include="SHMManager_DBA.h" />
     <ClInclude Include="SocketAccept.h" />
@@ -494,6 +495,7 @@
     <ClCompile Include="ServerGrpInfo.cpp" />
     <ClCompile Include="ServerManager.cpp" />
     <ClCompile Include="ShareMemory.cpp" />
+    <ClCompile Include="SHMAllocator.cpp" />
     <ClCompile Include="SHMManagerBase.cpp" />
     <ClCompile Include="SHMManager_DBA.cpp" />
     <ClCompile Include="SocketAccept.cpp" />

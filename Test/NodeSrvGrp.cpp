@@ -4,6 +4,7 @@
 #include "ServerManager.h"
 #include "ParamPool.h"
 #include "ParamDef.h"
+#include "Scene.h"
 
 NodeSrvInfo::NodeSrvInfo(int32 nSrvType, int32 nSrvID, int32 nSocketID, SockAddr& addr)
 	: ServerInfo( nSrvType, nSrvID, nSocketID, addr)
@@ -21,7 +22,7 @@ void NodeSrvInfo::UpdateDetailsPool()
 		pPool = ParamSet::CreateNew( eParam_WorldNodeDetails, nIdx);
 	}
 
-	PARAM_SET_VALUE( pPool, nSrvID, nSrvID, true);
+	PARAM_SET_VALUE( pPool, ServerID, nSrvID, true);
 	PARAM_SET_VALUE( pPool, SceneLoadValue, nTotalLoadValue, true);
 }
 

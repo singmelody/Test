@@ -3,6 +3,7 @@
 #include "LoadTemplateManager.h"
 #include "Timer.h"
 #include "MyLog.h"
+#include "GameUtil.h"
 
 LoadThread::LoadThread(LoadTemplateManager* pMgr, LoadBatch* pBatch, int32 nThreadIdx) 
 	: m_pMgr(pMgr), m_pLoadBatch(pBatch), m_nThreadIdx(nThreadIdx)
@@ -28,7 +29,7 @@ void LoadThread::ProcessLoad()
 		{
 			if(nWaitTemplateCnt > 1)
 			{
-				GSleep( 10 );
+				GameUtil::Sleep( 10 );
 				continue;
 			}
 			break;
