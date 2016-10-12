@@ -104,6 +104,14 @@ public:
 		eSceneCreate_GuildWar		= 8,
 	};
 
+	enum SceneAttribute
+	{
+		eSA_ChallengeCopy		= 1 << 1,	// 挑战副本
+		eSA_AutoResetProcess	= 1 << 2,	// 自动重置进度
+
+		eSA_DisableReEnter		= 1 << 10
+	};
+
 	SceneInfo(void);
 	virtual ~SceneInfo(void);
 
@@ -117,8 +125,16 @@ public:
 	const EnterPointInfo* GetEnterPointInfo ( uint16 from_scenesid, int32 nEnterType = eEnterType_Default) const;
 
 	bool IsTrunk() const { return m_CreateType == eSceneCreate_MainTrunk || m_CreateType == eSceneCreate_WarTrunk || m_CreateType == eSceneCreate_GuildWar; }
-
 	bool IsMainTrunk() const { return m_CreateType == eSceneCreate_MainTrunk; }
+	bool IsRootCopy() const { return m_CreateType == eSceneCreate_RootCopy; }
+	
+	virtual bool IsCopy() const { return IsTrunk(); }
+	virtual bool IsForceEnter() const 
+	{
+		return m_bForceEnter & IsCopy();
+	}
+
+	inline bool DisableReEnter() const { return (m_SceneAttribute & eSA_DisableReEnter) != 0; }
 
 	uint16			m_SceneSID;
 	std::string		m_SceneName;
@@ -129,6 +145,9 @@ public:
 	uint8			m_CreateType;
 	uint16			m_nPlayerMax;
 	int32			m_nLoadValue;
+	uint16			m_nNextSceneSID;
+	int32			m_SceneAttribute;
+	bool			m_bForceEnter;
 
 	EnterInfoMap	m_mapEnterInfos;
 };

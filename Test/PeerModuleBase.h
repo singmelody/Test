@@ -96,7 +96,7 @@ public:
 	void OnPeerConnected(SrvItem* pItem);
 	void OnPeerDisConnect(int32 nSocketID);
 
-	bool GetConnectionItem(class ConnectionItem& item);
+	bool GetConnectingItem(class ConnectionItem& item);
 
 	void W2GPacketCounter(int32 nPacketType);
 	void N2GPacketCounter(int32 nPacketType);

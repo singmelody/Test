@@ -4,6 +4,12 @@
 #include "AvatarOnLineManager.h"
 #include "SceneManager.h"
 #include "MyLog.h"
+#include "WorldSceneInfo.h"
+#include "WorldAvatar.h"
+#include "Time.h"
+#include "ParamPool.h"
+#include "SceneProcessCont.h"
+#include "SceneProcess.h"
 
 WorldState_DataReady::WorldState_DataReady(void)
 {
@@ -68,7 +74,7 @@ void WorldState_DataReady::Tick(int32 nFrameTime)
 		if(TryEnterNextScene(pAvatar))
 			continue;
 
-		MyLog::error("Avatar Req Enter Game Failed AvatarID[%d] Account[%s]", pAvatar->GetAvatarID(), pAvatar->GetAccountName().c_str() );
+		MyLog::error("Avatar Req Enter Game Failed AvatarID[%d] Account[%s]", pAvatar->GetAvatarID(), pAvatar->GetAccountName());
 
 		PacketCltSelectAvatarFailed tmpPkt;
 		tmpPkt.nReason = PacketCltSelectAvatarFailed::eFR_EnterSceneFailed;
@@ -83,7 +89,7 @@ bool WorldState_DataReady::RequestEnterScene(WorldAvatar* pAvatar, int32 nTarget
 	assert( pAvatar );
 	const int16 nSceneSID = SceneInfo::GetSceneSID(nTargetSceneID);
 
-	WorldSceneInfo* pInfo = (WorldSceneInfo*)(SceneManage::GetSceneInfo(nSceneSID));
+	WorldSceneInfo* pInfo = (WorldSceneInfo*)(SceneManager::GetSceneInfo(nSceneSID));
 	if(!pInfo)
 		return false;
 
@@ -104,11 +110,11 @@ bool WorldState_DataReady::RequestEnterScene(WorldAvatar* pAvatar, int32 nTarget
 				{
 					if( pInfo->IsRootCopy() )
 					{
-						const EnterPointInfo* pEnter = pInfo->GetEnterPointInfo( nSceneSID, eDefault);
+						const EnterPointInfo* pEnter = pInfo->GetEnterPointInfo( nSceneSID, eEnterType_Default);
 						if(pEnter)
 						{
 							pAvatar->SetTargetScenePoint( pEnter->GetPos() );
-							pAvatar->SetTargetSceneDir( pEnter->Dir );
+							pAvatar->SetTargetSceneDir( pEnter->vDir );
 						}
 					}
 					else
@@ -142,11 +148,11 @@ bool WorldState_DataReady::TryEnterNextScene(WorldAvatar* pAvatar)
 			return false;
 		}
 
-		const SceneInfo* pNextInfo = SceneManager::GetSceneInfo( pCurSD->m_NextSceneSID);
+		const SceneInfo* pNextInfo = SceneManager::GetSceneInfo( pCurSD->m_nNextSceneSID);
 		if(pNextInfo != NULL)
 		{
 			if( pNextInfo->IsMainTrunk() )
-				nSceneSID = pCurSD->m_NextSceneSID;
+				nSceneSID = pCurSD->m_nNextSceneSID;
 			else
 				nSceneSID = SCENE_ID_DEFAULT;
 		}
@@ -182,7 +188,7 @@ bool WorldState_DataReady::TryEnterNextScene(WorldAvatar* pAvatar)
 
 	pAvatar->m_nTargetSceneID = nTargetSceneID;
 	pAvatar->SetTargetScenePoint(pEnter->GetRandPos());
-	pAvatar->SetTargetSceneDir(pEnter->Dir);
+	pAvatar->SetTargetSceneDir(pEnter->vDir);
 
 	return true;
 }

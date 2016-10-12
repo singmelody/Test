@@ -25,6 +25,12 @@ int16 SceneCreateArg::InstanceID()
 
 SceneInfo::SceneInfo(void)
 {
+	m_nNextSceneSID = SCENE_ID_NULL;
+	m_SceneSID = SCENE_ID_NULL;
+	m_bDynEnterSwitch = true;
+
+	m_SceneAttribute = 0;
+	m_bForceEnter = false;
 }
 
 

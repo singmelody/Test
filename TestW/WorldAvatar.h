@@ -170,7 +170,7 @@ public:
 	bool			m_bTargetNodeAvatarCreated;
 	bool			m_bIsDestroy;
 	int32			m_nTargetNodeID;
-
+	bool			m_bAvatarDataDirty;
 protected:
 	int32			m_charInterval[CC_MAX];
 
@@ -188,7 +188,6 @@ protected:
 	int8			m_worldArenaState;
 
 	bool			m_bStageChanging;
-	bool			m_bAvatarDataDirty;
 	bool			m_bHasGateAvatar;
 	bool			m_bLastAvatarInfoValid;
 

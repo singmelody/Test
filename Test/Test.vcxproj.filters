@@ -462,6 +462,15 @@
     <ClInclude Include="FSMExtendData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SceneProcessCont.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CommonDataCont_T.h">
+      <Filter>Game\CommonData</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneProcess.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -849,6 +858,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="FSMExtendData.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneProcessCont.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CommonDataCont_T.cpp">
+      <Filter>Game\CommonData</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneProcess.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

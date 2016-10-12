@@ -21,6 +21,8 @@ enum ValueChangeMode
 	eVCM_Update,
 };
 
+class CommonDataObjectTickList;
+
 class CommonDataObject : public GameObject
 {
 	friend class CommonDataObjectTickList;
@@ -55,4 +57,26 @@ protected:
 	CommonDataObject*			_next;
 	CommonDataObject*			_prev;
 	CommonDataObjectTickList*	pList;
+};
+
+class CommonDataObjectTickList
+{
+public:
+	CommonDataObjectTickList()
+		: _head(NULL)
+		, _back(NULL)
+		, m_nCount(0)
+	{
+
+	}
+
+	virtual ~CommonDataObjectTickList()
+	{
+
+	}
+
+protected:
+	int32				m_nCount;
+	CommonDataObject*	_head;
+	CommonDataObject*	_back;
 };

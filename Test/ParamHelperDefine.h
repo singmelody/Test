@@ -9,6 +9,7 @@ extern int32 Param_Name_Table[MAX_PARAM_NAME_DEFINE_SIZE][MAX_PARAM_NAME_INDEX];
 enum
 {
 	param_name_avatardid	= 0,
+	param_name_lastlandtime = 46,
 	param_name_create_time	= 49,
 
 	param_name_faceid		= 112,
@@ -31,6 +32,7 @@ enum
 	param_name_title		= 207,
 	param_name_accountname	= 209,
 
+	param_name_permanent	= 308,
 	param_name_ServerID		= 679,
 	param_name_CltCnt		= 734,
 };

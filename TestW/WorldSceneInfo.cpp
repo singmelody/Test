@@ -26,6 +26,23 @@ WorldSceneInfo::~WorldSceneInfo(void)
 }
 
 
+bool WorldSceneInfo::TryEnterTargetScene(WorldAvatar* pAvatar, int16 nInstanceID, int32& nFailReason)
+{
+	if(nInstanceID == SCENE_ID_NULL)
+		return false;
+
+	int32 nTargetSceneID = SceneInfo::GenSceneID( m_SceneSID, nInstanceID);
+
+	WorldScene* pScene = (WorldScene*)m_Instances.GetItem(nTargetSceneID);
+	if(!pScene)
+	{
+		nFailReason = eChangeSceneError_SceneNotExist;
+		return false;
+	}
+
+	return TryEnterScene( pAvatar, pScene, nFailReason);
+}
+
 bool WorldSceneInfo::TryEnterScene(WorldAvatar* pAvatar, WorldScene* pScene, int32& nFailReason)
 {
 	if(!pScene)

@@ -144,6 +144,33 @@ ServerInfo* ServerManager::AddDBA(int32 nSrvID, int32 nSocketID, SockAddr& laddr
 	return m_pDBA;
 }
 
+ServerInfo* ServerManager::AddLogin(int32 nSrvID, int32 nSocketID, SockAddr& laddr)
+{
+	if(!m_pLogin)
+		return NULL;
+
+	MyLog::message("->>Srv Manager Registry Login iSocketID = %d\n", nSocketID);
+
+	ServerInfo* pInfo = new ServerInfo( eSrv_Login, nSrvID, nSocketID, laddr);
+	if(!pInfo)
+		return NULL;
+
+	m_pLogin = pInfo;
+	AddSrvInfo(pInfo);
+	return m_pLogin;
+}
+
+ServerInfo* ServerManager::AddNode(int32 nSrvID, int32 nSocketID, SockAddr& laddr)
+{
+	ServerInfo* pInfo = NULL;
+	if(IsSameGroup( nSrvID ))
+		pInfo = m_LocalNodeGrp.AddServer( nSrvID, nSocketID, laddr);
+	else
+		pInfo = m_RemoteNodeGrp.AddServer( nSrvID, nSocketID, laddr);
+
+	return pInfo;
+}
+
 bool ServerManager::IsSameGroup(int32 nSrvID)
 {
 	int32 nGrpID = GetGroupID(nSrvID);
@@ -170,19 +197,26 @@ ServerInfo* ServerManager::AddSrvInfo(SrvItem* pItem)
 			m_RemoteWorldGrp.AddServer( nSrvID, nSocketID, laddr);
 
 	case eSrv_Login:
+		AddLogin( nSrvID, nSocketID, laddr);
 		break;
 
 	case eSrv_Node:
+		AddNode( nSrvID, nSocketID, laddr);
 		break;
 
 	case eSrv_Gate:
+		{
+			GateSrvInfo* pInfo = (GateSrvInfo*)m_GateGrp.AddServer( nSrvID, nSocketID, laddr);
+			if(pInfo)
+				pInfo->SetGateSrvInfo( pItem->listenPortClt, pItem->listenIpClt);
+		}
 		break;
 
 	case eSrv_Collision:
 		break;
 
 	case eSrv_DOG:
-		
+		m_DogGroup.AddServer( nSrvID, nSocketID, laddr);
 		break;
 	}
 

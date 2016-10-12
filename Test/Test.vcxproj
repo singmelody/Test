@@ -250,6 +250,7 @@
     <ClInclude Include="CircularQueue.h" />
     <ClInclude Include="CommonConfig.h" />
     <ClInclude Include="CommonDataCont.h" />
+    <ClInclude Include="CommonDataCont_T.h" />
     <ClInclude Include="CommonDataManager.h" />
     <ClInclude Include="CommonDataObj.h" />
     <ClInclude Include="CommonDataOwner.h" />
@@ -344,6 +345,8 @@
     <ClInclude Include="SceneInstanceMgr.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="SceneManagerBase.h" />
+    <ClInclude Include="SceneProcess.h" />
+    <ClInclude Include="SceneProcessCont.h" />
     <ClInclude Include="ServerConfig.h" />
     <ClInclude Include="ServerGrp.h" />
     <ClInclude Include="ServerGrpInfo.h" />
@@ -387,6 +390,7 @@
     <ClCompile Include="CircularQueue.cpp" />
     <ClCompile Include="CommonConfig.cpp" />
     <ClCompile Include="CommonDataCont.cpp" />
+    <ClCompile Include="CommonDataCont_T.cpp" />
     <ClCompile Include="CommonDataManager.cpp" />
     <ClCompile Include="CommonDataObj.cpp" />
     <ClCompile Include="CommonDataOwner.cpp" />
@@ -483,6 +487,8 @@
     <ClCompile Include="SceneInstanceMgr.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SceneManagerBase.cpp" />
+    <ClCompile Include="SceneProcess.cpp" />
+    <ClCompile Include="SceneProcessCont.cpp" />
     <ClCompile Include="ServerConfig.cpp" />
     <ClCompile Include="ServerGrp.cpp" />
     <ClCompile Include="ServerGrpInfo.cpp" />

@@ -2,9 +2,10 @@
 
 enum CommonDataType
 {
-	eCommonData_Min		= -1,
-	eCommonData_Pet		= 0,
-	eCommonData_Buff	= 1,
+	eCommonData_Min				= -1,
+	eCommonData_Pet				= 0,
+	eCommonData_Buff			= 1,
+	eCommonData_SceneProcess	= 10,
 	eCommonData_Max
 };
 
@@ -21,13 +22,13 @@ class CommonDataObject;
 class CommonDataCont
 {
 public:
-	CommonDataCont(void);
-	virtual ~CommonDataCont(void);
+	CommonDataCont(CommonDataType type) : m_Type(type) { m_pOwner = NULL; }
+	virtual ~CommonDataCont(void){}
 
-	virtual void SetOwner(CommonDataOwner* pOwner) { m_pOwner = pOwner; }
-	CommonDataType GetType() { return m_Type; }
+	virtual void				SetOwner(CommonDataOwner* pOwner) { m_pOwner = pOwner; }
+	CommonDataType				GetType() { return m_Type; }
 
-	CommonDataObject* CreateCommonDataObj(int32 nDataID, int32 nIdx = -1);
+	CommonDataObject*			CreateCommonDataObj(int32 nDataID, int32 nIdx = -1);
 
 	virtual	int32				Add(CommonDataObject* pObj, int32 nIdx = -1) = 0;
 	virtual bool				Remove(int32 nIdx, bool bDel = true) = 0;
@@ -43,5 +44,6 @@ protected:
 	int32				m_nMaxIdx;
 	CommonDataOwner*	m_pOwner;
 	CommonDataType		m_Type;
+
 };
 

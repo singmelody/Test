@@ -2,15 +2,6 @@
 #include "CommonDataCont.h"
 
 
-CommonDataCont::CommonDataCont(void)
-{
-}
-
-
-CommonDataCont::~CommonDataCont(void)
-{
-}
-
 CommonDataObject* CommonDataCont::CreateCommonDataObj(int32 nDataID, int32 nIdx /*= -1*/)
 {
 	CommonDataObject* pObj = NewObject(nDataID);

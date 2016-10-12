@@ -5,6 +5,9 @@
 #include "MyLog.h"
 #include "ServerManager.h"
 #include "Thread.h"
+#include "TimeManager.h"
+
+#define CONNECTION_INTERVAL 1000
 
 PeerModuleBase::PeerModuleBase(SrvType nModuleType) : ModuleBase(nModuleType), m_bUseConnectionThread(false)
 {
@@ -154,7 +157,7 @@ void PeerModuleBase::ConnectThreadProc()
 {
 	ConnectionItem item;
 
-	if(GetConnectionItem(item))
+	if(GetConnectingItem(item))
 	{
 		int32 nSocketID = PeerConnect( item.listenIP, item.nListenPort, false);
 		if(nSocketID != -1)
@@ -164,9 +167,31 @@ void PeerModuleBase::ConnectThreadProc()
 	Sleep(50);
 }
 
-bool PeerModuleBase::GetConnectionItem(ConnectionItem& item)
+bool PeerModuleBase::GetConnectingItem(ConnectionItem& item)
 {
+	AUTOLOCK(m_lockConnection);
 
+	uint64 time = TimeManager::Instance().CurTime() - CONNECTION_INTERVAL;
+	ServerItemMap& map = m_mapSrvItems;
+
+	for (auto itr = map.begin(); itr != map.end(); ++itr)
+	{
+		SrvItem* pItem = itr->second;
+		if( pItem->nSocketID == -1 && pItem->nLastConnectTime < time)
+		{
+			item.nSrvID = pItem->nSrvID;
+			item.nSocketID = -1;
+
+			item.nListenPort = pItem->listenPortPeer;
+			memcpy( item.listenIP, pItem->listenIpPeer, IPLEN);
+
+			pItem->nLastConnectTime = TimeManager::Instance().CurTime();
+
+			return true;
+		}
+	}
+
+	return false;
 }
 
 void PeerModuleBase::W2GPacketCounter(int32 nPacketType)
@@ -371,7 +396,7 @@ void PeerModuleBase::OnRecvSrvConnectPkt(class PacketSrvConnect* pPkt)
 	SrvItem item(pPkt);
 
 	MyLog::message("Recv %s Connection id=%d ip=%s port=%d\n", 
-		GetSrvTitle(pPkt->type), pPkt->id, pPkt->IP, pPkt->nPort);
+		GetSrvTitle(pPkt->nType), pPkt->nID, pPkt->ListenIpPeer, pPkt->nListenPortClt);
 
 	Servers.AddSrvInfo(&item);
 }

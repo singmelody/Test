@@ -25,6 +25,8 @@ public:
 
 	virtual void OnEnterScene( WorldAvatar* pAvatar, WorldScene* pScene) {}
 	virtual void OnLeaveScene( WorldAvatar* pAvatar, WorldScene* pScene) {}
+
+	virtual bool TryEnterTargetScene(WorldAvatar* pAvatar, int16 nInstanceID, int32& nFailReason);
 protected:
 	bool TryEnterScene( WorldAvatar* pAvatar, WorldScene* pScene, int32& nFailReason);
 

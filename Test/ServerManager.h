@@ -75,6 +75,8 @@ public:
 	bool AddLocalWorld(int32 nSrvID, int32 nSocketID, SockAddr& addr);
 
 	ServerInfo* AddDBA(int32 nSrvID, int32 nSocketID, SockAddr& addr);
+	ServerInfo* AddLogin(int32 nSrvID, int32 nSocketID, SockAddr& laddr);
+	ServerInfo* AddNode( int32 nSrvID, int32 nSocketID, SockAddr& laddr);
 
 	ServerInfo* AddSrvInfo( class SrvItem* pItem);
 	void AddSrvInfo( ServerInfo* pInfo);
@@ -105,6 +107,7 @@ public:
 	NodeSrvGrp		m_LocalNodeGrp;
 	NodeSrvGrp		m_RemoteNodeGrp;
 	ServerGrp		m_CollisionGroup;
+	ServerGrp		m_DogGroup;
 
 
 	GateSrvGrp		m_GateGrp;
