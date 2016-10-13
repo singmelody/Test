@@ -320,10 +320,10 @@ void PeerModuleBase::SendPacketSrvConnect(int32 nSocketID)
 
 	ConfigManager::GetConfigValue( "CommonConfig", "ModuleIndex", pkt.nModuleIndex, true);
 	pkt.nFlag = 0;
-	pkt.nListenPortPeer = m_peerPort;
+	pkt.nListenPortPeer = m_PeerPort;
 
 	memset( pkt.ListenIpPeer, 0, IPLEN);
-	memcpy( pkt.ListenIpPeer, m_peerIP.c_str(), m_peerIP.length());
+	memcpy( pkt.ListenIpPeer, m_PeerIP.c_str(), m_PeerIP.length());
 
 	pkt.nListenPortClt = 0;
 	memset( pkt.ListenIpClt, 0, IPLEN);

@@ -72,3 +72,9 @@ PACKET_IMPL(PacketMulticast2Channel);
 PACKET_IMPL(PacketFSMExtendData);
 
 PACKET_IMPL(PacketNetEvent);
+
+PACKET_IMPL(PacketConnectGateSrv);
+
+PACKET_IMPL(PacketCltReady);
+
+PACKET_IMPL(PacketLogout2Login);

@@ -2,8 +2,10 @@
 #include "GateAccountStates.h"
 #include "GateServer.h"
 #include "GateAccount.h"
+#include "MyLog.h"
 
 GateAccountStateBase* GateAccountStateBase::s_states[eGateAccountState_Count];
+
 
 
 GateAccountStateBase::GateAccountStateBase(GateAccountState state)
@@ -12,6 +14,14 @@ GateAccountStateBase::GateAccountStateBase(GateAccountState state)
 	, AccountMgr(GateAccountManager::Instance())
 {
 
+}
+
+void GateAccountStateBase::DefaultHandlePacket( GateAccount& account, class PacketBase& pkt, const char* pSzFrom)
+{
+	assert(pSzFrom);
+
+	MyLog::error("DefaultHandlePacket Packet=[%s] from[%s] State=[%s] UserCN=[%s]",
+		pkt.GetClassName(), pSzFrom, GetStateName(), account.strUserCN.c_str() );
 }
 
 void GateAccountStateBase::Init()

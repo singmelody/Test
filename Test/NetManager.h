@@ -43,7 +43,7 @@ public:
 
 	void NetRun();
 
-	void Accept( char* sAddr, int32 nPort, bool bSrv);
+	void Accept( char* sAddr, int32 nPort, bool bSrv = false);
 	int32 Connect( char* sAddr, int32 nPort, bool bSingleThread = false);
 
 	void CloseChannel(int32 nChannel);

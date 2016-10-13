@@ -49,20 +49,6 @@ public:
 
 	}
 
-#define _BIT32_(X) (1<<X)
-	static const uint32 PktAttr_IsClient2Srv	=	_BIT32_(0);
-	static const uint32 PktAttr_ShouldEncrypt	= 	_BIT32_(1);
-
-	static const uint32 PktAttr_IsEvent			=	_BIT32_(2);
-	static const uint32 PktAttr_Disconnect		=	_BIT32_(3);
-
-	static const uint32 PktAttr_IsClient2Node	=	_BIT32_(4);
-	static const uint32 PktAttr_IsClient2World	=   _BIT32_(5);
-	static const uint32 PktAttr_IsClient2Login	=	_BIT32_(6);
-
-	static const uint32	PktAttr_NoNeedLZOSend	=	_BIT32_(7);
-#undef  _BIT32_
-
 	int32 GetAvatarID() const { return m_AvatarID; }
 	void SetAvatarID(int32 nID) { m_AvatarID = nID; }
 
@@ -86,10 +72,10 @@ public:
 
 	virtual uint32 GetStaticAttribute() const { return PktAttr_ShouldEncrypt; }
 
-	static bool IsClient2Srv(uint32 attr) { return 0 != (attr & PktAttr_IsClient2Srv); }
+	static bool IsClient2Srv(uint32 attr) { return 0 != (attr & PktAttr_IsClt2Srv); }
 	static bool ShouldEncrypt(uint32 attr) { return 0 != (attr & PktAttr_ShouldEncrypt); }
 	static bool IsEvent(uint32 attr) { return 0 != (attr & PktAttr_IsEvent); }
-	static bool IsDisconnectCommand(uint32 attr) { return 0 != ( attr & PktAttr_Disconnect);}
+	static bool IsDisconnectCommand(uint32 attr) { return 0 != ( attr & PktAttr_DisconnectCommand);}
 
 	virtual int32 GetPacketID() const { return m_PacketID; }
 	virtual void SetPacketID(int32 nID) { m_PacketID = nID; }
@@ -101,6 +87,20 @@ public:
 	inline void ResetPacketType() { m_SendType = 0; }
 
 	virtual int32 PacketClassSize() { return sizeof(*this); }
+
+#define _BIT32_(X) (1<<X)
+	static const uint32 PktAttr_IsClt2Srv		=	_BIT32_(0);
+	static const uint32 PktAttr_ShouldEncrypt	=	_BIT32_(1);
+
+	static const uint32 PktAttr_IsEvent			=	_BIT32_(2);
+	static const uint32 PktAttr_DisconnectCommand =	_BIT32_(3);
+
+	static const uint32 PktAttr_IsClt2Node		=	_BIT32_(4);
+	static const uint32 PktAttr_IsClt2World		=	_BIT32_(5);
+	static const uint32 PktAttr_IsClt2Login		=	_BIT32_(6);
+
+	static const uint32 PktAttr_NoNeedLZOSend	=	_BIT32_(7);
+#undef  _BIT32_
 protected:
 
 	int32		m_PacketID;

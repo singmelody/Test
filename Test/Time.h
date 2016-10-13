@@ -17,6 +17,12 @@ public:
 	}
 
 	static Time CurrentTime();
+
+	const Time& operator+(const Time& time)
+	{
+		m_milliSec += time.m_milliSec;
+		return *this;
+	}
 private:
 	uint64 m_milliSec;
 };

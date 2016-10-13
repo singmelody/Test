@@ -47,6 +47,14 @@ void WatchDog::UpdateTime(int32 nIdx)
 	state.Step = 0;
 }
 
+void WatchDog::NextStep(int32 nIdx)
+{
+	if( nIdx < 0 || nIdx >= MAX_WATCH_STATE_SIZE || !m_watchStates[nIdx].UseFlag )
+		return;
+
+	m_watchStates[nIdx].Step++;
+}
+
 void WatchDog::Thread_Update()
 {
 	uint64 nCurTime = TimeManager::Instance().CurTime();

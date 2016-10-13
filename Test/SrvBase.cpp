@@ -6,6 +6,7 @@
 #include "MyMutex.h"
 #include "PacketImpl.h"
 #include "WatchDog.h"
+#include "ConfigManager.h"
 
 FINISH_FACTORY_ARG0(CltNewConnection);
 
@@ -45,8 +46,10 @@ SrvBase::SrvBase(void)
 	m_SrvCirRcBufSize = 2048*32;
 	m_SrvSocketRnBufSize = 2048;
 	m_SrvCirRnBufSize = 2048*32;
+
 	m_SrvIP = "127.0.0.1";
 	m_SrvPort = 10001;
+
 	m_SrvNetThreadFrameTime = 0;
 	m_SrvMaxSockets = 0;
 	m_nSrvNetEventWaitTime = 0;
@@ -125,7 +128,9 @@ bool SrvBase::SrvExit()
 
 void SrvBase::FillSrvConfig()
 {
+	MyLog::message("Srv Use IOCP Net Mode: %d", m_SrvUseIOCP);
 
+	ConfigManager::GetConfigValue( "CommonConfig", "SrvIP", m_SrvIP, true);
 }
 
 NetManager* SrvBase::CreateCltNetManager(bool bLZOCompress, int32 nSockRcBufSize, int32 nRcBufferSize, int32 nSockSnBuffSize, int32 nSnBufferSize, FunctionBase_Arg1<int32>* funcAccpet /*= NULL*/, FunctionBase_Arg1<int32>* funcCon /*= NULL*/, FunctionBase_Arg1<int32>* funcDiscon /*= NULL*/, int32 MAX_SOCKETS /*= MY_SOCKET_LIST_SIZE*/)

@@ -53,4 +53,8 @@
 
 #define PACKET_CLT_2_GATE( packet, basePacket) \
 	PACKET( packet, basePacket) \
-	IMPLE_GetStaticAttribute( PktAttr_IsClient2Srv | PktAttr_ShouldEncrypt ) 
+	IMPLE_GetStaticAttribute( PktAttr_IsClt2Srv | PktAttr_ShouldEncrypt ) 
+
+
+#define IP_ADDRESS 32
+#define KEY_LENGTH 32

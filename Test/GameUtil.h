@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <set>
+#include "Time.h"
 
 class MyPath
 {
@@ -29,5 +30,6 @@ public:
 	static bool GetCommandOpt( const std::string& strOptName, int32 nArgc, char* argv[]);
 
 	static std::string TrimStr( const std::string& str, const std::string strTrim);
+	static void	Sleep(const Time& time);
 };
 

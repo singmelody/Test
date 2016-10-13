@@ -41,20 +41,20 @@ public:
 		while (m_elements[m_pos] != m_DefVal)
 		{
 			m_pos++;
-			if(res == m_pos)
+			if(nRes == m_pos)
 				return -1;
 
 			if(m_pos >= ELEMENTCOUNT)
 				m_pos = 0;
 		}
 		m_elements[m_pos] = val;
-		res = m_pos;
+		nRes = m_pos;
 		m_pos++;
 		m_count++;
 		if(m_pos >= ELEMENTCOUNT)
 			m_pos = 0;
 
-		return res;
+		return nRes;
 	}
 
 	bool add(int32 nIndex, T& val)

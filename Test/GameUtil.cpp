@@ -1,5 +1,6 @@
 #include "StdAfx.h"
 #include "GameUtil.h"
+#include "Thread.h"
 #include <Windows.h>
 
 std::string MyPath::m_MainPath = "";
@@ -80,4 +81,9 @@ std::string GameUtil::TrimStr(const std::string& str, const std::string strTrim)
 		return strRet;
 
 	return strRet.substr( 0, pEnd + 1);
+}
+
+void GameUtil::Sleep(const Time& time)
+{
+	MyThread::Sleep(time.MilliSecond());
 }

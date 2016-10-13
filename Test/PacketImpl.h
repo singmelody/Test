@@ -294,6 +294,21 @@ PACKET(PacketFSMExtendData, PacketDataPack<PACKET_EX_BUFF_MAX_SIZE>)
 START_ADD_PACKET_MEMBER(PacketFSMExtendData)
 PACKET_END(PacketFSMExtendData)
 
+PACKET(PacketConnectGateSrv, PacketBase)
+uint8 userCNLen;
+char userCN[MAX_ACCOUNT];
+char key[KEY_LENGTH];
+IMPLE_GetStaticAttribute(PktAttr_IsClt2Srv)
+	START_ADD_PACKET_MEMBER(PacketConnectGateSrv)
+	ADD_PACKET_MEMBER( userCNLen, uint8, userCNLen);
+ADD_PACKET_MEMBER_STR( userCN, MAX_ACCOUNT, "");
+ADD_PACKET_MEMBER_STR( key, KEY_LENGTH, "");
+PACKET_END(PacketConnectGateSrv)
+
+PACKET(PacketNewConnectioRet, PacketBase)
+START_ADD_PACKET_MEMBER(PacketNewConnectioRet)
+PACKET_END(PacketNewConnectioRet)
+
 PACKET_EX(PacketMulticast2Avatar, PacketBroadCastBase<int32>, new PoolPacketAllocator(40960))
 START_ADD_PACKET_MEMBER(PacketMulticast2Avatar)
 PACKET_END(PacketMulticast2Avatar)
@@ -368,3 +383,15 @@ START_ADD_PACKET_MEMBER(PacketCltSelectAvatar)
 ADD_PACKET_MEMBER( nAvatarIdx, uint8, nAvatarIdx)
 PACKET_END(PacketCltSelectAvatar)
 
+PACKET_CLT_2_GATE( PacketCltReady, PacketBase)
+int32 nToken;
+START_ADD_PACKET_MEMBER(PacketCltReady)
+	ADD_PACKET_MEMBER( nToken, uint8, nToken);
+PACKET_END(PacketCltReady)
+
+
+PACKET_CLT_2_GATE(PacketLogout2Login, PacketBase)
+int32 nGateID;
+START_ADD_PACKET_MEMBER(PacketLogout2Login)
+	ADD_PACKET_MEMBER( nGateID, int32, nGateID);
+PACKET_END(PacketLogout2Login)

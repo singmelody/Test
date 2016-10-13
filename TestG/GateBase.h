@@ -12,6 +12,8 @@ public:
 
 	GateCltNetChannel* GetCltChannel(int32 nSocketID);
 	void FreeCltChannel(GateCltNetChannel* pChannel);
+
+	bool IsServerReady() { return m_bSrvReady; }
 protected:
 
 	bool	m_bSrvReady;

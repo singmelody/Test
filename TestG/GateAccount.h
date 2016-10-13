@@ -6,6 +6,7 @@
 #include <string>
 #include "Singleton.h"
 #include <hash_map>
+#include "Time.h"
 
 enum GateAccountState
 {
@@ -24,6 +25,8 @@ enum GateAccountState
 
 	eGateAccountState_Count,
 };
+
+class GateAccountStateBase;
 
 struct GateAvatar
 {
@@ -56,6 +59,15 @@ public:
 
 	void ChangeState(GateAccountState state);
 
+	const Time& GetExpireTime() const { return m_expireTime; }
+	void SetExpireTime(uint32 nMilliSeconds);
+
+	GateAvatar&	GetAvatar() { return m_avatar; }
+
+	GateAccountStateBase* GetState() const { return m_pState; }
+	int32 GetCltSocketID() const { return m_nClntSockID; }
+
+	std::string strUserCN;
 protected:
 	int32	m_nClntSockID;
 	bool	m_bClntConnect;
@@ -64,9 +76,13 @@ protected:
 	int32	m_nUserIP;
 	int32	m_nCityChatChannelID;
 
+	Time	m_expireTime;
+
 	GateAccountStateBase*	m_pState;
+	GateAvatar				m_avatar;
 };
 
+typedef stdext::hash_map<int32, GateAccount*> GateAccountMap;
 
 class GateAccountManager : public Singleton<GateAccountManager>
 {
@@ -76,9 +92,20 @@ public:
 
 	class GateCltNetChannel* GetCltChannelByAvatarID(int32 nAvatarID);
 	int32 GetCltChannelID(int32 nAvatarID);
+	
+	GateAccount* CreateAccount(int32 nCltSocketID);
+	void RemoveAccount(int32 nCltSocketID);
+
+	GateAccount* GetAccount(int32 nSocketID);
+	GateAccount* GetAccountByAvatarID(int32 nAvatarID);
 
 private:
 	volatile long m_RWLock_mapAvatarID2ChannelID;
-	stdext::hash_map< int32, int16> m_mapAvatarID2ChannelID;
+	
+	GateAccountMap					m_mapSocketID2Account;
+	GateAccountMap					m_mapAvatarID2Account;
+
+	stdext::hash_map< int32, int16> m_mapAvatarID2ChannelID;	// avatarid -> channelid
+
 };
 
