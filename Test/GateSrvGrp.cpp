@@ -1,6 +1,8 @@
 #include "StdAfx.h"
 #include "GateSrvGrp.h"
 #include <algorithm>
+#include "ServerManager.h"
+#include "ParamSet.h"
 
 GateSrvInfo::GateSrvInfo()
 	: ServerInfo()

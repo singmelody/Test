@@ -5,6 +5,7 @@
 #include "PoolAllocator.h"
 #include <string>
 #include "Singleton.h"
+#include <hash_map>
 
 enum GateAccountState
 {
@@ -63,13 +64,21 @@ protected:
 	int32	m_nUserIP;
 	int32	m_nCityChatChannelID;
 
-	GateAccountState*	m_pState;
+	GateAccountStateBase*	m_pState;
 };
+
 
 class GateAccountManager : public Singleton<GateAccountManager>
 {
 public:
 	GateAccountManager();
 	~GateAccountManager();
+
+	class GateCltNetChannel* GetCltChannelByAvatarID(int32 nAvatarID);
+	int32 GetCltChannelID(int32 nAvatarID);
+
+private:
+	volatile long m_RWLock_mapAvatarID2ChannelID;
+	stdext::hash_map< int32, int16> m_mapAvatarID2ChannelID;
 };
 

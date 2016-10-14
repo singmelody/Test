@@ -8,11 +8,13 @@ GateCltNetManager::GateCltNetManager(bool bLZOCompresss, int32 sockRcBuffSize, i
 
 }
 
-GateCltNetManager::CreateNewChannel()
-{
-	return new GateCltNetChannel();
-}
-
 GateCltNetManager::~GateCltNetManager(void)
 {
+
+}
+
+
+NetChannelBase* GateCltNetManager::CreateNewChannel()
+{
+	return new GateCltNetChannel();
 }

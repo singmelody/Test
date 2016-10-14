@@ -33,6 +33,8 @@ public:
 
 	virtual void* New() { return NULL; }
 	virtual void  Free(void* ptr) {}
+
+	virtual int32 ClassSize() { return 0; }
 protected:
 	int32		m_id;
 	std::string m_name;
@@ -202,7 +204,7 @@ public:
 	virtual void AddFactory(FactoryBase_Arg0* pFunc);
 
 	int32 GetFactoryCount() { return (int32)m_FuncID_Arg0.size(); }
-
+	FactoryBase_Arg0* GetFactory(int32 nIdx) { return m_FuncID_Arg0[nIdx]; }
 protected:
 	typedef std::map< UtilID, FactoryBase_Arg0*> FactoryMap;
 

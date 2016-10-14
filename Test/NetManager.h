@@ -31,10 +31,10 @@ class NetManager
 public:
 	NetManager(
 		bool bLZOCompress,
-		int32 nSockRcBufSize,
-		int32 nRcBufSize,
-		int32 nSockSnBufSize,
-		int32 nSnBufSize,
+		int32 nSockRcBuffSize,
+		int32 nRcBufferSize,
+		int32 nSockSnBufferSize,
+		int32 nSnBufferSize,
 		FunctionBase_Arg1<int32>* funcAccept,
 		FunctionBase_Arg1<int32>* funcCon,
 		FunctionBase_Arg1<int32>* funcDiscon,
@@ -77,7 +77,17 @@ public:
 	bool Compressable() const { return m_bLzoCompress; }
 	NetChannelBase* CreateNewChannel();
 
+	void SetRecvPacketFilter(IRecvPacketFilter* pFilter){ m_pIRecvPacketFilter = pFilter; }
+	
+	PacketProcessor* GetPacketProcessor() { return m_pProcessor; }
+	void SetPacketProcessor(PacketProcessor* p){ m_pProcessor = p; }
+
 	static PacketBase* DuplicatePacket( PacketBase& pkt);
+
+	void SetName(const std::string& name) { m_strName = name; }
+
+	void SetEventWaitTime(int32 nWaitMS) { m_nEventWaitTimeMs = nWaitMS;}
+	int32 GetEventWaitTime() const { return m_nEventWaitTimeMs;}
 protected:
 
 	void ProcNewConnection();
@@ -123,7 +133,7 @@ protected:
 
 
 	IRecvPacketFilter*	m_pIRecvPacketFilter;
-
+	int32				m_nEventWaitTimeMs;
 
 };
 
@@ -136,6 +146,7 @@ public:
 		bool bLZOCompress,
 		int32 nSockRcBuffSize,
 		int32 nRcBufferSize,
+		int32 nSockSnBufferSize,
 		int32 nSnBufferSize,
 		FunctionBase_Arg1<int32>* funcAccept = NULL,
 		FunctionBase_Arg1<int32>* funcCon = NULL,
@@ -157,6 +168,7 @@ public:
 		bool bLZOCompress,
 		int32 nSockRcBuffSize,
 		int32 nRcBufferSize,
+		int32 nSockSnBufferSize,
 		int32 nSnBufferSize,
 		FunctionBase_Arg1<int32>* funcAccept = NULL,
 		FunctionBase_Arg1<int32>* funcCon = NULL,

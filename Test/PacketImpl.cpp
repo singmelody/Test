@@ -69,4 +69,6 @@ PACKET_IMPL(PacketMulticast2Avatar);
 
 PACKET_IMPL(PacketMulticast2Channel);
 
-PACKET_IMPL(PacketFSMExtentdData);
+PACKET_IMPL(PacketFSMExtendData);
+
+PACKET_IMPL(PacketNetEvent);

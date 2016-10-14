@@ -143,6 +143,7 @@
     <ClInclude Include="GateAccountStates.h" />
     <ClInclude Include="GateAccount.h" />
     <ClInclude Include="GateBase.h" />
+    <ClInclude Include="GateChatManager.h" />
     <ClInclude Include="GateCltNetManager.h" />
     <ClInclude Include="GateFuncExManager.h" />
     <ClInclude Include="GateFuncManager.h" />
@@ -158,6 +159,7 @@
     <ClCompile Include="GateAccountStates.cpp" />
     <ClCompile Include="GateAccount.cpp" />
     <ClCompile Include="GateBase.cpp" />
+    <ClCompile Include="GateChatManager.cpp" />
     <ClCompile Include="GateCltNetManager.cpp" />
     <ClCompile Include="GateFuncExManager.cpp" />
     <ClCompile Include="GateFuncManager.cpp" />

@@ -88,6 +88,7 @@ struct DBRowData
 		val = (char*)((char*)_buff + pos);
 	}
 };
+
 class DBRow
 {
 	DECLARE_FACTORY_ARG0(DBRow, -1, new PoolAllocatorEx)

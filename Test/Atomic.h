@@ -35,15 +35,15 @@ private:
 	volatile long* m_pLock;
 };
 
-class RealLock
+class ReadLock
 {
 public:
-	RealLock(volatile long* lock);
-	~RealLock();
+	ReadLock(volatile long* lock);
+	~ReadLock();
 
 private:
-	RealLock(const RealLock& );
-	RealLock& operator=(const RealLock&);
+	ReadLock(const ReadLock& );
+	ReadLock& operator=(const ReadLock&);
 
 	volatile long* m_pLock;
 };
@@ -55,7 +55,7 @@ public:
 	~WriteLock();
 
 private:
-	WriteLock(const RealLock& );
+	WriteLock(const ReadLock& );
 	WriteLock& operator=(const WriteLock&);
 
 	volatile long* m_pLock;

@@ -29,6 +29,7 @@ NetManager::NetManager(
 	m_nRcBufSize = nRcBufSize;
 	m_nSockRnBufSize = nSockSnBufSize;
 	m_nSnBufSize = nSnBufSize;
+
 }
 
 NetManager::~NetManager(void)
@@ -327,6 +328,28 @@ void NetManager::ProcPendingDestroy()
 		SAFE_DELETE(pChannel);
 		m_destroyQueue.pop_front();
 	}
+}
+
+
+NetManagerIOCP::NetManagerIOCP(
+	bool bLZOCompress, int32 nSockRcBuffSize, int32 nRcBufferSize, int32 nSockSnBufferSize, 
+	int32 nSnBufferSize, FunctionBase_Arg1<int32>* funcAccept /*= NULL*/, FunctionBase_Arg1<int32>* funcCon /*= NULL*/, 
+	FunctionBase_Arg1<int32>* funcDiscon /*= NULL*/, int32 MAX_SOCKETS /*= MY_SOCKET_LIST_SIZE */)
+	: NetManager( bLZOCompress, nSockRcBuffSize, nRcBufferSize, nSockSnBufferSize, 
+				nSnBufferSize, funcAccept, funcCon, funcDiscon, MAX_SOCKETS)
+{
+
+}
+
+
+NetManagerReactor::NetManagerReactor(
+	bool bLZOCompress, int32 nSockRcBuffSize, int32 nRcBufferSize, int32 nSockSnBufferSize, 
+	int32 nSnBufferSize, FunctionBase_Arg1<int32>* funcAccept, FunctionBase_Arg1<int32>* funcCon, 
+	FunctionBase_Arg1<int32>* funcDiscon, int32 MAX_SOCKETS)
+	: NetManager( bLZOCompress, nSockRcBuffSize, nRcBufferSize, nSockSnBufferSize, 
+	nSnBufferSize, funcAccept, funcCon, funcDiscon, MAX_SOCKETS)
+{
+
 }
 
 void NetManagerReactor::NetRun()

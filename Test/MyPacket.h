@@ -51,7 +51,6 @@
 #define ADD_PACKET_MEMBER_STR( member, size, des) \
 	Add_Ref_Member_String( member, size, eTB_Flag_Sec, des);
 
-
 #define PACKET_CLT_2_GATE( packet, basePacket) \
 	PACKET( packet, basePacket) \
 	IMPLE_GetStaticAttribute( PktAttr_IsClient2Srv | PktAttr_ShouldEncrypt ) 

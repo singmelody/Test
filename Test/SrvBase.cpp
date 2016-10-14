@@ -2,6 +2,12 @@
 #include "SrvBase.h"
 #include "MyLog.h"
 #include "MyPacketProc.h"
+#include "FunctionBase.h"
+#include "MyMutex.h"
+#include "PacketImpl.h"
+#include "WatchDog.h"
+
+FINISH_FACTORY_ARG0(CltNewConnection);
 
 class SrvBaseRecvPacketFilter : public IRecvPacketFilter
 {
@@ -18,6 +24,7 @@ private:
 };
 
 
+
 SrvBase::SrvBase(void)
 	: m_SrvNetThread("SrvNetWork")
 	, m_SrvNetThreadMinFrameTime(-1)
@@ -26,7 +33,7 @@ SrvBase::SrvBase(void)
 	, m_bSrvPacketUseIndexWhenSend(false)
 {
 	m_CltPktProc = NULL;
-	m_SrvNetManager = NULL;
+	m_SrvNetMgr = NULL;
 
 	m_SrvUseIOCP = false;
 
@@ -41,7 +48,9 @@ SrvBase::SrvBase(void)
 	m_SrvIP = "127.0.0.1";
 	m_SrvPort = 10001;
 	m_SrvNetThreadFrameTime = 0;
-
+	m_SrvMaxSockets = 0;
+	m_nSrvNetEventWaitTime = 0;
+	m_pRecvPacketFilterOfSrvBase = NULL;
 }
 
 
@@ -57,14 +66,61 @@ bool SrvBase::SrvInit()
 
 	m_CltPktProc = CreateCltPktProcessor();
 	if( !m_CltPktProc )
-		return NULL;
+		return false;
+
+	FunctionBase_Arg1<int32>* pAFunc = new Function_Arg1< SrvBase, int32>( this, &SrvBase::SrvAccept);
+	FunctionBase_Arg1<int32>* pCFunc = new Function_Arg1< SrvBase, int32>( this, &SrvBase::SrvConnect);
+	FunctionBase_Arg1<int32>* pDFunc = new Function_Arg1< SrvBase, int32>( this, &SrvBase::SrvDisconnect);
+
+	NetManager* pMgr = CreateCltNetManager( m_bSrvEnableLZO, m_SrvSocketRcBufSize, m_SrvCirRcBufSize, m_SrvSocketRnBufSize, m_SrvCirRnBufSize,
+		pAFunc, pCFunc, pDFunc, m_SrvMaxSockets);
+
+	if(!pMgr)
+	{
+		MyLog::error("Srv Net Manager Create Fail");
+		return false;
+	}
+
+	pMgr->SetName("SrvBase");
+
+#if PACKET_USE_INDEX_DATA
+	pMgr->UseIndexWhenRecv(m_bSrvPacketUseIndexWhenRecv);
+	pMgr->UseIndexWhenSend(m_bSrvPacketUseIndexWhenSend);
+#endif
+
+	pMgr->SetEventWaitTime(m_nSrvNetEventWaitTime);
+	pMgr->SetRecvPacketFilter(m_pRecvPacketFilterOfSrvBase);
+
+	pMgr->Accept( (char*)m_SrvIP.c_str(), m_SrvPort, true);
+
+	MyLog::message("Srv Listen IP = %s port=%d", m_SrvIP.c_str(), m_SrvPort);
+
+	pMgr->SetPacketProcessor( m_CltPktProc );
+
+	m_SrvNetMgr = pMgr;
+
+	RegCltPktHandle( m_CltPktProc );
+
+	// init watch dog
+	WatchDog::Instance().RegWatchDog( SRV_THREAD_WATCHDOG_ID, "Srv-Thread");
+
+	m_SrvNetThread.Init( new Function_Arg0<SrvBase>( this, &SrvBase::SrvThreadLoop));
+	m_SrvNetThread.Start();
 
 	MyLog::message("End SrvBase::SrvExit");
+
+	return true;
 }
 
 bool SrvBase::SrvExit()
 {
+	m_SrvNetThread.Exit();
+	m_SrvNetThread.Wait();
 
+	SAFE_DELETE(m_CltPktProc);
+	SAFE_DELETE(m_SrvNetMgr);
+
+	return true;
 }
 
 void SrvBase::FillSrvConfig()
@@ -84,8 +140,62 @@ MyPacketProc* SrvBase::CreateCltPktProcessor()
 	return new MyPacketProc();
 }
 
+void SrvBase::SrvAccept(int32 nSocketID)
+{
+	CltNetOperation( nSocketID, eNetEvent_Accept);
+
+	LOCK(&m_listMutex);
+	MyLog::message("Accept Clt Connection. SocketID = %d", nSocketID);
+
+	CltNewConnection* pCon = FACTORY_NEWOBJ(CltNewConnection);
+	if(!pCon)
+		return;
+
+	pCon->nSocketID = nSocketID;
+	pCon->nTimeOffVal = SERVER_NEW_CONNECTION_TIMEOUT;
+
+	m_CltNewConnections.insert(std::make_pair( nSocketID, pCon));
+}
+
+void SrvBase::SrvDisconnect(int32 nSocketID)
+{
+	CltNetOperation( nSocketID, eNetEvent_Disconnect);
+
+	MyLog::message("SrvBase::SrvDisconnect(). SocketID=%d", nSocketID);
+
+	LOCK(&m_listMutex);
+	std::map< int32, CltNewConnection*>::iterator itr = m_CltNewConnections.find(nSocketID);
+	if( itr != m_CltNewConnections.end() )
+	{
+		FACTORY_DELOBJ(itr->second);
+		m_CltNewConnections.erase(itr);
+	}
+}
+
+void SrvBase::CltNetOperation(int32 nSocketID, int32 nNetEvent)
+{
+	PacketNetEvent* pkt = (PacketNetEvent*)PacketFactory::Instance().New( PacketNetEvent::GetClassStatic()->ClassID() );
+	pkt->nSocketID = nSocketID;
+	pkt->nFlag = nNetEvent;
+
+	m_CltPktProc->PushPacket(pkt);
+}
+
 void SrvBase::RegCltPktHandle(PacketProcessor* pProc)
 {
 	REG_DEFAULT_PACKET_HANDLER( pProc, PacketBase, SrvBase, DftCltPktHandle);
 	REG_PACKET_HANDLER( pProc, PacketNetEvent, SrvBase, PktCltNetEvent);
+}
+
+void SrvBase::PktCltNetEvent(PacketNetEvent* pPkt)
+{
+	if(!pPkt)
+		return;
+
+	int32 nSocketID = pPkt->nSocketID;
+	if( pPkt->nFlag == eNetEvent_Disconnect )
+	{
+		MyLog::message("Clt Disconnect Srv because receive packetnetevent with flag = eNetEvent_Disconnect. SocketID = %d", nSocketID);
+		OnCltDisconnect(nSocketID);
+	}
 }

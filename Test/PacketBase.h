@@ -2,6 +2,7 @@
 
 #include "BaseType.h"
 #include "PacketSender.h"
+#include <assert.h>
 
 #define PACKET_BASE_SIZE					(2*sizeof(int32) + sizeof(uint8))
 
@@ -98,6 +99,8 @@ public:
 	inline uint8 GetPacketType() { return m_SendType; }
 	inline bool CheckPacketType(uint8 nType) { return (m_SendType & nType) > 0; }
 	inline void ResetPacketType() { m_SendType = 0; }
+
+	virtual int32 PacketClassSize() { return sizeof(*this); }
 protected:
 
 	int32		m_PacketID;

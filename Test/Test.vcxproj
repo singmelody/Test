@@ -264,6 +264,7 @@
     <ClInclude Include="DLMallocConfig.h" />
     <ClInclude Include="Factory.h" />
     <ClInclude Include="FactoryManagerBase.h" />
+    <ClInclude Include="FSMExtendData.h" />
     <ClInclude Include="FunctionBase.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameUtil.h" />
@@ -409,6 +410,7 @@
     </ClCompile>
     <ClCompile Include="Factory.cpp" />
     <ClCompile Include="FactoryManagerBase.cpp" />
+    <ClCompile Include="FSMExtendData.cpp" />
     <ClCompile Include="FunctionBase.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameUtil.cpp" />

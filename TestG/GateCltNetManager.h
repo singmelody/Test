@@ -1,4 +1,12 @@
 #pragma once
+
+#include "BaseType.h"
+#include "FunctionBase.h"
+#include "NetChannelBase.h"
+#include "NetChannel.h"
+#include "GateFuncExManager.h"
+#include "NetManager.h"
+
 class GateCltNetManager : public BASENETMANAGER, public GateFuncExManager
 {
 public:
@@ -11,7 +19,7 @@ public:
 		FunctionBase_Arg1<int32>* funcAccept = NULL,
 		FunctionBase_Arg1<int32>* funcCon = NULL,
 		FunctionBase_Arg1<int32>* funcDisCon = NULL,
-		int32 MAX_SOCKETS
+		int32 MAX_SOCKETS = MY_SOCKET_LIST_SIZE
 		);
 	~GateCltNetManager(void);
 
@@ -25,6 +33,4 @@ class GateCltNetChannel : public NetChannel
 {
 public:
 	GateCltNetChannel();
-
-	int32 
 };

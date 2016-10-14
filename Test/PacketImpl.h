@@ -274,9 +274,25 @@ START_ADD_PACKET_MEMBER(PacketCltSelectAvatarFail)
 	ADD_PACKET_MEMBER( nParam, uint8 , nParam);
 PACKET_END(PacketCltSelectAvatarFail)
 
-PACKET(PacketFSMExtentdData, PacketDataPack<PACKET_EX_BUFF_MAX_SIZE>)
-START_ADD_PACKET_MEMBER(PacketFSMExtentdData)
-PACKET_END(PacketFSMExtentdData)
+enum
+{
+	eNetEvent_Accept,
+	eNetEvent_Connect,
+	eNetEvent_Disconnect,
+};
+
+PACKET(PacketNetEvent, PacketBase)
+int32 nSocketID;
+int32 nFlag;
+IMPLE_GetStaticAttribute(PktAttr_IsEvent);
+START_ADD_PACKET_MEMBER(PacketNetEvent)
+	ADD_PACKET_MEMBER( nSocketID, int32 , nReason);
+	ADD_PACKET_MEMBER( nFlag, int32, nParam);
+PACKET_END(PacketNetEvent)
+
+PACKET(PacketFSMExtendData, PacketDataPack<PACKET_EX_BUFF_MAX_SIZE>)
+START_ADD_PACKET_MEMBER(PacketFSMExtendData)
+PACKET_END(PacketFSMExtendData)
 
 PACKET_EX(PacketMulticast2Avatar, PacketBroadCastBase<int32>, new PoolPacketAllocator(40960))
 START_ADD_PACKET_MEMBER(PacketMulticast2Avatar)

@@ -9,6 +9,10 @@ public:
 	static GateAccountStateBase* GetState(GateAccountState state);
 	static void Init();
 
+	virtual const char* GetStateName() const = 0;
+	virtual void OnEnter(GateAccount& account){}
+	virtual void OnDisconnect(GateAccount& account) { account.ChangeState(eGateAccountState_Destroy); }
+	virtual void OnLeave(GateAccount& account){}
 protected:
 	explicit GateAccountStateBase(GateAccountState state);
 	virtual ~GateAccountStateBase(){}

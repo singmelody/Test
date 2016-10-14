@@ -55,7 +55,7 @@ public:
 template <class T, class T1>
 class Function_Arg1 : public FunctionBase_Arg1<T1>
 {
-	typedef void (T::*Function)(T1& arg1);
+	typedef void (T::*Function)(T1 arg1);
 public:
 	Function_Arg1(T* p, Function f)
 	{
