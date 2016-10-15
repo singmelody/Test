@@ -84,7 +84,7 @@ ServerInfo* ServerManager::GetGateInfo(int32 nID)
 	return m_GateGrp.GetServer(nID);
 }
 
-ServerInfo* ServerManager::GetWarWorldInfo(PacketBase* pPkt)
+ServerInfo* ServerManager::GetWarWorldInfo()
 {
 	return m_pWarWorld;
 }

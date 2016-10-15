@@ -16,8 +16,14 @@
 #define PARAM_GET_VALUE( paramPtr, paramName, defVal) \
 	paramPtr->GetValue( ParamNameIndexHelper::GetParamIndex( paramPtr->GetParamDefineIndex(), param_name_##paramName), defVal)
 
-#define PARAM_SET_VALUE( paramPtr, paramName, defVal, dirty) \
-	paramPtr->SetValue( ParamNameIndexHelper::GetParamIndex( paramPtr->GetParamDefineIndex(), param_name_##paramName), defVal, dirty);
+#define PARAM_GET_STRING( paramPtr, paramName, defVal ) \
+	paramPtr->GetValueString( ParamNameIndexHelper::GetParamIndex( paramPtr->GetParamDefineIndex(), param_name_##paramName), defVal);
+
+#define PARAM_SET_VALUE( paramPtr, paramName, Val, dirty) \
+	paramPtr->SetValue( ParamNameIndexHelper::GetParamIndex( paramPtr->GetParamDefineIndex(), param_name_##paramName), Val, dirty);
+
+#define PARAM_SET_STRING( paramPtr, paramName, Val, dirty ) \
+	paramPtr->SetValueString( ParamNameIndexHelper::GetParamIndex( paramPtr->GetParamDefineIndex(), param_name_##paramName), Val, dirty);
 
 typedef FunctionBase_Arg2<ParamPool*, ParamBase*> ParamCallback;
 
@@ -39,10 +45,10 @@ public:
 	~ParamPool(void);
 
 	template <class T>
-	void SetValue( int32 nIdx, T val, bool bDirty);
+	void SetValue( int32 nIdx, T val, bool bDirty = true);
 
 	template <class T>
-	void SetValue( const char* sName, T val, bool bDirty);
+	void SetValue( const char* sName, T val, bool bDirty = true);
 
 	template <class T>
 	void SetValue( ParamBase* pBase, T val, bool bDirty);
@@ -221,7 +227,7 @@ void ParamPool::SetValue(const char* sName, T val, bool bDirty)
 	if(!m_pDef)
 		return;
 
-	ParamBase* pBase = m_pDef->GetParam(nIdx);
+	ParamBase* pBase = m_pDef->GetParam(sName);
 	SetValue<T>( pBase, val, bDirty);
 }
 

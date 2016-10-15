@@ -67,7 +67,7 @@ public:
 	void SetPeerModule(PeerModuleBase* pPeerModule);
 	void SetSrvType( SrvType nSrvType);
 
-	ServerInfo* GetWarWorldInfo( PacketBase* pPkt);
+	ServerInfo* GetWarWorldInfo();
 	ServerInfo* GetLoginInfo();
 	ServerInfo*	GetDBAInfo();
 	ServerInfo* GetGateInfo(int32 nID);
@@ -79,6 +79,9 @@ public:
 
 	ServerInfo* GetSrvBySocketID(int32 nSocketID);
 	ServerInfo* GetSrvBySrvID(int32 nSrvID);
+
+	static const int32 GROUPID_OF_WARSERVER = 0;
+	static bool IsWarServer(int32 nSrvID) { return GROUPID_OF_WARSERVER == GetGroupID(nSrvID); }
 
 	int32			m_nZoneID;	// ¥Ûµÿ∑…”•
 	int32			m_nGrpID;	// ∑ÔªÀºØ

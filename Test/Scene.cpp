@@ -5,7 +5,7 @@
 Scene::Scene(void)
 	:m_nSceneID(SCENE_ID_NULL)
 	,m_nSceneLv(1)
-	,m_nAreaID(-1)
+	,m_nArenaID(-1)
 {
 	
 	m_nPlayerCnt = 0;

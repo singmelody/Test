@@ -71,6 +71,7 @@ WorldAvatar::WorldAvatar()
 	m_WorldAvatarFlag = 0;
 
 	m_nCommonDataMaskFinish = -1;
+	m_bTargetNodeAvatarCreated = false;
 }
 
 
@@ -137,6 +138,11 @@ bool WorldAvatar::Tick(int32 nDelaTime)
 	TickComponent(nDelaTime);
 
 	return false;
+}
+
+void WorldAvatar::TickFCM(int32 nDeltaTime)
+{
+	return;
 }
 
 void WorldAvatar::TickChatInternal(int32 nDeltaTime)

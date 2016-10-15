@@ -193,7 +193,97 @@ int32 nErrorID;	// 1->scene not existing 2->srv busy 3->retry 4->create scene fa
 START_ADD_PACKET_MEMBER(PacketChangeSceneFail)
 PACKET_END(PacketChangeSceneFail)
 
+PACKET(PacketAvatarCommission, PacketBase)
+int32 info;
+START_ADD_PACKET_MEMBER(PacketAvatarCommission)
+	ADD_PACKET_MEMBER( info, int32, "")
+PACKET_END(PacketAvatarCommission)
+
+PACKET(PacketGateRouteNotify, PacketBase)
+enum 
+{
+	eOpen = 0, eClose = 1,
+};
+
+int32 nNodeID;
+uint8 nFlag;
+START_ADD_PACKET_MEMBER(PacketGateRouteNotify)
+	ADD_PACKET_MEMBER( nNodeID, int32, nNodeID)
+	ADD_PACKET_MEMBER( nFlag, uint8, nFlag)
+PACKET_END(PacketGateRouteNotify)
+
+
+PACKET(PacketCltLogout, PacketBase)
+START_ADD_PACKET_MEMBER(PacketCltLogout)
+PACKET_END(PacketCltLogout)
+
+PACKET(PacketCreateAvatarRes, PacketBase)
+int32 nFlag;
+int32 nIdx;
+int32 nTypeID;
+START_ADD_PACKET_MEMBER(PacketCreateAvatarRes)
+ADD_PACKET_MEMBER( nFlag, int32 ,nFlag);
+ADD_PACKET_MEMBER( nIdx, int32, nIdx);
+ADD_PACKET_MEMBER( nTypeID, int32, nTypeID);
+PACKET_END(PacketCreateAvatarRes)
+
+
+PACKET(PacketDelCharacterFinish, PacketBase)
+int32 nFlag;
+int64 nAvatarDID;
+START_ADD_PACKET_MEMBER(PacketDelCharacterFinish)
+ADD_PACKET_MEMBER( nFlag, int32 , nFlag);
+ADD_PACKET_MEMBER( nAvatarDID, int64 ,nAvatarDID);
+PACKET_END(PacketDelCharacterFinish)
+
+PACKET(PacketDelCharacater2DBA, PacketBase)
+int64 nAvatarDID;
+int32 nAccountID;
+START_ADD_PACKET_MEMBER(PacketDelCharacater2DBA)
+ADD_PACKET_MEMBER( nAvatarDID, int64 , nAvatarDID);
+ADD_PACKET_MEMBER( nAccountID, int32 , nAccountID);
+PACKET_END(PacketDelCharacater2DBA)
+
+PACKET(PacketCltSelectAvatarFail, PacketBase)
+
+enum{
+	eReason_Unkown,				// unkown error
+	eReason_BadIdx,				// role is not existed
+	eReason_AvatarBanded,		// baned in the game
+	eReason_BillingFail,		// billing failed,
+	eReason_EnterSceneFailed,	// failed to enter scene
+};
+uint8 nReason;
+uint8 nParam
+START_ADD_PACKET_MEMBER(PacketCltSelectAvatarFail)
+	ADD_PACKET_MEMBER( nReason, uint8 , nReason);
+	ADD_PACKET_MEMBER( nParam, uint8 , nParam);
+PACKET_END(PacketCltSelectAvatarFail)
+
 // CLT 2 Gate
+PACKET_CLT_2_GATE(PacketCreateAvatar, PacketBase)
+int32 nIdx;
+int16 nFlag;
+uint8 nAccountLen;
+char account[MAX_ACCOUNT];
+uint8 nAvatarTitleLen;
+char avatarTitle[MAX_TITLE];
+START_ADD_PACKET_MEMBER(PacketCreateAvatar)
+ADD_PACKET_MEMBER( nIdx, int32 ,user_index);
+ADD_PACKET_MEMBER( nFlag, int16, create_flag);
+ADD_PACKET_MEMBER( nAccountLen, uint8, accountLen);
+ADD_PACKET_MEMBER_STR( account, MAX_ACCOUNT, account_str);
+ADD_PACKET_MEMBER( nAvatarTitleLen, uint8, nAvatarTitleLen);
+ADD_PACKET_MEMBER_STR( avatarTitle, MAX_TITLE, avatarTitle);
+PACKET_END(PacketCreateAvatar)
+
+PACKET_CLT_2_GATE(PacketDelCharacter, PacketBase)
+int32 nIdx;
+START_ADD_PACKET_MEMBER(PacketDelCharacter)
+ADD_PACKET_MEMBER( nIdx, int32 ,user_index);
+PACKET_END(PacketDelCharacter)
+
+
 PACKET_CLT_2_GATE(PacketCltSelectAvatar, PacketBase)
 uint8 nAvatarIdx;
 START_ADD_PACKET_MEMBER(PacketCltSelectAvatar)

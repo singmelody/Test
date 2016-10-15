@@ -27,6 +27,12 @@ public:
 
 	void SetUserIp( uint32 nIP) { m_nUserIP = nIP; }
 	uint32 GetUserIp() const { return m_nUserIP; }
+
+	void IsFCMAccount(bool b) { m_bIsFCMAcount = b; }
+	bool IsFCMAccount()	const { return m_bIsFCMAcount; }
+
+	void NeedNoticeFCMState(bool b) { m_bNeedNoticeFCMStage = b; } 
+	bool NeedNoticeFCMState() const { return m_bNeedNoticeFCMStage; }
 protected:
 	ParamPool*	m_pRoleDataSet[MAX_AVATAR_COUNT_ONE_USER];
 	ParamPool*	m_pRecentRoleSet;
@@ -39,7 +45,7 @@ protected:
 
 	int32		m_nAccTimeAfterLastHeartBeat;
 
-	int32		m_bIsFCMAcount;
+	bool		m_bIsFCMAcount;
 	uint32		m_nMilliSeconds;
 	bool		m_bNeedNoticeFCMStage;
 };

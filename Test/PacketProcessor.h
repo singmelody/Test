@@ -1,6 +1,7 @@
 #pragma once
 
 #include "PacketList.h"
+#include "UtilID.h"
 #include <map>
 
 #define REG_PACKET_HANDLER( processor, packet, classobj, function) \

@@ -1,6 +1,9 @@
 #include "StdAfx.h"
 #include "WorldStateGame.h"
-
+#include "WorldAvatar.h"
+#include "PacketImpl.h"
+#include "WorldServer.h"
+#include "WorldAvatarManager.h"
 
 WorldStateGame::WorldStateGame(void)
 {
@@ -9,6 +12,31 @@ WorldStateGame::WorldStateGame(void)
 
 WorldStateGame::~WorldStateGame(void)
 {
+}
+
+void WorldStateGame::OnEnterState(WorldAvatar* pAvatar)
+{
+	WorldState::OnEnterState(pAvatar);
+
+	if(!pAvatar->Account.IsFCMAccount())
+		return;
+
+	m_listFCMAvatars.insert(pAvatar);
+
+	if(pAvatar->Account.NeedNoticeFCMState())
+	{
+		pAvatar->TickFCM(0);
+	}
+}
+
+void WorldStateGame::OnLeaveState(WorldAvatar* pAvatar)
+{
+	WorldState::OnLeaveState(pAvatar);
+
+	if(!pAvatar->Account.IsFCMAccount())
+		return;
+
+	m_listFCMAvatars.erase(pAvatar);
 }
 
 void WorldStateGame::TryCommissionNodeAvatar(WorldAvatar* pAvatar)
@@ -49,22 +77,58 @@ bool WorldStateGame::CommisionNodeAvatar(WorldAvatar* pAvatar)
 	return true;
 }
 
+// just can be called in the OnPullAvatarDataFinish function
 void WorldStateGame::DecommisionNodeAvatar(WorldAvatar* pAvatar)
 {
+	if (!pAvatar)
+		return;
 
+	WorldScene* pScene = (WorldScene*)pAvatar->GetScene();
+	if(pScene)
+	{
+		pScene->ExitScene(pAvatar);
+
+		if(pAvatar->HasGateAvatar())
+		{
+			PacketGateRouteNotify pkt;
+			pkt.nFlag = PacketGateRouteNotify::eClose;
+			pkt.nNodeID = -1;
+
+			pAvatar->Send2Gate( &pkt, true);
+		}
+	}
+
+	int32 nNodeSrvID = pAvatar->GetNodeSrvID();
+	if( nNodeSrvID != SERVERID_NULL )
+	{
+		PacketAvatarDecommision pkt;
+		pkt.SetAvatarID( pAvatar->GetAvatarID() );
+		Send2Node( pkt, nNodeSrvID);
+
+		pAvatar->SetNodeSrvID( SERVERID_NULL );
+	}
 }
 
 // Node Crash influence following game state : Jumping/Gaming/ExitGame
 void WorldStateGame::OnNodeCrashed(int32 nSrvID, bool bUseSHM)
 {
 	// Node disconnect, can't get player data again, just logout
-	if( nSrvID = SERVERID_NULL)
+	if( nSrvID == SERVERID_NULL )
 		return;
+
+	bool bWaitData = true;
+	{
+		if (Servers.IsWarServer(nSrvID))
+		{
+			if(!Servers.GetWarWorldInfo())
+				bWaitData = false;
+		}
+	}
 
 	TickList& list = m_listAvatars;
 
-	TickNode* pNode = list.GetNext(NULL);
-	while( pNode != NULL)
+	PTICKNODE pNode = list.GetNext(NULL);
+	while( pNode != NULL )
 	{
 		WorldAvatar* pAvatar = (WorldAvatar*)( pNode->Get() );
 		if(!pAvatar)
@@ -75,8 +139,23 @@ void WorldStateGame::OnNodeCrashed(int32 nSrvID, bool bUseSHM)
 
 		pNode = list.GetNext(pNode);
 
-		OnNodeCrashed( nSrvID, bUseSHM, pAvatar);
+		OnNodeCrashed( nSrvID, bUseSHM, pAvatar, bWaitData);
 	}
+}
+
+void WorldStateGame::ReleaseBillingAndDestroy(WorldAvatar* pAvatar)
+{
+	if (WorldServer::bUseBilling)
+	{
+		pAvatar->SetCurState(eWS_Billing);
+	}
+	else
+		AvatarMgr.RemoveWorldAvatar(pAvatar);
+}
+
+void WorldStateGame::TickFCMAvatars(int32 nFrameTime)
+{
+
 }
 
 void WorldStateGameNode::NotifyChangeSceneFailed(WorldAvatar* pAvatar, int32 failReason)

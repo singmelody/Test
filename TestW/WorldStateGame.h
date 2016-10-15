@@ -24,11 +24,11 @@ protected:
 	void PullAvatarDataFromNode( WorldAvatar* pAvatar, bool bLogout);
 
 protected:
-	virtual void OnNodeCrashed( int32 nSrvID, bool bUseSHM, WorldAvatar* pAvatar){}
+	virtual void OnNodeCrashed( int32 nSrvID, bool bUseSHM, WorldAvatar* pAvatar, bool bWaitData){}
 
 	void ReleaseBillingAndDestroy( WorldAvatar* pAvatar);
 	void DestroyDummyNodeAvatar( WorldAvatar* pAvatar);
-	void TickFCMAvatars();
+	void TickFCMAvatars(int32 nFrameTime);
 
 	std::set<WorldAvatar*>	m_listFCMAvatars;
 	int32 m_nAccFCMTickTime;

@@ -55,6 +55,7 @@ class WorldState;
 class PacketBase;
 class Scene;
 class WorldAvatar;
+class ParamPool;
 
 WorldAvatar* GetWorldAvatar(int32 nAvatarID);
 WorldAvatar* GetWorldAvatar( PacketBase* pPkt);
@@ -164,6 +165,11 @@ public:
 	int32			m_nTargetSceneID;
 	int32			m_nDataLoadingFlags;
 	int32			m_nCommonDataMaskFinish;
+
+	bool			m_bTargetNodeAvatarCreated;
+	bool			m_bIsDestroy;
+	int32			m_nTargetNodeID;
+
 protected:
 	int32			m_charInterval[CC_MAX];
 
@@ -175,15 +181,12 @@ protected:
 	WorldState*		m_pCurStage;
 
 
-	int32			m_nTargetNodeID;
 
 	int32			m_WorldAvatarFlag;
 
 	int8			m_worldArenaState;
 
-	bool			m_bIsDestroy;
 	bool			m_bStageChanging;
-	bool			m_bTargetNodeAvatarCreated;
 	bool			m_bAvatarDataDirty;
 	bool			m_bHasGateAvatar;
 	bool			m_bLastAvatarInfoValid;

@@ -48,3 +48,19 @@ PACKET_IMPL(PacketGateCreateAvatarRst);
 PACKET_IMPL(PacketManufactureDataInit);
 
 PACKET_IMPL(PacketChangeSceneFail);
+
+PACKET_IMPL(PacketGateRouteNotify);
+
+PACKET_IMPL(PacketCltLogout);
+
+PACKET_IMPL(PacketCreateAvatar);
+
+PACKET_IMPL(PacketCreateAvatarRes);
+
+PACKET_IMPL(PacketDelCharacter);
+
+PACKET_IMPL(PacketDelCharacterFinish);
+
+PACKET_IMPL(PacketDelCharacater2DBA);
+
+PACKET_IMPL(PacketCltSelectAvatarFail);

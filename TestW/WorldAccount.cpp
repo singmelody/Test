@@ -57,6 +57,14 @@ void WorldAccount::AddRoleSet(class PacketUserData* pPkt)
 		pPool->SetValue( "avatardid", pPkt->nAvatarDID);
 }
 
+ParamPool* WorldAccount::GetRoleSet(int32 nIdx)
+{
+	if( nIdx < 0 || nIdx >= MAX_AVATAR_COUNT_ONE_USER )
+		return NULL;
+
+	return m_pRoleDataSet[nIdx];
+}
+
 bool WorldAccount::SetRoleSet(int32 nIdx, ParamPool* pPool)
 {
 	if( nIdx < 0 || nIdx >= MAX_AVATAR_COUNT_ONE_USER)

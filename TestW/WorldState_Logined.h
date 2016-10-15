@@ -19,8 +19,8 @@ public:
 	void PktGate_CreateAvatar( class PacketCreateAvatar* pPkt);
 	void PktGate_CreateAvatarRes( class PacketCreateAvatarRes* pPkt);
 
-	void PktGate_DelAvatar( class PacketDelAvatar* pPkt);
-	void PktGate_DelAvatarRes( class PacketDelAvatarRes* pPkt);
+	void PktGate_DelCharacter( class PacketDelCharacter* pPkt);
+	void PktGate_DelCharacterRes( class PacketDelCharacterFinish* pPkt);
 	
 	void PktGate_CltSelectAvatar( class PacketCltSelectAvatar* pPkt);
 };
