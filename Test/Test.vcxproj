@@ -311,6 +311,7 @@
     <ClInclude Include="ParamDef.h" />
     <ClInclude Include="ParamDefManager.h" />
     <ClInclude Include="ParamEx.h" />
+    <ClInclude Include="ParamHelperDefine.h" />
     <ClInclude Include="ParamNameIndexHelper.h" />
     <ClInclude Include="ParamPool.h" />
     <ClInclude Include="ParamPool2SqlProcessor.h" />
@@ -344,6 +345,8 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="BaseType.h" />
+    <ClInclude Include="thirdparty\tinyxml\tinystr.h" />
+    <ClInclude Include="thirdparty\tinyxml\tinyxml.h" />
     <ClInclude Include="Thread.h" />
     <ClInclude Include="Time.h" />
     <ClInclude Include="TimeManager.h" />
@@ -437,6 +440,7 @@
     <ClCompile Include="ParamDef.cpp" />
     <ClCompile Include="ParamDefManager.cpp" />
     <ClCompile Include="ParamEx.cpp" />
+    <ClCompile Include="ParamHelperDefine.cpp" />
     <ClCompile Include="ParamNameIndexHelper.cpp" />
     <ClCompile Include="ParamPool.cpp" />
     <ClCompile Include="ParamPool2SqlProcessor.cpp" />
@@ -474,6 +478,18 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Itanium'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Test.cpp" />
+    <ClCompile Include="thirdparty\tinyxml\tinystr.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="thirdparty\tinyxml\tinyxml.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="thirdparty\tinyxml\tinyxmlerror.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="thirdparty\tinyxml\tinyxmlparser.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="WatchDog.cpp" />
     <ClInclude Include="Singleton.h">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>

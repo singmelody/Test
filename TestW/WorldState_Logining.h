@@ -1,5 +1,7 @@
 #pragma once
 
+#include "WorldState.h"
+
 class PacketProcessor;
 
 class WorldState_Logining : public WorldState, public Singleton<WorldState_Logined>

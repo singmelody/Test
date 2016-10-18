@@ -24,6 +24,7 @@ enum WorldStateID
 };
 
 class WorldState;
+class PacketProcessor;
 
 class WorldStateManager : public WorldFuncExManager, public Singleton<WorldStateManager>
 {

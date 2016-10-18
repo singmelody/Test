@@ -9,6 +9,8 @@
 #include "ConfigManager.h"
 #include "ParamDefManager.h"
 #include "ServerConfig.h"
+#include "WatchDog.h"
+#include "ParamPool.h"
 #include <sstream>
 
 #define DOG 1
@@ -126,9 +128,22 @@ void ModuleBase::Exit()
 	WatchDog::Instance().Stop();
 #endif
 
-	MemoryLog::Shutdown();
+	// MemoryLog::Shutdown();
 	LogThread::Instance().Stop();
 	SAFE_DELETE(g_pLog);
+}
+
+bool ModuleBase::CreateDogPool()
+{
+	m_pModuleDogPool = ParamSet::CreateNew( eParam_ModuleInfo, 0);
+	if( m_pModuleDogPool )
+	{
+		m_listDogData.push_back( m_pModuleDogPool );
+		return true;
+	}
+
+	MyLog::error("ModuleBase::CreateDogPool() Failed to Create ParamSet");
+	return false;
 }
 
 void ModuleBase::InitLog(int32 nArgc, char* argv[])

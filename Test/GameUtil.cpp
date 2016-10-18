@@ -2,6 +2,8 @@
 #include "GameUtil.h"
 #include <Windows.h>
 
+std::string MyPath::m_MainPath = "";
+
 void MyPath::SetMainPath(const char* path)
 {
 	if(!path)
@@ -29,6 +31,7 @@ void MyPath::GetDirFiles(const std::string& path, std::set<std::string>& files)
 	} while (FindNextFile( h, &fd));
 }
 
+
 GameUtil::GameUtil(void)
 {
 }
@@ -45,7 +48,7 @@ bool GameUtil::GetCommandOpt(const std::string& strOptName, std::string& strOptV
 		if( strOptName != argv[i])
 			continue;
 
-		strOptValue = argv[i];
+		strOptValue = argv[i+1];
 		return true;
 	}
 

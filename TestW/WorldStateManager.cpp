@@ -3,6 +3,8 @@
 #include "WorldState_Logining.h"
 #include "WorldState_Logined.h"
 #include "WorldState_DataLoading.h"
+#include "WorldState_DataReady.h"
+#include "WorldState_WaitScene.h"
 #include "PacketProcessor.h"
 
 WorldStateManager::WorldStateManager(void)

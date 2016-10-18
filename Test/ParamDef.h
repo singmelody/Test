@@ -16,9 +16,11 @@ enum ParamType
 
 	eParam_Max,	
 
+	eParam_ModuleInfo = 50,
+	eParam_WorldInfo = 51,
+	eParam_LoginInfo = 52,
 	eParam_DBAInfo = 53,
-	eParam_LoginInfo = 54,
-	eParam_GateInfo = 55,
+	eParam_GateInfo = 54,
 
 	eParam_Count
 };
