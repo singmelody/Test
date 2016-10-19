@@ -1,6 +1,9 @@
 #include "StdAfx.h"
 #include "WorldState_DataReady.h"
-
+#include "PacketImpl.h"
+#include "AvatarOnLineManager.h"
+#include "SceneManager.h"
+#include "MyLog.h"
 
 WorldState_DataReady::WorldState_DataReady(void)
 {

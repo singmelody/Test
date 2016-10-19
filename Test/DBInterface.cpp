@@ -145,6 +145,13 @@ void DBRow::AddColumn()
 	m_columns.push_back((int64)0);
 }
 
+void DBRow::Fill(Vector3& obj, int32 nColX, int32 nColY, int32 nColZ)
+{
+	Fill(obj.x, nColX, 0);
+	Fill(obj.y, nColY, 0);
+	Fill(obj.z, nColZ, 0);
+}
+
 DBRowData::DBRowData(int32 nInitBuffSize)
 : _capacity(nInitBuffSize)
 {

@@ -17,6 +17,7 @@ float2 operator-(const float2& op0, const float2& op1);
 struct float3
 {
 	float3():x(0),y(0),z(0){}
+	float3( float _x, float _y, float _z): x(_x),y(_y),z(_z) {}
 	float x,y,z;
 
 	void zero() { x=y=z=0; }

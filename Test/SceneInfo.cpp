@@ -1,6 +1,7 @@
 #include "StdAfx.h"
 #include "SceneInfo.h"
 #include "SceneManagerBase.h"
+#include "BaseType.h"
 
 SceneCreateArg::SceneCreateArg()
 {
@@ -46,4 +47,42 @@ uint16 SceneInfo::GetSceneInstanceID(uint32 nSceneID)
 const SceneInfo* SceneInfo::GetSceneInfo(uint16 nSceneSID)
 {
 	return SceneManagerBase::GetSceneInfo( nSceneSID );
+}
+
+EnterPointInfo::EnterPointInfo(DBRow& row)
+{
+	static const int32 nCol_ID = row.GetColumnIdx("ID");
+	static const int32 nCol_FromScene = row.GetColumnIdx("FromScene");
+	static const int32 nCol_EnterType = row.GetColumnIdx("EnterType");
+	static const int32 nCol_EnterMode = row.GetColumnIdx("EnterMode");
+	static const int32 nCol_X = row.GetColumnIdx("x");
+	static const int32 nCol_Y = row.GetColumnIdx("y");
+	static const int32 nCol_Z = row.GetColumnIdx("z");
+	static const int32 nCol_Range = row.GetColumnIdx("range");
+	static const int32 nCol_Dx = row.GetColumnIdx("dx");
+	static const int32 nCol_Dy = row.GetColumnIdx("dy");
+	static const int32 nCol_Dz = row.GetColumnIdx("dz");
+
+	row.Fill( nSceneID, nCol_ID, 0);
+	row.Fill( nFromSceneID, nCol_FromScene, 0);
+	row.Fill( nEnterType, nCol_EnterType, eEnterType_Default);
+	row.Fill( nEnterMode, nCol_EnterMode, eEnterMode_PosDir);
+
+	row.Fill( vPos, nCol_X, nCol_Y, nCol_Z);
+	row.Fill( nRange, nCol_Range, 0);
+	row.Fill( vDir, nCol_Dx, nCol_Dy, nCol_Dz);
+}
+
+Vector3 PointInfo::GetRangePos() const
+{
+	f32 x = 0;
+	f32 y = 0;
+
+	if( nRange > 0)
+	{
+		x = (double)rand()/(RAND_MAX +1) * 2.0 * nRange - nRange;
+		y = (double)rand()/(RAND_MAX +1) * 2.0 * nRange - nRange;
+	}
+
+	return Vector3( vPos.x + x, vPos.y + y, vPos.z);
 }

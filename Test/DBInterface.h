@@ -8,6 +8,7 @@
 
 #include "Factory.h"
 #include "PoolAllocatorEx.h"
+#include "MyVector.h"
 
 #define USE_SQLITE_DB		0	// sqlite may not be thread safe, please use single thread
 #define USE_ODBC_DB			1
@@ -132,6 +133,8 @@ public:
 		else
 			obj = defaultValue;
 	}
+
+	void Fill(Vector3& obj, int32 nColX, int32 nColY, int32 nColZ);
 
 	void SetDBTable(DBTable* pTable) { m_pTable = pTable; }
 

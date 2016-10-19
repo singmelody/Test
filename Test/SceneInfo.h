@@ -1,4 +1,7 @@
 #pragma once
+#include "DBInterface.h"
+#include "MyVector.h"
+#include "ID2ItemMap.h"
 
 class SceneCreateArg
 {
@@ -18,9 +21,72 @@ public:
 	int16	TemplateID();
 	int16	InstanceID();
 };
+
+
+enum EnterType
+{
+	eEnterType_Default	= 0,
+	eEnterType_Succeed	= 1,
+	eEnterType_Failed	= 2,
+};
+
+enum EnterMode
+{
+	eEnterMode_PosDir	= 0,	// 按给定方位跳转
+	eEnterMode_NoChange	= 1,	// 保持方位不变
+};
+
+class PointInfo
+{
+public:
+	PointInfo();
+
+	Vector3		vDir;
+	f32			nRange;
+
+	const Vector3& GetPos() const { return vPos; }
+	Vector3 GetRangePos() const;
+
+	EnterMode	nEnterMode;
+protected:
+	Vector3 vPos;
+};
+
+class EnterPointInfo : public PointInfo
+{
+public:
+	EnterPointInfo( DBRow& row);
+
+	int32 nSceneID;
+	int32 nFromSceneID;
+	int32 nEnterType;
+};
+
+class EnterPointMap : public ID2ItemMap< uint16, EnterPointInfo>
+{};
+
+class EnterInfo
+{
+public:
+	EnterInfo( DBRow& row);
+	~EnterInfo();
+
+	int32 nSceneID;
+	int32 nFromSceneID;
+
+	bool bDefaultEnter;
+	EnterPointMap	Map;
+};
+
 class SceneInfo
 {
 public:
+	enum SceneType
+	{
+		eSceneCreate_MainTrunk	= 0,	// 主场景
+		eSceneCreate_TeamCopy	= 1,	// 队伍副本
+	};
+
 	SceneInfo(void);
 	virtual ~SceneInfo(void);
 
