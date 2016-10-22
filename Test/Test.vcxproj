@@ -306,6 +306,7 @@
     <ClInclude Include="ParamDef.h" />
     <ClInclude Include="ParamDefManager.h" />
     <ClInclude Include="ParamEx.h" />
+    <ClInclude Include="ParamNameIndexHelper.h" />
     <ClInclude Include="ParamPool.h" />
     <ClInclude Include="ParamPool2SqlProcessor.h" />
     <ClInclude Include="ParamPoolOwner.h" />
@@ -332,6 +333,7 @@
     <ClInclude Include="SHMManagerBase.h" />
     <ClInclude Include="SHMManager_DBA.h" />
     <ClInclude Include="SocketAccept.h" />
+    <ClInclude Include="SpaceManager.h" />
     <ClInclude Include="SrvBase.h" />
     <ClInclude Include="SrvPacketTestManager.h" />
     <ClInclude Include="stdafx.h" />
@@ -425,6 +427,7 @@
     <ClCompile Include="ParamDef.cpp" />
     <ClCompile Include="ParamDefManager.cpp" />
     <ClCompile Include="ParamEx.cpp" />
+    <ClCompile Include="ParamNameIndexHelper.cpp" />
     <ClCompile Include="ParamPool.cpp" />
     <ClCompile Include="ParamPool2SqlProcessor.cpp" />
     <ClCompile Include="ParamPoolOwner.cpp" />
@@ -448,6 +451,7 @@
     <ClCompile Include="SHMManagerBase.cpp" />
     <ClCompile Include="SHMManager_DBA.cpp" />
     <ClCompile Include="SocketAccept.cpp" />
+    <ClCompile Include="SpaceManager.cpp" />
     <ClCompile Include="SrvBase.cpp" />
     <ClCompile Include="SrvPacketTestManager.cpp" />
     <ClCompile Include="stdafx.cpp">

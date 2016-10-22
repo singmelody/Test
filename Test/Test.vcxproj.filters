@@ -357,6 +357,12 @@
     <ClInclude Include="GateSrvGrp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SpaceManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ParamNameIndexHelper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -669,6 +675,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GateSrvGrp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SpaceManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ParamNameIndexHelper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

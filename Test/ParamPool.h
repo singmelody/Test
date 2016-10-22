@@ -2,6 +2,7 @@
 #include "ParamEx.h"
 #include "FunctionBase.h"
 #include "ParamDebugHelper.h"
+#include "ParamNameIndexHelper.h"
 #include <assert.h>
 #include <bitset>
 
