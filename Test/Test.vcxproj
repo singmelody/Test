@@ -240,6 +240,7 @@
     <ClInclude Include="AvatarSrv.h" />
     <ClInclude Include="AvatarSrvEx.h" />
     <ClInclude Include="BlowFishCipher.h" />
+    <ClInclude Include="CasterTrunkContainer.h" />
     <ClInclude Include="CircularBufferEx.h" />
     <ClInclude Include="CircularList.h" />
     <ClInclude Include="CircularListEx.h" />
@@ -359,6 +360,7 @@
     <ClCompile Include="AvatarSrv.cpp" />
     <ClCompile Include="AvatarSrvEx.cpp" />
     <ClCompile Include="BlowFishCipher.cpp" />
+    <ClCompile Include="CasterTrunkContainer.cpp" />
     <ClCompile Include="CircularBufferEx.cpp" />
     <ClCompile Include="CircularList.cpp" />
     <ClCompile Include="CircularListEx.cpp" />
