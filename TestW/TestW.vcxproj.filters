@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="ReadMe.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="stdafx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -85,6 +82,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="WorldState_DataReady.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldSceneInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldEnterManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -156,6 +159,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="WorldState_DataReady.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldSceneInfo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldEnterManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

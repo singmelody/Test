@@ -82,12 +82,12 @@ PACKET_END(PacketCommonDataUpdate)
 PACKET(PacketCommonDataDelete, PacketBase)
 int32 nDelFlag;
 START_ADD_PACKET_MEMBER(PacketCommonDataDelete)
-	ADD_PACKET_MEMBER( nDelFlag, uint8, nDelFlag);
+ADD_PACKET_MEMBER( nDelFlag, uint8, nDelFlag);
 PACKET_END(PacketCommonDataDelete)
 
 // CLT 2 Gate
 PACKET_CLT_2_GATE(PacketCltSelectAvatar, PacketBase)
 uint8 nAvatarIdx;
 START_ADD_PACKET_MEMBER(PacketCltSelectAvatar)
-	ADD_PACKET_MEMBER( nAvatarIdx, uint8, nAvatarIdx);
+ADD_PACKET_MEMBER( nAvatarIdx, uint8, nAvatarIdx);
 PACKET_END(PacketCltSelectAvatar)

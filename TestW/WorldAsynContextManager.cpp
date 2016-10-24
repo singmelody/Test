@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "WorldAsynContextManager.h"
-
+#include "FactoryManagerBase.h"
 
 WorldAsynContextManager::WorldAsynContextManager(void)
 {

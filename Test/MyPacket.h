@@ -7,6 +7,7 @@
 #include "PacketFactory.h"
 #include "MyFactory.h"
 #include "MyClassManager.h"
+#include "PacketBase.h"
 
 
 #define PACKET_EX( subPacket, basePacket, alloc) \
@@ -30,10 +31,15 @@
 	};
 
 #define PACKET_DROP( packet, basePacket) \
-	PACKET_EX( packet, basePacket, new PoolPacketAllocator())
+	PACKET_EX( packet, basePacket, new PoolPacketAllocator()) \
+
+#define IMPLE_GetStaticAttribute(ATTRI) \
+	private:\
+		virtual uint32 GetStaticAttribute() const { return ATTRI; } \
+	public: \
 
 #define START_ADD_PACKET_MEMBER(packet) \
-	Ref_BaseClass_Begin(packet)
+	Ref_BaseClass_Begin(packet) \
 
 #define PACKET_IMPL(packet) \
 	Ref_Class(packet) \
@@ -44,3 +50,8 @@
 
 #define ADD_PACKET_MEMBER_STR( member, size, des) \
 	Add_Ref_Member_String( member, size, eTB_Flag_Sec, des);
+
+
+#define PACKET_CLT_2_GATE( packet, basePacket) \
+	PACKET( packet, basePacket) \
+	IMPLE_GetStaticAttribute( PktAttr_IsClient2Srv | PktAttr_ShouldEncrypt ) 

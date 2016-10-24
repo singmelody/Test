@@ -363,6 +363,9 @@
     <ClInclude Include="ParamNameIndexHelper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="AsynContextManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -683,5 +686,9 @@
     <ClCompile Include="ParamNameIndexHelper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="AsynContextManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+
   </ItemGroup>
 </Project>

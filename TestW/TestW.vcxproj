@@ -134,9 +134,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <None Include="ReadMe.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="AvatarOnLineManager.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
@@ -146,9 +143,11 @@
     <ClInclude Include="WorldAvatarGroup.h" />
     <ClInclude Include="WorldAvatarManager.h" />
     <ClInclude Include="WorldBase.h" />
+    <ClInclude Include="WorldEnterManager.h" />
     <ClInclude Include="WorldFuncExManager.h" />
     <ClInclude Include="WorldFuncManager.h" />
     <ClInclude Include="WorldScene.h" />
+    <ClInclude Include="WorldSceneInfo.h" />
     <ClInclude Include="WorldSceneManager.h" />
     <ClInclude Include="WorldServer.h" />
     <ClInclude Include="WorldState.h" />
@@ -176,9 +175,11 @@
     <ClCompile Include="WorldAvatarGroup.cpp" />
     <ClCompile Include="WorldAvatarManager.cpp" />
     <ClCompile Include="WorldBase.cpp" />
+    <ClCompile Include="WorldEnterManager.cpp" />
     <ClCompile Include="WorldFuncExManager.cpp" />
     <ClCompile Include="WorldFuncManager.cpp" />
     <ClCompile Include="WorldScene.cpp" />
+    <ClCompile Include="WorldSceneInfo.cpp" />
     <ClCompile Include="WorldSceneManager.cpp" />
     <ClCompile Include="WorldServer.cpp" />
     <ClCompile Include="WorldState.cpp" />

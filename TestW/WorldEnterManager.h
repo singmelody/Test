@@ -1,6 +1,10 @@
 #pragma once
 
 #include "WorldFuncExManager.h"
+#include "Singleton.h"
+
+class WorldAvatar;
+class WorldScene;
 
 class WorldEnterManager : public WorldFuncExManager, public Singleton<WorldEnterManager>
 {

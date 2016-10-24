@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "WorldEnterManager.h"
-
+#include "WorldSceneInfo.h"
 
 WorldEnterManager::WorldEnterManager(void)
 {
@@ -30,11 +30,38 @@ bool WorldEnterManager::HandleEnterScene(WorldAvatar* pAvatar, WorldScene* pScen
 
 	WorldScene* pOldScene = (WorldScene*)pAvatar->GetScene();
 
-	if( pOldScene )
+	if( pOldScene != NULL )
 	{
+		WorldSceneInfo* pInfo = (WorldSceneInfo*)(pOldScene->m_pSceneInfo);
+		pOldScene->OnLeaveScene( pAvatar, pOldScene);
+
+		if( pOldScene->GetNodeID() == nTarNodeID)
+		{
+			// target scene and current scene on the same node
+			pOldScene->ExitScene(eWS_Jumping);
+
+			PacketShortChangeScene pkt;
+
+			pkt.SetAvatarID( pAvatar->GetAvatarID() );
+			pkt.targetScene = target_scene_id;
+			pkt.x = pos.x;
+			pkt.y = pos.y;
+			pkt.z = pos.z;
+			pkt.dx = dir.x;
+			pkt.dy = dir.y;
+			pkt.dz = dir.z;
+
+			Send2Node( pkt, nTarNodeID);
+			return true;
+		}
 	}
 	
 	pAvatar->m_bTargetNodeAvatarCreated = false;
+	pAvatar->m_nTargetNodeID = nTarNodeID;
+	pAvatar->m_nTargetSceneID = nTarSceneID;
+
+	// target node create avatar
+
 	return;
 
 }
