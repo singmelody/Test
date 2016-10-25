@@ -1,6 +1,7 @@
 #include "StdAfx.h"
 #include "WorldAvatarManager.h"
-
+#include "WorldAvatar.h"
+#include "MyLog.h"
 
 WorldAvatarManager::WorldAvatarManager(void)
 {

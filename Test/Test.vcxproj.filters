@@ -366,6 +366,12 @@
     <ClInclude Include="AsynContextManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ID2ItemMap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GMap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -689,6 +695,11 @@
     <ClCompile Include="AsynContextManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-
+    <ClCompile Include="ID2ItemMap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GMap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

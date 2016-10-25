@@ -3,6 +3,9 @@
 #include <string>
 #include "BaseType.h"
 #include "WorldAvatarGroup.h"
+#include "MyVector.h"
+#include "WorldAccount.h"
+#include "WorldScene.h"
 
 enum DataLoadingFlag
 {
@@ -178,6 +181,9 @@ protected:
 	bool			m_bAvatarDataDirty;
 	bool			m_bHasGateAvatar;
 	bool			m_bLastAvatarInfoValid;
+
+	int32			m_PendingCreateSceneID;
+	int32			m_WorldAvatarFlag;
 
 
 	WorldTalenTreeData*			m_pTalentTreeCom;

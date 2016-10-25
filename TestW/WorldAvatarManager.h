@@ -2,6 +2,7 @@
 
 #include "Singleton.h"
 #include <map>
+#include "BaseType.h"
 
 class CreateWorldAvatarArg;
 class WorldAvatar;

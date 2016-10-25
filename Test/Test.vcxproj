@@ -259,6 +259,8 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameUtil.h" />
     <ClInclude Include="GateSrvGrp.h" />
+    <ClInclude Include="GMap.h" />
+    <ClInclude Include="ID2ItemMap.h" />
     <ClInclude Include="IRecvPacketFilter.h" />
     <ClInclude Include="LZOCompressor.h" />
     <ClInclude Include="lzoconf.h" />
@@ -384,6 +386,8 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameUtil.cpp" />
     <ClCompile Include="GateSrvGrp.cpp" />
+    <ClCompile Include="GMap.cpp" />
+    <ClCompile Include="ID2ItemMap.cpp" />
     <ClCompile Include="LZOCompressor.cpp" />
     <ClCompile Include="minilzo.c" />
     <ClCompile Include="ModuleBase.cpp" />

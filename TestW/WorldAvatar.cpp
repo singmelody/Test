@@ -4,6 +4,7 @@
 #include "WorldAvatarManager.h"
 #include "WorldStateManager.h"
 #include "AvatarOnLineManager.h"
+#include "ServerManager.h"
 
 WorldAvatar* GetWorldAvatar(int32 nAvatarID)
 {
@@ -56,7 +57,8 @@ WorldAvatar::WorldAvatar()
 	memset( m_charInterval, 0, sizeof(m_charInterval));
 	memset( &storageData, 0, sizeof(storageData));
 
-	m_pendingCreateSceneID = SCENE_ID_NULL;
+	m_PendingCreateSceneID = SCENE_ID_NULL;
+	m_WorldAvatarFlag = 0;
 
 	m_worldArenaState = MP_STATE_NULL;
 	m_WorldAvatarFlag = 0;

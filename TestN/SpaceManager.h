@@ -1,6 +1,11 @@
 #pragma once
 
 #include "Factory.h"
+#include "MyVector.h"
+#include "SceneInfo.h"
+
+
+class NodeAvatar;
 
 class CSpaceManager
 {

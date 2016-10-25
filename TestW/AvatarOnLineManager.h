@@ -2,6 +2,7 @@
 
 #include <string>
 #include <map>
+#include <hash_map>
 #include "Singleton.h"
 #include "WorldFuncExManager.h"
 
@@ -40,7 +41,7 @@ public:
 	int32 GetMaxOnlineUser() const { return m_nMaxOnlineUser; }
 	void SetMaxOnlineUser(int32 v) { m_nMaxOnlineUser = v; SyncOnlineUserInfo2Login(); }
 	inline bool EnableAccMaxOnlineUser() const { return config_AccMaxOnlineUser_Enable; }
-	inline bool EnableAccMaxOnlineUser(bool v) const { config_AccMaxOnlineUser_Enable = v; }
+	inline bool EnableAccMaxOnlineUser(bool v)  { config_AccMaxOnlineUser_Enable = v; }
 
 	void ProcAccMaxOnlineUser(int32 nFrameTime);
 
