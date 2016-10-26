@@ -363,6 +363,9 @@
     <ClInclude Include="ParamNameIndexHelper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GIDMap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="AsynContextManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
