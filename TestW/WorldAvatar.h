@@ -186,9 +186,9 @@ protected:
 	int32			m_WorldAvatarFlag;
 
 
-	WorldTalenTreeData*			m_pTalentTreeCom;
-	WorldRelationComponent*		m_pRelationCom;
-	WorldAbilityComponent*		m_pWorldAbilityCom;
-	WorldManufactureComponent*	m_pManufactureCom;
-	WorldArenaRankComponent*	m_pArenaRankComponent;
+// 	WorldTalenTreeData*			m_pTalentTreeCom;
+// 	WorldRelationComponent*		m_pRelationCom;
+// 	WorldAbilityComponent*		m_pWorldAbilityCom;
+// 	WorldManufactureComponent*	m_pManufactureCom;
+// 	WorldArenaRankComponent*	m_pArenaRankComponent;
 };

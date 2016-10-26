@@ -146,6 +146,7 @@
     <ClInclude Include="WorldEnterManager.h" />
     <ClInclude Include="WorldFuncExManager.h" />
     <ClInclude Include="WorldFuncManager.h" />
+    <ClInclude Include="WorldGroup.h" />
     <ClInclude Include="WorldScene.h" />
     <ClInclude Include="WorldSceneInfo.h" />
     <ClInclude Include="WorldSceneManager.h" />
@@ -178,6 +179,7 @@
     <ClCompile Include="WorldEnterManager.cpp" />
     <ClCompile Include="WorldFuncExManager.cpp" />
     <ClCompile Include="WorldFuncManager.cpp" />
+    <ClCompile Include="WorldGroup.cpp" />
     <ClCompile Include="WorldScene.cpp" />
     <ClCompile Include="WorldSceneInfo.cpp" />
     <ClCompile Include="WorldSceneManager.cpp" />

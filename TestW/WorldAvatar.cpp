@@ -127,9 +127,9 @@ void WorldAvatar::ReleaseComponent()
 bool WorldAvatar::Init(CreateWorldAvatarArg& args)
 {
 	SetNodeSrvID( SrvID_NULL );
-	SetGateSrvID( args.gateSrvID );
+	SetGateSrvID( args.nGateSrvID );
 	
-	m_gateChannelID = args.gateChannelID;
+	m_gateChannelID = args.nGateChannelID;
 
 	CreateComponent();
 

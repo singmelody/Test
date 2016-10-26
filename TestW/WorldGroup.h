@@ -1,6 +1,8 @@
 #pragma once
 #include "CasterTrunkContainer.h"
 
+class WorldAvatar;
+
 class WorldGroup
 {
 public:

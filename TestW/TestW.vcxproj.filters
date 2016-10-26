@@ -90,6 +90,9 @@
     <ClInclude Include="WorldEnterManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="WorldGroup.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -165,6 +168,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="WorldEnterManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldGroup.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
