@@ -1,6 +1,7 @@
 #pragma once
 #include "WorldState.h"
 #include "Singleton.h"
+#include "WorldStateManager.h"
 
 class WorldState_DataReady : public WorldState, public Singleton<WorldState_DataReady>
 {

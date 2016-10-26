@@ -1,6 +1,7 @@
 #include "StdAfx.h"
 #include "WorldState_Gaming.h"
 #include "SceneManager.h"
+#include "PacketImpl.h"
 
 WorldState_Gaming::WorldState_Gaming(void)
 {

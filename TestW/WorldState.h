@@ -2,6 +2,7 @@
 
 #include "WorldFuncExManager.h"
 #include "GameObject.h"
+#include "WorldStateManager.h"
 
 class Scene;
 class WorldAvatar;

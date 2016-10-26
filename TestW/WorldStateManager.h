@@ -31,7 +31,7 @@ public:
 	WorldStateManager(void);
 	~WorldStateManager(void);
 
-	WorldState* GetState( WorldStateID nStateID);
+	WorldState* GetState( int32 nStateID);
 
 protected:
 	void RegPeerPktHandle( PacketProcessor* pProc);

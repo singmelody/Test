@@ -3,6 +3,7 @@
 #include "WorldState_Logining.h"
 #include "WorldState_Logined.h"
 #include "WorldState_DataLoading.h"
+#include "PacketProcessor.h"
 
 WorldStateManager::WorldStateManager(void)
 {
@@ -27,7 +28,7 @@ WorldStateManager::~WorldStateManager(void)
 {
 }
 
-WorldState* WorldStateManager::GetState(WorldStateID nStateID)
+WorldState* WorldStateManager::GetState(int32 nStateID)
 {
 	if( nStateID < 0 || nStateID >= eWS_Count)
 		return NULL;
