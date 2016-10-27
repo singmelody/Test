@@ -17,6 +17,29 @@ typedef unsigned long SM_KEY;
 #define SrvID_NULL	-1
 #define IPLEN		32
 
+#define W2G_Packet_Counter 0
+#define G2W_Packet_Counter 0
+#define N2G_Packet_Counter 0
+#define G2N_Packet_Counter 0
+#define N2W_Packet_Counter 0
+#define W2N_Packet_Counter 0
+#define L2W_Packet_Counter 0
+#define W2L_Packet_Counter 0
+
+#define PEER_THREAD_WATCHDOG_ID 0
+#define SRV_THREAD_WATCHDOG_ID	1
+#define GAME_THREAD_WATCHDOG_ID	2
+
+class TiXmlDocument;
+class TiXmlElement;
+class TiXmlDeclaration;
+class TiXmlNode;
+
+typedef TiXmlDocument XmlDocument;
+typedef TiXmlElement XmlElement;
+typedef TiXmlDeclaration XmlDeclaration;
+typedef TiXmlNode XmlNode;
+
 #define SAFE_DELETE(p) if(p) { delete (p); p = NULL; }
 #define SAFE_DELETE_ARRAY(p) if(p) { delete[] (p); p = NULL; }
 #define SAFE_RELEASE(p) if(p) { p.Release(); p = NULL; }

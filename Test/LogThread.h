@@ -4,7 +4,7 @@
 
 class FunctionBase_Arg0;
 
-class LogThread : public Thread, public Singleton<LogThread>
+class LogThread : public MyThread, public Singleton<LogThread>
 {
 public:
 	virtual void Stop();

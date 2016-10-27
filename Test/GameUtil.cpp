@@ -64,3 +64,17 @@ bool GameUtil::GetCommandOpt(const std::string& strOptName, int32 nArgc, char* a
 
 	return false;
 }
+
+std::string GameUtil::TrimStr(const std::string& str, const std::string strTrim)
+{
+	std::string::size_type pStart = str.find_first_not_of(strTrim);
+	if( pStart == std::string::npos )
+		return std::string();
+
+	std::string strRet = str.substr( pStart );
+	std::string::size_type pEnd = str.find_last_not_of(strTrim);
+	if( pEnd == std::string::npos )
+		return strRet;
+
+	return strRet.substr( 0, pEnd + 1);
+}

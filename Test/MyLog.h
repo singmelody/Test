@@ -22,6 +22,14 @@ enum LogDomain
 	eLD_Count
 };
 
+enum LogType
+{
+	eLogType_Message,
+	eLogType_Warning,
+	eLogType_Error,
+	eLogType_Count,
+};
+
 class Console
 {
 public:
@@ -57,10 +65,14 @@ public:
 	static void warning( const char* str, ...);
 	static void error( const char* str, ...);
 
+	static void FillConfig();
 protected:
 	MyLog();
 	~MyLog();
 
 	friend class Singleton<MyLog>;
+
+	static bool m_logSwitch[eLogType_Count];
+	static bool m_logPrintSwitch[eLogType_Count];
 };
 

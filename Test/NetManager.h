@@ -70,9 +70,14 @@ public:
 #endif
 
 	void SetDisconnectFun(FunctionBase_Arg1<int32>* funcDisconn) { m_DisconnectCallBack = funcDisconn; }
+	
+	bool SendPacket( PacketBase& pkt, int32 nSocketID);
+
 	virtual void OnReceivedPacket( NetChannelBase* pChannel, PacketBase* pPkt);
 	bool Compressable() const { return m_bLzoCompress; }
 	NetChannelBase* CreateNewChannel();
+
+	static PacketBase* DuplicatePacket( PacketBase& pkt);
 protected:
 
 	void ProcNewConnection();

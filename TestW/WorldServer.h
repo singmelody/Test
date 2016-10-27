@@ -20,8 +20,7 @@ public:
 
 	virtual bool ClusterCheck();
 
-	int32 m_nNodeCount;
-	int32 m_nCollisionCount;
+
 
 	virtual void ProcessLogic( int32 nFrameTime);
 
@@ -46,4 +45,7 @@ protected:
 
 	ShutDownStage	m_shutdownStage;
 	bool			m_bBillingRested;
+
+	int32			m_nNodeCount;
+	int32			m_nCollisionCount;
 };

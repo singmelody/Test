@@ -363,9 +363,6 @@
     <ClInclude Include="ParamNameIndexHelper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GIDMap.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="AsynContextManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -376,6 +373,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CasterTrunkContainer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ConfigManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -708,6 +708,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CasterTrunkContainer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ConfigManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ServerConfig.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

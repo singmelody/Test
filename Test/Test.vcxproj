@@ -247,6 +247,7 @@
     <ClInclude Include="CommonConfig.h" />
     <ClInclude Include="CommonDataCont.h" />
     <ClInclude Include="CommonDataOwner.h" />
+    <ClInclude Include="ConfigManager.h" />
     <ClInclude Include="DataBuffer.h" />
     <ClInclude Include="DataSerialization.h" />
     <ClInclude Include="DBAConfig.h" />
@@ -367,6 +368,7 @@
     <ClCompile Include="CommonConfig.cpp" />
     <ClCompile Include="CommonDataCont.cpp" />
     <ClCompile Include="CommonDataOwner.cpp" />
+    <ClCompile Include="ConfigManager.cpp" />
     <ClCompile Include="DataBuffer.cpp" />
     <ClCompile Include="DataSerialization.cpp" />
     <ClCompile Include="DBAConfig.cpp" />
@@ -452,6 +454,7 @@
     <ClCompile Include="SceneInfo.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SceneManagerBase.cpp" />
+    <ClCompile Include="ServerConfig.cpp" />
     <ClCompile Include="ServerGrp.cpp" />
     <ClCompile Include="ServerGrpInfo.cpp" />
     <ClCompile Include="ServerManager.cpp" />

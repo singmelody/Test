@@ -1,13 +1,13 @@
 #include "StdAfx.h"
 #include "PeerModuleBase.h"
+#include "PacketImpl.h"
+#include "ConfigManager.h"
 #include "MyLog.h"
+#include "ServerManager.h"
 
-PeerModuleBase::PeerModuleBase(int32 nModuleType)
-	: ModuleBase(nModuleType)
-	, m_bUseConnectionThread(false)
-	, Servers.SetPeerModule(this)
+PeerModuleBase::PeerModuleBase(SrvType nModuleType) : ModuleBase(nModuleType), m_bUseConnectionThread(false)
 {
-
+	Servers.SetPeerModule(this);
 }
 
 
@@ -245,19 +245,19 @@ void PeerModuleBase::SendPacketSrvConnect(int32 nSocketID)
 
 	PacketSrvConnect pkt;
 
-	pkt.id = m_nSrvID;
-	pkt.type = m_nSrvType;
-	pkt.moduleindex = -1;
+	pkt.nID = m_nSrvID;
+	pkt.nType = m_nSrvType;
+	pkt.nModuleIndex = -1;
 
-	ConfigManager::GetConfigValue( "CommonConfig", "ModuleIndex", pkt.moduleindex, true);
-	pkt.flag = 0;
-	pkt.listenPortPeer = m_peerPort;
+	ConfigManager::GetConfigValue( "CommonConfig", "ModuleIndex", pkt.nModuleIndex, true);
+	pkt.nFlag = 0;
+	pkt.nListenPortPeer = m_peerPort;
 
-	memset( pkt.listenIpPeer, 0, IPLEN);
-	memcpy( pkt.litenIpPeer, m_peerIP.c_str(), m_peerIP.length());
+	memset( pkt.ListenIpPeer, 0, IPLEN);
+	memcpy( pkt.ListenIpPeer, m_peerIP.c_str(), m_peerIP.length());
 
-	pkt.listenPortClt = 0;
-	memset( pkt.listenIpClt, 0, IPLEN);
+	pkt.nListenPortClt = 0;
+	memset( pkt.ListenIpClt, 0, IPLEN);
 
 	OnSendPacketSrvConnect(pkt);
 	PeerSend( &pkt, nSocketID);

@@ -80,7 +80,7 @@ void WorldServer::OnConfigLoaded()
 
 	WorldAvatarManager::Instance().SetServerGroupID( Servers.m_nGrpID );
 
-	ConfigManager::GetConfigValue("WorldConfig/Cluster", "NodeCount", m_NodeCnt);
+	ConfigManager::GetConfigValue("WorldConfig/Cluster", "NodeCount", m_nNodeCount);
 	ConfigManager::GetConfigValue("WorldConfig/Cluster", "CollisionCount", m_nCollisionCount);
 
 	AvatarOnLineManager::Instance().OnConfigLoaded();

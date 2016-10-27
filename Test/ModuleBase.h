@@ -35,9 +35,14 @@ public:
 	inline void StopMainLoop(){ m_bExitLoop = true; }
 	inline bool IsExiting() const { return m_bExitLoop;}
 
+	bool IsDebug() const { return m_bDebug; }
+	const uint8 GetSrvType() { return m_nSrvType; }
+
 	typedef std::list<ParamPool*> DogDataList;
 	DogDataList m_listDogData;
 protected:
+	void InitLog( int32 argc, char* argv[]);
+
 	ServerManager& Servers;
 	LoadTemplateManager& Templates;
 

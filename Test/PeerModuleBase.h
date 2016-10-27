@@ -42,7 +42,7 @@ public:
 class PeerModuleBase : public ModuleBase, public PeerBase
 {
 public:
-	PeerModuleBase(int32 nModuleType);
+	PeerModuleBase(SrvType nModuleType);
 	~PeerModuleBase(void);
 
 	virtual bool Init(int32 argc, char* argv[]);
@@ -93,8 +93,6 @@ protected:
 	void OnRecvSrvInfoPkt(PacketAddSrvInfo* pPkt);
 	void OnSendPacketSrvConnect(class PacketSrvConnect& pkt);
 	void OnRecvSrvConnectPkt(class PacketSrvConnect* pPkt);
-
-	ServerManager& Servers;
 
 	#define THREADMAXCNT 4
 	CircularList<class MyThread*,THREADMAXCNT>	m_PeerThreadList;

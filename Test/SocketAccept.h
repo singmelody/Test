@@ -5,7 +5,7 @@
 
 class NetManager;
 
-class SocketAccept : public Thread
+class SocketAccept : public MyThread
 {
 public:
 	SocketAccept(void) : m_pMgr(NULL), m_bShouldExit(false)

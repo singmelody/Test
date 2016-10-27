@@ -61,6 +61,15 @@ public:
 	static const uint32	PktAttr_NoNeedLZOSend	=	_BIT32_(7);
 #undef  _BIT32_
 
+	int32 GetAvatarID() const { return m_AvatarID; }
+	void SetAvatarID(int32 nID) { m_AvatarID = nID; }
+
+	int32 GetSocketID() { return m_SocketID; }
+	void  SetSocketID(int32 nID) { m_SocketID = nID;} 
+	virtual class MyClass* GetClass() { return NULL; }
+
+	const char* GetClassName();
+
 	virtual char* ReadPacket(char* buffer);
 	virtual char* WritePacket(char* buffer);
 
@@ -80,13 +89,8 @@ public:
 	static bool IsEvent(uint32 attr) { return 0 != (attr & PktAttr_IsEvent); }
 	static bool IsDisconnectCommand(uint32 attr) { return 0 != ( attr & PktAttr_Disconnect);}
 
-	int32 GetAvatarID() const { return m_AvatarID; }
-	void SetAvatarID(int32 nID) { m_AvatarID = nID; }
-
 	virtual int32 GetPacketID() const { return m_PacketID; }
 	virtual void SetPacketID(int32 nID) { m_PacketID = nID; }
-
-	virtual MyClass* GetClass() { return NULL; }
 
 	inline void SetPacketType(int8 type) { m_SendType |= type; }
 	inline void UnSetPacketType(int8 type) { m_SendType &= ~type; }

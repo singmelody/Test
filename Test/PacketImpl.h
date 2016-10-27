@@ -12,6 +12,32 @@ PACKET( PacketAvatarDecommision, PacketBase)
 START_ADD_PACKET_MEMBER(PacketAvatarDecommision)
 PACKET_END(PacketAvatarDecommision)
 
+PACKET( PacketSrvConnect, PacketBase)
+int32	nID;
+uint8	nType;
+int8	nModuleIndex;
+uint8	nFlag;
+int32	nListenPortPeer;
+int32	ListenIpPeer[IPLEN];
+int32	nListenPortClt;
+char	ListenIpClt[IPLEN];
+
+bool CheckFlag( uint8 mask)
+{
+	return ( nFlag & mask) != 0;
+}
+
+START_ADD_PACKET_MEMBER(PacketSrvConnect)
+ADD_PACKET_MEMBER( nID, int32, nID);
+ADD_PACKET_MEMBER( nType, uint8, nType);
+ADD_PACKET_MEMBER( nModuleIndex, int8, nModuleIndex);
+ADD_PACKET_MEMBER( nFlag, uint8, nFlag);
+ADD_PACKET_MEMBER( nListenPortPeer, int32, nListenPortPeer);
+ADD_PACKET_MEMBER_STR( ListenIpPeer, IPLEN, NetIPPeer);
+ADD_PACKET_MEMBER( nListenPortClt, int32, listenPortClt);
+ADD_PACKET_MEMBER_STR( ListenIpClt, IPLEN, NetIPClt);
+PACKET_END(PacketSrvConnect)
+
 PACKET( PacketAddSrvInfo, PacketBase)
 int32 nSrvType;
 int32 nSrvID;

@@ -23,7 +23,7 @@ void SocketAccept::Accept(char* sAddr, int32 nPort, bool bSrv /*= false*/)
 		return;
 	}
 
-	Thread::Start();
+	MyThread::Start();
 }
 
 void SocketAccept::Run()

@@ -1,6 +1,7 @@
 #include "StdAfx.h"
 #include "MyLog.h"
 #include "Log.h"
+#include "ConfigManager.h"
 
 #include <Windows.h>
 #include <assert.h>
@@ -73,15 +74,19 @@ void Console::SetBufferSize(short x, short y)
 	}
 }
 
+bool MyLog::m_logSwitch[eLogType_Count];
+bool MyLog::m_logPrintSwitch[eLogType_Count];
+
 MyLog::MyLog(void)
 {
+	memset( m_logSwitch, 0, sizeof(m_logSwitch));
+	memset( m_logPrintSwitch, 0, sizeof(m_logPrintSwitch));
 }
 
 
 MyLog::~MyLog(void)
 {
 }
-
 
 void MyLog::Create(const char* pFileName)
 {
@@ -114,4 +119,28 @@ void MyLog::error(const char* fmt, ...)
 {
 	CONSOLE_RED;
 	LOG_DOMAIN( eLogFile_All, LOG_DOMAIN_DEFAILT);
+}
+
+void MyLog::FillConfig()
+{
+	int32 iConfig = 0;
+	ConfigManager::GetConfigValue( "LogConfig", "LogActive", iConfig, true);
+	
+	char buff[32];
+	memset( buff, 0, 32);
+
+	for (int32 i = 0; i < eLogType_Count; ++i)
+	{
+		int32 nConfig;
+
+		// file switch
+		sprintf( buff, "logSwitch%d", i);
+		ConfigManager::GetConfigValue( "LogConfig", buff, nConfig, true);
+		m_logSwitch[i] = nConfig > 0;
+
+		// print switch
+		sprintf( buff, "logPrintSwitch%d", i);
+		ConfigManager::GetConfigValue( "LogConfig", buff, nConfig, true);
+		m_logPrintSwitch[i] = nConfig > 0;
+	}
 }

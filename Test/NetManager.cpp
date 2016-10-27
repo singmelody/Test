@@ -6,7 +6,7 @@
 #include <assert.h>
 #include "MyLog.h"
 #include "PacketProcessor.h"
-
+#include "PacketFactory.h"
 
 NetManager::NetManager(
 	bool bLZOCompress, 
@@ -172,6 +172,28 @@ NetChannelBase* NetManager::GetChannel(int32 nSocketID)
 	return pChannel;
 }
 
+bool NetManager::SendPacket(PacketBase& pkt, int32 nSocketID)
+{
+	bool bSuceed = false;
+
+	NetChannelBase* pChannel = GetChannel( nSocketID );
+	if ( pChannel )
+	{
+		PacketBase* pPkt = DuplicatePacket(pkt);
+		if(!pPkt)
+			MyLog::error("NetManager::SendPacket failed to DuplicatePacket [%s]", pkt.GetClassName() );
+		else
+		{
+			pPkt->SetSocketID( nSocketID );
+			pChannel->AppendPacket( pPkt );
+			bSuceed = true;
+		}
+		FreeChannel(pChannel);
+	}
+
+	return bSuceed;
+}
+
 void NetManager::OnReceivedPacket(NetChannelBase* pChannel, PacketBase* pPkt)
 {
 	if(!m_pProcessor)
@@ -183,6 +205,29 @@ void NetManager::OnReceivedPacket(NetChannelBase* pChannel, PacketBase* pPkt)
 NetChannelBase* NetManager::CreateNewChannel()
 {
 	return new NetChannel();
+}
+
+PacketBase* NetManager::DuplicatePacket(PacketBase& pkt)
+{
+	PacketBase* pPktTmp = (PacketBase*)PacketFactory::Instance().New( pkt.GetPacketID() );
+	if( pPktTmp == NULL )
+		return 0;
+
+#if PACKET_USE_INDEX_DATA
+	bool bOri = pkt.IsUseIndex();
+	pkt.IsUseIndex(false);
+	pPktTmp->IsUseIndex(false);
+#endif
+
+	char buffer[PACKET_MAX_SIZE];
+	pkt.WritePacket(buffer);
+	pPktTmp->ReadPacket(buffer);
+
+#if PACKET_USE_INDEX_DATA
+	pkt.IsUseIndex(bOri);
+#endif
+
+	return pPktTmp;
 }
 
 void NetManager::ProcNewConnection()
