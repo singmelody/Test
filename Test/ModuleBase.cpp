@@ -8,7 +8,10 @@
 #include "LogThread.h"
 #include "ConfigManager.h"
 #include "ParamDefManager.h"
+#include "ServerConfig.h"
 #include <sstream>
+
+#define DOG 1
 
 ModuleBase::ModuleBase(SrvType nSrvType)
 	: m_nSrvType( nSrvType), Servers(ServerManager::Instance()), Templates(MyLoadTemplateManager::Instance())
@@ -95,12 +98,37 @@ bool ModuleBase::Init(int32 nArgc, char* argv[])
 	std::string strDBFile;
 	strDBFile = MyPath::MainPath();
 	strDBFile += "Data/Server.db";
-	DBLoader::SetDBFile( strDBFile );
+	DBLoader::SetDBFile( strDBFile.c_str() );
 
 	// load argument define
 	MyLog::message("Begin LoadModule[BaseServer]");
 	Templates.AddTemplate( "ParamDefManager", ParamDefManager::Instance());
+	Templates.Load("BaseServer");
+	MyLog::message("End LoadModule[BaseServer]");
 
+	CreateDogPool();
+	OnConfigLoaded();
+
+	AppendLoadTemplate();
+
+#if DOG
+	WatchDog::Instance().Start();
+#endif
+
+	MyLog::message("End ModuleBase::Init() ModuleName[%s]", m_strModuelName.c_str());
+
+	return true;
+}
+
+void ModuleBase::Exit()
+{
+#if DOG
+	WatchDog::Instance().Stop();
+#endif
+
+	MemoryLog::Shutdown();
+	LogThread::Instance().Stop();
+	SAFE_DELETE(g_pLog);
 }
 
 void ModuleBase::InitLog(int32 nArgc, char* argv[])

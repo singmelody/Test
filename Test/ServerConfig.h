@@ -13,7 +13,7 @@ public:
 	ServerConfig(void);
 	~ServerConfig(void);
 
-	void FillConfig();
+	static void FillConfig();
 
 	static int16 nConsoleW;
 	static int16 nConsoleH;
