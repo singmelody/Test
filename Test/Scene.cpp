@@ -4,7 +4,7 @@
 
 Scene::Scene(void)
 {
-
+	m_nPlayerCnt = 0;
 }
 
 

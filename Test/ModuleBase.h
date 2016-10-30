@@ -2,6 +2,7 @@
 
 #include <list>
 #include "ServerGrpInfo.h"
+#include "ServerManager.h"
 
 class ParamPool;
 class LoadTemplateManager;

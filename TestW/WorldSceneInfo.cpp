@@ -2,6 +2,12 @@
 #include "WorldSceneInfo.h"
 
 
+SceneRequestList::SceneRequestList()
+{
+
+}
+
+
 WorldSceneInfo::WorldSceneInfo(void)
 	: EnterMgr( WorldEnterManager::Instance() )
 {

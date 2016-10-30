@@ -90,6 +90,8 @@ int32 ServerManager::MakeSrvID(int32 nZoneID, int32 nGrpID, int32 nSrvType, int3
 {
 	int32 nSrvID = ( nZoneID << eSrvID_ZoneStartBit) + ( nGrpID << eSrvID_GrpStartBit) 
 		+ ( nSrvType << eSrvID_TypeStartBit) + nIdx;
+
+	return nSrvID;
 }
 
 int32 ServerManager::MakeSrvID(int32 nSrvType, int32 nSrvIdx)

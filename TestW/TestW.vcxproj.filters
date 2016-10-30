@@ -93,6 +93,12 @@
     <ClInclude Include="WorldGroup.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="WorldServerNormal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldSceneInfo_MainTrunk.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -171,6 +177,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="WorldGroup.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldServerNormal.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldSceneInfo_MainTrunk.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

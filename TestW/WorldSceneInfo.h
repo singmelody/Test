@@ -1,4 +1,14 @@
 #pragma once
+
+#include "CircularList.h"
+#include "CircularQueue.h"
+
+class SceneRequestList : public CircularQueue< int32, 10240>
+{
+public:
+	SceneRequestList();
+};
+
 class WorldSceneInfo : public SceneInfoEx
 {
 public:
@@ -13,7 +23,7 @@ protected:
 	bool TryEnterScene( WorldAvatar* pAvatar, WorldScene* pScene, int32& nFailReason);
 
 	class WorldSceneManager& SceneMgr;
-	class WorldAysnManager& ContextMgr;
+	class WorldAsynContextManager& ContextMgr;
 	class WorldEnterManager& EnterMgr;
 };
 

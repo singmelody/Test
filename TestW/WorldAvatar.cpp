@@ -115,12 +115,12 @@ void WorldAvatar::SetCurState( WorldStateID newStateID )
 
 void WorldAvatar::CreateComponent()
 {
-	balbalbla
+	
 }
 
 void WorldAvatar::ReleaseComponent()
 {
-	FACTORY_DELOBJ( m_pRelationCom );
+	//FACTORY_DELOBJ( m_pRelationCom );
 
 }
 
@@ -129,7 +129,7 @@ bool WorldAvatar::Init(CreateWorldAvatarArg& args)
 	SetNodeSrvID( SrvID_NULL );
 	SetGateSrvID( args.nGateSrvID );
 	
-	m_gateChannelID = args.nGateChannelID;
+	m_nGateSrvID = args.nGateChannelID;
 
 	CreateComponent();
 

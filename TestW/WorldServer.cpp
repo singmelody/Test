@@ -2,6 +2,7 @@
 #include "WorldAvatar.h"
 #include "WorldServer.h"
 #include "WorldAvatarManager.h"
+#include "ConfigManager.h"
 
 WorldServer::WorldServer()
 	: m_shutdownStage(eSDS_None)

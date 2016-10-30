@@ -44,6 +44,12 @@ uint16 SceneInfo::GetSceneInstanceID(uint32 nSceneID)
 	return uint16(nSceneID);
 }
 
+uint32 SceneInfo::GenSceneID(uint16 nSceneSID, uint16 nInstanceID /*= 0*/)
+{
+	uint32 nVal = nSceneSID << 16;
+	return nVal | nInstanceID;
+}
+
 const SceneInfo* SceneInfo::GetSceneInfo(uint16 nSceneSID)
 {
 	return SceneManagerBase::GetSceneInfo( nSceneSID );

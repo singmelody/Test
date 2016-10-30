@@ -6,6 +6,7 @@
 #include "MyVector.h"
 #include "WorldAccount.h"
 #include "WorldScene.h"
+#include "WorldStateManager.h"
 
 enum DataLoadingFlag
 {
@@ -108,7 +109,7 @@ public:
 	int32 GetUserID();
 
 	virtual void SetParamPool(ParamPool* p);
-	WorldAvatarCommonData*	GetCommonDataManager() const;
+	class WorldAvatarCommonData*	GetCommonDataManager() const;
 	//WorldTalenTreeData*		GetTalentTreeData() { return m_pTalentTreeData; }
 
 	ParamPool*	GetRoleSet(int32 nIdx) { return Account.GetRoleSet(nIdx);}
@@ -183,9 +184,9 @@ protected:
 	bool			m_bLastAvatarInfoValid;
 
 	int32			m_PendingCreateSceneID;
-	int32			m_WorldAvatarFlag;
 
-
+	Vector3			m_target_scene_point;
+	Vector3			m_target_scene_dir;
 // 	WorldTalenTreeData*			m_pTalentTreeCom;
 // 	WorldRelationComponent*		m_pRelationCom;
 // 	WorldAbilityComponent*		m_pWorldAbilityCom;

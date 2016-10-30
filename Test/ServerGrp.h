@@ -20,7 +20,6 @@ public:
 
 	virtual void SortList(){}
 
-protected:
 	SrvInfoMap		m_SrvMap;
 
 	ServerManager*	m_pMgr;

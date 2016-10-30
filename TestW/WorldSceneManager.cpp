@@ -41,26 +41,26 @@ SceneInfo* WorldSceneManager::CreateSceneInfo(int32 nSceneType, int32 nPlayerMax
 
 	switch(nSceneType)
 	{
-	case SceneInfo::SceneCreate_MainTrunk:
+	case SceneInfo::eSceneCreate_MainTrunk:
 		pInfo = new WorldSceneInfo_MainTrunk();
 		break;
 
-	case SceneInfo::SceneCreate_TeamCopy:
-		if(playerMax > 1)
+	case SceneInfo::eSceneCreate_TeamCopy:
+		if(nPlayerMax > 1)
 			pInfo = new WorldSceneInfo_TeamCopy();
 		else
 			pInfo = new WorldSceneInfo_ScenarioCopy();
 		break;
-	case SceneInfo::SceneCreate_TokenCopy:
+	case SceneInfo::eSceneCreate_TokenCopy:
 		pInfo = new WorldSceneInfo_TokenCopy();
 		break;
-	case SceneInfo::SceneCreate_Scenario:
+	case SceneInfo::eSceneCreate_Scenario:
 		pInfo = new WorldSceneInfo_ScenarioCopy();
 		break;
-	case SceneInfo::SceneCreate_TrunkCopy:
+	case SceneInfo::eSceneCreate_TrunkCopy:
 		pInfo = new WorldSceneInfo_TrunkCopy();
 		break;
-	case SceneInfo::SceneCreate_RootCopy:
+	case SceneInfo::eSceneCreate_RootCopy:
 		pInfo = new WorldSceneInfo_RootCopy();
 		break;
 	}

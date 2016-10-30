@@ -2,6 +2,7 @@
 #include "DBInterface.h"
 #include "MyVector.h"
 #include "ID2ItemMap.h"
+#include "SceneInstanceMgr.h"
 
 class SceneCreateArg
 {
@@ -83,8 +84,16 @@ class SceneInfo
 public:
 	enum SceneType
 	{
-		eSceneCreate_MainTrunk	= 0,	// 主场景
-		eSceneCreate_TeamCopy	= 1,	// 队伍副本
+		eSceneCreate_MainTrunk		= 0,	// 主场景
+		eSceneCreate_TeamCopy		= 1,	// 队伍副本
+		eSceneCreate_ScenarioCopy	= 2,	// 剧情副本
+		eSceneCreate_TrunkCopy		= 3,	// 主场景位面
+		eSceneCreate_RootCopy		= 4,	// 起始副本
+
+		eSceneCreate_WarTrunk		= 5,
+		eSceneCreate_GuildCopy		= 6,
+		eSceneCreate_TokenCopy		= 7,
+		eSceneCreate_GuildWar		= 8,
 	};
 
 	SceneInfo(void);
@@ -92,6 +101,8 @@ public:
 
 	static uint16 GetSceneSID(uint32 nSceneID);
 	static uint16 GetSceneInstanceID(uint32 nSceneID);
+
+	static uint32 GenSceneID( uint16 nSceneSID, uint16 nInstanceID = 0);
 
 	static const SceneInfo* GetSceneInfo( uint16 nSceneSID);
 
@@ -103,5 +114,24 @@ public:
 	int32			m_nNpcAutoLevelStep;
 
 	uint8			m_CreateType;
+};
+
+class SceneInfoEx : public SceneInfo
+{
+public:
+	SceneInfoEx();
+
+	SceneInstanceMgr m_Instances;
+
+	virtual void OnSceneCreate( Scene* pScene);
+	virtual void OnSceneDestroy( Scene* pScene);
+	virtual Scene* CreateSceneObj();
+
+	uint32 m_nParallelBits;
+
+	std::string m_strSceneClass;
+	std::string m_strDftSceneClass;
+
+	uint16		m_nPlayerMax;
 };
 

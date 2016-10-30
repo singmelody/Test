@@ -244,6 +244,7 @@
     <ClInclude Include="CircularBufferEx.h" />
     <ClInclude Include="CircularList.h" />
     <ClInclude Include="CircularListEx.h" />
+    <ClInclude Include="CircularQueue.h" />
     <ClInclude Include="CommonConfig.h" />
     <ClInclude Include="CommonDataCont.h" />
     <ClInclude Include="CommonDataOwner.h" />
@@ -329,6 +330,7 @@
     <ClInclude Include="SceneContentItem.h" />
     <ClInclude Include="SceneContentNpc.h" />
     <ClInclude Include="SceneInfo.h" />
+    <ClInclude Include="SceneInstanceMgr.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="SceneManagerBase.h" />
     <ClInclude Include="ServerConfig.h" />
@@ -368,6 +370,7 @@
     <ClCompile Include="CircularBufferEx.cpp" />
     <ClCompile Include="CircularList.cpp" />
     <ClCompile Include="CircularListEx.cpp" />
+    <ClCompile Include="CircularQueue.cpp" />
     <ClCompile Include="CommonConfig.cpp" />
     <ClCompile Include="CommonDataCont.cpp" />
     <ClCompile Include="CommonDataOwner.cpp" />
@@ -456,6 +459,7 @@
     <ClCompile Include="SceneContentItem.cpp" />
     <ClCompile Include="SceneContentNpc.cpp" />
     <ClCompile Include="SceneInfo.cpp" />
+    <ClCompile Include="SceneInstanceMgr.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SceneManagerBase.cpp" />
     <ClCompile Include="ServerConfig.cpp" />
