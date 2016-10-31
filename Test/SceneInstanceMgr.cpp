@@ -1,6 +1,7 @@
 #include "StdAfx.h"
 #include "SceneInstanceMgr.h"
-
+#include "SceneInfo.h"
+#include "Scene.h"
 
 SceneInstanceMgr::SceneInstanceMgr(void)
 {
@@ -21,12 +22,24 @@ uint32 SceneInstanceMgr::AllocSceneID(bool bRand)
 			if(nRandid == 0)
 				continue;
 
-			uint32 nSceneID = SceneInfo::GenSceneID( m_pSceneInfo->m_nSceneID, nRandid);
+			uint32 nSceneID = SceneInfo::GenSceneID( m_pSceneInfo->m_SceneSID, nRandid);
 
 			if( find(nSceneID) == end() )
 				return nSceneID;
 		}
 	}
+	else
+	{
+		for (int32 i = 1; i < 50; ++i)
+		{
+			int32 nSceneID = SceneInfo::GenSceneID( m_pSceneInfo->m_SceneSID, i);
+
+			if( find( nSceneID) == end() )
+				return nSceneID;
+		}
+	}
+
+	return SCENE_ID_NULL;
 }
 
 Scene* SceneInstanceMgr::GetMinLoadScene()
@@ -56,4 +69,5 @@ Scene* SceneInstanceMgr::GetMinLoadScene()
 
 Scene* SceneInstanceMgr::GetFrontScene()
 {
+	return NULL;
 }

@@ -4,6 +4,8 @@
 #include "ID2ItemMap.h"
 #include "SceneInstanceMgr.h"
 
+class Scene;
+
 class SceneCreateArg
 {
 public:
@@ -106,14 +108,20 @@ public:
 
 	static const SceneInfo* GetSceneInfo( uint16 nSceneSID);
 
+	bool IsTrunk() const { return m_CreateType == eSceneCreate_MainTrunk || m_CreateType == eSceneCreate_WarTrunk || m_CreateType == eSceneCreate_GuildWar; }
+
+	bool IsMainTrunk() const { return m_CreateType == eSceneCreate_MainTrunk; }
+
 	uint16			m_SceneSID;
 	std::string		m_SceneName;
 	int32			m_ShowDescript;
 	int32			m_ShowName;
 	bool			m_bDynEnterSwitch;
 	int32			m_nNpcAutoLevelStep;
-
 	uint8			m_CreateType;
+	uint16			m_nPlayerMax;
+	int32			m_nLoadValue;
+
 };
 
 class SceneInfoEx : public SceneInfo
@@ -132,6 +140,5 @@ public:
 	std::string m_strSceneClass;
 	std::string m_strDftSceneClass;
 
-	uint16		m_nPlayerMax;
 };
 

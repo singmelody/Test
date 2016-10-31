@@ -1,6 +1,7 @@
 #pragma once
 
 #include "SceneManagerBase.h"
+#include "SceneInfo.h"
 
 enum CreateSceneRst
 {
@@ -27,14 +28,28 @@ enum ChangeSceneRst
 	eChangeSceneError_NodeID,
 };
 
+class SceneContentGroup;
+
+typedef std::map< int32, SceneContentGroup*> BornDataMap;
+
+class Scene;
+
 class SceneManager : public SceneManagerBase
 {
 public:
 	SceneManager(void);
 	virtual ~SceneManager(void);
 
+	SceneInstanceMgr* GetSceneMap(uint16 nSceneSID);
+	virtual Scene* CreateScene( SceneCreateArg& arg);
 
+	virtual void OnSceneCreated( Scene* pScene);
+	virtual void OnSceneDestroied( Scene* pScene);
+
+	BornDataMap	m_bornDataMap;
 protected:
-	int32 m_copyCnt[];
+
+	int32 m_nCopyCnt;
+	int32 m_nSceneLoadValue;
 };
 
