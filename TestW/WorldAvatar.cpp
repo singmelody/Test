@@ -5,6 +5,9 @@
 #include "WorldStateManager.h"
 #include "AvatarOnLineManager.h"
 #include "ServerManager.h"
+#include "WorldState.h"
+#include "Time.h"
+#include "WorldSceneManager.h"
 
 WorldAvatar* GetWorldAvatar(int32 nAvatarID)
 {
@@ -61,7 +64,6 @@ WorldAvatar::WorldAvatar()
 	m_WorldAvatarFlag = 0;
 
 	m_worldArenaState = MP_STATE_NULL;
-	m_WorldAvatarFlag = 0;
 }
 
 
@@ -85,14 +87,14 @@ int64 WorldAvatar::GenUID()
 
 Scene* WorldAvatar::GetScene()
 {
-	return WorldSceneManager::Instance().GetScene(m_SceneID);
+	return WorldSceneManager::Instance().GetScene(m_sceneID);
 }
 
 void WorldAvatar::SetCurState( WorldStateID newStateID )
 {
 	if( m_bStageChanging )
 	{
-		MyLog::error("SetCurStage error, avatarid[%d], curstage[%d], newStage[%d]", GetAvatarID(), m_curStageID, newStateID);
+		MyLog::error("SetCurStage error, avatarid[%d], curstage[%d], newStage[%d]", GetAvatarID(), m_nCurStageID, newStateID);
 		return;
 	}
 

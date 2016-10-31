@@ -20,6 +20,8 @@ enum SrvMask
 
 enum SrvSegment
 {
+	// SrvID
+	// ZZZZZZZ|GGGGGGTT|TTTIIIII|IIIIIIII
 	eSrvID_ZoneStartBit = 24,	// 24-31
 	eSrvID_GrpStartBit	= 18,	// 18-23
 	eSrvID_TypeStartBit	= 13,	// 13-17
@@ -33,6 +35,13 @@ enum SrvSegment
 	eSrvID_MaxGrpID		= ( 1 << eSrvID_GrpBits) - 1,
 	eSrvID_MaxTypeID	= ( 1 << eSrvID_TypeBits) - 1,
 	eSrvID_MaxIndexBits	= ( 1 << eSrvID_IndexBits) - 1,
+
+	// AvatarID
+	// XXXXXXXX|XXXIIIII|IIIIIIII|IIGGGGGG
+	ePlayerAvatarID_GrpBits = eSrvID_GrpBits,
+	ePlayerAvatarID_IdxBits = 15,
+	ePlayerAvatarID_MaxGrp	= eSrvID_MaxGrpID,
+	ePlayerAvatarID_MaxIdx	= ( 1 << ePlayerAvatarID_IdxBits) -1,
 };
 
 
@@ -61,7 +70,7 @@ public:
 	ServerInfo* GetWarWorldInfo( PacketBase* pPkt);
 
 	void SetSrvType( SrvType nSrvType);
-protected:
+
 	int32			m_nZoneID;	// ´óµØ·ÉÓ¥
 	int32			m_nGrpID;	// ·ï»Ë¼¯
 

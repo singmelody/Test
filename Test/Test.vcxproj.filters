@@ -31,6 +31,9 @@
     <Filter Include="Game\Scene">
       <UniqueIdentifier>{babee6e3-6d98-4f64-a9bf-f2b37ad268dd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Util\Time">
+      <UniqueIdentifier>{932440a5-8298-41e9-b608-96b1d59f4883}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -115,9 +118,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="FunctionBase.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Time.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Log.h">
@@ -411,6 +411,12 @@
     <ClInclude Include="SceneInstanceMgr.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Time.h">
+      <Filter>Util\Time</Filter>
+    </ClInclude>
+    <ClInclude Include="AvatarManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -480,9 +486,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="FunctionBase.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Time.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Log.cpp">
@@ -768,6 +771,12 @@
       <Filter>Game\Scene</Filter>
     </ClCompile>
     <ClCompile Include="SceneInstanceMgr.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Time.cpp">
+      <Filter>Util\Time</Filter>
+    </ClCompile>
+    <ClCompile Include="AvatarManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

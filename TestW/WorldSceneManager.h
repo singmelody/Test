@@ -13,7 +13,7 @@ class SceneInfo;
 class WorldScene;
 class WorldAvatarManager;
 
-class WorldSceneManager : public SceneManager, public WorldFuncManager, Singleton<WorldSceneManager>
+class WorldSceneManager : public SceneManager, public WorldFuncManager, public Singleton<WorldSceneManager>
 {
 public:
 	WorldSceneManager(void);

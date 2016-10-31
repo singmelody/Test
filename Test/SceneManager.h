@@ -46,6 +46,9 @@ public:
 	virtual void OnSceneCreated( Scene* pScene);
 	virtual void OnSceneDestroied( Scene* pScene);
 
+	virtual Scene* GetScene(int32 nSceneID);
+	virtual Scene* NextScene(Scene* pScene) { return NULL; }
+
 	BornDataMap	m_bornDataMap;
 protected:
 

@@ -70,3 +70,18 @@ void SceneManager::OnSceneDestroied(Scene* pScene)
 	m_nSceneLoadValue -= pScene->GetLoadValue();
 }
 
+Scene* SceneManager::GetScene(int32 nSceneID)
+{
+	int16 scenesid = SceneInfo::GetSceneSID(nSceneID);
+
+	SceneInstanceMgr* pMgr = GetSceneMap(scenesid);
+	if(!pMgr)
+		return NULL;
+
+	SceneInstanceMgr::iterator siter = pMgr->find(nSceneID);
+	if( siter == pMgr->end() )
+		return NULL;
+
+	return siter->second;
+}
+

@@ -84,10 +84,10 @@ public:
 	
 	virtual Scene* GetScene();
 
-	void SetTargetScenePoint(f32 x, f32 y, f32 z) { m_tartget_scene_point.Set( x, y, z);}
+	void SetTargetScenePoint(f32 x, f32 y, f32 z) { m_target_scene_point.Set( x, y, z);}
 	void SetTargetScenePoint(const Vector3& pos) { m_target_scene_point = pos;}
 
-	void SetTargetSceneDir(f32 x, f32 y, f32 z) { m_tartget_scene_dir.Set( x, y, z);}
+	void SetTargetSceneDir(f32 x, f32 y, f32 z) { m_target_scene_dir.Set( x, y, z);}
 	void SetTargetSceneDir(const Vector3& dir) { m_target_scene_dir = dir;}
 
 	void SetPendingCreateScene(int32 nSceneID) { m_PendingCreateSceneID = nSceneID; }
@@ -113,6 +113,8 @@ public:
 	//WorldTalenTreeData*		GetTalentTreeData() { return m_pTalentTreeData; }
 
 	ParamPool*	GetRoleSet(int32 nIdx) { return Account.GetRoleSet(nIdx);}
+	WorldAccount Account;
+
 	bool CheckInStage(WorldStateID stageID) { return m_nCurStageID == stageID; }
 
 	bool IsGaming() { return m_nCurStageID == eWS_Gaming;}
@@ -131,7 +133,7 @@ public:
 	void SyncAvatarData2DB(bool bExitGame, int32 nSyncFlag);
 
 	void SetDataLoadingFlags(int32 bit) { m_nDataLoadingFlags |= bit; }
-	void CheckDataLoadingFlags(int32 bit) { return (m_nDataLoadingFlags & bit) == bit; }
+	bool CheckDataLoadingFlags(int32 bit) { return (m_nDataLoadingFlags & bit) == bit; }
 
 	void			TickChatInternal(int32 nDeltaTime);
 	virtual void	SetChatInterval(int32 nChannel, int32 interval);
@@ -151,8 +153,8 @@ public:
 	int8			GetWorldArenaState() const { return m_worldArenaState; }
 
 	bool			CheckAvatarFlag(int32 nFlag) { return (nFlag & m_WorldAvatarFlag) != 0; }
-	void			SetAvatarFlag(int32 nFlag) { return m_WorldAvatarFlag |= nFlag; }
-	void			CancelAvatarFlag(int32 nFlag) { return m_WorldAvatarFlag &= (~nFlag); }
+	void			SetAvatarFlag(int32 nFlag) { m_WorldAvatarFlag |= nFlag; }
+	void			CancelAvatarFlag(int32 nFlag) { m_WorldAvatarFlag &= (~nFlag); }
 
 	WorldAccount	m_account;
 protected:
@@ -185,8 +187,6 @@ protected:
 
 	int32			m_PendingCreateSceneID;
 
-	Vector3			m_target_scene_point;
-	Vector3			m_target_scene_dir;
 // 	WorldTalenTreeData*			m_pTalentTreeCom;
 // 	WorldRelationComponent*		m_pRelationCom;
 // 	WorldAbilityComponent*		m_pWorldAbilityCom;

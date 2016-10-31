@@ -21,6 +21,11 @@ struct float3
 	float x,y,z;
 
 	void zero() { x=y=z=0; }
+	float3& Set(float _x, float _y, float _z)
+	{
+		x = _x; y = _y; z = _z;
+		return *this;
+	}
 };
 
 struct ShapeLine2D

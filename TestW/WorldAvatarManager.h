@@ -3,11 +3,13 @@
 #include "Singleton.h"
 #include <map>
 #include "BaseType.h"
+#include "AvatarManager.h"
+#include "WorldFuncManager.h"
 
 class CreateWorldAvatarArg;
 class WorldAvatar;
 
-class WorldAvatarManager : public Singleton<WorldAvatarManager>
+class WorldAvatarManager : public AvatarManager, public WorldFuncManager, public Singleton<WorldAvatarManager>
 {
 public:
 	WorldAvatarManager(void);
