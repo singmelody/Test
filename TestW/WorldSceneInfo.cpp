@@ -1,6 +1,10 @@
 #include "StdAfx.h"
 #include "WorldSceneInfo.h"
-
+#include "WorldScene.h"
+#include "SceneManager.h"
+#include "WorldAvatar.h"
+#include "WorldAsynContextManager.h"
+#include "WorldSceneManager.h"
 
 SceneRequestList::SceneRequestList()
 {
@@ -9,8 +13,11 @@ SceneRequestList::SceneRequestList()
 
 
 WorldSceneInfo::WorldSceneInfo(void)
-	: EnterMgr( WorldEnterManager::Instance() )
+	: SceneMgr( WorldSceneManager::Instance() )
+	, ContextMgr( WorldAsynContextManager::Instance() )
+	, EnterMgr( WorldEnterManager::Instance() )
 {
+
 }
 
 
@@ -45,14 +52,14 @@ bool WorldSceneInfo::TryEnterScene(WorldAvatar* pAvatar, WorldScene* pScene, int
 		return false;
 	}
 
-	if(!pAvatar->CheckEnterScene(pScene))
+	if(!pScene->CheckEnterScene(pAvatar))
 	{
 		nFailReason = eChangeSceneError_CheckEnterFailed;
 		return false;
 	}
 
 	// 
-	return EnterMgr::HandleEnterScene();
+	return EnterMgr.HandleEnterScene( pAvatar, pScene);
 }
 
 void WorldSceneInfo_Trunk::OnSceneCreateSucceed(WorldScene* pScene)

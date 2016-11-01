@@ -3,6 +3,7 @@
 #include "ServerGrpInfo.h"
 #include "ServerManager.h"
 #include "MyLog.h"
+#include "PeerModuleBase.h"
 
 ServerGrp::ServerGrp(void)
 {
@@ -55,4 +56,27 @@ ServerInfo* ServerGrp::GetServer(int32 nID)
 		return itr->second;
 
 	return NULL;
+}
+
+void ServerGrp::BroadcastPacket(PacketBase* pPkt, int32 nExceptID)
+{
+	for (auto itr = m_SrvMap.begin(); itr != m_SrvMap.end(); ++itr)
+	{
+		ServerInfo* pInfo = itr->second;
+		if(!pInfo)
+			continue;
+
+		if( pInfo->nSrvID == nExceptID )
+			continue;
+
+		PeerSend( pInfo->nSocketID, pPkt);
+	}
+}
+
+void ServerGrp::PeerSend(int32 nSocketID, class PacketBase* pPkt)
+{
+	if(!m_pMgr || !m_pMgr->m_pPeerModule)
+		return;
+
+	m_pMgr->m_pPeerModule->PeerSend( pPkt, nSocketID);
 }

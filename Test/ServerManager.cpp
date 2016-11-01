@@ -81,7 +81,7 @@ ServerInfo* ServerManager::GetDBAInfo()
 
 ServerInfo* ServerManager::GetGateInfo(int32 nID)
 {
-	return m_GateGrp.GetSrv(nID);
+	return m_GateGrp.GetServer(nID);
 }
 
 ServerInfo* ServerManager::GetWarWorldInfo(PacketBase* pPkt)
@@ -167,5 +167,4 @@ ServerInfo* ServerManager::GetSrvBySrvID(int32 nSrvID)
 		return itr->second;
 
 	return NULL;
-}
 }

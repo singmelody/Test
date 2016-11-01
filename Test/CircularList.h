@@ -1,5 +1,7 @@
 #pragma once
 
+#include "BaseType.h"
+
 template<class T, int32 ELEMENTCOUNT>
 class CircularList
 {

@@ -13,7 +13,7 @@ public:
 
 	uint32 Second() const
 	{
-		return m_milliSec / 1000;
+		return (uint32)(m_milliSec/1000);
 	}
 
 	static Time CurrentTime();

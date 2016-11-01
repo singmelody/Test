@@ -2,6 +2,9 @@
 #include "WorldState_Gaming.h"
 #include "SceneManager.h"
 #include "PacketImpl.h"
+#include "WorldState_Gaming.h"
+#include "WorldAvatar.h"
+#include "WorldSceneInfo.h"
 
 WorldState_Gaming::WorldState_Gaming(void)
 {

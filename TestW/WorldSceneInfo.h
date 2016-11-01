@@ -2,6 +2,12 @@
 
 #include "CircularList.h"
 #include "CircularQueue.h"
+#include "BaseType.h"
+#include "SceneInfo.h"
+#include "WorldEnterManager.h"
+
+class WorldAvatar;
+class WorldScene;
 
 class SceneRequestList : public CircularQueue< int32, 10240>
 {
@@ -31,7 +37,7 @@ protected:
 class WorldSceneInfo_Trunk : public WorldSceneInfo
 {
 public:
-	WorldSceneInfo();
+	WorldSceneInfo_Trunk();
 
 	virtual bool IsCopy() const { return false; }
 

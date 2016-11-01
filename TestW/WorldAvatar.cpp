@@ -10,6 +10,7 @@
 #include "WorldSceneManager.h"
 #include "ArenaDefine.h"
 #include <sstream>
+#include "WorldServer.h"
 
 WorldAvatar* GetWorldAvatar(int32 nAvatarID)
 {
