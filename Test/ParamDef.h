@@ -24,6 +24,9 @@ enum ParamType
 	eParam_DBAInfo = 53,
 	eParam_GateInfo = 54,
 
+	eParam_LoginGateDetails = 60,
+	eParam_WorldNodeDetails = 61,
+
 	eParam_Count
 };
 

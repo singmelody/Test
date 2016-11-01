@@ -3,6 +3,10 @@
 #include "WorldServer.h"
 #include "WorldAvatarManager.h"
 #include "ConfigManager.h"
+#include "MyLog.h"
+#include "LoadTemplateManager.h"
+#include "AvatarOnLineManager.h"
+#include "WorldSceneManager.h"
 
 WorldServer::WorldServer()
 	: m_shutdownStage(eSDS_None)
@@ -25,6 +29,8 @@ bool WorldServer::Init(int32 nArgc, char* argv[])
 	MyLog::message("Begin LoadMoule[WorldSrv]");
 	Templates.Load("WorldServer");
 	MyLog::message("End LoadMoule[WorldSrv]");
+
+	return true;
 }
 
 void WorldServer::OnGateDisconnect(ServerInfo* pInfo)
@@ -58,7 +64,7 @@ bool WorldServer::ClusterCheck()
 		return false;
 	}
 
-	int32 nCurCollisionCnt = Servers.CollisionGroup.ServerCnt();
+	int32 nCurCollisionCnt = Servers.m_CollisionGroup.ServerCnt();
 	if( nCurCollisionCnt < m_nCollisionCount)
 	{
 		MyLog::message("WorldServer::ClusterCheck() Node Check CurCount[%d] NeedCnt[%d]", nCurCollisionCnt, m_nCollisionCount);
@@ -79,7 +85,7 @@ void WorldServer::OnConfigLoaded()
 {
 	WorldBase::OnConfigLoaded();
 
-	WorldAvatarManager::Instance().SetServerGroupID( Servers.m_nGrpID );
+	WorldAvatarManager::Instance().SetSrvGroupID( Servers.m_nGrpID );
 
 	ConfigManager::GetConfigValue("WorldConfig/Cluster", "NodeCount", m_nNodeCount);
 	ConfigManager::GetConfigValue("WorldConfig/Cluster", "CollisionCount", m_nCollisionCount);

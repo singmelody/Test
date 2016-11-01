@@ -33,6 +33,8 @@ public:
 	virtual void SortList();
 
 	int32 GetLowSceneLoadNode( int32 exclude_ID = SERVERID_NULL);
+
+	int32 ServerCnt();
 protected:
 	NodeSrvList m_listByTrunkValue;
 	NodeSrvList m_listByLoadValue;

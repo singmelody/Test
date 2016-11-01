@@ -16,6 +16,7 @@ public:
 	~WorldAvatarManager(void);
 
 	WorldAvatar* CreateWorldAvatar(CreateWorldAvatarArg& arg);	
+	void RemoveWorldAvatar( WorldAvatar* pAvatar);
 protected:
 	int32 m_ConnectCount;
 	std::map< std::string, int32>	m_titleMap;		// title - avatarid

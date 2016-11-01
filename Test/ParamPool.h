@@ -177,6 +177,29 @@ public:
 	static ParamPool* CreateNew( int32 nDefID, int32 nDataID, char* pBuff = 0);
 };
 
+class ParamSetEx : public ParamPoolEx<1024>
+{
+	DECLARE_FACTORY_ARG0( ParamSet, -1, new PoolAllocatorEx);
+public:
+	static ParamPool* CreateNew( int32 nParamType, char* pBuff = 0);
+	static ParamPool* CreateNew( int32 nDefID, int32 nDataID, char* pBuff = 0);
+};
+
+class ParamSyncCounter : public Singleton<ParamSyncCounter>
+{
+	typedef std::map<std::string, int32> ParamCountMap;
+public:
+	ParamSyncCounter(){}
+	~ParamSyncCounter(){}
+
+	void AddCount(const char* sName, int32 flag);
+	void Clear();
+	void Print();
+
+	ParamCountMap	m_CltSelfMap;
+	ParamCountMap	m_CltAllMap;
+};
+
 template <class T>
 void ParamPool::SetValue( ParamBase* pBase, T val, bool bDirty)
 {
@@ -222,14 +245,21 @@ void ParamPool::SetValue( ParamBase* pBase, T val, bool bDirty)
 template <class T>
 T ParamPool::GetValue(int32 nIdx, T defVal)
 {
+	if(!m_pDef)
+		return defVal;
 
+	ParamBase* pBase = m_pDef->GetParam(nIdx);
+	return GetValue<T>( pBase, defVal);
 }
-
 
 template <class T>
 T ParamPool::GetValue(const char* sName, T defVal)
 {
+	if(!m_pDef)
+		return defVal;
 
+	ParamBase* pBase = m_pDef.GetParam(sName);
+	return GetValue<T>( pBase, defVal);
 }
 
 template <class T>
@@ -254,19 +284,19 @@ T ParamPool::GetValueFromBuff(ParamBase* pBase, char* pBuffer)
 	{
 	case eTB_Int16:
 		{
-			Param_Int16* pVal = (Param_Int16*)(pBase);
+			Param_Type<int16>* pVal = (Param_Type<int16>*)(pBase);
 			int16 nValue = pVal->GetValue(pBuffer);
 			return (T)nValue;
 		}
 	case eTB_Int32:
 		{
-			Param_Int32* pVal = (Param_Int32*)(pBase);
+			Param_Type<int32>* pVal = (Param_Type<int32>*)(pBase);
 			int32 nValue = pVal->GetValue(pBuffer);
 			return (T)nValue;
 		}
 	case eTB_Int64:
 		{
-			Param_Int64* pVal = (Param_Int64*)(pBase);
+			Param_Type<int64>* pVal = (Param_Type<int64>*)(pBase);
 			int64 nValue = pVal->GetValue(pBuffer);
 			return (T)nValue;
 		}

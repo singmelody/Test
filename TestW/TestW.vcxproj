@@ -162,6 +162,7 @@
     <ClInclude Include="WorldState_Logined.h" />
     <ClInclude Include="WorldState_Logining.h" />
     <ClInclude Include="WorldState_WaitScene.h" />
+    <ClInclude Include="WorldTeamManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AvatarOnLineManager.cpp" />
@@ -197,6 +198,7 @@
     <ClCompile Include="WorldState_Logined.cpp" />
     <ClCompile Include="WorldState_Logining.cpp" />
     <ClCompile Include="WorldState_WaitScene.cpp" />
+    <ClCompile Include="WorldTeamManager.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

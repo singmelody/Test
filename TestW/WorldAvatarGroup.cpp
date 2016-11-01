@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "WorldAvatarGroup.h"
-
+#include "WorldTeamManager.h"
 
 WorldAvatarGroup::WorldAvatarGroup(void)
 {

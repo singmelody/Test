@@ -2,12 +2,22 @@
 #include "ParamPoolOwner.h"
 #include "MyListNode.h"
 
+class GameObject;
+
+typedef MyListNode<GameObject>		TickNode;
+typedef MyListNode<TickNode>		TickList;
+
 class GameObject : public ParamPoolOwner
 {
 public:
 	GameObject(void);
 	virtual ~GameObject(void);
-};
 
-typedef MyListNode<GameObject*>		TickNode;
-typedef std::list<TickNode*>		TickList;
+	void InitTickNode(GameObject* pObj){ _tick_node.Set(pObj); }
+protected:
+	bool		_bDestroy;
+	int32		m_Type;
+
+	bool		m_bShow;
+	TickNode	_tick_node;
+};

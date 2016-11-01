@@ -34,7 +34,7 @@ public:
 
 	bool GetSceneCreateParam( int16 nSceneSID, SceneCreateArg& obj);
 	WorldScene* CreateWorldScene( SceneCreateArg& arg);
-	void OnNodeCrash( int32 nNodeID = SERVERID_NULL);
+	void OnNodeCrashed( int32 nNodeID = SERVERID_NULL);
 
 	typedef std::map< int32, WorldScene*> CreatingSceneMap;
 	CreatingSceneMap m_mapCreatingScenes;

@@ -101,7 +101,7 @@ public:
 	virtual void Send2DBA( PacketBase* pPkt);
 	virtual void Send2Node( PacketBase* pPkt);	
 	virtual void Send2Login( PacketBase* pPkt);	
-	virtual void Send2Gate( PacketBase* pPkt);
+	virtual void Send2Gate( PacketBase* pPkt, bool bGateProc = false);
 
 	void Send2CurNode(PacketBase& pkt);
 
@@ -155,8 +155,10 @@ public:
 	bool			CheckAvatarFlag(int32 nFlag) { return (nFlag & m_WorldAvatarFlag) != 0; }
 	void			SetAvatarFlag(int32 nFlag) { m_WorldAvatarFlag |= nFlag; }
 	void			CancelAvatarFlag(int32 nFlag) { m_WorldAvatarFlag &= (~nFlag); }
+	void			RelaseComponent();
 
 	WorldAccount	m_account;
+	int32			m_nChangeSceneState;	// 0->first login;1->normal playing
 protected:
 	int32			m_charInterval[CC_MAX];
 
@@ -166,7 +168,6 @@ protected:
 
 	int32			m_nCurStageID;
 	WorldState*		m_pCurStage;
-	WorldServer*	m_pWorld;
 
 	CurDataStage	m_curDataOnSide;
 
@@ -186,6 +187,7 @@ protected:
 	bool			m_bLastAvatarInfoValid;
 
 	int32			m_PendingCreateSceneID;
+	WorldServer*	m_pWorld;
 
 // 	WorldTalenTreeData*			m_pTalentTreeCom;
 // 	WorldRelationComponent*		m_pRelationCom;

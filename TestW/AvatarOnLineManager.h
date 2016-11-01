@@ -36,7 +36,7 @@ public:
 
 	WorldAvatar* GetAvatarByAccountName(const char* accountName);
 	WorldAvatar* GetAvatarByDID(int64 nAvatarDID);
-	WorldAvatar* GetAvatraByName(const char* name);
+	WorldAvatar* GetAvatarByName(const char* name);
 
 	int32 GetMaxOnlineUser() const { return m_nMaxOnlineUser; }
 	void SetMaxOnlineUser(int32 v) { m_nMaxOnlineUser = v; SyncOnlineUserInfo2Login(); }

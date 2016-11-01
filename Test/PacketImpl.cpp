@@ -29,4 +29,4 @@ PACKET_IMPL(PacketCommonDataUpdate)
 
 PACKET_IMPL(PacketCommonDataDelete)
 
-
+PACKET_IMPL(PacketGateDestroyAvatar);

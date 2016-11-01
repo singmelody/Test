@@ -8,6 +8,8 @@
 #include "WorldState.h"
 #include "Time.h"
 #include "WorldSceneManager.h"
+#include "ArenaDefine.h"
+#include <sstream>
 
 WorldAvatar* GetWorldAvatar(int32 nAvatarID)
 {
@@ -17,9 +19,10 @@ WorldAvatar* GetWorldAvatar(int32 nAvatarID)
 WorldAvatar* GetWorldAvatar(PacketBase* pPkt)
 {
 	if(!pPkt)
-		return;
+		return NULL;
 
-	GetWorldAvatar(pPkt->GetAvatarID());
+	WorldAvatar* pAvatar = GetWorldAvatar(pPkt->GetAvatarID());
+	return pAvatar;
 }
 
 WorldAvatar* GetWorldAvatarByDID(int64 nAvatarDID)
@@ -54,16 +57,17 @@ WorldAvatar::WorldAvatar()
 	m_pCurStage = NULL;
 	m_bStageChanging = false;
 
-	m_changeSceneState = 0;
+	m_nChangeSceneState = 0;
 	m_bIsDestroy = false;
 
 	memset( m_charInterval, 0, sizeof(m_charInterval));
-	memset( &storageData, 0, sizeof(storageData));
+	//memset( &storageData, 0, sizeof(storageData));
 
 	m_PendingCreateSceneID = SCENE_ID_NULL;
+
+	m_worldArenaState = eMP_STATE_NULL;
 	m_WorldAvatarFlag = 0;
 
-	m_worldArenaState = MP_STATE_NULL;
 }
 
 
@@ -90,6 +94,15 @@ Scene* WorldAvatar::GetScene()
 	return WorldSceneManager::Instance().GetScene(m_sceneID);
 }
 
+void WorldAvatar::Send2Gate(PacketBase* pPkt, bool bGateProc)
+{
+	if(!pPkt)
+		return;
+
+	pPkt->SetAvatarID(GetAvatarID());
+	m_pWorld->Send2Gate( pPkt, m_nGateSrvID, bGateProc);
+}
+
 void WorldAvatar::SetCurState( WorldStateID newStateID )
 {
 	if( m_bStageChanging )
@@ -113,6 +126,46 @@ void WorldAvatar::SetCurState( WorldStateID newStateID )
 		m_pCurStage->OnEnterState(this);
 
 	m_bStageChanging = false;
+}
+
+bool WorldAvatar::Tick(int32 nDelaTime)
+{
+	TickChatInternal(nDelaTime);
+	TickComponent(nDelaTime);
+
+	return false;
+}
+
+void WorldAvatar::TickChatInternal(int32 nDeltaTime)
+{
+	for (int32 i = 0; i < CC_MAX; ++i)
+	{
+		m_charInterval[i] -= nDeltaTime;
+		if( m_charInterval[i] < 0)
+			m_charInterval[i] = 0;
+	}
+}
+
+void WorldAvatar::SetChatInterval(int32 nChannel, int32 interval)
+{
+	if( nChannel < 0 || nChannel >= CC_MAX)
+		return;
+
+	m_charInterval[nChannel] = interval;
+}
+
+int32 WorldAvatar::GetChatInterval(int32 nChannel)
+{
+	if( nChannel < 0 || nChannel >= CC_MAX)
+		return INT_MAX;
+
+	return m_charInterval[nChannel];
+}
+
+void WorldAvatar::RelaseComponent()
+{
+	//FACTORY_DELOBJ(m_pRelationComponent);
+	//FACTORY_DELOBJ(m_pCDComponent);
 }
 
 void WorldAvatar::CreateComponent()

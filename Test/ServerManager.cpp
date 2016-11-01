@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "ServerManager.h"
-
+#include "MyLog.h"
 
 
 const char* GetSrvTitle(int32 nSrvType)
@@ -73,6 +73,17 @@ ServerInfo* ServerManager::GetLoginInfo()
 	return m_pLogin;
 }
 
+ServerInfo* ServerManager::GetDBAInfo()
+{
+	 return m_pDBA;
+}
+
+
+ServerInfo* ServerManager::GetGateInfo(int32 nID)
+{
+	return m_GateGrp.GetSrv(nID);
+}
+
 ServerInfo* ServerManager::GetWarWorldInfo(PacketBase* pPkt)
 {
 	return m_pWarWorld;
@@ -97,4 +108,64 @@ int32 ServerManager::MakeSrvID(int32 nZoneID, int32 nGrpID, int32 nSrvType, int3
 int32 ServerManager::MakeSrvID(int32 nSrvType, int32 nSrvIdx)
 {
 	return MakeSrvID( m_nZoneID, m_nGrpID, nSrvType, nSrvIdx);
+}
+
+bool ServerManager::AddLocalWorld(int32 nSrvID, int32 nSocketID, SockAddr& addr)
+{
+	if(!m_pLocalWorld)
+		return false;
+
+	MyLog::message("-->>Srv Manager Registry World SocketID=%d\n", nSocketID);
+
+	ServerInfo* pInfo = new ServerInfo( eSrv_World, nSrvID, nSocketID, addr);
+	if(!pInfo)
+		return false;
+
+	m_pLocalWorld = pInfo;
+	m_localWorldChannelID = nSocketID;
+
+	AddSrvInfo(pInfo);
+	return true;
+}
+
+void ServerManager::AddSrvInfo(ServerInfo* pInfo)
+{
+	if(!pInfo)
+		return;
+
+	m_SrvBySrvID[pInfo->nSrvID] = pInfo;
+	m_SrvBySocketID[pInfo->nSocketID] = pInfo;
+}
+
+void ServerManager::RemoveSrvInfo(ServerInfo* pInfo)
+{
+	if(!pInfo)
+		return;
+
+	SrvInfoMap::iterator itr = m_SrvBySrvID.find( pInfo->nSrvID );
+	if( itr != m_SrvBySrvID.end() )
+		m_SrvBySrvID.erase(itr);
+
+	SrvInfoMap::iterator itr1 = m_SrvBySocketID.find( pInfo->nSocketID );
+	if( itr1 != m_SrvBySocketID.end() )
+		m_SrvBySocketID.erase(itr1);
+}
+
+ServerInfo* ServerManager::GetSrvBySocketID(int32 nSocketID)
+{
+	SrvInfoMap::iterator itr = m_SrvBySocketID.find( nSocketID );
+	if( itr != m_SrvBySocketID.end() )
+		return itr->second;
+
+	return NULL;
+}
+
+ServerInfo* ServerManager::GetSrvBySrvID(int32 nSrvID)
+{
+	SrvInfoMap::iterator itr = m_SrvBySrvID.find(nSrvID);
+	if( itr != m_SrvBySrvID.end() )
+		return itr->second;
+
+	return NULL;
+}
 }

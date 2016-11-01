@@ -234,6 +234,7 @@
   <ItemGroup>
     <ClInclude Include="Allocator.h" />
     <ClInclude Include="AreaManager.h" />
+    <ClInclude Include="ArenaDefine.h" />
     <ClInclude Include="AsynContextManager.h" />
     <ClInclude Include="Atomic.h" />
     <ClInclude Include="Avatar.h" />

@@ -1,6 +1,9 @@
 #include "StdAfx.h"
 #include "WorldState_WaitScene.h"
 #include "GameObject.h"
+#include "MyListNode.h"
+#include "PacketImpl.h"
+#include "WorldAvatarManager.h"
 
 WorldState_WaitScene::WorldState_WaitScene(void)
 {
@@ -31,7 +34,7 @@ void WorldState_WaitScene::Tick(int32 nFrameTime)
 		if( nPendTime <= 0 )
 		{
 			PacketCltSelectAvatarFailed tmpPkt;
-			tmpPkt.reason = PacketCltSelectAvatarFailed::eReason_EnterSceneFailed;
+			tmpPkt.nReason = PacketCltSelectAvatarFailed::eFR_EnterSceneFailed;
 			pAvatar->Send2Gate(&tmpPkt, true);
 
 			AvatarMgr.RemoveWorldAvatar(pAvatar);

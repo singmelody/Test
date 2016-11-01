@@ -99,6 +99,9 @@
     <ClInclude Include="WorldSceneInfo_MainTrunk.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="WorldTeamManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -183,6 +186,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="WorldSceneInfo_MainTrunk.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldTeamManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

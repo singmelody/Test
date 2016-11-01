@@ -2,6 +2,7 @@
 #include "WorldAvatarManager.h"
 #include "WorldAvatar.h"
 #include "MyLog.h"
+#include "AvatarOnLineManager.h"
 
 WorldAvatarManager::WorldAvatarManager(void)
 {
@@ -44,4 +45,26 @@ WorldAvatar* WorldAvatarManager::CreateWorldAvatar(CreateWorldAvatarArg& arg)
 	pAvatar->SetWorld(&WorldSrv);
 
 	return pAvatar;
+}
+
+void WorldAvatarManager::RemoveWorldAvatar(WorldAvatar* pAvatar)
+{
+	if(!pAvatar)
+		return;
+
+	m_accountMap.erase(pAvatar->Account.GetAccountName());
+	AvatarOnLineManager::Instance().DelAvatar(pAvatar);
+
+	int32 nAvatarID = pAvatar->GetAvatarID();
+
+	MyLog::message("WorldRemoveAvatra [%]", nAvatarID);
+
+	if (pAvatar->HasGateAvatar())
+	{
+		PacketGateDestroyAvatar pkt;
+		pAvatar->Send2Gate( &pkt, true);
+	}
+	pAvatar->SetCurState( eWS_Null);
+	RemovePlayerAvatar( nAvatarID );
+	FACTORY_DELOBJ(pAvatar);
 }

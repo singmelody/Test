@@ -368,3 +368,48 @@ const char* ParamPool::GetValueString(ParamBase* pParam, const char* defVal)
 
 	return pParam->GetValueString(m_pParamBuffer);
 }
+
+void ParamSyncCounter::AddCount(const char* sName, int32 flag)
+{
+	if(!sName)
+		return;
+
+	if ( (( flag & eParam_Flag_CltSelf) != 0) && ((flag & eParam_Flag_CltAll) == 0) )
+	{
+		ParamCountMap::iterator itr = m_CltSelfMap.find(sName);
+		if( itr == m_CltSelfMap.end() )
+			m_CltSelfMap.insert(std::make_pair<std::string, int32>( sName, 1));
+		else
+			itr->second++;
+	}
+
+	if( (( flag & eParam_Flag_CltSelf) == 0) && ((flag & eParam_Flag_CltAll) != 0) )
+	{
+		ParamCountMap::iterator itr = m_CltAllMap.find(sName);
+		if( itr == m_CltAllMap.end() )
+			m_CltAllMap.insert(std::make_pair<std::string, int32>( sName, 1));
+		else
+			itr->second++;
+	}
+}
+
+void ParamSyncCounter::Clear()
+{
+	m_CltSelfMap.clear();
+	m_CltAllMap.clear();
+}
+
+void ParamSyncCounter::Print()
+{
+	ParamCountMap::iterator itr = m_CltSelfMap.begin();
+	for (; itr != m_CltSelfMap.end(); ++itr)
+	{
+		MyLog::message("Param Client Self Sync Name[%s] Count[%d]", itr->first.c_str(), itr->second);
+	}
+
+	ParamCountMap::iterator itr1 = m_CltAllMap.begin();
+	for (; itr1 != m_CltAllMap.end(); ++itr1)
+	{
+		MyLog::message("Param Client All Sync Name[%s] Count[%d]", itr1->first.c_str(), itr1->second);
+	}
+}

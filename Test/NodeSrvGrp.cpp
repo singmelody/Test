@@ -3,6 +3,7 @@
 #include <algorithm>
 #include "ServerManager.h"
 #include "ParamPool.h"
+#include "ParamDef.h"
 
 NodeSrvInfo::NodeSrvInfo(int32 nSrvType, int32 nSrvID, int32 nSocketID, SockAddr& addr)
 	: ServerInfo( nSrvType, nSrvID, nSocketID, addr)

@@ -111,6 +111,10 @@ START_ADD_PACKET_MEMBER(PacketCommonDataDelete)
 ADD_PACKET_MEMBER( nDelFlag, uint8, nDelFlag);
 PACKET_END(PacketCommonDataDelete)
 
+PACKET(PacketGateDestroyAvatar,PacketBase)
+START_ADD_PACKET_MEMBER(PacketGateDestroyAvatar);
+PACKET_END(PacketGateDestroyAvatar)
+
 // CLT 2 Gate
 PACKET_CLT_2_GATE(PacketCltSelectAvatar, PacketBase)
 uint8 nAvatarIdx;

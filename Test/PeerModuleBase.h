@@ -67,6 +67,9 @@ public:
 
 	virtual void Send2Login( PacketBase* pPkt);
 
+	virtual void Send2Gate( PacketBase* pPkt, int32 nSrvID = -1, bool bGateProc = false);
+	virtual void Send2Gate( PacketBase* pPkt, int32 nSrvID, uint16 nChannelID, int16 channelList[]);
+
 	virtual void OnAddWorldInfo( ServerInfo* pInfo) {}
 	virtual void OnAddLoginInfo( ServerInfo* pInfo) {}
 	virtual void OnAddDBAInfo( ServerInfo* pInfo) {}
@@ -87,6 +90,9 @@ public:
 	void OnPeerDisConnect(int32 nSocketID);
 
 	bool GetConnectionItem(class ConnectionItem& item);
+
+	void W2GPacketCounter(int32 nPacketType);
+	void N2GPacketCounter(int32 nPacketType);
 protected:
 	void SyncConnectServer(SrvItem* pInfo);
 

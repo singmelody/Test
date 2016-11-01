@@ -34,6 +34,7 @@ public:
 
 	WorldState* GetState( int32 nStateID);
 
+	void OnNodeCrashed(int32 nNodeID = SERVERID_NULL, bool bUse = false);
 protected:
 	void RegPeerPktHandle( PacketProcessor* pProc);
 	WorldState*		m_worldState[eWS_Count];

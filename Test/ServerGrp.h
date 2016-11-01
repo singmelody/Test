@@ -16,7 +16,12 @@ public:
 	virtual ~ServerGrp(void);
 
 	void Init(ServerManager* pMgr, int32 nSrvType);
-	virtual ServerInfo* CreateSrvInfo( int32 nSrvType, int32 nSrvID, int32 nSocketID, SockAddr& laddr);
+
+	ServerInfo* CreateSrvInfo( int32 nSrvType, int32 nSrvID, int32 nSocketID, SockAddr& laddr);
+	ServerInfo* AddServer( int32 nID, int32 nSocketID, SockAddr& laddr);
+	ServerInfo*	GetServer(int32 nID);
+	
+	int32 ServerCnt() { return (int32)m_SrvMap.size();}
 
 	virtual void SortList(){}
 
@@ -25,5 +30,9 @@ public:
 	ServerManager*	m_pMgr;
 	int32			m_nSrvType;
 	std::string		m_strSrvName;
+
+protected:
+	virtual void OnAddServer(ServerInfo* pInfo){}
+	virtual void OnRemoveServer(ServerInfo* pInfo){}
 };
 

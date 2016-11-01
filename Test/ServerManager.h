@@ -65,11 +65,20 @@ public:
 	int32 MakeSrvID( int32 nSrvType, int32 nSrvIdx);
 
 	void SetPeerModule(PeerModuleBase* pPeerModule);
-
-	ServerInfo* GetLoginInfo();
-	ServerInfo* GetWarWorldInfo( PacketBase* pPkt);
-
 	void SetSrvType( SrvType nSrvType);
+
+	ServerInfo* GetWarWorldInfo( PacketBase* pPkt);
+	ServerInfo* GetLoginInfo();
+	ServerInfo*	GetDBAInfo();
+	ServerInfo* GetGateInfo(int32 nID);
+
+	bool AddLocalWorld(int32 nSrvID, int32 nSocketID, SockAddr& addr);
+
+	void AddSrvInfo( ServerInfo* pInfo);
+	void RemoveSrvInfo( ServerInfo* pInfo);
+
+	ServerInfo* GetSrvBySocketID(int32 nSocketID);
+	ServerInfo* GetSrvBySrvID(int32 nSrvID);
 
 	int32			m_nZoneID;	// ¥Ûµÿ∑…”•
 	int32			m_nGrpID;	// ∑ÔªÀºØ
@@ -87,10 +96,15 @@ public:
 
 	NodeSrvGrp		m_LocalNodeGrp;
 	NodeSrvGrp		m_RemoteNodeGrp;
+	ServerGrp		m_CollisionGroup;
+
 
 	GateSrvGrp		m_GateGrp;
 
 	ServerGrp		m_NodeDataSyncGrp;
 	ServerGrp		m_RemoteWorldGrp;
+
+	SrvInfoMap		m_SrvBySrvID;
+	SrvInfoMap		m_SrvBySocketID;
 };
 

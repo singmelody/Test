@@ -2,12 +2,12 @@
 
 enum ParamFlag
 {
-	eParamFlag_Server		= 1 << 0,
-	eParamFlag_CltSelf		= 1 << 1,
-	eParamFlag_CltAll		= 1 << 2,
-	eParamFlag_Save			= 1 << 3,
-	eParamFlag_NoUpdate		= 1 << 4,
-	eParamFlag_Node			= 1 << 5,
+	eParam_Flag_Server			= 1 << 0,
+	eParam_Flag_CltSelf			= 1 << 1,
+	eParam_Flag_CltAll			= 1 << 2,
+	eParam_Flag_Save			= 1 << 3,
+	eParam_Flag_NoUpdate		= 1 << 4,
+	eParam_Flag_Node			= 1 << 5,
 };
 
 enum ParamSync

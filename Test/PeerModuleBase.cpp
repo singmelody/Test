@@ -102,6 +102,45 @@ void PeerModuleBase::Send2Login(PacketBase* pPkt)
 	}
 }
 
+void PeerModuleBase::Send2Gate(PacketBase* pPkt, int32 nSrvID /*= -1*/, bool bGateProc /*= false*/)
+{
+	if( !pPkt )
+		return;
+
+	if(bGateProc)
+		pPkt->SetPacketType(ePacketType_GateProc);
+
+	if( nSrvID != -1 )
+	{
+		ServerInfo* pInfo = Servers.GetGateInfo(nSrvID);
+		if(pInfo)
+			PeerSend( pPkt, pInfo->nSocketID);
+	}
+	else
+	{
+		if( m_nSrvType == eSrv_Gate )
+			nSrvID = m_nSrvID;
+
+		Servers.m_GateGrp.BroadcastPacket( pkt, nSrvID);
+	}
+
+	switch(m_nSrvType)
+	{
+	case eSrv_World:
+		W2GPacketCounter( pPkt->GetPacketID() );
+		break;
+	case eSrv_Node:
+		N2GPacketCounter( pPkt->GetPacketID() );
+		break;
+	}
+
+}
+
+void PeerModuleBase::Send2Gate(PacketBase* pPkt, int32 nSrvID, uint16 nChannelID, int16 channelList[])
+{
+
+}
+
 void PeerModuleBase::StartConnectionThread()
 {
 	MyThread* pThread = new MyThread("Module Connection");
@@ -129,9 +168,39 @@ bool PeerModuleBase::GetConnectionItem(ConnectionItem& item)
 
 }
 
+void PeerModuleBase::W2GPacketCounter(int32 nPacketType)
+{
+	if(!W2G_Packet_Counter)
+		return;
+
+
+	PeerSendPacketCounter::iterator itr = m_G2NPacketCounter.find(nPacketType);
+	if( itr == m_G2NPacketCounter.end() )
+	{
+		m_G2NPacketCounter.insert(std::make_pair<int32, int32>( nPacketType, 1));
+		return;
+	}
+	else
+		itr->second++;
+}
+
+void PeerModuleBase::N2GPacketCounter(int32 nPacketType)
+{
+	if(!N2G_Packet_Counter)
+		return;
+
+	PeerSendPacketCounter::iterator itr = m_N2GPacketCounter.find(nPacketType);
+	if( itr == m_N2GPacketCounter.end() )
+	{
+		m_N2GPacketCounter.insert(std::make_pair<int32, int32>( nPacketType, 1));
+		return;
+	}
+	else
+		itr->second++;
+}	
+
 void PeerModuleBase::OnPeerDisConnect(int32 nSocketID)
 {
-	_FunctionStart( PeerModuleBase_OnPeerDisConnect);
 
 	ServerInfo* pInfo = Servers.GetSrvBySocketID( nSocketID );
 	if(!pInfo)

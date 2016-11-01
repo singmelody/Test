@@ -38,6 +38,11 @@ WorldState* WorldStateManager::GetState(int32 nStateID)
 	return m_worldState[nStateID];
 }
 
+void WorldStateManager::OnNodeCrash()
+{
+
+}
+
 void WorldStateManager::RegPeerPktHandle(PacketProcessor* pProc)
 {
 	for (int32 i = 0; i < eWS_Count; ++i)

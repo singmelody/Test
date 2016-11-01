@@ -1,6 +1,7 @@
 #include "StdAfx.h"
 #include "AvatarOnLineManager.h"
 #include "PacketImpl.h"
+#include "WorldAvatar.h"
 
 AvatarOnLineManager::AvatarOnLineManager(void)
 	: m_nMaxOnlineUser(0)
@@ -46,4 +47,12 @@ void AvatarOnLineManager::SyncOnlineUserInfo2Login()
 	Send2Login(pkt);
 }
 
+WorldAvatar* AvatarOnLineManager::GetAvatarByName(const char* name)
+{
+	AvatarNameMap::iterator itr = m_avatarNameTable.find(name);
+	if( itr != m_avatarNameTable.end())
+		return GetWorldAvatar(itr->second);
+
+	return NULL;
+}
 
