@@ -48,7 +48,7 @@ public:
 	f32			nRange;
 
 	const Vector3& GetPos() const { return vPos; }
-	Vector3 GetRangePos() const;
+	Vector3 GetRandPos() const;
 
 	EnterMode	nEnterMode;
 protected:

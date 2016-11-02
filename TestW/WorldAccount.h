@@ -24,6 +24,9 @@ public:
 	const std::string& GetAccountName() const { return m_AccountName; }
 
 	void SetRecentRoleSet( ParamPool* pPool);
+
+	void SetUserIp( uint32 nIP) { m_nUserIP = nIP; }
+	uint32 GetUserIp() const { return m_nUserIP; }
 protected:
 	ParamPool*	m_pRoleDataSet[MAX_AVATAR_COUNT_ONE_USER];
 	ParamPool*	m_pRecentRoleSet;

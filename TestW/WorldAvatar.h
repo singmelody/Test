@@ -159,6 +159,10 @@ public:
 
 	WorldAccount	m_account;
 	int32			m_nChangeSceneState;	// 0->first login;1->normal playing
+	CurDataStage	m_curDataOnSide;
+
+	int32			m_nDataLoadingFlags;
+	int32			m_nCommonDataMaskFinish;
 protected:
 	int32			m_charInterval[CC_MAX];
 
@@ -169,12 +173,10 @@ protected:
 	int32			m_nCurStageID;
 	WorldState*		m_pCurStage;
 
-	CurDataStage	m_curDataOnSide;
 
 	int32			m_nTargetNodeID;
 	int32			m_nTargetSceneID;
 
-	int32			m_nDataLoadingFlags;
 	int32			m_WorldAvatarFlag;
 
 	int8			m_worldArenaState;

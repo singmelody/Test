@@ -11,7 +11,7 @@ public:
 
 	virtual int32 GetState() { return eWS_DataReady; }
 	virtual void OnEnterState( WorldAvatar* pAvatar);
-	virtual void OnLeaveStage( WorldAvatar* pAvatar);
+	virtual void OnLeaveState( WorldAvatar* pAvatar);
 	virtual void DestroyAvatar( WorldAvatar* pAvatar);
 
 	virtual void Tick(int32 nFrameTime);

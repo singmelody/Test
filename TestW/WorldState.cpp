@@ -17,7 +17,7 @@ void WorldState::OnEnterState(WorldAvatar* pAvatar)
 	pAvatar->SendPendingTime(Create_Avatar_Pending_Time);
 }
 
-void WorldState::OnLeaveStage(WorldAvatar* pAvatar)
+void WorldState::OnLeaveState(WorldAvatar* pAvatar)
 {
 	m_listAvatars.Remove(pAvatar->GetTickNode());
 }

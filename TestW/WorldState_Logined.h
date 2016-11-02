@@ -13,7 +13,7 @@ public:
 	virtual void RegPeerPktHandle(PacketProcessor* pProc);
 	
 	virtual void OnEnterState(WorldAvatar* pAvatar);
-	virtual void OnLeaveStage(WorldAvatar* pAvatar);
+	virtual void OnLeaveState(WorldAvatar* pAvatar);
 	virtual void DestroyAvatar(WorldAvatar* pAvatar);
 
 	void PktGate_CreateAvatar( class PacketCreateAvatar* pPkt);

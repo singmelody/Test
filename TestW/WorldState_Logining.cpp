@@ -2,6 +2,16 @@
 
 #include "WorldState_Logining.h"
 #include "AvatarOnLineManager.h"
+#include "PacketProcessor.h"
+#include <assert.h>
+#include "PacketImpl.h"
+#include "WorldAvatar.h"
+#include "ParamHelperDefine.h"
+#include "ParamPool.h"
+#include "ParamTypeDef.h"
+#include "MyLog.h"
+#include "MyListNode.h"
+#include "ParamDef.h"
 
 WorldState_Logining::WorldState_Logining(void)
 {
@@ -14,8 +24,8 @@ WorldState_Logining::~WorldState_Logining(void)
 
 void WorldState_Logining::RegPeerPktHandle(PacketProcessor* pProc)
 {
-	REG_PACKET_HANDLER( pProc, PacketUserData, WorldState_Logining, PktDBA_UserData);
-	REG_PACKET_HANDLER( pProc, PacketUserDataRegFinish, WorldState_Logining, PktDBA_UserDataReqFinish);
+// 	REG_PACKET_HANDLER( pProc, PacketUserData, WorldState_Logining, PktDBA_UserData);
+// 	REG_PACKET_HANDLER( pProc, PacketUserDataRegFinish, WorldState_Logining, PktDBA_UserDataReqFinish);
 }
 
 void WorldState_Logining::PktDBA_UserData(class PacketUserData* pPkt)
@@ -40,10 +50,10 @@ void WorldState_Logining::PktDBA_UserDataReqFinish(class PacketUserDataRegFinish
 		if(!pPool)
 			continue;
 
-		pkt.AvatarDID = PARAM_GET_VALUE( pPool, avatardid,  (int64)-1);
-		pkt.index = i;
+		pkt.nAvatarDID = PARAM_GET_VALUE( pPool, avatardid,  (int64)-1);
+		pkt.nIndex = i;
 
-		pkt.SyncParam2Gate( pAvatar, true, pPool, Param_Flag_RoleList, Param_Sync_All);
+		pkt.SyncParam2Gate( pAvatar, true, pPool, eParam_Flag_RoleList, eParam_Sync_All);
 	}
 }
 
@@ -57,25 +67,25 @@ void WorldState_Logining::OnEnterState( WorldAvatar* pAvatar)
 
 	PacketSystemConfigRequest pktConfig;
 	pktConfig.SetAvatarID( pAvatar->GetAvatarID() );
-	pktConfig.AvatarID = pAvatar->GetAvatarID();
-	pktConfig.accountLen = uint8(pAvatar->m_account.GetAccountName().size());
-	assert(pktConfig.accountLen <= sizeof(pktConfig.account));
-	memcpy( pktConfig.account, pAvatar->m_account.GetAccountName().c_str(), pktConfig.accountLen);
+	pktConfig.nAvatarDID = pAvatar->GetAvatarDID();
+	pktConfig.nAccountLen = uint8(pAvatar->m_account.GetAccountName().size());
+	assert(pktConfig.nAccountLen <= sizeof(pktConfig.account));
+	memcpy( pktConfig.account, pAvatar->m_account.GetAccountName().c_str(), pktConfig.nAccountLen);
 	Send2DBA(pktConfig);
 
 	PacketRoleListRequest pkt;
 	pkt.SetAvatarID( pAvatar->GetAvatarID() );
-	pkt.AccountNameLen = uint8(pAvatar->m_account.GetAccountNmae().size());
-	assert( pkt.AccountNameLen <= sizeof(pkt.AccountName));
-	memcpy( pkt.AccountName, pAvatar->m_account.GetAccountName().c_str(), pkt.AccountNameLen);
+	pkt.nAccountNameLen = uint8(pAvatar->m_account.GetAccountName().size());
+	assert( pkt.nAccountNameLen <= sizeof(pkt.AccountName));
+	memcpy( pkt.AccountName, pAvatar->m_account.GetAccountName().c_str(), pkt.nAccountNameLen);
 
-	Send2DBA(PacketRoleListRequest);
+	Send2DBA(pkt);
 }
 
 
-void WorldState_Logining::OnLeaveStage( WorldAvatar* pAvatar)
+void WorldState_Logining::OnLeaveState( WorldAvatar* pAvatar)
 {
-	WorldState::OnLeaveStage(pAvatar);
+	WorldState::OnLeaveState(pAvatar);
 }
 
 void WorldState_Logining::Tick(int32 nFrameTime)

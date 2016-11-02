@@ -26,9 +26,9 @@ void WorldState_DataReady::OnEnterState(WorldAvatar* pAvatar)
 	assert(pPool);
 }
 
-void WorldState_DataReady::OnLeaveStage(WorldAvatar* pAvatar)
+void WorldState_DataReady::OnLeaveState(WorldAvatar* pAvatar)
 {
-	WorldState::OnLeaveStage(pAvatar);
+	WorldState::OnLeaveState(pAvatar);
 
 	uint32 nLandTime = Time::CurrentTime().Second();
 	PARAM_SET_VALUE( pAvatar->GetParamPool(), lastlandtime, nLandTime, true);

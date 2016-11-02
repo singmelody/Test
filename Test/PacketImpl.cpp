@@ -30,3 +30,7 @@ PACKET_IMPL(PacketCommonDataUpdate)
 PACKET_IMPL(PacketCommonDataDelete)
 
 PACKET_IMPL(PacketGateDestroyAvatar);
+
+PACKET_IMPL(PacketSystemConfigRequest);
+
+PACKET_IMPL(PacketAvatarData2DBA);

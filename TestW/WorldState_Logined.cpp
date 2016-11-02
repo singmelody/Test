@@ -16,9 +16,9 @@ void WorldState_Logined::OnEnterState(WorldAvatar* pAvatar)
 	WorldState::OnEnterState(pAvatar);
 }
 
-void WorldState_Logined::OnLeaveStage(WorldAvatar* pAvatar)
+void WorldState_Logined::OnLeaveState(WorldAvatar* pAvatar)
 {
-	WorldState::OnLeaveStage(pAvatar);
+	WorldState::OnLeaveState(pAvatar);
 }
 
 void WorldState_Logined::RegPeerPktHandle(PacketProcessor* pProc)

@@ -69,6 +69,7 @@ WorldAvatar::WorldAvatar()
 	m_worldArenaState = eMP_STATE_NULL;
 	m_WorldAvatarFlag = 0;
 
+	m_nCommonDataMaskFinish = -1;
 }
 
 
@@ -118,7 +119,7 @@ void WorldAvatar::SetCurState( WorldStateID newStateID )
 	m_bStageChanging = true;
 
 	if( m_pCurStage != NULL)
-		m_pCurStage->OnLeaveStage(this);
+		m_pCurStage->OnLeaveState(this);
 
 	m_nCurStageID = newStateID;
 	m_pCurStage = WorldStateManager::Instance().GetState(m_nCurStageID);

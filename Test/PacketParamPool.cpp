@@ -61,6 +61,27 @@ void PacketParamPool::SyncParamPool(SyncPacketArg& arg, ParamPool* pPool, uint32
 		pPool->ClearDirty();
 }
 
+
+void PacketParamPool::SyncParamPool(PacketSender* pPack, SENDPARAMFUNC1 pFunc, ParamPool* pPool, uint32 paramFlag, uint32 syncFlag, uint32 nParamFlagExclude /*= 0*/)
+{
+
+}
+
+void PacketParamPool::SyncParamPool(PacketSender* pPack, SENDPARAMFUNC2 pFunc, int32 nParam, ParamPool* pPool, uint32 paramFlag, uint32 syncFlag, uint32 nParamFlagExclude /*= 0*/)
+{
+
+}
+
+void PacketParamPool::SyncParamPool(PacketSender* pPack, SENDPARAMFUNC3 pFunc, bool bParam, ParamPool* pPool, uint32 paramFlag, uint32 syncFlag, uint32 nParamFlagExclude /*= 0*/)
+{
+
+}
+
+void PacketParamPool::SyncParam2Gate(class PacketSender* pSender, bool bGateProc, ParamPool* pPool, uint32 nParamFlag, uint32 nSyncFlag, uint32 nParamFlagExclude)
+{
+	SyncParamPool( pSender, &PacketSender::Send2Gate, bGateProc, pPool, nParamFlag, nSyncFlag, nParamFlagExclude);
+}
+
 bool PacketParamPool::UpdateParamPool(ParamPoolOwner* pPool, bool bDirty /*= false*/)
 {
 	if(!pPool)

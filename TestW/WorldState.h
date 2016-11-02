@@ -16,7 +16,7 @@ public:
 
 	virtual int32 GetState() { return eWS_Null; }
 	virtual void OnEnterState( WorldAvatar* pAvatar);
-	virtual void OnLeaveStage( WorldAvatar* pAvatar);
+	virtual void OnLeaveState( WorldAvatar* pAvatar);
 
 	virtual void RegPeerPktHandle( PacketProcessor* pProc){}
 

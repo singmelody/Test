@@ -34,6 +34,9 @@
     <Filter Include="Util\Time">
       <UniqueIdentifier>{932440a5-8298-41e9-b608-96b1d59f4883}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Util\Math">
+      <UniqueIdentifier>{4fc833d6-f812-4929-a71a-e53c567b3e2d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -133,9 +136,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MyVector.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MyMath.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SceneContentNpc.h">
@@ -321,9 +321,6 @@
     <ClInclude Include="CommonDataOwner.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Avatar.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ParamTypeDef.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -420,6 +417,12 @@
     <ClInclude Include="ArenaDefine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="MyMath.h">
+      <Filter>Util\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Avatar.h">
+      <Filter>Game\Avatar</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -504,9 +507,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="MyVector.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MyMath.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SceneContentNpc.cpp">
@@ -680,9 +680,6 @@
     <ClCompile Include="CommonDataOwner.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Avatar.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="PacketParamPool.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -781,6 +778,12 @@
     </ClCompile>
     <ClCompile Include="AvatarManager.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MyMath.cpp">
+      <Filter>Util\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Avatar.cpp">
+      <Filter>Game\Avatar</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

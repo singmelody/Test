@@ -5,7 +5,8 @@
 class GameObject;
 
 typedef MyListNode<GameObject>		TickNode;
-typedef MyListNode<TickNode>		TickList;
+typedef MyListNode<GameObject>		*PTICKNODE;
+typedef MyList<TickNode>		TickList;
 
 class GameObject : public ParamPoolOwner
 {

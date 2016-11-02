@@ -2,6 +2,7 @@
 
 #include "PacketBase.h"
 #include "MyPacket.h"
+#include "PacketSender.h"
 
 PACKET(PacketParamPoolBase, PacketBaseEx<PACKET_EX_BUFF_SIZE>)
 uint32	m_ParamType;
@@ -14,6 +15,7 @@ PACKET_END(PacketParamPoolBase)
 class SyncPacketArg;
 class ParamPool;
 class ParamPoolOwner;
+class PacketSender;
 
 class PacketParamPool : public PacketParamPoolBase
 {
@@ -33,7 +35,16 @@ public:
 
 	bool CheckFlag(int8 flag) { }
 
-	void SyncParamPool( SyncPacketArg& arg, ParamPool* pPool, uint32 paramFlag, uint32 syncFlag, uint32 nParamFlagExclude);
+	void SyncParamPool( SyncPacketArg& arg, ParamPool* pPool, uint32 paramFlag, uint32 syncFlag, uint32 nParamFlagExclude = 0);
+	void SyncParamPool( PacketPack* pPack, ParamPool* pPool, uint32 paramFlag, uint32 syncFlag, uint32 nParamFlagExclude = 0);
+
+	void SyncParamPool( PacketSender* pPack, SENDPARAMFUNC1 pFunc, ParamPool* pPool, uint32 paramFlag, uint32 syncFlag, uint32 nParamFlagExclude = 0);
+	void SyncParamPool( PacketSender* pPack, SENDPARAMFUNC2 pFunc, int32 nParam, ParamPool* pPool, uint32 paramFlag, uint32 syncFlag, uint32 nParamFlagExclude = 0);
+	void SyncParamPool( PacketSender* pPack, SENDPARAMFUNC3 pFunc, bool bParam, ParamPool* pPool, uint32 paramFlag, uint32 syncFlag, uint32 nParamFlagExclude = 0);
+
+
+	void SyncParam2Gate(class PacketSender* pSender, bool bGateProc, ParamPool* pPool, uint32 nParamFlag, uint32 nSyncFlag, uint32 nParamFlagExclude = 0);
+
 
 	bool UpdateParamPool( ParamPoolOwner* pPool, bool bDirty = false);
 	bool UpdateParamPool( ParamPool* pPool, bool bDirty = false);

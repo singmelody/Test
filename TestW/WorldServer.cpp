@@ -8,6 +8,8 @@
 #include "AvatarOnLineManager.h"
 #include "WorldSceneManager.h"
 
+bool WorldServer::bUseBilling = false;
+
 WorldServer::WorldServer()
 	: m_shutdownStage(eSDS_None)
 	, m_bBillingRested(false)
@@ -53,6 +55,7 @@ void WorldServer::OnAllocateSrvID(int32 nSrvType, int32 nSrvID, int32 nSocketID)
 {
 
 }
+
 
 bool WorldServer::ClusterCheck()
 {

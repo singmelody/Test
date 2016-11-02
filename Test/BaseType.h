@@ -58,6 +58,9 @@ typedef TiXmlNode XmlNode;
 #define	INVALID_TEAM_ID				-1
 #define SCENE_ID_DEFAULT			1
 
+#define MIN_ACCOUNT	5
+#define MAX_ACCOUNT	50
+
 #define MAX_AVATAR_COUNT_ONE_USER	3
 
 #define _WINSOCKAPI_

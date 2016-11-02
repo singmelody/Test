@@ -2,6 +2,13 @@
 #include "WorldState_DataLoading.h"
 #include "PacketProcessor.h"
 #include "AvatarOnLineManager.h"
+#include "WorldAvatar.h"
+#include "MyLog.h"
+#include "ParamPool.h"
+#include "SceneInfo.h"
+#include "WorldServer.h"
+#include "MyMath.h"
+#include "WorldSceneManager.h"
 
 WorldState_DataLoading::WorldState_DataLoading(void)
 {
@@ -14,6 +21,8 @@ WorldState_DataLoading::~WorldState_DataLoading(void)
 
 void WorldState_DataLoading::OnEnterState(WorldAvatar* pAvatar)
 {
+	
+
 	WorldState::OnEnterState(pAvatar);
 	
 	ParamPool* pPool = pAvatar->GetParamPool();
@@ -31,14 +40,14 @@ void WorldState_DataLoading::OnEnterState(WorldAvatar* pAvatar)
 	// init data loading process
 	{
 		pAvatar->m_nDataLoadingFlags = 0;
-		pAvatar->m_CommonDataMaskFinish = 0;
+		pAvatar->m_nCommonDataMaskFinish = 0;
 	}
 
 	pAvatar->m_curDataOnSide = eCurDataOnDBA;
 
 	RequestAvatarDataFromDBA( pAvatar );
 
-	if( WorldServer::UseBilling )
+	if( WorldServer::bUseBilling )
 		pAvatar->RequestBillingLogin();
 	else
 	{
@@ -51,7 +60,7 @@ void WorldState_DataLoading::OnEnterState(WorldAvatar* pAvatar)
 
 void WorldState_DataLoading::OnLeaveState(WorldAvatar* pAvatar)
 {
-	WorldState::OnLeaveStage(pAvatar);
+	WorldState::OnLeaveState(pAvatar);
 }
 
 void WorldState_DataLoading::Tick(int32 nFrameTime)
@@ -94,8 +103,8 @@ void WorldState_DataLoading::RequestAvatarDataFromDBA(WorldAvatar* pAvatar)
 {
 	PacketAvatarData2DBA pkt;
 	pkt.SetAvatarID( pAvatar->GetAvatarID());
-	pkt.SetAvatarDID( pAvatar->GetAvatarDID() );
-	pkt.nFlag = AVATARDATA_SELECT;
+	pkt.nAvatarDID = pAvatar->GetAvatarDID();
+	pkt.nFlag = eAvatarData_Select;
 	Send2DBA( pkt );
 }
 
@@ -120,7 +129,7 @@ bool WorldState_DataLoading::CheckAvatarSceneInfo(WorldAvatar* pAvatar)
 		f32 y = pPool->GetValue( "downcorrdinatey", 0.0f);
 		f32 z = pPool->GetValue( "downcorrdinatez", 0.0f);
 
-		if(FLOAT_EQUAL( x, 0.0f) && FLOAT_EQUAL( y, 0.0f) && FLOAT_EQUAL( z, 0.0f))
+		if(Math::FLOAT_EQUAL( x, 0.0f) && Math::FLOAT_EQUAL( y, 0.0f) && Math::FLOAT_EQUAL( z, 0.0f))
 			bRelocate = true;
 
 		else
@@ -135,7 +144,7 @@ bool WorldState_DataLoading::CheckAvatarSceneInfo(WorldAvatar* pAvatar)
 	}
 	else
 	{
-		pInfo = SceneManager::GetSceneInfo( SCENE_ID_DEFAULT);
+		pInfo = SceneMgr::GetSceneInfo( SCENE_ID_DEFAULT);
 		if(!pInfo)
 			return false;
 
@@ -153,7 +162,7 @@ bool WorldState_DataLoading::CheckAvatarSceneInfo(WorldAvatar* pAvatar)
 		}
 		
 		pAvatar->SetTargetScenePoint( pEnter->GetRandPos() );
-		pAvatar->SetTargetSceneDir( pEnter->Dir );
+		pAvatar->SetTargetSceneDir( pEnter->vDir );
 	}
 
 	pAvatar->m_nTargetSceneID = nTargetSceneID;
