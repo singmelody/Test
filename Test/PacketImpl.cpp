@@ -34,3 +34,15 @@ PACKET_IMPL(PacketGateDestroyAvatar);
 PACKET_IMPL(PacketSystemConfigRequest);
 
 PACKET_IMPL(PacketAvatarData2DBA);
+
+PACKET_IMPL(PacketUserSelectData);
+
+PACKET_IMPL(PacketCommonDataRequest);
+
+PACKET_IMPL(PacketGateCreateAvatar);
+
+PACKET_IMPL(PacketCommonDataReqFinish);
+
+PACKET_IMPL(PacketGateCreateAvatarRst);
+
+PACKET_IMPL(PacketManufactureDataInit);

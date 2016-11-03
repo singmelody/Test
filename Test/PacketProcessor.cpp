@@ -36,6 +36,21 @@ bool PacketProcessor::PushPacket( PacketBase* pPkt )
 	return true;
 }
 
+void PacketProcessor::RegPacketHandle(int32 nPacketID, FuncEntry* pFunc)
+{
+	if(!pFunc)
+		return;
+
+	FuncMap::iterator itr = m_functionMap.find(nPacketID);
+	if( itr != m_functionMap.end() )
+	{
+		MyLog::error("RegPacket Handle Fail, Hanlder Existing");
+		return;
+	}
+
+	m_functionMap[nPacketID] = pFunc;
+}
+
 void PacketProcessor::RegDefaultHandler(FuncEntry* pFunc)
 {
 	if(DefaultPacketFunction)

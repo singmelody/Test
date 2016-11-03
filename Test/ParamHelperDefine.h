@@ -10,6 +10,6 @@ enum
 {
 	param_name_avatardid	= 0,
 	param_name_clt_ip		= 136,
-	param_name_leftpoint	= 137,
+	param_name_left_point	= 137,
 	param_name_viplevel		= 189,
 };

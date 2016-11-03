@@ -4,6 +4,7 @@
 #include "MyListNode.h"
 #include "PacketImpl.h"
 #include "WorldAvatarManager.h"
+#include "WorldAvatar.h"
 
 WorldState_WaitScene::WorldState_WaitScene(void)
 {

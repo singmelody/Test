@@ -9,13 +9,6 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="tinyxml">
-      <UniqueIdentifier>{1e6bcd4f-9f82-4f21-94a4-a1f9bac48f0d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Util">
       <UniqueIdentifier>{ab041ec2-3c88-443e-ba3b-237d1ed8d032}</UniqueIdentifier>
     </Filter>
@@ -36,6 +29,21 @@
     </Filter>
     <Filter Include="Util\Math">
       <UniqueIdentifier>{4fc833d6-f812-4929-a71a-e53c567b3e2d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Util\Memory">
+      <UniqueIdentifier>{d609e2bb-8467-4fd9-b2ba-77596005f31e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Util\Log">
+      <UniqueIdentifier>{9de2929d-7f59-49a6-8c96-33d70056fbd8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirParty">
+      <UniqueIdentifier>{86c95b8d-fa26-4504-9ec9-92084543cd61}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirParty\tinyxml">
+      <UniqueIdentifier>{1e6bcd4f-9f82-4f21-94a4-a1f9bac48f0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\CommonData">
+      <UniqueIdentifier>{4974a16d-2597-40a8-8a89-a7812c6cd6e0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -61,9 +69,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="UtilID.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Allocator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PoolAllocatorEx.h">
@@ -117,16 +122,7 @@
     <ClInclude Include="DLAllocator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="LogThread.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="FunctionBase.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Log.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MyLog.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="RSAipher.h">
@@ -318,9 +314,6 @@
     <ClInclude Include="SrvPacketTestManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CommonDataOwner.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ParamTypeDef.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -337,9 +330,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AvatarSrv.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CommonDataCont.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MyLoadTemplateManager.h">
@@ -379,10 +369,10 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="thirdparty\tinyxml\tinystr.h">
-      <Filter>tinyxml</Filter>
+      <Filter>ThirParty\tinyxml</Filter>
     </ClInclude>
     <ClInclude Include="thirdparty\tinyxml\tinyxml.h">
-      <Filter>tinyxml</Filter>
+      <Filter>ThirParty\tinyxml</Filter>
     </ClInclude>
     <ClInclude Include="CircularList.h">
       <Filter>Util\Container</Filter>
@@ -411,9 +401,6 @@
     <ClInclude Include="Time.h">
       <Filter>Util\Time</Filter>
     </ClInclude>
-    <ClInclude Include="AvatarManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ArenaDefine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -422,6 +409,39 @@
     </ClInclude>
     <ClInclude Include="Avatar.h">
       <Filter>Game\Avatar</Filter>
+    </ClInclude>
+    <ClInclude Include="StaticMemoryPool.h">
+      <Filter>Util\Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="Allocator.h">
+      <Filter>Util\Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="MyLog.h">
+      <Filter>Util\Log</Filter>
+    </ClInclude>
+    <ClInclude Include="Log.h">
+      <Filter>Util\Log</Filter>
+    </ClInclude>
+    <ClInclude Include="LogThread.h">
+      <Filter>Util\Log</Filter>
+    </ClInclude>
+    <ClInclude Include="resource1.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AvatarManager.h">
+      <Filter>Game\Avatar</Filter>
+    </ClInclude>
+    <ClInclude Include="CommonDataCont.h">
+      <Filter>Game\CommonData</Filter>
+    </ClInclude>
+    <ClInclude Include="CommonDataOwner.h">
+      <Filter>Game\CommonData</Filter>
+    </ClInclude>
+    <ClInclude Include="CommonDataObj.h">
+      <Filter>Game\CommonData</Filter>
+    </ClInclude>
+    <ClInclude Include="CommonDataManager.h">
+      <Filter>Game\CommonData</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -444,9 +464,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="UtilID.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Allocator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PoolAllocatorEx.cpp">
@@ -488,16 +505,7 @@
     <ClCompile Include="DLAllocator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="LogThread.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="FunctionBase.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Log.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MyLog.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="RSAipher.cpp">
@@ -677,9 +685,6 @@
     <ClCompile Include="SrvPacketTestManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CommonDataOwner.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="PacketParamPool.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -693,12 +698,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="AvatarSrv.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CommonDataCont.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MyLoadTemplateManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="NodeSrvGrp.cpp">
@@ -738,16 +737,16 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="thirdparty\tinyxml\tinystr.cpp">
-      <Filter>tinyxml</Filter>
+      <Filter>ThirParty\tinyxml</Filter>
     </ClCompile>
     <ClCompile Include="thirdparty\tinyxml\tinyxml.cpp">
-      <Filter>tinyxml</Filter>
+      <Filter>ThirParty\tinyxml</Filter>
     </ClCompile>
     <ClCompile Include="thirdparty\tinyxml\tinyxmlerror.cpp">
-      <Filter>tinyxml</Filter>
+      <Filter>ThirParty\tinyxml</Filter>
     </ClCompile>
     <ClCompile Include="thirdparty\tinyxml\tinyxmlparser.cpp">
-      <Filter>tinyxml</Filter>
+      <Filter>ThirParty\tinyxml</Filter>
     </ClCompile>
     <ClCompile Include="CircularList.cpp">
       <Filter>Util\Container</Filter>
@@ -776,14 +775,47 @@
     <ClCompile Include="Time.cpp">
       <Filter>Util\Time</Filter>
     </ClCompile>
-    <ClCompile Include="AvatarManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="MyMath.cpp">
       <Filter>Util\Math</Filter>
     </ClCompile>
     <ClCompile Include="Avatar.cpp">
       <Filter>Game\Avatar</Filter>
     </ClCompile>
+    <ClCompile Include="StaticMemoryPool.cpp">
+      <Filter>Util\Memory</Filter>
+    </ClCompile>
+    <ClCompile Include="Allocator.cpp">
+      <Filter>Util\Memory</Filter>
+    </ClCompile>
+    <ClCompile Include="MyLog.cpp">
+      <Filter>Util\Log</Filter>
+    </ClCompile>
+    <ClCompile Include="MyLoadTemplateManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Log.cpp">
+      <Filter>Util\Log</Filter>
+    </ClCompile>
+    <ClCompile Include="LogThread.cpp">
+      <Filter>Util\Log</Filter>
+    </ClCompile>
+    <ClCompile Include="AvatarManager.cpp">
+      <Filter>Game\Avatar</Filter>
+    </ClCompile>
+    <ClCompile Include="CommonDataCont.cpp">
+      <Filter>Game\CommonData</Filter>
+    </ClCompile>
+    <ClCompile Include="CommonDataOwner.cpp">
+      <Filter>Game\CommonData</Filter>
+    </ClCompile>
+    <ClCompile Include="CommonDataObj.cpp">
+      <Filter>Game\CommonData</Filter>
+    </ClCompile>
+    <ClCompile Include="CommonDataManager.cpp">
+      <Filter>Game\CommonData</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Test.rc" />
   </ItemGroup>
 </Project>

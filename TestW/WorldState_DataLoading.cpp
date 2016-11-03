@@ -1,6 +1,5 @@
 #include "StdAfx.h"
 #include "WorldState_DataLoading.h"
-#include "PacketProcessor.h"
 #include "AvatarOnLineManager.h"
 #include "WorldAvatar.h"
 #include "MyLog.h"
@@ -9,6 +8,8 @@
 #include "WorldServer.h"
 #include "MyMath.h"
 #include "WorldSceneManager.h"
+#include "PacketProcessor.h"
+#include "CommonDataObj.h"
 
 WorldState_DataLoading::WorldState_DataLoading(void)
 {
@@ -21,8 +22,6 @@ WorldState_DataLoading::~WorldState_DataLoading(void)
 
 void WorldState_DataLoading::OnEnterState(WorldAvatar* pAvatar)
 {
-	
-
 	WorldState::OnEnterState(pAvatar);
 	
 	ParamPool* pPool = pAvatar->GetParamPool();
@@ -129,7 +128,7 @@ bool WorldState_DataLoading::CheckAvatarSceneInfo(WorldAvatar* pAvatar)
 		f32 y = pPool->GetValue( "downcorrdinatey", 0.0f);
 		f32 z = pPool->GetValue( "downcorrdinatez", 0.0f);
 
-		if(Math::FLOAT_EQUAL( x, 0.0f) && Math::FLOAT_EQUAL( y, 0.0f) && Math::FLOAT_EQUAL( z, 0.0f))
+		if(FLOAT_EQUAL( x, 0.0f) && FLOAT_EQUAL( y, 0.0f) && FLOAT_EQUAL( z, 0.0f))
 			bRelocate = true;
 
 		else
@@ -144,7 +143,7 @@ bool WorldState_DataLoading::CheckAvatarSceneInfo(WorldAvatar* pAvatar)
 	}
 	else
 	{
-		pInfo = SceneMgr::GetSceneInfo( SCENE_ID_DEFAULT);
+		pInfo = SceneMgr.GetSceneInfo( SCENE_ID_DEFAULT);
 		if(!pInfo)
 			return false;
 
@@ -173,9 +172,9 @@ void WorldState_DataLoading::RegPeerPktHandle(PacketProcessor* pProcessor)
 {
 	REG_PACKET_HANDLER( pProcessor, PacketUserSelectData, WorldState_DataLoading, PktDBA_SelectUserData);
 	REG_PACKET_HANDLER( pProcessor, PacketCommonDataInit, WorldState_DataLoading, PktDBA_CommonDataInit);
-	REG_PACKET_HANDLER( pProcessor, PacketCommonDataReqFinish, WorldState_DataLoading, PktDBA_CommonDataReqFinish);
-	REG_PACKET_HANDLER( pProcessor, PacketGateCreateAvatarRst, WorldState_DataLoading, PktDBA_CreateAvatarRes);
-	REG_PACKET_HANDLER( pProcessor, PacketManufactureDataInit, WorldState_DataLoading, PktDBA_ManufactureDataInit);
+ 	REG_PACKET_HANDLER( pProcessor, PacketCommonDataReqFinish, WorldState_DataLoading, PktDBA_CommonDataReqFinish);
+ 	REG_PACKET_HANDLER( pProcessor, PacketGateCreateAvatarRst, WorldState_DataLoading, PktDBA_CreateAvatarRes);
+ 	REG_PACKET_HANDLER( pProcessor, PacketManufactureDataInit, WorldState_DataLoading, PktDBA_ManufactureDataInit);
 
 }
 
@@ -202,34 +201,65 @@ void WorldState_DataLoading::PktDBA_SelectUserData(class PacketUserSelectData* p
 		pAvatar->OnAfterPullDataFromDBA();
 
 		int32 nAvatarID = pAvatar->GetAvatarID();
-		int32 nAvatarDID = pAvatar->GetAvatarDID();
+		int64 nAvatarDID = pAvatar->GetAvatarDID();
 
 		{
-			pAvatar->m_CommonDataMaskFinish = 0;
+			pAvatar->m_nCommonDataMaskFinish = 0;
 
 			PacketCommonDataRequest pkt;
-
 			pkt.SetAvatarID( nAvatarID);
 			pkt.nAvatarDID = nAvatarDID;
 
 			Send2DBA(pkt);
 		}
 
-		{
-			PacketNewPlayerMail pkt;
-			pkt.nAvatarDID = nAvatarDID;
-			pkt.SetAvatarID(nAvatarID);
-			Send2DBA(pkt);
-		}
-
-		{
-			PacketDeletgateQuestDataRequest pkt;
-			pkt.SetAvatarID( nAvatarID);
-			pkt.nAvatarDID = nAvatarDID;
-
-			Send2DBA(pkt);
-		}
+// 		{
+// 			PacketNewPlayerMail pkt;
+// 			pkt.nAvatarDID = nAvatarDID;
+// 			pkt.SetAvatarID(nAvatarID);
+// 			Send2DBA(pkt);
+// 		}
+// 
+// 		{
+// 			PacketDeletgateQuestDataRequest pkt;
+// 			pkt.SetAvatarID( nAvatarID);
+// 			pkt.nAvatarDID = nAvatarDID;
+// 
+// 			Send2DBA(pkt);
+// 		}
 	}
+}
+
+void WorldState_DataLoading::PktDBA_CommonDataInit(class PacketCommonDataInit* pPkt)
+{
+	if(!pPkt)
+		return;
+
+	WorldAvatar* pAvatar = GetWorldAvatarAndCheckStage( pPkt->GetAvatarID(), "WorldState_DataLoading::PktDBA_CommonDataInit");
+	if(!pAvatar)
+		return;
+
+	CommonDataObject* pObj = pAvatar->OnRecvInitPacket(pPkt);
+	if(!pObj)
+		return;
+
+	pObj->SetObjectFlag(eObjectFlag_SaveFlag);
+	pObj->AfterInitObject();
+}
+
+void WorldState_DataLoading::PktDBA_CommonDataReqFinish(class PacketCommonDataReqFinish* pPkt)
+{
+
+}
+
+void WorldState_DataLoading::PktDBA_CreateAvatarRes(class PacketGateCreateAvatarRst* pPkt)
+{
+
+}
+
+void WorldState_DataLoading::PktDBA_ManufactureDataInit(class PacketManufactureDataInit* pPkt)
+{
+
 }
 
 void WorldState_DataLoading::DestroyAvatar(WorldAvatar* pAvatar)
@@ -248,14 +278,14 @@ void WorldState_DataLoading::CreateGateAvatar(WorldAvatar& avatar, ParamPool& po
 	}
 
 	PacketGateCreateAvatar newPkt;
-	newPkt.avatarTitleLen = uint8(strlen(pSzAvatar));
-	if( newPkt.avatarTitleLen > sizeof(newPkt.avatarTitle))
+	newPkt.nAvatarTitleLen = uint8(strlen(pSzAvatar));
+	if( newPkt.nAvatarTitleLen > sizeof(newPkt.avatarTitle))
 	{
 		MyLog::error("WorldState_DataLoading::OnEnterState Bad TitleLen = [%d]", newPkt.avatarTitle);
 		return;
 	}
 
-	memcpy( newPkt.avatarTitle, pSzAvatar, newPkt.avatarTitleLen);
+	memcpy( newPkt.avatarTitle, pSzAvatar, newPkt.nAvatarTitleLen);
 	avatar.Send2Gate( &newPkt, true);
 }
 

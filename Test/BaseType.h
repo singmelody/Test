@@ -57,9 +57,12 @@ typedef TiXmlNode XmlNode;
 #define SERVERID_NULL				-1
 #define	INVALID_TEAM_ID				-1
 #define SCENE_ID_DEFAULT			1
+#define MAX_MANUFACTURE_RECIPE_COUNT 512
 
 #define MIN_ACCOUNT	5
 #define MAX_ACCOUNT	50
+
+#define MAX_TITLE 40
 
 #define MAX_AVATAR_COUNT_ONE_USER	3
 

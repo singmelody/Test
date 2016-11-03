@@ -3,6 +3,7 @@
 #include "FunctionBase.h"
 #include "ParamDebugHelper.h"
 #include "ParamNameIndexHelper.h"
+#include "ParamDef.h"
 #include <assert.h>
 #include <bitset>
 
@@ -17,8 +18,6 @@
 
 #define PARAM_SET_VALUE( paramPtr, paramName, defVal, dirty) \
 	paramPtr->SetValue( ParamNameIndexHelper::GetParamIndex( paramPtr->GetParamDefineIndex(), param_name_##paramName), defVal, dirty);
-
-
 
 typedef FunctionBase_Arg2<ParamPool*, ParamBase*> ParamCallback;
 
@@ -38,6 +37,12 @@ public:
 
 	ParamPool(void);
 	~ParamPool(void);
+
+	template <class T>
+	void SetValue( int32 nIdx, T val, bool bDirty);
+
+	template <class T>
+	void SetValue( const char* sName, T val, bool bDirty);
 
 	template <class T>
 	void SetValue( ParamBase* pBase, T val, bool bDirty);
@@ -201,6 +206,26 @@ public:
 };
 
 template <class T>
+void ParamPool::SetValue(int32 nIdx, T val, bool bDirty)
+{
+	if(!m_pDef)
+		return;
+
+	ParamBase* pBase = m_pDef->GetParam(nIdx);
+	SetValue<T>( pBase, val, bDirty);
+}
+
+template <class T>
+void ParamPool::SetValue(const char* sName, T val, bool bDirty)
+{
+	if(!m_pDef)
+		return;
+
+	ParamBase* pBase = m_pDef->GetParam(nIdx);
+	SetValue<T>( pBase, val, bDirty);
+}
+
+template <class T>
 void ParamPool::SetValue( ParamBase* pBase, T val, bool bDirty)
 {
 	if(!pBase)
@@ -219,19 +244,19 @@ void ParamPool::SetValue( ParamBase* pBase, T val, bool bDirty)
 	{
 	case eTB_Int16:
 		{
-			Param_Int16* pVal = (Param_Int16*)(pBase);
+			Param_Type<int16>* pVal = (Param_Type<int16>*)(pBase);
 			pVal->SetValue( m_pParamBuffer, (int16)val);
 			break;
 		}
 	case eTB_Int32:
 		{
-			Param_Int32* pVal = (Param_Int32*)(pBase);
+			Param_Type<int32>* pVal = (Param_Type<int32>*)(pBase);
 			pVal->SetValue( m_pParamBuffer, (int32)val);
 			break;
 		}
 	case eTB_Int64:
 		{
-			Param_Int64* pVal = (Param_Int64*)(pBase);
+			Param_Type<int64>* pVal = (Param_Type<int64>*)(pBase);
 			pVal->SetValue( m_pParamBuffer, (int64)val);
 			break;
 		}
@@ -240,6 +265,8 @@ void ParamPool::SetValue( ParamBase* pBase, T val, bool bDirty)
 	PostSetValue(pBase);
 	UpdateParambit( pBase, bDirty);
 }
+
+
 
 
 template <class T>
@@ -258,7 +285,7 @@ T ParamPool::GetValue(const char* sName, T defVal)
 	if(!m_pDef)
 		return defVal;
 
-	ParamBase* pBase = m_pDef.GetParam(sName);
+	ParamBase* pBase = m_pDef->GetParam(sName);
 	return GetValue<T>( pBase, defVal);
 }
 

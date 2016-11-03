@@ -5,7 +5,7 @@
 
 #define REG_PACKET_HANDLER( processor, packet, classobj, function) \
 	processor->RegPacketHandle( UtilID::CreateFromString(#packet), \
-	new FunctionPacket<classObj, packet*, PacketBase*>( this, &classobj::function)); packet tmppkt##packet;
+	new FunctionPacket<classobj, packet*, PacketBase*>( this, &classobj::function)); packet tmppkt##packet;
 
 template < class T>
 class FunctionPacketBase
@@ -54,8 +54,10 @@ public:
 	virtual bool OnPacketReceived( PacketBase* pPkt);
 	bool PushPacket( PacketBase* pPkt );
 
-	void RegDefaultHandler( FuncEntry* pFunc);
+	void RegPacketHandle( int32 nPacketID, FuncEntry* pFunc);
 	void RegPacketHandler( int32 nPacket, FuncEntry* pFunc);
+	void RegDefaultHandler( FuncEntry* pFunc);
+
 	bool ProcessPacket(PacketBase* pPkt);
 	void RemovePacketHandler( int32 nPacketID, char* sFuncName);
 protected:

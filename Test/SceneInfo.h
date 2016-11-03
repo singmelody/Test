@@ -45,7 +45,7 @@ public:
 	PointInfo();
 
 	Vector3		vDir;
-	f32			nRange;
+	f32			fRange;
 
 	const Vector3& GetPos() const { return vPos; }
 	Vector3 GetRandPos() const;
@@ -65,7 +65,8 @@ public:
 	int32 nEnterType;
 };
 
-class EnterPointMap : public ID2ItemMap< uint16, EnterPointInfo>
+
+class EnterPointMap : public ID2ItemMapDft< uint16, EnterPointInfo>
 {};
 
 class EnterInfo
@@ -80,6 +81,11 @@ public:
 	bool bDefaultEnter;
 	EnterPointMap	Map;
 };
+
+
+class EnterInfoMap : public ID2ItemMapDft< uint16, EnterInfo>
+{};
+
 
 class SceneInfo
 {
@@ -105,8 +111,10 @@ public:
 	static uint16 GetSceneInstanceID(uint32 nSceneID);
 
 	static uint32 GenSceneID( uint16 nSceneSID, uint16 nInstanceID = 0);
-
 	static const SceneInfo* GetSceneInfo( uint16 nSceneSID);
+
+	const EnterInfo* GetEnterInfo(uint16 from_scenesid = 0) const { return m_mapEnterInfos.GetConstItem( from_scenesid, true);}
+	const EnterPointInfo* GetEnterPointInfo ( uint16 from_scenesid, int32 nEnterType = eEnterType_Default) const;
 
 	bool IsTrunk() const { return m_CreateType == eSceneCreate_MainTrunk || m_CreateType == eSceneCreate_WarTrunk || m_CreateType == eSceneCreate_GuildWar; }
 
@@ -122,6 +130,7 @@ public:
 	uint16			m_nPlayerMax;
 	int32			m_nLoadValue;
 
+	EnterInfoMap	m_mapEnterInfos;
 };
 
 class SceneInfoEx : public SceneInfo

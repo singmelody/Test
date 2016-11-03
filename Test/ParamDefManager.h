@@ -50,6 +50,14 @@ public:
 
 	const ParamMap& GetDefMap(){ return m_paramDefMap; }
 
+	bool IsNodeServer() const { return m_bIsNodeServer; }
+	void IsNodeServer(bool b) { m_bIsNodeServer = b; }
+
+	bool IsSHMEnable() const { return m_bIsSHMEnable; }
+	void IsSHMEnable(bool b) { m_bIsSHMEnable = b; }
+
+	void SetListener(IListener* pListener) { }
+
 	bool		m_bLockAllocator;
 protected:
 	void InitParamMD5();
@@ -60,6 +68,9 @@ protected:
 	ParamMap m_paramDefMap;
 
 	std::string m_paramDefClassType[eParam_Count];
+
+	bool m_bIsNodeServer;
+	bool m_bIsSHMEnable;
 };
 
 template <class T>

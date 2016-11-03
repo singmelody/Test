@@ -1,6 +1,7 @@
 #include "StdAfx.h"
 #include "ParamDef.h"
 #include "ParamEx.h"
+#include "ParamPool2SqlProcessor.h"
 
 ParamDef::ParamDef(void)
 {
@@ -23,6 +24,8 @@ void ParamDef::LoadParamDef(DBRow& row)
 
 	row.Fill( m_index, nCol_ParamID, -1);
 	row.Fill( m_name, nCol_ParamName, "");
+
+	m_cid = UtilID::CreateFromString(m_name.c_str());
 }
 
 bool ParamDef::AddParam(ParamBase* pBase)
@@ -243,6 +246,24 @@ void ParamDef::SetIParamPool2SqlProcessor(IParamPool2SqlProcessor* p)
 
 	m_pIParamPool2SqlProcessor = p;
 	m_nExtraPoolSize = m_pIParamPool2SqlProcessor->GetExtraSize();
+}
+
+void ParamDef::SetBufferAlloc(Allocator* pAlloc)
+{
+	m_pBufferAlloc = pAlloc;
+	if(m_pBufferAlloc)
+	{
+		InitBufferAlloc(*m_pBufferAlloc);
+	}
+}
+
+void ParamDef::InitBufferAlloc(Allocator& alloc)
+{
+	alloc.Init( Size() + ExtraSize() );
+	MemoryHead mHead;
+	mHead.AllocInfo = m_cid;
+	mHead.MemInfo = 0x7cfcfcfc;
+	alloc.SetMemoryInfo(mHead);
 }
 
 bool ParamDef::CheckClassType(int32 nValue, const char* pClassType, char* pClassTypeEx)

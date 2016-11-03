@@ -11,6 +11,9 @@ ParamDefManager::ParamDefManager(void)
 {
 	m_paramDefClassType[eParam_Avatar] = "NpcParamDef";
 	m_paramDefClassType[eParam_Monster] = "MonsterParamDef";
+
+	m_bIsNodeServer = false;
+	m_bIsSHMEnable = false;
 }
 
 

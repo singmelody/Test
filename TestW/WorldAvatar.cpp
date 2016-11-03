@@ -65,6 +65,7 @@ WorldAvatar::WorldAvatar()
 	//memset( &storageData, 0, sizeof(storageData));
 
 	m_PendingCreateSceneID = SCENE_ID_NULL;
+	m_nTargetSceneID = SCENE_ID_NULL;
 
 	m_worldArenaState = eMP_STATE_NULL;
 	m_WorldAvatarFlag = 0;

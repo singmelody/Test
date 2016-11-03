@@ -26,7 +26,6 @@ protected:
 	void PktDBA_CommonDataInit(class PacketCommonDataInit* pPkt);
 	void PktDBA_CommonDataReqFinish(class PacketCommonDataReqFinish* pPkt);
 	void PktDBA_CreateAvatarRes(class PacketGateCreateAvatarRst* pPkt);
-
 	void PktDBA_ManufactureDataInit( class PacketManufactureDataInit* pPkt);
 	void PktDBA_OfflineDataInit( class PacketOfflineDataInit* pPkt);
 	void PktDBA_OfflineDataFin( class PacketOfflineDataFin* pPkt);

@@ -55,6 +55,17 @@ const SceneInfo* SceneInfo::GetSceneInfo(uint16 nSceneSID)
 	return SceneManagerBase::GetSceneInfo( nSceneSID );
 }
 
+
+
+const EnterPointInfo* SceneInfo::GetEnterPointInfo(uint16 from_scenesid, int32 nEnterType /*= eEnterType_Default*/) const
+{
+	EnterInfo* pEnterInfo = (EnterInfo*)GetEnterInfo(from_scenesid);
+	if(!pEnterInfo)
+		return NULL;
+
+	return pEnterInfo->Map.GetItem( nEnterType, true);
+}
+
 EnterPointInfo::EnterPointInfo(DBRow& row)
 {
 	static const int32 nCol_ID = row.GetColumnIdx("ID");
@@ -75,20 +86,31 @@ EnterPointInfo::EnterPointInfo(DBRow& row)
 	row.Fill( nEnterMode, nCol_EnterMode, eEnterMode_PosDir);
 
 	row.Fill( vPos, nCol_X, nCol_Y, nCol_Z);
-	row.Fill( nRange, nCol_Range, 0);
+	row.Fill( fRange, nCol_Range, 0.0f);
 	row.Fill( vDir, nCol_Dx, nCol_Dy, nCol_Dz);
 }
 
-Vector3 PointInfo::GetRangePos() const
+Vector3 PointInfo::GetRandPos() const
 {
 	f32 x = 0;
 	f32 y = 0;
 
-	if( nRange > 0)
+	if( fRange > 0)
 	{
-		x = (double)rand()/(RAND_MAX +1) * 2.0 * nRange - nRange;
-		y = (double)rand()/(RAND_MAX +1) * 2.0 * nRange - nRange;
+		x = (double)rand()/(RAND_MAX +1) * 2.0 * fRange - fRange;
+		y = (double)rand()/(RAND_MAX +1) * 2.0 * fRange - fRange;
 	}
 
 	return Vector3( vPos.x + x, vPos.y + y, vPos.z);
+}
+
+
+EnterInfo::EnterInfo(DBRow& row)
+{
+
+}
+
+EnterInfo::~EnterInfo()
+{
+
 }

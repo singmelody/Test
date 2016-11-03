@@ -3,6 +3,7 @@
 #include "ShareMemory.h"
 #include "MyLog.h"
 #include "GameUtil.h"
+#include "StaticMemoryPool.h"
 
 SHMManagerBase::SHMManagerBase(void)
 {
@@ -32,7 +33,7 @@ void SHMManagerBase::OnParamDefLoaded()
 
 void SHMManagerBase::Init(const std::string& strSHMPrefix, bool bIsLogicProc, bool bEnableSHM, bool bCreateSHM, bool bDeleteOldSHM)
 {
-
+	m_bIsLogicProc = bIsLogicProc;
 }
 
 
@@ -66,14 +67,48 @@ bool SHMManagerBase::OpenSHMs()
 				ShareMemory::SHMRM( strPath.c_str(), 0);
 			}
 
-			const uint32 nUintSize = HEADER_SIZE_FOR_SHARED_MEMORY + sizeof(MemoryHead) + pDef->Size() + pIParamPool2SqlProcessor->GetExtraSize();
+			const uint32 nUnitSize = HEADER_SIZE_FOR_SHARED_MEMORY + sizeof(MemoryHead) + pDef->Size() + pIParamPool2SqlProcessor->GetExtraSize();
 			bool bCreate;
-			if(!pSHM->Open( strPath.c_str(), 0, nUintSize * pDef->SMUCount(), bCreate))
+			if(!pSHM->Open( strPath.c_str(), 0, nUnitSize * pDef->SMUCount(), bCreate))
 			{
+				MyLog::error("SHMManagerBase::OpenSHMs() Failed! can not open [%s] SUMUCount=[%d] unitSize=[%d]", strPath.c_str(), pDef->SMUCount(), nUnitSize);
+				return false;
+			}
 
+			if( bCreate != ShouldCreateSHMs() )
+			{
+				pSHM->Close();
+				return false;
+			}
+
+			char* ptr = (char*)(pSHM->GetShareMemoryPtr());
+			assert( ptr );
+			if(!ptr)
+			{
+				pSHM->Close();
+				MyLog::error("SHMManagerBase::OpenSHMs() FAILED! SHM [%s] GetShareMemoryPtr() Failed", strPath.c_str());
+				return false;
+			}
+
+			TypeInfo info;
+			info.m_nUnitSize = nUnitSize;
+			info.m_nCountUnits = pDef->SMUCount();
+			info.m_pMemPtr = ptr;
+			info.m_pParamDef = pDef;
+			info.m_nParamDefIndex = pDef->Index();
+
+			m_vSHMs.push_back(pSHM.release());
+			m_mapParamIdx2Infos.insert( std::make_pair( pDef->Index(), info));
+
+			if(IsLogicProc())
+			{
+				assert( !pDef->GetBufferAlloc() );
+				pDef->SetBufferAlloc(new SHMAllocator(*pDef, ptr, nUnitSize, pDef->SMUCount()));
 			}
 		}
 	}
+
+	return true;
 }
 
 void SHMManagerBase::CloseSHMs()

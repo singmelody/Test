@@ -7,8 +7,8 @@ template < typename TID, class TItem>
 class ID2ItemMap : public std::map< TID, TItem*>
 {
 public:
-	ID2ItemMap(void);
-	~ID2ItemMap(void);
+	ID2ItemMap(void) {}
+	~ID2ItemMap(void){}
 
 	void AddItem( TID id, TItem* pItem)
 	{
@@ -29,7 +29,7 @@ public:
 
 	TItem* GetItem( TID id) const
 	{
-		typename std::map<TID, TItem*>::iterator itr = std::map<TID,TItem*>::find(id);
+		typename std::map<TID, TItem*>::const_iterator itr = std::map<TID,TItem*>::find(id);
 		if( itr != std::map<TID,TItem*>::end() )
 			return itr->second;
 
@@ -48,5 +48,39 @@ public:
 	}
 };
 
-// template < typename TID, class TItem>
-// class ID2ItemMapDft 
+template < typename TID, class TItem>
+class ID2ItemMapDft : public ID2ItemMap<TID, TItem>
+{
+public:
+	ID2ItemMapDft()
+	{
+		m_pDefaultItem = NULL;
+	}
+
+	void AddItem(TID id, TItem* pItem, bool bDefaultItem)
+	{
+		ID2ItemMap<TID, TItem>::AddItem( id, pItem);
+		
+		if( bDefaultItem || m_pDefaultItem == NULL)
+			m_pDefaultItem = pItem;
+	}
+
+	TItem* GetItem(TID nID, bool bUseDefault) const
+	{
+		TItem* pItem = ID2ItemMap<TID, TItem>::GetItem(nID);
+		if(!pItem)
+			return pItem;
+		
+		if(!bUseDefault)
+			return NULL;
+
+		return m_pDefaultItem;
+	}
+
+	const TItem* GetConstItem( TID nID, bool bUseDefault) const
+	{
+		return GetItem( nID, bUseDefault);
+	}
+
+	TItem*	m_pDefaultItem;
+};

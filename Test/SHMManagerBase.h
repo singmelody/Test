@@ -20,6 +20,7 @@ public:
 	inline bool EnableSHM() { return m_bEnableSHM; }
 	inline bool ShouldCreateSHMs() { return EnableSHM() && m_bCreateSHM; }
 	inline bool ShouldDeleteOldSHMs() { return ShouldCreateSHMs() && m_bShouldDeleteOldSHM; }
+	inline bool IsLogicProc() const { return m_bIsLogicProc; }
 protected:
 	virtual void InitParamPool2SqlProcessors(bool bUseSHM) = 0;
 

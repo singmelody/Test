@@ -111,6 +111,14 @@ START_ADD_PACKET_MEMBER(PacketCommonDataDelete)
 ADD_PACKET_MEMBER( nDelFlag, uint8, nDelFlag)
 PACKET_END(PacketCommonDataDelete)
 
+PACKET(PacketGateCreateAvatar,PacketBase)
+uint8 nAvatarTitleLen;
+char  avatarTitle[MAX_TITLE];
+START_ADD_PACKET_MEMBER(PacketGateCreateAvatar)
+ADD_PACKET_MEMBER( nAvatarTitleLen, uint8, nAvatarTitleLen)
+ADD_PACKET_MEMBER_STR( avatarTitle, MAX_TITLE, avatarTitle)
+PACKET_END(PacketGateCreateAvatar)
+
 PACKET(PacketGateDestroyAvatar,PacketBase)
 START_ADD_PACKET_MEMBER(PacketGateDestroyAvatar)
 PACKET_END(PacketGateDestroyAvatar)
@@ -150,6 +158,35 @@ START_ADD_PACKET_MEMBER(PacketAvatarData2DBA)
 	ADD_PACKET_MEMBER( nFlag, int32, nFlag)
 	ADD_PACKET_MEMBER( nAvatarDID, int64, nAvatarDID)
 PACKET_END(PacketAvatarData2DBA)
+
+// dba 2 world
+PACKET(PacketUserSelectData, PacketParamPool)
+int64 nAvatarDID;
+START_ADD_PACKET_MEMBER(PacketUserSelectData)
+	ADD_PACKET_MEMBER( nAvatarDID, int64, nAvatarDID)
+PACKET_END(PacketUserSelectData)
+
+PACKET(PacketCommonDataRequest, PacketBase)
+int64 nAvatarDID;
+START_ADD_PACKET_MEMBER(PacketCommonDataRequest)
+	ADD_PACKET_MEMBER( nAvatarDID, int64, nAvatarDID)
+PACKET_END(PacketCommonDataRequest)
+
+PACKET(PacketCommonDataReqFinish, PacketBase)
+int32 nDataType;
+START_ADD_PACKET_MEMBER(PacketCommonDataReqFinish)
+	ADD_PACKET_MEMBER( nDataType, int32, nDataType)
+PACKET_END(PacketCommonDataReqFinish)
+
+PACKET(PacketGateCreateAvatarRst, PacketBase)
+uint8 succ;
+START_ADD_PACKET_MEMBER(PacketGateCreateAvatarRst)
+	ADD_PACKET_MEMBER( succ, uint8, "")
+PACKET_END(PacketGateCreateAvatarRst)
+
+PACKET(PacketManufactureDataInit, PacketBaseEx<MAX_MANUFACTURE_RECIPE_COUNT*sizeof(int32)>)
+START_ADD_PACKET_MEMBER(PacketManufactureDataInit)
+PACKET_END(PacketManufactureDataInit)
 
 // CLT 2 Gate
 PACKET_CLT_2_GATE(PacketCltSelectAvatar, PacketBase)

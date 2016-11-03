@@ -1,6 +1,7 @@
 #include "StdAfx.h"
 #include "SrvPacketTestManager.h"
 #include "PacketFactory.h"
+#include "PacketBase.h"
 
 SrvPacketTestManager::SrvPacketTestManager(void)
 {

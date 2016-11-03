@@ -33,7 +33,7 @@ public:
 	inline bool IsLastPacket() { return CheckFlag(ePacketLast); }
 	inline bool IsFullPacket() { return CheckFlag(ePacketFull); }
 
-	bool CheckFlag(int8 flag) { }
+	bool CheckFlag(int8 bit) { return (m_ParamFlag & bit) == bit; }
 
 	void SyncParamPool( SyncPacketArg& arg, ParamPool* pPool, uint32 paramFlag, uint32 syncFlag, uint32 nParamFlagExclude = 0);
 	void SyncParamPool( PacketPack* pPack, ParamPool* pPool, uint32 paramFlag, uint32 syncFlag, uint32 nParamFlagExclude = 0);

@@ -161,6 +161,7 @@ public:
 	int32			m_nChangeSceneState;	// 0->first login;1->normal playing
 	CurDataStage	m_curDataOnSide;
 
+	int32			m_nTargetSceneID;
 	int32			m_nDataLoadingFlags;
 	int32			m_nCommonDataMaskFinish;
 protected:
@@ -175,7 +176,6 @@ protected:
 
 
 	int32			m_nTargetNodeID;
-	int32			m_nTargetSceneID;
 
 	int32			m_WorldAvatarFlag;
 

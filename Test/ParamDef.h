@@ -81,6 +81,10 @@ public:
 
 	void SMUCount(int32 nCount) { m_SMUCount = nCount; }
 	int32 SMUCount() const { return m_SMUCount; }
+
+	void SetBufferAlloc(Allocator* pAlloc);
+	void InitBufferAlloc(Allocator& alloc);
+	Allocator* GetBufferAlloc() const { return m_pBufferAlloc; }
 protected:
 	bool CheckClassType( int32 nValue, const char* pClassType, char* pClassTypeEx);
 
@@ -89,6 +93,8 @@ protected:
 
 	std::string m_classParamSet;
 	std::string m_classParamSetEx;
+
+	uint32 m_cid;
 
 	bool  m_loadData;
 

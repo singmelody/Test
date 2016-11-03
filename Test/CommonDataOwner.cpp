@@ -1,5 +1,6 @@
 #include "StdAfx.h"
 #include "CommonDataOwner.h"
+#include "CommonDataManager.h"
 
 
 CommonDataOwner::CommonDataOwner(void)
