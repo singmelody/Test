@@ -86,6 +86,6 @@ void WorldStateGameNode::NotifyChangeSceneFailed(WorldAvatar* pAvatar, int32 fai
 
 	PacketChangeSceneFail pkt;
 	pkt.SetAvatarID( pAvatar->GetAvatarID() );
-	pkt.errorID = failReason;
+	pkt.nErrorID = failReason;
 	pAvatar->Send2CurNode(pkt);
 }

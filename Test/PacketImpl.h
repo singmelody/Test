@@ -188,6 +188,11 @@ PACKET(PacketManufactureDataInit, PacketBaseEx<MAX_MANUFACTURE_RECIPE_COUNT*size
 START_ADD_PACKET_MEMBER(PacketManufactureDataInit)
 PACKET_END(PacketManufactureDataInit)
 
+PACKET(PacketChangeSceneFail, PacketBase)
+int32 nErrorID;	// 1->scene not existing 2->srv busy 3->retry 4->create scene failed
+START_ADD_PACKET_MEMBER(PacketChangeSceneFail)
+PACKET_END(PacketChangeSceneFail)
+
 // CLT 2 Gate
 PACKET_CLT_2_GATE(PacketCltSelectAvatar, PacketBase)
 uint8 nAvatarIdx;

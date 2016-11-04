@@ -8,6 +8,13 @@ enum CommonDataType
 	eCommonData_Max
 };
 
+enum CommonDataMask
+{
+	eCommonDataMask_Pet		= ( 1 << eCommonData_Pet),
+	eCommonDataMask_Buff	= ( 1 << eCommonData_Buff),
+	eCommonDataMask_All		= ( 1 << eCommonData_Max ) - 1,
+};
+
 class CommonDataOwner;
 class CommonDataObject;
 

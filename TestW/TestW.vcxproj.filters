@@ -13,6 +13,15 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Game">
+      <UniqueIdentifier>{66badf9f-d1cf-4e90-925c-1174d8a45f8c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Avatar">
+      <UniqueIdentifier>{cd219d2a-2363-4830-96d8-d2e02e199f4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\State">
+      <UniqueIdentifier>{530d512c-48dd-40aa-8614-d8f93dd97bc1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -24,70 +33,10 @@
     <ClInclude Include="WorldBase.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="WorldAvatar.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AvatarOnLineManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="WorldAvatarGroup.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="WorldFuncExManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="WorldFuncManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="WorldAvatarManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="WorldSceneManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="WorldAccount.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="WorldServer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="WorldAsynContextManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="WorldStateManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="WorldState_Logined.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="WorldState_Logining.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="WorldState_WaitScene.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="WorldState_DataLoading.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="WorldState.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="WorldState_Gaming.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="WorldStateGame.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="WorldScene.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="WorldState_DataReady.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="WorldSceneInfo.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="WorldEnterManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="WorldGroup.h">
@@ -96,11 +45,101 @@
     <ClInclude Include="WorldServerNormal.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="WorldTeamManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldAccount.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldSceneManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldScene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldSceneInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="WorldSceneInfo_MainTrunk.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="WorldTeamManager.h">
+    <ClInclude Include="WorldFuncManager.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldEnterManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldFuncExManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AvatarOnLineManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldStateGame.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AvatarOnLineManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldState.h">
+      <Filter>Game\State</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldState_WritingDBA.h">
+      <Filter>Game\State</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldState_Billing.h">
+      <Filter>Game\State</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldState_DataLoading.h">
+      <Filter>Game\State</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldState_DataReady.h">
+      <Filter>Game\State</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldState_Decommission.h">
+      <Filter>Game\State</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldState_EnterGame.h">
+      <Filter>Game\State</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldState_ExitGame.h">
+      <Filter>Game\State</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldState_Gaming.h">
+      <Filter>Game\State</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldState_Jumping.h">
+      <Filter>Game\State</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldState_Logined.h">
+      <Filter>Game\State</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldState_Logining.h">
+      <Filter>Game\State</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldState_WaitingNodeData.h">
+      <Filter>Game\State</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldState_WaitLogining.h">
+      <Filter>Game\State</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldState_WaitScene.h">
+      <Filter>Game\State</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldStateGame.h">
+      <Filter>Game\State</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldStateManager.h">
+      <Filter>Game\State</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldAvatar.h">
+      <Filter>Game\Avatar</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldAvatarGroup.h">
+      <Filter>Game\Avatar</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldAvatarManager.h">
+      <Filter>Game\Avatar</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -113,70 +152,10 @@
     <ClCompile Include="WorldBase.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="WorldAvatar.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="AvatarOnLineManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="WorldAvatarGroup.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="WorldFuncExManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="WorldFuncManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="WorldAvatarManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="WorldSceneManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="WorldAccount.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="WorldServer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="WorldAsynContextManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="WorldStateManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="WorldState_Logining.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="WorldState_WaitScene.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="WorldState_Logined.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="WorldState_DataLoading.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="WorldState.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="WorldState_Gaming.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="WorldStateGame.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="WorldScene.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="WorldState_DataReady.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="WorldSceneInfo.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="WorldEnterManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="WorldGroup.cpp">
@@ -185,11 +164,101 @@
     <ClCompile Include="WorldServerNormal.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="WorldTeamManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldAccount.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldSceneInfo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="WorldSceneInfo_MainTrunk.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="WorldTeamManager.cpp">
+    <ClCompile Include="WorldSceneManager.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldEnterManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldFuncExManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldFuncManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AvatarOnLineManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldStateGame.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AvatarOnLineManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldStateManager.cpp">
+      <Filter>Game\State</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldState.cpp">
+      <Filter>Game\State</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldState_Billing.cpp">
+      <Filter>Game\State</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldState_DataLoading.cpp">
+      <Filter>Game\State</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldState_DataReady.cpp">
+      <Filter>Game\State</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldState_Decommission.cpp">
+      <Filter>Game\State</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldState_EnterGame.cpp">
+      <Filter>Game\State</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldState_ExitGame.cpp">
+      <Filter>Game\State</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldState_Gaming.cpp">
+      <Filter>Game\State</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldState_Jumping.cpp">
+      <Filter>Game\State</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldState_Logined.cpp">
+      <Filter>Game\State</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldState_Logining.cpp">
+      <Filter>Game\State</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldState_WaitingNodeData.cpp">
+      <Filter>Game\State</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldState_WaitLogining.cpp">
+      <Filter>Game\State</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldState_WaitScene.cpp">
+      <Filter>Game\State</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldState_WritingDBA.cpp">
+      <Filter>Game\State</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldStateGame.cpp">
+      <Filter>Game\State</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldAvatar.cpp">
+      <Filter>Game\Avatar</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldAvatarGroup.cpp">
+      <Filter>Game\Avatar</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldAvatarManager.cpp">
+      <Filter>Game\Avatar</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

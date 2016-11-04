@@ -1,8 +1,9 @@
 #pragma once
 
-#include "WorldFuncExManager.h"
+#include "BaseType.h"
 #include "GameObject.h"
 #include "WorldStateManager.h"
+#include "WorldFuncExManager.h"
 
 class Scene;
 class WorldAvatar;

@@ -1,7 +1,7 @@
 #include "StdAfx.h"
 #include "WorldFuncExManager.h"
-#include "WorldAvatarManager.h"
 #include "WorldSceneManager.h"
+#include "WorldAvatarManager.h"
 
 WorldFuncExManager::WorldFuncExManager(void)
 	: AvatarMgr(WorldAvatarManager::Instance()), SceneMgr( WorldSceneManager::Instance() )

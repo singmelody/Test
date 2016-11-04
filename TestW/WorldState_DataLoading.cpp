@@ -249,16 +249,44 @@ void WorldState_DataLoading::PktDBA_CommonDataInit(class PacketCommonDataInit* p
 
 void WorldState_DataLoading::PktDBA_CommonDataReqFinish(class PacketCommonDataReqFinish* pPkt)
 {
+	WorldAvatar* pAvatar = GetWorldAvatarAndCheckStage( pPkt->GetAvatarID(), "WorldState_DataLoading::PktDBA_CommonDataReqFinish");
+	if(!pAvatar)
+		return;
 
+	int32& mask = pAvatar->m_nCommonDataMaskFinish;
+	mask |= 1 << pPkt->nDataType;
+
+	if( ( mask & eCommonDataMask_All) == eCommonDataMask_All )
+		pAvatar->SetDataLoadingFlags( eDLF_CommonData );
 }
 
 void WorldState_DataLoading::PktDBA_CreateAvatarRes(class PacketGateCreateAvatarRst* pPkt)
 {
+	if(!pPkt)
+		return;
 
+	WorldAvatar* pAvatar = GetWorldAvatarAndCheckStage( pPkt->GetAvatarID(), "WorldState_DataLoading::PktDBA_CreateAvatarRes");
+	if(!pAvatar)
+		return;
+
+	if ( pPkt->succ != 0)
+	{
+		pAvatar->SetDataLoadingFlags( eDLF_GateAffirm );
+		pAvatar->HasGateAvatar( true );
+	}
+	else
+		MyLog::error("Failed to Create Gate Avatar of Account=[%s]", pAvatar->Account.GetAccountName().c_str() );
 }
 
 void WorldState_DataLoading::PktDBA_ManufactureDataInit(class PacketManufactureDataInit* pPkt)
 {
+	if (!pPkt)
+		return;
+
+	WorldAvatar* pAvatar= GetWorldAvatar( pPkt );
+	if(!pAvatar )
+		return;
+
 
 }
 

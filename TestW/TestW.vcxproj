@@ -162,6 +162,14 @@
     <ClInclude Include="WorldState_Logined.h" />
     <ClInclude Include="WorldState_Logining.h" />
     <ClInclude Include="WorldState_WaitScene.h" />
+    <ClInclude Include="WorldState_Billing.h" />
+    <ClInclude Include="WorldState_Decommission.h" />
+    <ClInclude Include="WorldState_EnterGame.h" />
+    <ClInclude Include="WorldState_ExitGame.h" />
+    <ClInclude Include="WorldState_Jumping.h" />
+    <ClInclude Include="WorldState_WaitingNodeData.h" />
+    <ClInclude Include="WorldState_WaitLogining.h" />
+    <ClInclude Include="WorldState_WritingDBA.h" />
     <ClInclude Include="WorldTeamManager.h" />
   </ItemGroup>
   <ItemGroup>
@@ -190,7 +198,6 @@
     <ClCompile Include="WorldServer.cpp" />
     <ClCompile Include="WorldServerNormal.cpp" />
     <ClCompile Include="WorldState.cpp" />
-    <ClCompile Include="WorldStateGame.cpp" />
     <ClCompile Include="WorldStateManager.cpp" />
     <ClCompile Include="WorldState_DataLoading.cpp" />
     <ClCompile Include="WorldState_DataReady.cpp" />
@@ -198,6 +205,15 @@
     <ClCompile Include="WorldState_Logined.cpp" />
     <ClCompile Include="WorldState_Logining.cpp" />
     <ClCompile Include="WorldState_WaitScene.cpp" />
+    <ClCompile Include="WorldState_Billing.cpp" />
+    <ClCompile Include="WorldState_Decommission.cpp" />
+    <ClCompile Include="WorldState_EnterGame.cpp" />
+    <ClCompile Include="WorldState_ExitGame.cpp" />
+    <ClCompile Include="WorldState_Jumping.cpp" />
+    <ClCompile Include="WorldState_WaitingNodeData.cpp" />
+    <ClCompile Include="WorldState_WaitLogining.cpp" />
+    <ClCompile Include="WorldState_WritingDBA.cpp" />
+    <ClCompile Include="WorldStateGame.cpp" />
     <ClCompile Include="WorldTeamManager.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -5,6 +5,10 @@
 #include "WorldState_DataLoading.h"
 #include "WorldState_DataReady.h"
 #include "WorldState_WaitScene.h"
+#include "WorldState_Decommission.h"
+#include "WorldState_EnterGame.h"
+#include "WorldState_Jumping.h"
+#include "WorldState_Gaming.h"
 #include "PacketProcessor.h"
 
 WorldStateManager::WorldStateManager(void)

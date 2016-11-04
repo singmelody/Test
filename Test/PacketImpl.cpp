@@ -46,3 +46,5 @@ PACKET_IMPL(PacketCommonDataReqFinish);
 PACKET_IMPL(PacketGateCreateAvatarRst);
 
 PACKET_IMPL(PacketManufactureDataInit);
+
+PACKET_IMPL(PacketChangeSceneFail);
