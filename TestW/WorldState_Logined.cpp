@@ -8,6 +8,8 @@
 #include "ParamPool.h"
 #include "AvatarOnLineManager.h"
 #include "Time.h"
+#include "AvatarDefine.h"
+#include "DIYDataManager.h"
 
 WorldState_Logined::WorldState_Logined(void)
 {
@@ -65,7 +67,7 @@ void WorldState_Logined::PktGate_CreateAvatar(class PacketCreateAvatar* pPkt)
 		ParamPool* pPool = pAvatar->GetRoleSet(i);
 		if(pPool == NULL)
 		{
-			pAvatar->m_account.CreateRoleSet( i, PARAM_ID(pPkt->paramTypeID), PARAM_DATA_ID(pPkt->paramTypeID));
+			pAvatar->m_account.CreateRoleSet( i, PARAM_ID(pPkt->nParamTypeID), PARAM_DATA_ID(pPkt->nParamTypeID));
 			resPos = i;
 			break;
 		}
@@ -74,8 +76,8 @@ void WorldState_Logined::PktGate_CreateAvatar(class PacketCreateAvatar* pPkt)
 	if( -1 == resPos )
 	{
 		PacketCreateAvatarRes pkt;
-		pkt.flag = CreatAvatarRes_Fail_MaxCount;
-		pkt.index = -1;
+		pkt.nFlag = eCreateAvatarRes_Fail_MaxCount;
+		pkt.nIdx = -1;
 		pAvatar->Send2Gate( &pkt, true);
 		return;
 	}
@@ -84,21 +86,21 @@ void WorldState_Logined::PktGate_CreateAvatar(class PacketCreateAvatar* pPkt)
 	if(pPool)
 	{
 		PacketCreateAvatarRes pkt;
-		pkt.flag = CreatAvatarRes_Fail;
-		pkt.index = -1;
+		pkt.nFlag = eCreateAvatarRes_Fail;
+		pkt.nIdx = -1;
 		pAvatar->Send2Gate( &pkt, true);
 		return;
 	}
 
-	if(pPkt->checkdata)
+	if(pPkt->bCheckData)
 	{
 		bool bDirtyCheck = DIYDataManager::Instance().CheckDIYDataValid(pPkt);
 		if(bDirtyCheck)
 		{
 			MyLog::error("Bad DIYData!");
 			PacketCreateAvatarRes pkt;
-			pkt.flag = CreatAvatarRes_Fail;
-			pkt.index = -1;
+			pkt.nFlag = eCreateAvatarRes_Fail;
+			pkt.nIdx = -1;
 			pAvatar->Send2Gate( &pkt, true);
 		}
 	}
@@ -108,11 +110,11 @@ void WorldState_Logined::PktGate_CreateAvatar(class PacketCreateAvatar* pPkt)
 	if(pPkt->nAccountLen > sizeof(pPkt->account))
 	{
 		MyLog::error("Bad Account Len = [%d]", pPkt->nAccountLen);
-		PacketCreateAvatarsRes pkt;
-		pkt.flag = CreateAvatarRes_Fail;
-		pkt.index = -1;
+		PacketCreateAvatarRes pkt;
+		pkt.nFlag = eCreateAvatarRes_Fail;
+		pkt.nIdx = -1;
 		pAvatar->Send2Gate( &pkt, true);
-		return true;
+		return;
 	}
 
 	const std::string strAccount( pPkt->account, pPkt->nAccountLen);
@@ -137,7 +139,7 @@ void WorldState_Logined::PktGate_CreateAvatar(class PacketCreateAvatar* pPkt)
 
 	pPkt->nAvatarDID = pAvatar->GenGalaxyUID();
 
-	PARAM_SET_VALUE( pPool, avatardid, pPkt->AvatarDID, false);
+	PARAM_SET_VALUE( pPool, avatardid, pPkt->nAvatarDID, false);
 	PARAM_SET_VALUE( pPool, create_time, Time::CurrentTime().Second(), false);
 
 	pPkt->nIdx = resPos;
@@ -162,7 +164,7 @@ void WorldState_Logined::PktGate_CreateAvatarRes(class PacketCreateAvatarRes* pP
 	if(pPkt->nFlag != eCreateAvatarRes_Succ)
 	{
 		pAvatar->m_account.DestroyRoleSet( pPkt->nIdx);
-		pAvatar->Send2Gate( &pPkt, true);
+		pAvatar->Send2Gate( pPkt, true);
 		return;
 	}
 
@@ -207,8 +209,8 @@ void WorldState_Logined::PktGate_DelCharacter(class PacketDelCharacter* pPkt)
 	if(!pAvatar)
 		return;
 
-	MyLog::message("User Req Del Avatar.Account[%s] DelIndex[%d]", pAvatar->GetAccountName(), pkt->index));
-	ParamPool* pPool = pAvatar->GetRoleSet(pkt->index);
+	MyLog::message("User Req Del Avatar.Account[%s] DelIndex[%d]", pAvatar->GetAccountName(), pPkt->nIdx);
+	ParamPool* pPool = pAvatar->GetRoleSet(pPkt->nIdx);
 	if(!pPool)
 		return;
 
@@ -319,9 +321,4 @@ void WorldState_Logined::DestroyAvatar(WorldAvatar* pAvatar)
 {
 	AvatarOnLineManager::Instance().DelAccount(pAvatar);
 	WorldState::DestroyAvatar(pAvatar);
-}
-
-void WorldState_Logined::DestroyAvatar(WorldAvatar* pAvatar)
-{
-
 }

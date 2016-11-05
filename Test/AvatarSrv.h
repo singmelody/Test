@@ -4,6 +4,7 @@
 #include "PacketSender.h"
 #include "Avatar.h"
 #include "MyPacket.h"
+#include "StateManager.h"
 
 class AvatarSrv : public GameObject, public virtual PacketSender, public virtual Avatar
 {

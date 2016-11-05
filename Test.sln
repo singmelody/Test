@@ -11,6 +11,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestW", "TestW\TestW.vcxpro
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestG", "TestG\TestG.vcxproj", "{D05A5011-4BFD-400E-BC31-F268092D77E2}"
+	ProjectSection(ProjectDependencies) = postProject
+		{DC95BE4C-4BD8-4727-B720-2925FAAE912B} = {DC95BE4C-4BD8-4727-B720-2925FAAE912B}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestD", "TestD\TestD.vcxproj", "{30EF5E8A-3A8B-44F0-9057-1C0C3D8B4099}"
 EndProject

@@ -24,31 +24,13 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GateServer.h">
+    <ClInclude Include="BaseTestUnit.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GateBase.h">
+    <ClInclude Include="TimePeriod.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GateCltNetManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="resource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GateFuncExManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GateAccount.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GateLoginManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GateFuncManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GateSystemManager.h">
+    <ClInclude Include="TodSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -56,31 +38,16 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TestG.cpp">
+    <ClCompile Include="FuncUnit.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GateServer.cpp">
+    <ClCompile Include="BaseTestUnit.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GateBase.cpp">
+    <ClCompile Include="TimePeriod.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GateCltNetManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GateFuncExManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GateAccount.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GateLoginManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GateFuncManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GateSystemManager.cpp">
+    <ClCompile Include="TodSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

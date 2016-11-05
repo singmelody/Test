@@ -258,6 +258,7 @@
     <ClInclude Include="DataSerialization.h" />
     <ClInclude Include="DBAConfig.h" />
     <ClInclude Include="DBInterface.h" />
+    <ClInclude Include="DIYDataManager.h" />
     <ClInclude Include="DLAllocator.h" />
     <ClInclude Include="DLMalloc.h" />
     <ClInclude Include="DLMallocConfig.h" />
@@ -293,6 +294,7 @@
     <ClInclude Include="MyMutex.h" />
     <ClInclude Include="MyNetWork.h" />
     <ClInclude Include="MyPacket.h" />
+    <ClInclude Include="MyRandom.h" />
     <ClInclude Include="MySockAddr.h" />
     <ClInclude Include="MySocket.h" />
     <ClInclude Include="MyString.h" />
@@ -350,6 +352,7 @@
     <ClInclude Include="SpaceManager.h" />
     <ClInclude Include="SrvBase.h" />
     <ClInclude Include="SrvPacketTestManager.h" />
+    <ClInclude Include="StateManager.h" />
     <ClInclude Include="StaticMemoryPool.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
@@ -390,6 +393,7 @@
     <ClCompile Include="DataSerialization.cpp" />
     <ClCompile Include="DBAConfig.cpp" />
     <ClCompile Include="DBInterface.cpp" />
+    <ClCompile Include="DIYDataManager.cpp" />
     <ClCompile Include="DLAllocator.cpp" />
     <ClCompile Include="DLMalloc.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
@@ -430,6 +434,7 @@
     <ClCompile Include="MyMutex.cpp" />
     <ClCompile Include="MyNetWork.cpp" />
     <ClCompile Include="MyPacket.cpp" />
+    <ClCompile Include="MyRandom.cpp" />
     <ClCompile Include="MySockAddr.cpp" />
     <ClCompile Include="MySocket.cpp" />
     <ClCompile Include="MyString.cpp" />
@@ -484,6 +489,7 @@
     <ClCompile Include="SpaceManager.cpp" />
     <ClCompile Include="SrvBase.cpp" />
     <ClCompile Include="SrvPacketTestManager.cpp" />
+    <ClCompile Include="StateManager.cpp" />
     <ClCompile Include="StaticMemoryPool.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

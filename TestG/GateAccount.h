@@ -1,23 +1,23 @@
 #pragma once
 
+#include "BaseType.h"
+
 enum GateAccountState
 {
-	eGAS_CltConnected,
-	eGAS_CltReady,
-	eGAS_WaitingUserData,
-	eGAS_Ready2EnterGame,
+	eGateAccountState_CltConnected,
+	eGateAccountState_CltReady,
+	eGateAccountState_WaitingUserData,
+	eGateAccountState_Ready2EnterGame,
 
-	eGAS_CreatingAvatar,
-	eGAS_CreatingAvatarFinish,
-	
-	eGAS_DeletingAvatar,
+	eGateAccountState_CreatingAvatar,
+	eGateAccountState_CreatingAvatarFinish,
+	eGateAccountState_DeletingAvatar,
+	eGateAccountState_RequestEnterGame,
 
-	eGAS_RequestEnterGame,
+	eGateAccountState_Gaming,
+	eGateAccountState_Destroy,
 
-	eGAS_Gaming,
-	eGAS_Destroy,
-
-	eGAS_Count,
+	eGateAccountState_Count,
 };
 
 struct GateAvatar

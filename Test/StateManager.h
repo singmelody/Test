@@ -1,4 +1,17 @@
 #pragma once
+
+#include "Singleton.h"
+#include "AvatarDefine.h"
+
+class Avatar_State_Update_Table : public Singleton<Avatar_State_Update_Table>
+{
+public:
+	Avatar_State_Update_Table();
+	~Avatar_State_Update_Table(){}
+
+	int32 m_Table[eGAS_COUNT];
+};
+
 class StateManager
 {
 public:
@@ -45,7 +58,8 @@ public:
 
 		m_BitList[dIndex] |= ( 0x1 << bitIdx );
 
-
+		if(Avatar_State_Update_Table::Instance().m_Table[nBit] != 0)
+			m_DirtyList[dIndex] |= ( 0x1 << bitIdx );
 
 		return true;
 	}
@@ -57,7 +71,16 @@ public:
 
 		int32 dIndex = nBit / BIT_SIZE;
 		int32 bitIdx = nBit % BIT_SIZE;
+
+		m_BitList[dIndex] &= ~( 0x1 << bitIdx );
+
+		if(Avatar_State_Update_Table::Instance().m_Table[nBit] != 0)
+			m_DirtyList[dIndex] |= ( 0x1 << bitIdx );
+
+		return true;
 	}
+
+	bool GetData( int32 nIdx, uint32& nData);
 
 	void RandomState();
 protected:

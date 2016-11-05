@@ -17,4 +17,6 @@ enum{
 	eGAS_Base_CltCreateAvatar,
 	eGAS_Base_Dizzy,
 	eGAS_Base_Avatar_Frenzy,
+
+	eGAS_COUNT,
 };

@@ -22,6 +22,22 @@ WorldAccount::~WorldAccount(void)
 	DestroyAllRoleSet();
 }
 
+ParamPool* WorldAccount::CreateRoleSet(int32 nIdx, int32 nType, int32 nData)
+{
+	if( nIdx < 0 || nIdx >= MAX_AVATAR_COUNT_ONE_USER )
+		return NULL;
+
+	ParamPool*& pPool = m_pRoleDataSet[nIdx];
+	if( pPool != NULL )
+		return NULL;
+
+	pPool = ParamSet::CreateNew( nType, nData);
+	if(!pPool)
+		return NULL;
+
+	return pPool;
+}
+
 void WorldAccount::DestroyAllRoleSet()
 {
 	for (int32 i = 0; i < MAX_AVATAR_COUNT_ONE_USER; ++i)

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "GateFuncManager.h"
+
 class GateFuncExManager : public GateFuncManager
 {
 public:
@@ -7,7 +9,7 @@ public:
 	~GateFuncExManager(void);
 
 protected:
-	GateAccountManager& AccountMgr;
-	GateSystemManager& SystemMgr;
+	class GateAccountManager& AccountMgr;
+	class GateSystemManager& SystemMgr;
 };
 

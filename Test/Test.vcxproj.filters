@@ -29,6 +29,7 @@
     </Filter>
     <Filter Include="Util\Math">
       <UniqueIdentifier>{4fc833d6-f812-4929-a71a-e53c567b3e2d}</UniqueIdentifier>
+      <Extensions>h;cpp</Extensions>
     </Filter>
     <Filter Include="Util\Memory">
       <UniqueIdentifier>{d609e2bb-8467-4fd9-b2ba-77596005f31e}</UniqueIdentifier>
@@ -446,6 +447,15 @@
     <ClInclude Include="AvatarDefine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="StateManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MyRandom.h">
+      <Filter>Util\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="DIYDataManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -818,6 +828,15 @@
       <Filter>Game\CommonData</Filter>
     </ClCompile>
     <ClCompile Include="AvatarDefine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StateManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MyRandom.cpp">
+      <Filter>Util\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="DIYDataManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
