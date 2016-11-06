@@ -24,6 +24,9 @@ public:
 	void SetPendingTime(int32 nTime) { m_nPendingTime = nTime; }
 	int32 GetPendingTime() { return m_nPendingTime; }
 	int32 SubPendingTime(int32 nDeltaTime) { return m_nPendingTime -= nDeltaTime; }
+
+	virtual void SetState(int32 nState);
+	virtual bool ClearState(int32 nState) { return m_State.ClearBit( nState );}
 protected:
 	int32	m_nGateSrvID;
 	int32	m_nGateChannelID;
@@ -31,5 +34,7 @@ protected:
 	int32	m_nNodeID;
 	int32	m_nWorldID;
 	int32	m_nPendingTime;
+
+	StateManager m_State;
 };
 

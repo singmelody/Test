@@ -6,6 +6,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FuncUnit", "FuncUnit\FuncUnit.vcxproj", "{A56784AF-B678-469A-9197-2777EA447D2D}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestW", "TestW\TestW.vcxproj", "{CCAA44BF-6946-457D-8B48-69638AE3F368}"
+	ProjectSection(ProjectDependencies) = postProject
+		{DC95BE4C-4BD8-4727-B720-2925FAAE912B} = {DC95BE4C-4BD8-4727-B720-2925FAAE912B}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestG", "TestG\TestG.vcxproj", "{D05A5011-4BFD-400E-BC31-F268092D77E2}"
 EndProject

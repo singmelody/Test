@@ -177,6 +177,21 @@ void WorldAvatar::RelaseComponent()
 	//FACTORY_DELOBJ(m_pCDComponent);
 }
 
+// make sure the uid is the only one in all srv,
+// for the use of merge srv when necessary, especially for 
+// the srv zoneid & groupid
+int64 WorldAvatar::GenGalaxyUID()
+{
+	std::stringstream sstr;
+
+	sstr << Account.GetAccountName() <<"."<<ServerManager::Instance().m_nZoneID <<"."<< ServerManager::Instance().m_nGrpID;
+
+	uint32 nHashcode = UtilID::CreateFromString( sstr.str().c_str() );
+	uint32 nSecond = Time::CurrentTime().Second();
+
+	return uint64(nHashcode) << 32 | uint64(nSecond);
+}
+
 void WorldAvatar::CreateComponent()
 {
 	

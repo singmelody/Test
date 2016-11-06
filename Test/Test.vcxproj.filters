@@ -443,6 +443,9 @@
     <ClInclude Include="CommonDataManager.h">
       <Filter>Game\CommonData</Filter>
     </ClInclude>
+    <ClInclude Include="AvatarDefine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -813,6 +816,9 @@
     </ClCompile>
     <ClCompile Include="CommonDataManager.cpp">
       <Filter>Game\CommonData</Filter>
+    </ClCompile>
+    <ClCompile Include="AvatarDefine.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

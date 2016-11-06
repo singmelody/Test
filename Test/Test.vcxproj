@@ -238,6 +238,7 @@
     <ClInclude Include="AsynContextManager.h" />
     <ClInclude Include="Atomic.h" />
     <ClInclude Include="Avatar.h" />
+    <ClInclude Include="AvatarDefine.h" />
     <ClInclude Include="AvatarManager.h" />
     <ClInclude Include="AvatarSrv.h" />
     <ClInclude Include="AvatarSrvEx.h" />
@@ -369,6 +370,7 @@
     <ClCompile Include="AsynContextManager.cpp" />
     <ClCompile Include="Atomic.cpp" />
     <ClCompile Include="Avatar.cpp" />
+    <ClCompile Include="AvatarDefine.cpp" />
     <ClCompile Include="AvatarManager.cpp" />
     <ClCompile Include="AvatarSrv.cpp" />
     <ClCompile Include="AvatarSrvEx.cpp" />

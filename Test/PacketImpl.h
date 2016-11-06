@@ -217,6 +217,14 @@ PACKET(PacketCltLogout, PacketBase)
 START_ADD_PACKET_MEMBER(PacketCltLogout)
 PACKET_END(PacketCltLogout)
 
+enum
+{
+	eCreateAvatarRes_Fail	= 0,
+	eCreateAvatarRes_Succ,
+	eCreateAvatarRes_Fail_MaxCount,
+	eCreateAvatarRes_Fail_NameExists,
+};
+
 PACKET(PacketCreateAvatarRes, PacketBase)
 int32 nFlag;
 int32 nIdx;
@@ -227,6 +235,11 @@ ADD_PACKET_MEMBER( nIdx, int32, nIdx);
 ADD_PACKET_MEMBER( nTypeID, int32, nTypeID);
 PACKET_END(PacketCreateAvatarRes)
 
+enum DeleteAvatar
+{
+	eDelete_Avatar_Succ,
+	eDelete_Avatar_Fail,
+};
 
 PACKET(PacketDelCharacterFinish, PacketBase)
 int32 nFlag;
@@ -254,7 +267,7 @@ enum{
 	eReason_EnterSceneFailed,	// failed to enter scene
 };
 uint8 nReason;
-uint8 nParam
+uint8 nParam;
 START_ADD_PACKET_MEMBER(PacketCltSelectAvatarFail)
 	ADD_PACKET_MEMBER( nReason, uint8 , nReason);
 	ADD_PACKET_MEMBER( nParam, uint8 , nParam);
@@ -262,12 +275,30 @@ PACKET_END(PacketCltSelectAvatarFail)
 
 // CLT 2 Gate
 PACKET_CLT_2_GATE(PacketCreateAvatar, PacketBase)
-int32 nIdx;
-int16 nFlag;
-uint8 nAccountLen;
-char account[MAX_ACCOUNT];
-uint8 nAvatarTitleLen;
-char avatarTitle[MAX_TITLE];
+int32	nIdx;
+int16	nFlag;
+uint8	nAccountLen;
+char	account[MAX_ACCOUNT];
+uint8	nAvatarTitleLen;
+char	avatarTitle[MAX_TITLE];
+int32	nParamTypeID;
+int64	nAvatarDID;
+int32	nFaceID;
+int8	nSkinColor;
+int8	nTattoo;
+int8	nBeard_eyeshadow;
+int8	nBrow;
+int32   nHairID;
+int8	nHairColor;
+int32	nEyeID;
+int32	nFashionID;
+int32	nFashionColor;
+int8	nLipColor;
+int32	nMorph_1;
+int32	nMorph_2;
+int32	nMorph_3;
+uint8	nHeight;
+bool	bCheckData;
 START_ADD_PACKET_MEMBER(PacketCreateAvatar)
 ADD_PACKET_MEMBER( nIdx, int32 ,user_index);
 ADD_PACKET_MEMBER( nFlag, int16, create_flag);
@@ -275,6 +306,24 @@ ADD_PACKET_MEMBER( nAccountLen, uint8, accountLen);
 ADD_PACKET_MEMBER_STR( account, MAX_ACCOUNT, account_str);
 ADD_PACKET_MEMBER( nAvatarTitleLen, uint8, nAvatarTitleLen);
 ADD_PACKET_MEMBER_STR( avatarTitle, MAX_TITLE, avatarTitle);
+ADD_PACKET_MEMBER( nParamTypeID, int32, nParamTypeID);
+ADD_PACKET_MEMBER( nAvatarDID, int64, nAvatarDID);
+ADD_PACKET_MEMBER( nFaceID, int32, nFaceID);
+ADD_PACKET_MEMBER( nSkinColor, int8, nSkinColor);
+ADD_PACKET_MEMBER( nTattoo, int8, nTattoo);
+ADD_PACKET_MEMBER( nBeard_eyeshadow, int8, nBeard_eyeshadow);
+ADD_PACKET_MEMBER( nBrow, int8, nBrow);
+ADD_PACKET_MEMBER( nHairID, int32, nHairID);
+ADD_PACKET_MEMBER( nHairColor, int8, nHairColor);
+ADD_PACKET_MEMBER( nEyeID, int32, nEyeID);
+ADD_PACKET_MEMBER( nFashionID, int32, nFashionID);
+ADD_PACKET_MEMBER( nFashionColor, int32, nFashionColor);
+ADD_PACKET_MEMBER( nLipColor, int8, nLipColor);
+ADD_PACKET_MEMBER( nMorph_1, int8, nMorph_1);
+ADD_PACKET_MEMBER( nMorph_2, int8, nMorph_2);
+ADD_PACKET_MEMBER( nMorph_3, int8, nMorph_3);
+ADD_PACKET_MEMBER( nHeight, uint8, nHeight);
+ADD_PACKET_MEMBER( bCheckData, bool, bCheckData);
 PACKET_END(PacketCreateAvatar)
 
 PACKET_CLT_2_GATE(PacketDelCharacter, PacketBase)

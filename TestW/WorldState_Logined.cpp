@@ -104,10 +104,10 @@ void WorldState_Logined::PktGate_CreateAvatar(class PacketCreateAvatar* pPkt)
 	}
 
 
-	pPkt->accountLen = uint8(pAvatar->Account.GetAccountName().size());
-	if(pPkt->accountLen > sizeof(pPkt->account))
+	pPkt->nAccountLen = uint8(pAvatar->Account.GetAccountName().size());
+	if(pPkt->nAccountLen > sizeof(pPkt->account))
 	{
-		MyLog::error("Bad Account Len = [%d]", pPkt->accountLen);
+		MyLog::error("Bad Account Len = [%d]", pPkt->nAccountLen);
 		PacketCreateAvatarsRes pkt;
 		pkt.flag = CreateAvatarRes_Fail;
 		pkt.index = -1;
@@ -117,30 +117,30 @@ void WorldState_Logined::PktGate_CreateAvatar(class PacketCreateAvatar* pPkt)
 
 	const std::string strAccount( pPkt->account, pPkt->nAccountLen);
 
-	memcpy( pPkt->account, pAvatar->m_account.GetAccountName(), pPkt->nAccountLen);
+	memcpy( pPkt->account, pAvatar->GetAccountName(), pPkt->nAccountLen);
 
-	PARAM_SET_VALUE( pPool, faceid, pPkt->faceid, false);
-	PARAM_SET_VALUE( pPool, hairid, pPkt->hairid, false);
-	PARAM_SET_VALUE( pPool, eyeid, pPkt->eyeid, false);
-	PARAM_SET_VALUE( pPool, skincolor, pPkt->skincolor, false);
-	PARAM_SET_VALUE( pPool, tattoo, pPkt->tattoo, false);
-	PARAM_SET_VALUE( pPool, beard_eyeshadow, pPkt->beard_eyeshadow, false);
-	PARAM_SET_VALUE( pPool, morph_1, pPkt->morph_1, false);
-	PARAM_SET_VALUE( pPool, morph_2, pPkt->morph_2, false);
-	PARAM_SET_VALUE( pPool, morph_3, pPkt->morph_3, false);
-	PARAM_SET_VALUE( pPool, fashionid, pPkt->fashionid, false);
-	PARAM_SET_VALUE( pPool, fashioncolor, pPkt->fashioncolor, false);
-	PARAM_SET_VALUE( pPool, lipcolor, pPkt->lipcolor, false);
+	PARAM_SET_VALUE( pPool, faceid, pPkt->nFaceID, false);
+	PARAM_SET_VALUE( pPool, hairid, pPkt->nHairColor, false);
+	PARAM_SET_VALUE( pPool, eyeid, pPkt->nEyeID, false);
+	PARAM_SET_VALUE( pPool, skincolor, pPkt->nSkinColor, false);
+	PARAM_SET_VALUE( pPool, tattoo, pPkt->nTattoo, false);
+	PARAM_SET_VALUE( pPool, beard_eyeshadow, pPkt->nBeard_eyeshadow, false);
+	PARAM_SET_VALUE( pPool, morph_1, pPkt->nMorph_1, false);
+	PARAM_SET_VALUE( pPool, morph_2, pPkt->nMorph_2, false);
+	PARAM_SET_VALUE( pPool, morph_3, pPkt->nMorph_3, false);
+	PARAM_SET_VALUE( pPool, fashionid, pPkt->nFashionID, false);
+	PARAM_SET_VALUE( pPool, fashioncolor, pPkt->nFashionColor, false);
+	PARAM_SET_VALUE( pPool, lipcolor, pPkt->nLipColor, false);
 
 	PARAM_SET_VALUE( pPool, title, strTitle.c_str(), false);
 	PARAM_SET_VALUE( pPool, accountname, strAccount.c_str(), false);
 
-	pPkt->AvatarDID = pAvatar->GenGalaxyUID();
+	pPkt->nAvatarDID = pAvatar->GenGalaxyUID();
 
 	PARAM_SET_VALUE( pPool, avatardid, pPkt->AvatarDID, false);
 	PARAM_SET_VALUE( pPool, create_time, Time::CurrentTime().Second(), false);
 
-	pPkt->index = resPos;
+	pPkt->nIdx = resPos;
 	pAvatar->SetState( eGAS_Base_CltCreateAvatar);
 
 	// create avatar log
@@ -159,7 +159,7 @@ void WorldState_Logined::PktGate_CreateAvatarRes(class PacketCreateAvatarRes* pP
 
 	MyLog::message("User Reqw Create Avatar.Account[%s] Result[%d]", pAvatar->GetAccountName(), pPkt->nFlag);
 
-	if(pPkt->nFlag != CreateAvatarRes_Succ)
+	if(pPkt->nFlag != eCreateAvatarRes_Succ)
 	{
 		pAvatar->m_account.DestroyRoleSet( pPkt->nIdx);
 		pAvatar->Send2Gate( &pPkt, true);
@@ -172,7 +172,7 @@ void WorldState_Logined::PktGate_CreateAvatarRes(class PacketCreateAvatarRes* pP
 		MyLog::error("there is error in create avatar !!");
 
 		PacketCreateAvatarRes pPkt;
-		pPkt.nFlag = CreateAvatarRes_Fail;
+		pPkt.nFlag = eCreateAvatarRes_Fail;
 		pPkt.nIdx = -1;
 		pAvatar->Send2Gate( &pPkt, true);
 		return;
@@ -181,7 +181,7 @@ void WorldState_Logined::PktGate_CreateAvatarRes(class PacketCreateAvatarRes* pP
 	{
 		// tell clt create success
 		PacketCreateAvatarRes pkt;
-		pkt.nFlag = CreateAvatarRes_Success;
+		pkt.nFlag = eCreateAvatarRes_Succ;
 		pkt.nIdx = -1;
 		pAvatar->Send2Gate( &pkt, true);
 
@@ -191,8 +191,8 @@ void WorldState_Logined::PktGate_CreateAvatarRes(class PacketCreateAvatarRes* pP
 	{
 		PacketUserData pkt;
 
-		pkt.AvatarDID = pPool->GetValue("avatardid", (int64)-1);
-		pkt.index = pPkt->index;
+		pkt.nAvatarDID = pPool->GetValue("avatardid", (int64)-1);
+		pkt.nIndex = pPkt->nIdx;
 
 		pkt.SyncParam2Gate( pAvatar, true, pPool, eParam_Flag_RoleList, eParam_Sync_All);
 	}
@@ -236,7 +236,7 @@ void WorldState_Logined::PktGate_DelCharacterRes(class PacketDelCharacterFinish*
 	if(!pAvatar)
 		return;
 
-	if (pPkt->nFlag == eDelete_Avatar_Success)
+	if (pPkt->nFlag == eDelete_Avatar_Succ)
 	{
 		ParamPool* pPool = NULL;
 		for(int32 i = 0; i < MAX_AVATAR_COUNT_ONE_USER; ++i)

@@ -158,6 +158,8 @@ public:
 	void			CancelAvatarFlag(int32 nFlag) { m_WorldAvatarFlag &= (~nFlag); }
 	void			RelaseComponent();
 
+	int64			GenGalaxyUID();
+
 	WorldAccount	m_account;
 	int32			m_nChangeSceneState;	// 0->first login;1->normal playing
 	CurDataStage	m_curDataOnSide;

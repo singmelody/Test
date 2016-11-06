@@ -50,6 +50,10 @@ typedef TiXmlNode XmlNode;
 #define MAKE_LOGIC_ID( paramid, dataid) \
 	( (paramid) << 8 + (dataid) & 0xff )
 
+#define MAX_BIT_SIZE				512
+#define BIT_SIZE					32
+#define BIT_LIST_SIZE				(MAX_BIT_SIZE/BIT_SIZE+1)
+
 #define SERVER_TICK_TIME_SHOW		1000
 #define GAME_THREAD_WATCHDOG_ID		2
 #define SCENE_ID_NULL				0
