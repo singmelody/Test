@@ -140,6 +140,7 @@
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GateAccountStates.h" />
     <ClInclude Include="GateAccount.h" />
     <ClInclude Include="GateBase.h" />
     <ClInclude Include="GateCltNetManager.h" />
@@ -153,6 +154,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="GateAccountStates.cpp" />
     <ClCompile Include="GateAccount.cpp" />
     <ClCompile Include="GateBase.cpp" />
     <ClCompile Include="GateCltNetManager.cpp" />

@@ -1,6 +1,9 @@
 #pragma once
 
 #include "BaseType.h"
+#include "Factory.h"
+#include "PoolAllocator.h"
+#include <string>
 
 enum GateAccountState
 {
