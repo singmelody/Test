@@ -230,12 +230,12 @@ public:
 		if (nClassID < 0 || nClassID >= (int32)m_FuncID_Arg1.size())
 			return NULL;
 
-		FactoryBase_Arg0* pFactory = m_FuncID_Arg1[nClassID];
+		FactoryBase_Arg1<tArg>* pFactory = m_FuncID_Arg1[nClassID];
 
 		if (!pFactory)
 			return NULL;
 
-		return pFactory->New();
+		return pFactory->New(arg);
 	}
 
 	virtual void* New(const char* pClassName, tArg arg)
@@ -248,11 +248,11 @@ public:
 		if (itr == m_FuncName_Arg1.end())
 			return NULL;
 
-		FactoryBase_Arg1* pFactoryBase = itr->second;
+		FactoryBase_Arg1<tArg>* pFactoryBase = itr->second;
 		if (!pFactoryBase)
 			return NULL;
 
-		return pFactoryBase->New();
+		return pFactoryBase->New(arg);
 	}
 
 	virtual void Delete(void* ptr)
@@ -262,10 +262,10 @@ public:
 
 		int32 nInfo = ( (MemoryHead*)((char*)ptr-sizeof(MemoryHead)))->AllocInfo;
 
-		if (nInfo < 0 || nInfo >= (int32)m_FuncID_Arg0.size())
+		if (nInfo < 0 || nInfo >= (int32)m_FuncID_Arg1.size())
 			return;
 
-		FactoryBase_Arg1* pFactory = m_FuncID_Arg1[nInfo];
+		FactoryBase_Arg1<tArg>* pFactory = m_FuncID_Arg1[nInfo];
 		if (!pFactory)
 			return;
 
@@ -284,11 +284,11 @@ public:
 		if (nClassID == -1)
 		{
 			pFunc->ClassID((int32)m_FuncID_Arg1.size());
-			m_FuncID_Arg0.push_back(pFunc);
+			m_FuncID_Arg1.push_back(pFunc);
 			return;
 		}
 
-		if (nClassID >= (int32)m_FuncID_Arg0.size())
+		if (nClassID >= (int32)m_FuncID_Arg1.size())
 			m_FuncID_Arg1.resize(nClassID+1);
 
 		m_FuncID_Arg1[nClassID] = pFunc;

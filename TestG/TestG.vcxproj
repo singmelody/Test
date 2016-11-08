@@ -147,6 +147,7 @@
     <ClInclude Include="GateFuncExManager.h" />
     <ClInclude Include="GateFuncManager.h" />
     <ClInclude Include="GateLoginManager.h" />
+    <ClInclude Include="GatePktProc.h" />
     <ClInclude Include="GateServer.h" />
     <ClInclude Include="GateSystemManager.h" />
     <ClInclude Include="resource.h" />
@@ -161,6 +162,7 @@
     <ClCompile Include="GateFuncExManager.cpp" />
     <ClCompile Include="GateFuncManager.cpp" />
     <ClCompile Include="GateLoginManager.cpp" />
+    <ClCompile Include="GatePktProc.cpp" />
     <ClCompile Include="GateServer.cpp" />
     <ClCompile Include="GateSystemManager.cpp" />
     <ClCompile Include="stdafx.cpp">

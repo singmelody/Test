@@ -5,7 +5,7 @@
 class PeerSrvModuleBase : public PeerModuleBase, public SrvBase
 {
 public:
-	PeerSrvModuleBase(void);
+	PeerSrvModuleBase(SrvType nModuelType);
 	~PeerSrvModuleBase(void);
 
 	virtual bool Init(int32 nArgc, char* argv[]);
@@ -14,6 +14,6 @@ public:
 	virtual bool ProcessPacket();
 
 protected:
-	f32		m_fSrv
+	f32		m_fSrv;
 };
 

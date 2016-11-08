@@ -64,3 +64,9 @@ PACKET_IMPL(PacketDelCharacterFinish);
 PACKET_IMPL(PacketDelCharacater2DBA);
 
 PACKET_IMPL(PacketCltSelectAvatarFail);
+
+PACKET_IMPL(PacketMulticast2Avatar);
+
+PACKET_IMPL(PacketMulticast2Channel);
+
+PACKET_IMPL(PacketFSMExtentdData);

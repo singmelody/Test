@@ -456,6 +456,12 @@
     <ClInclude Include="DIYDataManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="MyPacketProc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PacketData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -837,6 +843,12 @@
       <Filter>Util\Math</Filter>
     </ClCompile>
     <ClCompile Include="DIYDataManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MyPacketProc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PacketData.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

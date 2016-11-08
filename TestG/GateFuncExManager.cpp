@@ -3,6 +3,8 @@
 
 
 GateFuncExManager::GateFuncExManager(void)
+	: SystemMgr(GateSystemManager::Instance())
+	, AccountMgr(GateAccountManager::Instance())
 {
 }
 

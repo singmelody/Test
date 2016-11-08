@@ -1,6 +1,7 @@
 #pragma once
 
 #include "BaseType.h"
+#include "PacketSender.h"
 
 #define PACKET_BASE_SIZE					(2*sizeof(int32) + sizeof(uint8))
 
@@ -94,6 +95,9 @@ public:
 
 	inline void SetPacketType(int8 type) { m_SendType |= type; }
 	inline void UnSetPacketType(int8 type) { m_SendType &= ~type; }
+	inline uint8 GetPacketType() { return m_SendType; }
+	inline bool CheckPacketType(uint8 nType) { return (m_SendType & nType) > 0; }
+	inline void ResetPacketType() { m_SendType = 0; }
 protected:
 
 	int32		m_PacketID;
@@ -109,6 +113,7 @@ protected:
 class PacketSender;
 class SyncPackArg;
 class CasterTrunkGate;
+
 
 class PacketPackBase : public PacketBase
 {
@@ -263,4 +268,129 @@ public:
 protected:
 	char		m_buffer[nPacketSize];
 	uint16		m_buffSize;
+};
+
+template< int32 nPacketSize = PACKET_EX_BUFF_SIZE>
+class PacketDataPack : public PacketBaseEx<nPacketSize>
+{
+public:
+	enum
+	{
+		eMaxCnt = 100,
+		eMaxContentSize = PACKET_MAX_SIZE - PACKET_EX_SIZE - eMaxCnt*4,	// 
+	};
+
+	PacketDataPack()
+	{
+		m_pSyncPacketArg = NULL;
+		m_nSyncFlag = 0;
+		m_nDataCnt = 0;
+		Reset();
+	}
+
+	void Reset()
+	{
+		PacketBaseEx<nPacketSize>::SetPacketSize(0);
+		m_nDataCnt = 0;
+	}
+
+	virtual bool SerialType() { return false; }
+
+	bool FillData(class PacketData* pData)
+	{
+		// 		int32 nOffset = 0;
+		// 		MemoryOStream 
+
+		return true;
+	}
+
+	uint16			m_nSyncFlag;
+	SyncPacketArg*	m_pSyncPacketArg;
+	uint16			m_nDataCnt;
+};
+
+class PacketAttachBase : public PacketBase
+{
+public:
+	PacketAttachBase();
+	virtual ~PacketAttachBase();
+
+	virtual char* ReadPacket( char* pBuffer );
+	virtual char* WritePacket( char* pBuffer );
+
+	void AttachPacket(PacketBase* pPkt);
+	PacketBase* GetPacket() { return m_pPacket; }
+protected:
+	PacketBase*		m_pPacket;
+	int32			m_nPacketType;
+};
+
+template <typename T>
+class PacketBroadCastBase : public PacketAttachBase
+{
+public:
+	PacketBroadCastBase()
+	{
+		m_nCastCount = 0;
+	}
+
+	virtual char* ReadPacket(char* pBuffer)
+	{	
+		char* tmp = PacketAttachBase::ReadPacket(pBuffer);
+		if(!tmp)
+			return NULL;
+
+		m_nCastCount = *((uint16*)tmp);
+		tmp += sizeof(uint16);
+
+		int32 nSize = m_nCastCount * sizeof(T);
+		memcpy( m_CastList, tmp, nSize);
+		tmp += nSize;
+
+		return tmp;
+	}
+
+	virtual char* WritePacket(char* pBuffer)
+	{
+		char* tmp = PacketAttachBase::WritePacket(pBuffer);
+
+		*((uint16*)tmp) = m_nCastCount;
+		tmp += sizeof(uint16);
+
+		int32 nSize = m_nCastCount * sizeof(T);
+		memcpy( tmp, m_CastList, nSize);
+		tmp += nSize;
+
+		return tmp;
+	}
+
+	void SetCastList( uint16 nCnt, T* pBuffer)
+	{
+		if(!pBuffer)
+			return;
+
+		int32 nSize = nCnt * sizeof(T);
+		if( nSize > PACKET_SEND_LIST_BUFFER_SIZE )
+			return;
+
+		m_nCastCount = nCnt;
+		memcpy( m_CastList, (char*)pBuffer, nSize);
+	}
+
+	uint16 GetCastList(T* pBuffer)
+	{
+		if(!pBuffer)
+			return 0;
+
+		int32 nSize = m_nCastCount * sizeof(T);
+		if( nSize > PACKET_SEND_LIST_BUFFER_SIZE )
+			return 0;
+
+		memcpy( (char*)pBuffer, m_CastList, nSize);
+		return m_nCastCount;
+
+	}
+protected:
+	int32		m_nCastCount;
+	char		m_CastList[PACKET_SEND_LIST_BUFFER_SIZE];
 };

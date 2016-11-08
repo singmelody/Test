@@ -8,6 +8,9 @@
 	processor->RegPacketHandle( UtilID::CreateFromString(#packet), \
 	new FunctionPacket<classobj, packet*, PacketBase*>( this, &classobj::function)); packet tmppkt##packet;
 
+#define REG_DEFAULT_PACKET_HANDLER( processor, basepacket, classobj, function) \
+	processor->RegDefaultHandler( new FunctionPacket< classobj, basepacket*, basepacket*>( this, &classobj::function));
+
 template < class T>
 class FunctionPacketBase
 {

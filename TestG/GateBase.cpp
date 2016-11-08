@@ -1,6 +1,5 @@
-#include "GateBase.h"
-#include "GateBase.h"
 #include "StdAfx.h"
+#include "GateBase.h"
 
 
 GateBase::GateBase(void)

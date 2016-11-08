@@ -64,4 +64,14 @@ namespace DS
 		Serialize( value.y, buffer, offset, bToBuff);		
 		Serialize( value.z, buffer, offset, bToBuff);
 	}
+
+	class IOStreamBase
+	{
+
+	};
+
+	class MemoryIOStreamBase : public IOStreamBase
+	{
+
+	};
 }

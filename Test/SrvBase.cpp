@@ -1,5 +1,7 @@
 #include "StdAfx.h"
 #include "SrvBase.h"
+#include "MyLog.h"
+#include "MyPacketProc.h"
 
 class SrvBaseRecvPacketFilter : public IRecvPacketFilter
 {
@@ -47,13 +49,43 @@ SrvBase::~SrvBase(void)
 {
 }
 
+bool SrvBase::SrvInit()
+{
+	MyLog::message("Begin SrvBase::SrvInit");
+
+	FillSrvConfig();
+
+	m_CltPktProc = CreateCltPktProcessor();
+	if( !m_CltPktProc )
+		return NULL;
+
+	MyLog::message("End SrvBase::SrvExit");
+}
+
+bool SrvBase::SrvExit()
+{
+
+}
+
+void SrvBase::FillSrvConfig()
+{
+
+}
+
 NetManager* SrvBase::CreateCltNetManager(bool bLZOCompress, int32 nSockRcBufSize, int32 nRcBufferSize, int32 nSockSnBuffSize, int32 nSnBufferSize, FunctionBase_Arg1<int32>* funcAccpet /*= NULL*/, FunctionBase_Arg1<int32>* funcCon /*= NULL*/, FunctionBase_Arg1<int32>* funcDiscon /*= NULL*/, int32 MAX_SOCKETS /*= MY_SOCKET_LIST_SIZE*/)
 {
 	return new BASENETMANAGER( bLZOCompress, nSockRcBufSize, nRcBufferSize, nSockSnBuffSize, nSnBufferSize, funcAccpet, funcCon, funcDiscon, MAX_SOCKETS);
 }
 
 
+MyPacketProc* SrvBase::CreateCltPktProcessor()
+{
+	MyLog::message("Create Default Srv Packet Processor");
+	return new MyPacketProc();
+}
+
 void SrvBase::RegCltPktHandle(PacketProcessor* pProc)
 {
 	REG_DEFAULT_PACKET_HANDLER( pProc, PacketBase, SrvBase, DftCltPktHandle);
+	REG_PACKET_HANDLER( pProc, PacketNetEvent, SrvBase, PktCltNetEvent);
 }

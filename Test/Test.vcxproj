@@ -294,6 +294,7 @@
     <ClInclude Include="MyMutex.h" />
     <ClInclude Include="MyNetWork.h" />
     <ClInclude Include="MyPacket.h" />
+    <ClInclude Include="MyPacketProc.h" />
     <ClInclude Include="MyRandom.h" />
     <ClInclude Include="MySockAddr.h" />
     <ClInclude Include="MySocket.h" />
@@ -309,6 +310,7 @@
     <ClInclude Include="ODBCInterface.h" />
     <ClInclude Include="OperatorNew.h" />
     <ClInclude Include="PacketBase.h" />
+    <ClInclude Include="PacketData.h" />
     <ClInclude Include="PacketFactory.h" />
     <ClInclude Include="PacketImpl.h" />
     <ClInclude Include="PacketList.h" />
@@ -434,6 +436,7 @@
     <ClCompile Include="MyMutex.cpp" />
     <ClCompile Include="MyNetWork.cpp" />
     <ClCompile Include="MyPacket.cpp" />
+    <ClCompile Include="MyPacketProc.cpp" />
     <ClCompile Include="MyRandom.cpp" />
     <ClCompile Include="MySockAddr.cpp" />
     <ClCompile Include="MySocket.cpp" />
@@ -449,6 +452,7 @@
     <ClCompile Include="ODBCInterface.cpp" />
     <ClCompile Include="OperatorNew.cpp" />
     <ClCompile Include="PacketBase.cpp" />
+    <ClCompile Include="PacketData.cpp" />
     <ClCompile Include="PacketFactory.cpp" />
     <ClCompile Include="PacketImpl.cpp" />
     <ClCompile Include="PacketList.cpp" />

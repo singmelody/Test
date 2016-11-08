@@ -1,6 +1,6 @@
 #pragma once
 
-
+#include "PeerSrvModuleBase.h"
 
 class GateBase : public PeerSrvModuleBase
 {

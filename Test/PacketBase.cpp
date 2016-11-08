@@ -187,6 +187,8 @@ char* PacketBase::ReadPacket(char* buffer)
 	return tmp + sizeof(uint8);
 }
 
+// 4bit |  4bit  |2bit|2bit
+// pktid|avatarid|idx |sendtype
 char* PacketBase::WritePacket( char* pBuffer)
 {
 	char* tmp = pBuffer;
@@ -207,3 +209,73 @@ char* PacketBase::WritePacket( char* pBuffer)
 	*((uint8*)tmp) = m_SendType;
 	return tmp + sizeof(uint8);
 }
+
+PacketAttachBase::PacketAttachBase()
+	: m_pPacket(NULL)
+	, m_nPacketType(-1)
+{
+
+}
+
+PacketAttachBase::~PacketAttachBase()
+{
+	if(!m_pPacket)
+		return;
+
+	PacketFactory::Instance().Delete( m_pPacket );
+}
+
+char* PacketAttachBase::ReadPacket(char* pBuffer)
+{
+	if(!pBuffer)
+		return NULL;
+
+	char* tmp = PacketBase::ReadPacket(pBuffer);
+
+	m_nPacketType = *((int32*)tmp);
+	if( m_nPacketType == -1 )
+	{
+		tmp += sizeof(int32);
+		return tmp;
+	}
+
+	tmp += sizeof(int32);
+	m_pPacket = (PacketBase*)PacketFactory::Instance().New( m_nPacketType );
+	if( m_pPacket )
+		tmp = m_pPacket->ReadPacket(tmp);
+
+	return tmp;
+}
+
+char* PacketAttachBase::WritePacket(char* pBuffer)
+{
+	char* tmp = PacketBase::WritePacket(pBuffer);
+
+	if(!pBuffer)
+	{
+		*((int32*)tmp) = -1;
+		tmp += sizeof(int32);
+		return tmp;
+	}
+
+	*((int32*)tmp) = m_nPacketType;
+	tmp += sizeof(int32);
+	tmp = m_pPacket->WritePacket(tmp);
+
+	return tmp;
+}
+
+void PacketAttachBase::AttachPacket(PacketBase* pPkt)
+{
+	if(!pPkt)
+		return;
+
+	m_nPacketType = pPkt->GetPacketID();
+	m_pPacket = (PacketBase*)PacketFactory::Instance().New( pPkt->GetPacketID() );
+
+	char pBuffer[PACKET_MAX_SIZE];
+	pPkt->WritePacket(pBuffer);
+	m_pPacket->ReadPacket(pBuffer);
+}
+
+

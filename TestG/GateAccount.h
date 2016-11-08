@@ -4,6 +4,7 @@
 #include "Factory.h"
 #include "PoolAllocator.h"
 #include <string>
+#include "Singleton.h"
 
 enum GateAccountState
 {
@@ -53,5 +54,22 @@ public:
 	static void Delete(GateAccount* ptr);
 
 	void ChangeState(GateAccountState state);
+
+protected:
+	int32	m_nClntSockID;
+	bool	m_bClntConnect;
+	bool	m_bDestroy;
+	bool	m_bNeedNoticeWorldWhenDestroy;
+	int32	m_nUserIP;
+	int32	m_nCityChatChannelID;
+
+	GateAccountState*	m_pState;
+};
+
+class GateAccountManager : public Singleton<GateAccountManager>
+{
+public:
+	GateAccountManager();
+	~GateAccountManager();
 };
 

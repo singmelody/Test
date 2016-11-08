@@ -3,6 +3,7 @@
 #include "PacketBase.h"
 #include "MyPacket.h"
 #include "PacketParamPool.h"
+#include "MyFactory.h"
 
 PACKET( PacketPack, PacketPackBase)
 START_ADD_PACKET_MEMBER(PacketPack)
@@ -272,6 +273,18 @@ START_ADD_PACKET_MEMBER(PacketCltSelectAvatarFail)
 	ADD_PACKET_MEMBER( nReason, uint8 , nReason);
 	ADD_PACKET_MEMBER( nParam, uint8 , nParam);
 PACKET_END(PacketCltSelectAvatarFail)
+
+PACKET(PacketFSMExtentdData, PacketDataPack<PACKET_EX_BUFF_MAX_SIZE>)
+START_ADD_PACKET_MEMBER(PacketFSMExtentdData)
+PACKET_END(PacketFSMExtentdData)
+
+PACKET_EX(PacketMulticast2Avatar, PacketBroadCastBase<int32>, new PoolPacketAllocator(40960))
+START_ADD_PACKET_MEMBER(PacketMulticast2Avatar)
+PACKET_END(PacketMulticast2Avatar)
+
+PACKET_EX(PacketMulticast2Channel, PacketBroadCastBase<int16>, new PoolPacketAllocator(40960))
+START_ADD_PACKET_MEMBER(PacketMulticast2Channel)
+PACKET_END(PacketMulticast2Channel)
 
 // CLT 2 Gate
 PACKET_CLT_2_GATE(PacketCreateAvatar, PacketBase)

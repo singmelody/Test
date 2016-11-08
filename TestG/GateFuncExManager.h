@@ -1,6 +1,8 @@
 #pragma once
 
 #include "GateFuncManager.h"
+#include "GateAccount.h"
+#include "GateSystemManager.h"
 
 class GateFuncExManager : public GateFuncManager
 {

@@ -3,8 +3,10 @@
 #include "MySockAddr.h"
 #include "FunctionBase.h"
 #include "Thread.h"
+#include "NetManager.h"
 
 class NetManager;
+class MyPacketProc;
 
 class SrvBase
 {
@@ -24,8 +26,12 @@ public:
 	virtual NetManager* CreateCltNetManager( bool bLZOCompress, int32 nSockRcBufSize, int32 nRcBufferSize, int32 nSockSnBuffSize, int32 SnBufferSize,
 		FunctionBase_Arg1<int32>* funcAccpet = NULL, FunctionBase_Arg1<int32>* funcCon = NULL, FunctionBase_Arg1<int32>* funcDiscon = NULL, int32 MAX_SOCKETS = MY_SOCKET_LIST_SIZE);
 
+	virtual MyPacketProc* CreateCltPktProcessor();
 protected:
-	void SrvThreadLoop();	
+	void SrvThreadLoop();
+
+	virtual void RegCltPktHandle(PacketProcessor* pPkt);
+	virtual void DftCltPktHandle(PacketBase* pPkt) {}
 
 	MyThread		m_SrvNetThread;
 	NetManager*		m_SrvNetMgr;
