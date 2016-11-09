@@ -352,7 +352,6 @@
     <ClInclude Include="SHMManagerBase.h" />
     <ClInclude Include="SHMManager_DBA.h" />
     <ClInclude Include="SocketAccept.h" />
-    <ClInclude Include="SpaceManager.h" />
     <ClInclude Include="SrvBase.h" />
     <ClInclude Include="SrvPacketTestManager.h" />
     <ClInclude Include="StateManager.h" />

@@ -345,9 +345,6 @@
     <ClInclude Include="GateSrvGrp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SpaceManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ParamNameIndexHelper.h">
       <Filter>Header Files</Filter>
     </ClInclude>

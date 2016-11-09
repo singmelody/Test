@@ -56,3 +56,4 @@ CommonDataCont* CommonDataManager::GetCont(CommonDataType type) const
 	
 	return m_pCont[type];
 }
+
