@@ -44,8 +44,8 @@ SrvBase::SrvBase(void)
 
 	m_SrvSocketRcBufSize = 2048;
 	m_SrvCirRcBufSize = 2048*32;
-	m_SrvSocketRnBufSize = 2048;
-	m_SrvCirRnBufSize = 2048*32;
+	m_SrvSocketSnBufSize = 2048;
+	m_SrvCirSnBufSize = 2048*32;
 
 	m_SrvIP = "127.0.0.1";
 	m_SrvPort = 10001;
@@ -54,6 +54,10 @@ SrvBase::SrvBase(void)
 	m_SrvMaxSockets = 0;
 	m_nSrvNetEventWaitTime = 0;
 	m_pRecvPacketFilterOfSrvBase = NULL;
+
+	m_bUseSrvNetDelay = NET_TEST_USE_SRV_SEND_DELAY;
+	m_SrvNetDelayMin = NET_TEST_USE_SRV_SEND_DELAY_MIN;
+	m_SrvNetDelayMax = NET_TEST_USE_SRV_SEND_DELAY_MAX;
 }
 
 
@@ -75,7 +79,7 @@ bool SrvBase::SrvInit()
 	FunctionBase_Arg1<int32>* pCFunc = new Function_Arg1< SrvBase, int32>( this, &SrvBase::SrvConnect);
 	FunctionBase_Arg1<int32>* pDFunc = new Function_Arg1< SrvBase, int32>( this, &SrvBase::SrvDisconnect);
 
-	NetManager* pMgr = CreateCltNetManager( m_bSrvEnableLZO, m_SrvSocketRcBufSize, m_SrvCirRcBufSize, m_SrvSocketRnBufSize, m_SrvCirRnBufSize,
+	NetManager* pMgr = CreateCltNetManager( m_bSrvEnableLZO, m_SrvSocketRcBufSize, m_SrvCirRcBufSize, m_SrvSocketSnBufSize, m_SrvCirSnBufSize,
 		pAFunc, pCFunc, pDFunc, m_SrvMaxSockets);
 
 	if(!pMgr)
@@ -131,6 +135,41 @@ void SrvBase::FillSrvConfig()
 	MyLog::message("Srv Use IOCP Net Mode: %d", m_SrvUseIOCP);
 
 	ConfigManager::GetConfigValue( "CommonConfig", "SrvIP", m_SrvIP, true);
+	MyLog::message("SrvIP : %s", m_SrvIP.c_str());
+
+	ConfigManager::GetConfigValue("CommonConfig", "SrvPort", m_SrvPort, true);
+	MyLog::message("SrvPort : %d", m_SrvPort);
+
+	ConfigManager::GetConfigValue( "CommonConfig", "SrvSocketSnBufSize", m_SrvSocketSnBufSize);
+	if( m_SrvSocketSnBufSize < 2048)
+		m_SrvSocketSnBufSize = 2048;
+	MyLog::message("Srv SrvSockSNBufSize: %d", m_SrvSocketSnBufSize);
+
+	ConfigManager::GetConfigValue( "CommonConfig", "SrvSnBufSize", m_SrvCirSnBufSize);
+	if( m_SrvCirSnBufSize < m_SrvSocketSnBufSize)
+		m_SrvCirSnBufSize = m_SrvSocketSnBufSize*2;
+	MyLog::message("Srv SrvSockSNBufSize: %d", m_SrvCirSnBufSize);
+
+	ConfigManager::GetConfigValue( "CommonConfig", "SrvSockRcBufSize", m_SrvSocketRcBufSize);
+	if( m_SrvSocketRcBufSize < 2048)
+		m_SrvSocketRcBufSize = 2048;
+	MyLog::message("Srv SrvSockRcBufSize: %d", m_SrvCirSnBufSize);
+
+	ConfigManager::GetConfigValue( "CommonConfig", "SrvRcBufSize", m_SrvCirRcBufSize);
+	if( m_SrvCirRcBufSize < m_SrvSocketRcBufSize)
+		m_SrvCirRcBufSize = m_SrvSocketRcBufSize*2;
+	MyLog::message("Srv SrvSockSNBufSize: %d", m_SrvCirRcBufSize);
+
+	if( ConfigManager::GetConfigValue( "CommonConfig", "SrvDelay", m_bUseSrvNetDelay, true))
+		MyLog::message("Use Srv Net Delay");
+
+	if( ConfigManager::GetConfigValue( "CommonConfig", "SrvDelayMin", m_SrvNetDelayMin, true))
+		MyLog::message("Use Srv Net Delay Min");
+
+	if( ConfigManager::GetConfigValue( "CommonConfig", "SrvDelayMax", m_SrvNetDelayMax, true))
+		MyLog::message("Use Srv Net Delay Max");
+
+	// bla bla bla
 }
 
 NetManager* SrvBase::CreateCltNetManager(bool bLZOCompress, int32 nSockRcBufSize, int32 nRcBufferSize, int32 nSockSnBuffSize, int32 nSnBufferSize, FunctionBase_Arg1<int32>* funcAccpet /*= NULL*/, FunctionBase_Arg1<int32>* funcCon /*= NULL*/, FunctionBase_Arg1<int32>* funcDiscon /*= NULL*/, int32 MAX_SOCKETS /*= MY_SOCKET_LIST_SIZE*/)

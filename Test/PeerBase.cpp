@@ -50,9 +50,9 @@ bool PeerBase::PeerInit()
 	if( !m_PeerPktProc )
 		return false;
 
-	FunctionBase_Arg1<int32>* pAFunc = new Function_Arg1< PeerBase, int32>( this, &PeerBase::PeerAccept);
-	FunctionBase_Arg1<int32>* pCFunc = new Function_Arg1< PeerBase, int32>( this, &PeerBase::PeerConnect);
-	FunctionBase_Arg1<int32>* pDFunc = new Function_Arg1< PeerBase, int32>( this, &PeerBase::PeerDisconnect);
+	FunctionBase_Arg1<int32>* pAFunc = new Function_Arg1< PeerBase, int32>( this, &PeerBase::PeerOnAccept);
+	FunctionBase_Arg1<int32>* pCFunc = new Function_Arg1< PeerBase, int32>( this, &PeerBase::PeerOnConnect);
+	FunctionBase_Arg1<int32>* pDFunc = new Function_Arg1< PeerBase, int32>( this, &PeerBase::PeerOnDisconnect);
 
 	NetManager* pMgr = CreatePeerNetManager( m_bPeerEnableLZO, m_PeerSocketRcBufSize, m_PeerCirRcBufSize, m_PeerSocketRnBufSize, m_PeerCirRnBufSize,
 		pAFunc, pCFunc, pDFunc, m_PeerMaxSockets);
@@ -189,6 +189,30 @@ void PeerBase::Run()
 	{
 		GameUtil::Sleep(1);
 	}
+}
+
+int32 PeerBase::PeerConnect(char* sIP, int32 nPort, bool bDirty /*= false*/)
+{
+	if(!m_pPeerNetManager)
+		return -1;
+
+	while (true)
+	{
+		int32 nSocketID = m_pPeerNetManager->Connect( sIP, nPort);
+		if(nSocketID >= 0)
+			return nSocketID;
+
+		if(!bDirty)
+			return -1;
+
+		Console::Yellow();
+		MyLog::message("Peer Connect %s:%d Fail, Try Later!", sIP, nPort);
+		Console::Reset();
+
+		GameUtil::Sleep(2000);
+	}
+
+	return -1;
 }
 
 void PeerBase::RegPeerPktHandle(PacketProcessor* pProc)

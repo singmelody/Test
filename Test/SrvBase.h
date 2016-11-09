@@ -95,11 +95,15 @@ protected:
 
 	std::string		m_SrvIP;
 	int32			m_SrvPort;
-	int32			m_SrvSocketRcBufSize;
-	int32			m_SrvSocketRnBufSize;
 
+	int32			m_SrvSocketRcBufSize;
 	int32			m_SrvCirRcBufSize;
-	int32			m_SrvCirRnBufSize;
+	int32			m_SrvSocketSnBufSize;
+	int32			m_SrvCirSnBufSize;
+
+	int32			m_bUseSrvNetDelay;
+	int32			m_SrvNetDelayMin;
+	int32			m_SrvNetDelayMax;
 	
 	bool			m_bSrvEnableLZO;
 	bool			m_bSrvPacketUseIndexWhenSend;

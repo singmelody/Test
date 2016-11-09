@@ -1,7 +1,6 @@
 #pragma once
 
 #include <string>
-#include "BaseType.h"
 #include "WorldAvatarGroup.h"
 #include "MyVector.h"
 #include "WorldAccount.h"

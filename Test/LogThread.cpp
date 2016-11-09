@@ -5,11 +5,12 @@
 #include "MyLog.h"
 #include "Log.h"
 #include <assert.h>
+#include "GameUtil.h"
 
 #define LOG_FLUSH_TIME 30000
 
 LogThread::LogThread(void) 
-	: Thread("Log Flush"), m_pUpdateFunc(NULL),m_bExit(false)
+	: MyThread("Log Flush"), m_pUpdateFunc(NULL),m_bExit(false)
 {
 	m_frameTime = 0;
 	m_logTime = 0;
@@ -34,7 +35,7 @@ void LogThread::Thread_Update()
 		LogSystem_Flush();
 		m_logTime = 0;
 	}
-	GSleep(1000);
+	GameUtil::Sleep(1000);
 }
 
 void LogThread::Init(FunctionBase_Arg0* pFunc)

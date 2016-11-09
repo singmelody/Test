@@ -37,9 +37,11 @@ public:
 protected:
 	void Run();
 
-	void PeerAccept(int32 nSocketID);
-	void PeerConnect(int32 nSocketID);
-	void PeerDisconnect(int32 nSocketID);
+	int32 PeerConnect(char* sIP, int32 nPort, bool bDirty = false);
+
+	void PeerOnAccept(int32 nSocketID);
+	void PeerOnConnect(int32 nSocketID);
+	void PeerOnDisconnect(int32 nSocketID);
 
 	virtual void RegPeerPktHandle(class PacketProcessor* pProc);
 	virtual void DftPeerPktHandle(class PacketBase* pkt) {}

@@ -4,6 +4,7 @@
 #include "ConfigManager.h"
 #include "MyLog.h"
 #include "ServerManager.h"
+#include "Thread.h"
 
 PeerModuleBase::PeerModuleBase(SrvType nModuleType) : ModuleBase(nModuleType), m_bUseConnectionThread(false)
 {
@@ -121,7 +122,7 @@ void PeerModuleBase::Send2Gate(PacketBase* pPkt, int32 nSrvID /*= -1*/, bool bGa
 		if( m_nSrvType == eSrv_Gate )
 			nSrvID = m_nSrvID;
 
-		Servers.m_GateGrp.BroadcastPacket( pkt, nSrvID);
+		Servers.m_GateGrp.BroadcastPacket( pPkt, nSrvID);
 	}
 
 	switch(m_nSrvType)
@@ -144,8 +145,8 @@ void PeerModuleBase::Send2Gate(PacketBase* pPkt, int32 nSrvID, uint16 nChannelID
 void PeerModuleBase::StartConnectionThread()
 {
 	MyThread* pThread = new MyThread("Module Connection");
-	pThread->Init(new FunctionBase_Arg0<PeerModuleBase>( this, &PeerModuleBase::ConnectThreadProc));
-	m_PeerThreadList.push_back(pThread);
+	pThread->Init(new Function_Arg0<PeerModuleBase>( this, &PeerModuleBase::ConnectThreadProc));
+	m_PeerThreadList.add(pThread);
 	pThread->Start();
 }
 
@@ -339,7 +340,7 @@ void PeerModuleBase::OnSendPacketSrvConnect(PacketSrvConnect& pkt)
 
 void PeerModuleBase::OnRecvSrvConnectPkt(class PacketSrvConnect* pPkt)
 {
-	SrvItem item( pPkt);
+	SrvItem item(pPkt);
 
 	MyLog::message("Recv %s Connection id=%d ip=%s port=%d\n", 
 		GetSrvTitle(pPkt->type), pPkt->id, pPkt->IP, pPkt->nPort);
@@ -347,3 +348,28 @@ void PeerModuleBase::OnRecvSrvConnectPkt(class PacketSrvConnect* pPkt)
 	Servers.AddSrvInfo(&item);
 }
 
+SrvItem::SrvItem()
+{
+	nSrvID = 0;
+	nSrvType = eSrv_Unkown;
+
+	nSocketID = -1;
+
+	nLastConnectTime = 0;
+}
+
+SrvItem::SrvItem(class PacketSrvConnect* pPkt)
+{
+	nSrvID = pPkt->nID;
+	nSrvType = pPkt->nType;
+
+	listenPortPeer = pPkt->nListenPortPeer;
+	memcpy( listenIpPeer, pPkt->ListenIpPeer, IPLEN);
+
+	listenPortClt = pPkt->nListenPortClt;
+	memcpy( listenIpClt, pPkt->ListenIpClt, IPLEN);
+
+	nSocketID = pPkt->GetSocketID();
+
+	nLastConnectTime = 0;
+}

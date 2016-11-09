@@ -95,6 +95,6 @@ void WorldServer::OnConfigLoaded()
 
 	AvatarOnLineManager::Instance().OnConfigLoaded();
 
-	SockAddr laddr( m_peerIP, m_peerPort);
+	SockAddr laddr( m_PeerIP, m_PeerPort);
 	Servers.AddLocalWorld( m_nSrvID, -1, laddr);
 }

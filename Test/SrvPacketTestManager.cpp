@@ -2,6 +2,7 @@
 #include "SrvPacketTestManager.h"
 #include "PacketFactory.h"
 #include "PacketBase.h"
+#include "MyRandom.h"
 
 SrvPacketTestManager::SrvPacketTestManager(void)
 {
@@ -39,12 +40,35 @@ void SrvPacketTestManager::DoSend()
 
 	for(int32 i = 0; i < PACKET_MAX_SIZE; ++i)
 	{
-		pktBuff[i] = char(Random::Instance().Rand(-128,128));
+		pktBuff[i] = char(MyRandom::Instance().RandInt(-128,128));
 	}
 
 	int32 nCount = PacketFactory::Instance().GetFactoryCount();
 	for(int32 i = 0; i < nCount; ++i)
 	{
+		FactoryBase_Arg0* pFac = PacketFactory::Instance().GetFactory(i);
+		if(!pFac)
+			continue;
 
+		const char* sName = pFac->ClassName();
+
+		int32 nPacketID = -1;
+		if(sName != NULL)
+			nPacketID = UtilID::CreateFromString(sName);
+
+		PacketBase* pPkt = (PacketBase*)pFac->New();
+		if(!pPkt)
+			continue;
+
+		pPkt->ReadPacket(pktBuff);
+		pPkt->SetPacketID(nPacketID);
+
+		if(m_bCltSend)
+			TestSend2Clt(pPkt);
+
+		if(m_bPeerSend)
+			TestSend2Peer(pPkt);
+
+		pFac->Free(pPkt);
 	}
 }

@@ -27,6 +27,7 @@ class SrvItem
 {
 public:
 	SrvItem();
+	SrvItem( class PacketSrvConnect* pPkt);
 
 	int32	nSrvType;
 	int32	nSrvID;
@@ -37,6 +38,8 @@ public:
 
 	int32	listenPortClt;
 	char	listenIpClt[IPLEN];
+
+	uint64	nLastConnectTime;
 };
 
 class PeerModuleBase : public ModuleBase, public PeerBase

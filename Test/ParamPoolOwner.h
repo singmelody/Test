@@ -1,4 +1,6 @@
 #pragma once
+
+#include "BaseType.h"
 #include "FunctionBase.h"
 
 class ParamPool;
