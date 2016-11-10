@@ -30,4 +30,7 @@ enum
 	param_name_viplevel		= 189,
 	param_name_title		= 207,
 	param_name_accountname	= 209,
+
+	param_name_ServerID		= 679,
+	param_name_CltCnt		= 734,
 };

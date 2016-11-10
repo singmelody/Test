@@ -728,9 +728,6 @@
     <ClCompile Include="GateSrvGrp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SpaceManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ParamNameIndexHelper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

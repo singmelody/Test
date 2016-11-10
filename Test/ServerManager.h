@@ -74,11 +74,16 @@ public:
 
 	bool AddLocalWorld(int32 nSrvID, int32 nSocketID, SockAddr& addr);
 
+	ServerInfo* AddDBA(int32 nSrvID, int32 nSocketID, SockAddr& addr);
+
+	ServerInfo* AddSrvInfo( class SrvItem* pItem);
 	void AddSrvInfo( ServerInfo* pInfo);
 	void RemoveSrvInfo( ServerInfo* pInfo);
 
 	ServerInfo* GetSrvBySocketID(int32 nSocketID);
 	ServerInfo* GetSrvBySrvID(int32 nSrvID);
+
+	bool IsSameGroup(int32 nSrvID);
 
 	static const int32 GROUPID_OF_WARSERVER = 0;
 	static bool IsWarServer(int32 nSrvID) { return GROUPID_OF_WARSERVER == GetGroupID(nSrvID); }

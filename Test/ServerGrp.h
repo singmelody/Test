@@ -28,6 +28,8 @@ public:
 
 	virtual void SortList(){}
 
+	bool RemoveServer(int32 nID);
+
 	SrvInfoMap		m_SrvMap;
 
 	ServerManager*	m_pMgr;

@@ -22,6 +22,9 @@ public:
 	int32 GetGateSrvID() { return m_nGateSrvID; }
 	void SetGateSrvID(int32 nID) { m_nGateSrvID = nID; }
 
+	int32 GetGateChannelID() { return m_nGateChannelID; }
+	void SetGateChannelID(int32 nID) { m_nGateChannelID = nID; }
+
 	void SetPendingTime(int32 nTime) { m_nPendingTime = nTime; }
 	int32 GetPendingTime() { return m_nPendingTime; }
 	int32 SubPendingTime(int32 nDeltaTime) { return m_nPendingTime -= nDeltaTime; }

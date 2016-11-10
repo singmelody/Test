@@ -14,6 +14,7 @@ public:
 	CommonDataOwner(void);
 	virtual ~CommonDataOwner(void);
 
+
 	virtual CommonDataManager* GetCommonDataManager() { return NULL; }
 
 	CommonDataCont* GetCommonDataCont( CommonDataType type);

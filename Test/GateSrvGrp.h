@@ -15,7 +15,7 @@ public:
 
 	virtual void UpdateDetailsPool();
 
-	void SetGateInfo( int32 nPort, char* pIP);
+	void SetGateSrvInfo( int32 nPort, char* pIP);
 	virtual void FillPacket( PacketAddSrvInfo* pPkt);
 
 	int32	m_cltCnt;

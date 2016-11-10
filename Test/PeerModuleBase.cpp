@@ -156,7 +156,7 @@ void PeerModuleBase::ConnectThreadProc()
 
 	if(GetConnectionItem(item))
 	{
-		int32 nSocketID = PeerConnect( item.listenIP, item.listenPort, false);
+		int32 nSocketID = PeerConnect( item.listenIP, item.nListenPort, false);
 		if(nSocketID != -1)
 			AddConnectionItem( item.nSrvID, nSocketID);
 	}
@@ -199,6 +199,36 @@ void PeerModuleBase::N2GPacketCounter(int32 nPacketType)
 	else
 		itr->second++;
 }	
+
+void PeerModuleBase::AddConnectionItem(int32 nSrvID, int32 nSocketID)
+{
+	AUTOLOCK(m_lockConnection);
+
+	ConnectionItem* pItem = new ConnectionItem();
+
+	pItem->nSrvID = nSrvID;
+	pItem->nSocketID = nSocketID;
+
+	m_listConnectedItems.push_back(pItem);
+}
+
+ConnectionItem* PeerModuleBase::GetConnectedItem()
+{
+	AUTOLOCK(m_lockConnection);
+
+	ConnectionItem* pItem = NULL;
+
+	ConnectionItemList& list = m_listConnectedItems;
+	ConnectionItemList::iterator itr = m_listConnectedItems.begin();
+	if( itr != list.end() )
+	{
+		pItem = *itr;
+		list.erase(itr);
+	}
+
+	return pItem;
+}
+
 
 void PeerModuleBase::OnPeerDisConnect(int32 nSocketID)
 {
@@ -260,8 +290,6 @@ void PeerModuleBase::OnPeerDisConnect(int32 nSocketID)
 	Servers.RemoveSrvInfo(pInfo);
 
 	SAFE_DELETE(pInfo);
-
-	_FunctionEnd();
 }
 
 void PeerModuleBase::OnRecvSrvInfoPkt(PacketAddSrvInfo* pPkt)
@@ -277,7 +305,7 @@ void PeerModuleBase::OnRecvSrvInfoPkt(PacketAddSrvInfo* pPkt)
 	pItem->nSrvID = pPkt->nSrvID;
 
 	pItem->listenPortPeer = pPkt->nListenPortPeer;
-	memcpy( pItem->listenIpPeer, pPkt->listenIpPeer, IPLEN);
+	memcpy( pItem->listenIpPeer, pPkt->ListenIpPeer, IPLEN);
 
 	pItem->listenPortClt = pPkt->nListenPortClt;
 	memcpy( pItem->listenIpClt, pPkt->ListenIpClt, IPLEN);
@@ -293,7 +321,7 @@ void PeerModuleBase::SyncConnectServer(SrvItem* pItem)
 	char* ip = pItem->listenIpPeer;
 	int32 nPort = pItem->listenPortPeer;
 
-	MyLog::message("Connect 2 %s ip=%s port=%d\n", GetServerTitle(pItem->nSrvType), ip, nPort);
+	MyLog::message("Connect 2 %s ip=%s port=%d\n", GetSrvTitle(pItem->nSrvType), ip, nPort);
 
 	int32 nSocketID = PeerConnect( ip, nPort, true);
 	if(nSocketID == -1)

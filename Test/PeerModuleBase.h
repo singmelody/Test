@@ -4,6 +4,7 @@
 #include "ModuleBase.h"
 #include "PeerBase.h"
 #include "CircularList.h"
+#include "MyMutex.h"
 
 class ServerInfo;
 class ParamPool;
@@ -41,6 +42,9 @@ public:
 
 	uint64	nLastConnectTime;
 };
+
+typedef std::list<ConnectionItem*>		ConnectionItemList;
+typedef std::map<int32, SrvItem*>		ServerItemMap;
 
 class PeerModuleBase : public ModuleBase, public PeerBase
 {
@@ -96,8 +100,21 @@ public:
 
 	void W2GPacketCounter(int32 nPacketType);
 	void N2GPacketCounter(int32 nPacketType);
+
+	void AddConnectionItem( int32 nSrvID, int32 nSocketID);
+	ConnectionItem* GetConnectedItem();
+
+	ServerItemMap m_mapSrvItems;
 protected:
 	void SyncConnectServer(SrvItem* pInfo);
+
+	virtual void OnWorldDisconnect(ServerInfo* pInfo) {}
+	virtual void OnLocalWorldDisconnect(ServerInfo* pInfo) {}
+	virtual void OnDBADisconnect(ServerInfo* pInfo) {}
+	virtual void OnLoginDisconnect(ServerInfo* pInfo) {}
+	virtual void OnGateDisconnect(ServerInfo* pInfo) {}
+	virtual void OnNodeDisconnect(ServerInfo* pInfo) {}
+	virtual void OnCollisionDisconnect(ServerInfo* pInfo) {}
 
 	void OnRecvSrvInfoPkt(PacketAddSrvInfo* pPkt);
 	void OnSendPacketSrvConnect(class PacketSrvConnect& pkt);
@@ -107,5 +124,7 @@ protected:
 	CircularList<class MyThread*,THREADMAXCNT>	m_PeerThreadList;
 	bool	m_bUseConnectionThread;
 
+	Mutex	m_lockConnection;
+	ConnectionItemList	m_listConnectedItems;
 };
 

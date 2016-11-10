@@ -1,7 +1,7 @@
 #include "StdAfx.h"
 #include "ServerManager.h"
 #include "MyLog.h"
-
+#include "PeerModuleBase.h"
 
 const char* GetSrvTitle(int32 nSrvType)
 {
@@ -128,6 +128,68 @@ bool ServerManager::AddLocalWorld(int32 nSrvID, int32 nSocketID, SockAddr& addr)
 	return true;
 }
 
+ServerInfo* ServerManager::AddDBA(int32 nSrvID, int32 nSocketID, SockAddr& laddr)
+{
+	if(m_pDBA != NULL)
+		return NULL;
+
+	MyLog::message("->>Srv Manager Registry DBA iSocketID = %d\n", nSocketID);
+
+	ServerInfo* pInfo = new ServerInfo( eSrv_DBA, nSrvID, nSocketID, laddr);
+	if(!pInfo)
+		return NULL;
+
+	m_pDBA = pInfo;
+	AddSrvInfo(pInfo);
+	return m_pDBA;
+}
+
+bool ServerManager::IsSameGroup(int32 nSrvID)
+{
+	int32 nGrpID = GetGroupID(nSrvID);
+	return nGrpID == m_nGrpID;
+}
+
+ServerInfo* ServerManager::AddSrvInfo(SrvItem* pItem)
+{
+	int32 nSocketID = pItem->nSocketID;
+	int32 nSrvID = pItem->nSrvID;
+
+	SockAddr laddr( pItem->listenIpPeer, pItem->listenPortPeer);
+
+	switch( pItem->nSrvType )
+	{
+	case eSrv_DBA:
+		AddDBA( nSrvID, nSocketID, laddr);
+		break;
+
+	case eSrv_World:
+		if(IsSameGroup( nSrvID ))
+			AddLocalWorld( nSrvID, nSocketID, laddr);
+		else
+			m_RemoteWorldGrp.AddServer( nSrvID, nSocketID, laddr);
+
+	case eSrv_Login:
+		break;
+
+	case eSrv_Node:
+		break;
+
+	case eSrv_Gate:
+		break;
+
+	case eSrv_Collision:
+		break;
+
+	case eSrv_DOG:
+		
+		break;
+	}
+
+	ServerInfo* pInfo = GetSrvBySrvID(nSrvID);
+	return pInfo;
+}
+
 void ServerManager::AddSrvInfo(ServerInfo* pInfo)
 {
 	if(!pInfo)
@@ -136,6 +198,7 @@ void ServerManager::AddSrvInfo(ServerInfo* pInfo)
 	m_SrvBySrvID[pInfo->nSrvID] = pInfo;
 	m_SrvBySocketID[pInfo->nSocketID] = pInfo;
 }
+
 
 void ServerManager::RemoveSrvInfo(ServerInfo* pInfo)
 {

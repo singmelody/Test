@@ -1,5 +1,6 @@
 #include "StdAfx.h"
 #include "CasterTrunkContainer.h"
+#include "AvatarSrv.h"
 
 FINISH_FACTORY_ARG0(PlayerBranchContainer)
 
@@ -53,7 +54,7 @@ void CasterTrunkContainer::AddPlayer(AvatarSrv* pPlayer)
 	if(!pPlayer)
 		return;
 
-	int32 nBranchID = m_bByNode ? pPlayer->GetNodeSrvID() : pPlayer->m_nGateSrvID;
+	int32 nBranchID = m_bByNode ? pPlayer->GetNodeSrvID() : pPlayer->GetGateSrvID();
 	AddPlayer( pPlayer, nBranchID);
 }
 
@@ -70,7 +71,7 @@ void CasterTrunkContainer::AddPlayer(AvatarSrv* pPlayer, int32 nBranchID)
 				pBranch->AddPlayer( nAvatarID, pPlayer);
 			}
 			else
-				pBranch->AddPlayer( pPlayer->m_nGateChannelID, pPlayer);
+				pBranch->AddPlayer( pPlayer->GetGateChannelID(), pPlayer);
 		}
 	}
 }
@@ -80,7 +81,7 @@ void CasterTrunkContainer::RemovePlayer(AvatarSrv* pPlayer)
 	if(!pPlayer)
 		return;
 
-	int32 nBranchID = m_bByNode ? pPlayer->GetNodeSrvID() : pPlayer->m_nGateSrvID;
+	int32 nBranchID = m_bByNode ? pPlayer->GetNodeSrvID() : pPlayer->GetGateSrvID();
 	RemovePlayer( pPlayer, nBranchID);
 }
 
@@ -89,7 +90,7 @@ void CasterTrunkContainer::RemovePlayer(AvatarSrv* pPlayer, int32 nBranchID)
 	PlayerBranchContainer* pBranch = GetBranch( nBranchID, true);
 	if( pBranch )
 	{
-		int32 nID = m_bByNode ? pPlayer->GetAvatarID() : pPlayer->m_nGateChannelID;
+		int32 nID = m_bByNode ? pPlayer->GetAvatarID() : pPlayer->GetGateChannelID();
 		if( pBranch->RemovePlayer( nID, pPlayer) )
 		{
 			if( pBranch->m_mapPlayers.size() == 0)

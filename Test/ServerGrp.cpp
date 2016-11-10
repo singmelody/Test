@@ -80,3 +80,18 @@ void ServerGrp::PeerSend(int32 nSocketID, class PacketBase* pPkt)
 
 	m_pMgr->m_pPeerModule->PeerSend( pPkt, nSocketID);
 }
+
+bool ServerGrp::RemoveServer(int32 nID)
+{
+	MyLog::error("ServerManager Remove %s [%d]", m_strSrvName.c_str(), nID);
+
+	SrvInfoMap::iterator itr = m_SrvMap.find(nID);
+	if( itr == m_SrvMap.end() )
+		return false;
+
+	ServerInfo* pInfo = itr->second;
+	m_SrvMap.erase(itr);
+	OnRemoveServer(pInfo);
+
+	return true;
+}

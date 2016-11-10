@@ -491,7 +491,6 @@
     <ClCompile Include="SHMManagerBase.cpp" />
     <ClCompile Include="SHMManager_DBA.cpp" />
     <ClCompile Include="SocketAccept.cpp" />
-    <ClCompile Include="SpaceManager.cpp" />
     <ClCompile Include="SrvBase.cpp" />
     <ClCompile Include="SrvPacketTestManager.cpp" />
     <ClCompile Include="StateManager.cpp" />

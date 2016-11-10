@@ -14,6 +14,8 @@ enum SrvType
 	eSrv_NodeSHM,
 	eSrv_NodeDataSync,
 	eSrv_Collision,
+	eSrv_GMI,
+	eSrv_DOG,
 	eSrv_Count
 };
 

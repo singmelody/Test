@@ -3,6 +3,8 @@
 #include <algorithm>
 #include "ServerManager.h"
 #include "ParamSet.h"
+#include "ParamPool.h"
+#include "PacketImpl.h"
 
 GateSrvInfo::GateSrvInfo()
 	: ServerInfo()
