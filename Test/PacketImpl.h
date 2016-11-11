@@ -325,6 +325,65 @@ ADD_PACKET_MEMBER( dy, f32, "");
 ADD_PACKET_MEMBER( dz, f32, "");
 PACKET_END(PacketShortChangeScene)
 
+enum
+{
+	eNode_Avatar_Transport	= 0,
+	eNode_Avatar_Login		= 1,
+};
+
+PACKET(PacketNodeCreateAvatar, PacketBase)
+int8  nLoginFlag;
+int32 nFlag;
+int32 nSceneID;
+int32 nWorldID;
+int32 nNodeID;
+int32 nGateSrvID;
+int32 nGateChannelID;
+int32 nTypeID;
+int64 nAvatarDID;
+f32 x,y,z;
+f32 dx,dy,dz;
+int32 nState;
+START_ADD_PACKET_MEMBER(PacketNodeCreateAvatar)
+
+ADD_PACKET_MEMBER( nLoginFlag, int8, info);
+ADD_PACKET_MEMBER( nFlag, int32, "");
+ADD_PACKET_MEMBER( nSceneID, int32, "");
+ADD_PACKET_MEMBER( nWorldID, int32, "");
+ADD_PACKET_MEMBER( nNodeID, int32, "");
+ADD_PACKET_MEMBER( nGateSrvID, int32, "");
+ADD_PACKET_MEMBER( nGateChannelID, int32, "");
+ADD_PACKET_MEMBER( nTypeID, int32, "");
+ADD_PACKET_MEMBER( nAvatarDID, int64, "");
+ADD_PACKET_MEMBER( x, f32, "");
+ADD_PACKET_MEMBER( y, f32, "");
+ADD_PACKET_MEMBER( z, f32, "");
+ADD_PACKET_MEMBER( dx, f32, "");
+ADD_PACKET_MEMBER( dy, f32, "");
+ADD_PACKET_MEMBER( dz, f32, "");
+ADD_PACKET_MEMBER( nState, int32, "");
+PACKET_END(PacketNodeCreateAvatar)
+
+PACKET(PacketChangeSceneNotify, PacketBase)
+int32 nSceneID;
+int32 nNodeID;
+int32 nFlag;
+enum
+{
+	eEnter,
+	eLeave,
+};
+START_ADD_PACKET_MEMBER(PacketChangeSceneNotify)
+ADD_PACKET_MEMBER( nSceneID, int32, "");
+ADD_PACKET_MEMBER( nNodeID, int32, "");
+ADD_PACKET_MEMBER( nFlag, int32, "");
+PACKET_END(PacketChangeSceneNotify)
+
+PACKET(PacketDestroyAvatar, PacketBase)
+int32 nAvatarID;
+START_ADD_PACKET_MEMBER(PacketDestroyAvatar)
+	ADD_PACKET_MEMBER( nAvatarID, int32, "");
+PACKET_END(PacketDestroyAvatar)
 
 PACKET_EX(PacketMulticast2Avatar, PacketBroadCastBase<int32>, new PoolPacketAllocator(40960))
 START_ADD_PACKET_MEMBER(PacketMulticast2Avatar)
@@ -412,3 +471,17 @@ int32 nGateID;
 START_ADD_PACKET_MEMBER(PacketLogout2Login)
 	ADD_PACKET_MEMBER( nGateID, int32, nGateID);
 PACKET_END(PacketLogout2Login)
+
+
+// Packet_Clt
+PACKET_CLT(PacketCltSceneReq, PacketBase)
+int32 nTeleportID;
+int32 nSceneID;
+f32 x,y,z;
+START_ADD_PACKET_MEMBER(PacketCltSceneReq)
+ADD_PACKET_MEMBER( nTeleportID, int32, nTeleportID);
+ADD_PACKET_MEMBER( nSceneID, int32, nSceneID);
+ADD_PACKET_MEMBER( x, f32, "");
+ADD_PACKET_MEMBER( y, f32, "");
+ADD_PACKET_MEMBER( z, f32, "");
+PACKET_END(PacketCltSceneReq)

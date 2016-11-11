@@ -86,9 +86,11 @@ public:
 
 	void SetTargetScenePoint(f32 x, f32 y, f32 z) { m_target_scene_point.Set( x, y, z);}
 	void SetTargetScenePoint(const Vector3& pos) { m_target_scene_point = pos;}
+	const Vector3& GetTargetScenePoint() { return m_target_scene_point;}
 
 	void SetTargetSceneDir(f32 x, f32 y, f32 z) { m_target_scene_dir.Set( x, y, z);}
 	void SetTargetSceneDir(const Vector3& dir) { m_target_scene_dir = dir;}
+	const Vector3& GetTargetSceneDir() { return m_target_scene_point;}
 
 	void SetPendingCreateScene(int32 nSceneID) { m_PendingCreateSceneID = nSceneID; }
 	int32 GetPendingCreateScene() { return m_PendingCreateSceneID; }

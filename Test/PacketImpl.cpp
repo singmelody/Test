@@ -80,3 +80,11 @@ PACKET_IMPL(PacketCltReady);
 PACKET_IMPL(PacketLogout2Login);
 
 PACKET_IMPL(PacketShortChangeScene);
+
+PACKET_IMPL(PacketNodeCreateAvatar);
+
+PACKET_IMPL(PacketCltSceneReq);
+
+PACKET_IMPL(PacketChangeSceneNotify);
+
+PACKET_IMPL(PacketDestroyAvatar);

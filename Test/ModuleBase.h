@@ -39,6 +39,8 @@ public:
 	bool IsDebug() const { return m_bDebug; }
 	const uint8 GetSrvType() { return m_nSrvType; }
 
+	int32 GetSrvID() { return m_nSrvID; }
+
 	typedef std::list<ParamPool*> DogDataList;
 	DogDataList m_listDogData;
 protected:
