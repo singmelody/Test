@@ -68,3 +68,22 @@ void WorldAvatarManager::RemoveWorldAvatar(WorldAvatar* pAvatar)
 	RemovePlayerAvatar( nAvatarID );
 	FACTORY_DELOBJ(pAvatar);
 }
+
+int32 WorldAvatarManager::CheckAccountOnline(const char* pAccout, int32& nAvatarID)
+{
+	if(!pAccout)
+		return -1;
+
+	WorldAvatar* pAvatar = AvatarOnLineManager::Instance().GetAvatarByAccountName(pAccout);
+	if(pAvatar)
+	{
+		nAvatarID = pAvatar->GetAvatarID();
+		if( pAvatar->m_nCurStageID == eWS_ExitGame )
+			return -3;	// should enter waitlogining state, wait data save finish
+
+		return -4;
+	}
+
+	nAvatarID = -1;
+	return 0;
+}

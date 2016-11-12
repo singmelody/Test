@@ -17,6 +17,8 @@ public:
 
 	WorldAvatar* CreateWorldAvatar(CreateWorldAvatarArg& arg);	
 	void RemoveWorldAvatar( WorldAvatar* pAvatar);
+
+	int32 CheckAccountOnline( const char* pAccout, int32& nAvatarID);
 protected:
 	int32 m_ConnectCount;
 	std::map< std::string, int32>	m_titleMap;		// title - avatarid

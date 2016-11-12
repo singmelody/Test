@@ -173,14 +173,13 @@ public:
 	bool			m_bIsDestroy;
 	int32			m_nTargetNodeID;
 	bool			m_bAvatarDataDirty;
+	int32			m_nCurStageID;
 protected:
 	int32			m_charInterval[CC_MAX];
 
 	Vector3			m_target_scene_point;
 	Vector3			m_target_scene_dir;
 
-
-	int32			m_nCurStageID;
 	WorldState*		m_pCurStage;
 
 

@@ -2,6 +2,7 @@
 
 #include "AvatarSrv.h"
 #include "CommonDataOwner.h"
+#include "CommonDataManager.h"
 
 class Scene;
 
@@ -16,7 +17,12 @@ public:
 	
 	const char* GetName();
 	const char* GetAccountName();
+
+	void ReleaseCommonDataConts();
+	void ReleaseCommonDataConts(CommonDataType type);
 protected:
-	int32	m_sceneID;
+	int32				m_sceneID;
+
+	CommonDataManager*	m_pCommonDataMgr;
 };
 
