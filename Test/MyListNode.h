@@ -177,7 +177,7 @@ public:
 	{
 		T* pRes = _head;
 		Remove(_head);
-		return res;
+		return pRes;
 	}
 
 	T* Pop_back()
@@ -240,6 +240,11 @@ public:
 		}
 
 		c->prev(p->prev());
+		c->next(p);
+		c->prev()->next(c);
+		p->prev(c);
+		c->pList = this;
+		m_nCount++;
 	}
 
 	int32 GetCount() const { return m_nCnt; }

@@ -2,6 +2,8 @@
 
 #include <map>
 #include "BaseType.h"
+#include "IDPool.h"
+#include "MyMap.h"
 
 class AsynContext
 {
@@ -9,7 +11,7 @@ public:
 	AsynContext();
 	virtual ~AsynContext() {}
 
-	int32	nContextID;
+	uint32	nContextID;
 	uint16	nContextType;
 
 	int32 GetContextID()
@@ -32,7 +34,9 @@ public:
 	AsynContext* GetContext(int32 nContextID);
 	void RemoveContext( int32 nContextID );
 protected:
-	typedef std::map< int32, AsynContext*> ContextMap;
+	IDPool	m_IDPool;
+
+	typedef MyMap< int32, AsynContext*> ContextMap;
 	ContextMap m_vMap;
 };
 

@@ -1,4 +1,4 @@
 #include "StdAfx.h"
-#include "GMap.h"
+#include "MyMap.h"
 
 

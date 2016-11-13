@@ -5,6 +5,7 @@
 #include <assert.h>
 #include "DataBuffer.h"
 #include "ParamTypeDef.h"
+#include "SHMNodeExtraInfo.h"
 
 ParamPool::ParamPool(void)
 {
@@ -95,6 +96,29 @@ bool ParamPool::InitParamPool(int32 nDataID)
 	SetDataID(nDataID);
 	return true;
 
+}
+
+void ParamPool::NodeServer_WriteSHM_AvatarDID(int64 nAvatarDID)
+{
+	ParamPoolExInfo_Node_CommonData* pExtraInfo = (ParamPoolExInfo_Node_CommonData*)SHMGetExtraMemory();
+	assert(pExtraInfo);
+	pExtraInfo->m_nAvatarDID = nAvatarDID;
+}
+
+void ParamPool::NodeServer_WriteSHM_CommonDataIdx(int32 nCommonDataIdx)
+{
+	assert(m_pDef && m_pParamBuffer);
+	ParamPoolExInfo_Node_CommonData* pExtraInfo = (ParamPoolExInfo_Node_CommonData*)SHMGetExtraMemory();
+	assert(pExtraInfo);
+	pExtraInfo->m_nCommonDataIdx = nCommonDataIdx;
+}
+
+void ParamPool::NodeServer_WriteSHM_CommonDataFlag(int32 nCommonDataFlag)
+{
+	assert(m_pDef && m_pParamBuffer);
+	ParamPoolExInfo_Node_CommonData* pExtraInfo = (ParamPoolExInfo_Node_CommonData*)SHMGetExtraMemory();
+	assert(pExtraInfo);
+	pExtraInfo->m_nCommonDataFlag = nCommonDataFlag;
 }
 
 void ParamPool::SaveOldValue(ParamBase* pBase)

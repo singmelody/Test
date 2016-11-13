@@ -4,16 +4,16 @@
 #include <map>
 
 template < typename key, typename value>
-class GMap
+class MyMap : public std::map<key, value>
 {
 public:
-	GMap::GMap(void)
+	MyMap(void)
 	{
 		itr = std::map<key,value>::begin();
 	}
 
 
-	GMap::~GMap(void)
+	~MyMap(void)
 	{
 	}
 

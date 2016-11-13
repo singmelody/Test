@@ -34,9 +34,6 @@
     <Filter Include="Util\Memory">
       <UniqueIdentifier>{d609e2bb-8467-4fd9-b2ba-77596005f31e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Util\Log">
-      <UniqueIdentifier>{9de2929d-7f59-49a6-8c96-33d70056fbd8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ThirParty">
       <UniqueIdentifier>{86c95b8d-fa26-4504-9ec9-92084543cd61}</UniqueIdentifier>
     </Filter>
@@ -45,6 +42,9 @@
     </Filter>
     <Filter Include="Game\CommonData">
       <UniqueIdentifier>{4974a16d-2597-40a8-8a89-a7812c6cd6e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Util\Log">
+      <UniqueIdentifier>{9de2929d-7f59-49a6-8c96-33d70056fbd8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -354,9 +354,6 @@
     <ClInclude Include="ID2ItemMap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GMap.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="CasterTrunkContainer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -473,6 +470,12 @@
     </ClInclude>
     <ClInclude Include="SHMAllocator.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IDPool.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MyMap.h">
+      <Filter>Util\Container</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -749,9 +752,6 @@
     <ClCompile Include="ID2ItemMap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GMap.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="CasterTrunkContainer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -874,6 +874,12 @@
     </ClCompile>
     <ClCompile Include="SHMAllocator.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="IDPool.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MyMap.cpp">
+      <Filter>Util\Container</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

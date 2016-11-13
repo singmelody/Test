@@ -77,6 +77,10 @@ public:
 	bool InitParamPool( ParamDef* pDef, int32 nDataID, char* pBuff = NULL);
 	bool InitParamPool( int32 nDataID );
 
+	void NodeServer_WriteSHM_AvatarDID(int64 nAvatarDID);
+	void NodeServer_WriteSHM_CommonDataIdx(int32 nCommonDataIdx);
+	void NodeServer_WriteSHM_CommonDataFlag(int32 nCommonDataFlag);
+
 	void SaveOldValue( ParamBase* pBase);
 
 	virtual void SetAllDefault() = 0;

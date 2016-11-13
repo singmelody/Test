@@ -3,6 +3,8 @@
 #include "ParamDefManager.h"
 #include "CommonDataOwner.h"
 #include "CommonDataManager.h"
+#include "ParamPool.h"
+#include "MyLog.h"
 
 CommonDataObject::CommonDataObject()
 	: m_nIdx(-1), m_nFlag(eObject_NodeTick|eObject_WorldTick)
@@ -17,6 +19,8 @@ CommonDataObject::CommonDataObject()
 
 	m_bInit = false;
 	m_nValueChangeMode = eVCM_None;
+
+	m_nCommonDataType = -1;
 }
 
 void CommonDataObject::SetObjectFlag(int32 nFlag)
@@ -49,6 +53,26 @@ void CommonDataObject::NotifyCreate(int32 nFlag)
 
 void CommonDataObject::NotifyDelete()
 {
+	if(!m_pCommonDataOwner)
+		return;
 
+	CommonDataManager* pMgr = m_pCommonDataOwner->GetCommonDataManager();
+	if(pMgr)
+		pMgr->NotifyDelete(this);
+}
+
+void CommonDataObject::SetIndex(int32 nIdx)
+{
+	m_nIdx = nIdx;
+
+	static bool s_bIsNodeAndSHMEnable = ParamDefManager::Instance().IsNodeServer() && ParamDefManager::Instance().IsSHMEnable();
+	if(!s_bIsNodeAndSHMEnable)
+		return;
+
+	ParamPool* pPool = GetParamPool();
+	if(pPool)
+		pPool->NodeServer_WriteSHM_CommonDataIdx(nIdx);
+	else
+		MyLog::message("CommonDataObject::SetIndex No ParamPool");
 }
 
