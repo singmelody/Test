@@ -25,11 +25,11 @@ SceneInstanceMgr* SceneManager::GetSceneMap(uint16 nSceneSID)
 
 Scene* SceneManager::CreateScene(SceneCreateArg& arg)
 {
-	SceneInfoEx* pSI = (SceneInfoEx*)GetSceneInfo(arg.m_SceneSID);
+	SceneInfoEx* pSI = (SceneInfoEx*)GetSceneInfo(arg.m_nSceneSID);
 	if(!pSI)
 		return NULL;
 
-	SceneInstanceMgr* pMgr = GetSceneMap( arg.m_SceneSID );
+	SceneInstanceMgr* pMgr = GetSceneMap( arg.m_nSceneSID );
 	if(!pMgr)
 		return NULL;
 
@@ -41,7 +41,7 @@ Scene* SceneManager::CreateScene(SceneCreateArg& arg)
 	pScene->m_nSceneID = arg.m_SceneID;
 	pScene->SetSceneLevel( arg.m_SceneLevel );
 	pScene->SetArenaID(arg.m_ArenaID);
-	pScene->CreateParamPool( eParam_Scene, arg.m_SceneSID);
+	pScene->CreateParamPool( eParam_Scene, arg.m_nSceneSID);
 
 	pScene->BindParamPool();
 

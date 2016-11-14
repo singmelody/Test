@@ -25,6 +25,9 @@
     <Filter Include="Game\Scene">
       <UniqueIdentifier>{539a773c-848a-4523-8ee5-56c471ae8d1a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Team">
+      <UniqueIdentifier>{59999e55-77f0-4d97-bbd4-ae3de0f06cfa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -141,13 +144,19 @@
     <ClInclude Include="WorldScene.h">
       <Filter>Game\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="WorldSceneInfo_MainTrunk.h">
-      <Filter>Game\Scene</Filter>
-    </ClInclude>
     <ClInclude Include="WorldSceneInfo.h">
       <Filter>Game\Scene</Filter>
     </ClInclude>
     <ClInclude Include="WorldSceneManager.h">
+      <Filter>Game\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldTeam.h">
+      <Filter>Game\Team</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldSceneInfoTypes.h">
+      <Filter>Game\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldSceneTypes.h">
       <Filter>Game\Scene</Filter>
     </ClInclude>
   </ItemGroup>
@@ -263,13 +272,19 @@
     <ClCompile Include="WorldScene.cpp">
       <Filter>Game\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="WorldSceneInfo_MainTrunk.cpp">
-      <Filter>Game\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="WorldSceneInfo.cpp">
       <Filter>Game\Scene</Filter>
     </ClCompile>
     <ClCompile Include="WorldSceneManager.cpp">
+      <Filter>Game\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldTeam.cpp">
+      <Filter>Game\Team</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldSceneInfoTypes.cpp">
+      <Filter>Game\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldSceneTypes.cpp">
       <Filter>Game\Scene</Filter>
     </ClCompile>
   </ItemGroup>

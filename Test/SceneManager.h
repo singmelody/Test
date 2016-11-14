@@ -5,11 +5,14 @@
 
 enum CreateSceneRst
 {
-	eCreateSceneSucceed = 0,
-	eCreateSceneError_Creater,	// creator not exist
-	eCreateSceneError_SceneInfo,// scene template info not exist
-	eCreateSceneError_Team,		// create team not exist
-	eCreateSceneError_CreateTrunk,	// create other type except copy
+	eCreateScene_Succeed		= 0,
+	eCreateSceneError_Creater	= 1,	// creator not exist
+	eCreateSceneError_SceneInfo	= 2,	// scene template info not exist
+	eCreateSceneError_Team		= 3,	// create team not exist
+	eCreateSceneError_CreateTrunk = 4,	// create other type except copy
+	eCreateSceneError_TeamCopy	= 9,
+	eCreateSceneError_CreateWorldScene	= 13,
+
 };
 
 enum ChangeSceneRst

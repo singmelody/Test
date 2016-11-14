@@ -22,7 +22,7 @@ uint32 SceneInstanceMgr::AllocSceneID(bool bRand)
 			if(nRandid == 0)
 				continue;
 
-			uint32 nSceneID = SceneInfo::GenSceneID( m_pSceneInfo->m_SceneSID, nRandid);
+			uint32 nSceneID = SceneInfo::GenSceneID( m_pSceneInfo->m_nSceneSID, nRandid);
 
 			if( find(nSceneID) == end() )
 				return nSceneID;
@@ -32,7 +32,7 @@ uint32 SceneInstanceMgr::AllocSceneID(bool bRand)
 	{
 		for (int32 i = 1; i < 50; ++i)
 		{
-			int32 nSceneID = SceneInfo::GenSceneID( m_pSceneInfo->m_SceneSID, i);
+			int32 nSceneID = SceneInfo::GenSceneID( m_pSceneInfo->m_nSceneSID, i);
 
 			if( find( nSceneID) == end() )
 				return nSceneID;

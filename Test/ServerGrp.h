@@ -21,7 +21,7 @@ public:
 	ServerInfo* AddServer( int32 nID, int32 nSocketID, SockAddr& laddr);
 	ServerInfo*	GetServer(int32 nID);
 	
-	void BroadcastPacket(class PacketBase* pPkt, int32 nExceptID);
+	void BroadcastPacket(class PacketBase* pPkt, int32 nExceptID = -1);
 	void PeerSend( int32 nSocketID, class PacketBase* pPkt);
 
 	int32 ServerCnt() { return (int32)m_SrvMap.size();}

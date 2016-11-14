@@ -31,7 +31,7 @@ enum CurDataStage
 
 enum WorldAvatarFlag
 {
-	eWAF_Online	= 1 << 0,	// online & enter game
+	eWorldAvatar_Online	= 1 << 0,	// online & enter game
 };
 
 class CreateWorldAvatarArg
@@ -162,6 +162,8 @@ public:
 	void			CancelAvatarFlag(int32 nFlag) { m_WorldAvatarFlag &= (~nFlag); }
 	void			RelaseComponent();
 
+	virtual Team*	GetTeam();
+
 	int64			GenGalaxyUID();
 
 	WorldAccount	m_account;
@@ -197,6 +199,7 @@ protected:
 
 	int32			m_PendingCreateSceneID;
 	WorldServer*	m_pWorld;
+	uint8			m_nLastAvatarLevel;
 
 // 	WorldTalenTreeData*			m_pTalentTreeCom;
 // 	WorldRelationComponent*		m_pRelationCom;

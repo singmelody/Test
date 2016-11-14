@@ -30,7 +30,7 @@ public:
 
 	int32 Instance() { return SceneInfo::GetSceneInstanceID(m_nSceneID); }
 	const SceneInfo* GetSceneInfo() const { return m_pSceneInfo; }
-	int16 SceneSID() { return m_pSceneInfo->m_SceneSID; }
+	int16 SceneSID() { return m_pSceneInfo->m_nSceneSID; }
 
 	int32 GetNodeID() { return m_nNodeID; }
 	void SetNodeID(int32 nID) { m_nNodeID = nID; }
@@ -50,6 +50,8 @@ public:
 
 	void SetSceneLevel(int32 nSceneLv) { m_nSceneLv = nSceneLv; }
 	int32 GetSceneLevel() { return m_nSceneLv; }
+
+	inline void SetSceneState(SceneState state) { m_nSceneState = state; }
 	
 	SceneState  m_nSceneState;
 

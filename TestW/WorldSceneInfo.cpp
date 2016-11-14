@@ -26,6 +26,11 @@ WorldSceneInfo::~WorldSceneInfo(void)
 }
 
 
+bool WorldSceneInfo::LoadSceneInfo(DBRow& row)
+{
+
+}
+
 bool WorldSceneInfo::TryEnterTargetScene(WorldAvatar* pAvatar, int16 nInstanceID, int32& nFailReason)
 {
 	if(nInstanceID == SCENE_ID_NULL)
@@ -41,6 +46,11 @@ bool WorldSceneInfo::TryEnterTargetScene(WorldAvatar* pAvatar, int16 nInstanceID
 	}
 
 	return TryEnterScene( pAvatar, pScene, nFailReason);
+}
+
+int32 WorldSceneInfo::AllocSceneID()
+{
+	return m_Instances.AllocSceneID( !IsMainTrunk() );
 }
 
 bool WorldSceneInfo::TryEnterScene(WorldAvatar* pAvatar, WorldScene* pScene, int32& nFailReason)
@@ -79,12 +89,3 @@ bool WorldSceneInfo::TryEnterScene(WorldAvatar* pAvatar, WorldScene* pScene, int
 	return EnterMgr.HandleEnterScene( pAvatar, pScene);
 }
 
-void WorldSceneInfo_Trunk::OnSceneCreateSucceed(WorldScene* pScene)
-{
-
-}
-
-void WorldSceneInfo_Trunk::OnSceneCreateFailed(WorldScene* pScene)
-{
-
-}

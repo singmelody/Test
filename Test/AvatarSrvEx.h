@@ -5,6 +5,7 @@
 #include "CommonDataManager.h"
 
 class Scene;
+class Team;
 
 class AvatarSrvEx : public AvatarSrv, public CommonDataOwner
 {
@@ -14,6 +15,16 @@ public:
 
 	virtual Scene* GetScene();
 	virtual void SetScene( Scene* pScene);
+
+	int64 GetGuildID();
+	void SetGuildID(int64 nGuildID);
+
+	int16 GetSceneSID();
+	int16 GetSceneInstanceID();
+
+	virtual int64 GetTeamID();
+	virtual void SetTeamID(int64 nID);
+	virtual Team* GetTeam() { return NULL; }
 	
 	const char* GetName();
 	const char* GetAccountName();
@@ -21,7 +32,7 @@ public:
 	void ReleaseCommonDataConts();
 	void ReleaseCommonDataConts(CommonDataType type);
 protected:
-	int32				m_sceneID;
+	int32				m_nSceneID;
 
 	CommonDataManager*	m_pCommonDataMgr;
 };

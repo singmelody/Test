@@ -53,7 +53,7 @@ int32 WorldState_Gaming::ProcessCreateSceneRequest(class PacketCreateSceneReques
 		return eCreateSceneError_CreateTrunk;
 
 	if(pInfo->HandleEnterSceneExit( nSceneSID, pAvatar))
-		return eCreateSceneSucceed;
+		return eCreateScene_Succeed;
 
 	if( nSceneInstanceID != SCENE_ID_NULL )
 	{
@@ -105,6 +105,6 @@ void WorldState_Gaming::PktNode_CreateSceneRequest(class PacketCreateSceneReques
 		return;
 
 	int32 nResult = ProcessCreateSceneRequest( pPkt );
-	if( nResult != eCreateSceneSucceed)
+	if( nResult != eCreateScene_Succeed)
 		SceneMgr.NotifyCreateSceneResult( pPkt->nNodeID, pPkt->GetAvatarID(), nResult);
 }

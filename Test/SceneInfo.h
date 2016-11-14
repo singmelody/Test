@@ -11,7 +11,7 @@ class SceneCreateArg
 public:
 	SceneCreateArg();
 
-	int16	m_SceneSID;
+	int16	m_nSceneSID;
 	int32	m_SceneID;
 	int32	m_SceneLevel;
 	int32	m_NodeSrvID;
@@ -109,6 +109,7 @@ public:
 		eSA_ChallengeCopy		= 1 << 1,	// 挑战副本
 		eSA_AutoResetProcess	= 1 << 2,	// 自动重置进度
 
+		eSA_RebuildCopy			= 1 << 5,
 		eSA_DisableReEnter		= 1 << 10
 	};
 
@@ -136,7 +137,14 @@ public:
 
 	inline bool DisableReEnter() const { return (m_SceneAttribute & eSA_DisableReEnter) != 0; }
 
-	uint16			m_SceneSID;
+	inline bool CanRebuildCopy() const
+	{
+		return (m_SceneAttribute & eSA_RebuildCopy) != 0;
+	}
+
+	void FillSceneCreateArg( SceneCreateArg& obj) const;
+
+	uint16			m_nSceneSID;
 	std::string		m_SceneName;
 	int32			m_ShowDescript;
 	int32			m_ShowName;
@@ -148,6 +156,7 @@ public:
 	uint16			m_nNextSceneSID;
 	int32			m_SceneAttribute;
 	bool			m_bForceEnter;
+	int32			m_nParalleCnt;
 
 	EnterInfoMap	m_mapEnterInfos;
 };
@@ -156,6 +165,7 @@ class SceneInfoEx : public SceneInfo
 {
 public:
 	SceneInfoEx();
+	virtual ~SceneInfoEx(){}
 
 	SceneInstanceMgr m_Instances;
 

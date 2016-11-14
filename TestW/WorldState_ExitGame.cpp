@@ -33,7 +33,7 @@ void WorldState_ExitGame::OnEnterState(WorldAvatar* pAvatar)
 	else
 		pAvatar->SetPendingTime(0);
 
-	pAvatar->CancelAvatarFlag( eWAF_Online );
+	pAvatar->CancelAvatarFlag( eWorldAvatar_Online );
 }
 
 void WorldState_ExitGame::Tick(int32 nFrameTime)

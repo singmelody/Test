@@ -5,7 +5,7 @@
 
 AvatarSrvEx::AvatarSrvEx(void)
 {
-	m_sceneID = SCENE_ID_NULL;
+	m_nSceneID = SCENE_ID_NULL;
 // 	m_pCommonDataMgr = NULL;
 // 	m_pCDComponent = NULL;
 	
@@ -24,9 +24,58 @@ Scene* AvatarSrvEx::GetScene()
 void AvatarSrvEx::SetScene(Scene* pScene)
 {
 	if(pScene == NULL)
-		m_sceneID = SCENE_ID_NULL;
+		m_nSceneID = SCENE_ID_NULL;
 	else
-		m_sceneID = pScene->GetSceneID();
+		m_nSceneID = pScene->GetSceneID();
+}
+
+int64 AvatarSrvEx::GetGuildID()
+{
+	if(!m_pParamPool)
+		return INVALID_GUILD_ID;
+
+	return PARAM_GET_VALUE( m_pParamPool, guildid, INVALID_GUILD_ID);
+}
+
+void AvatarSrvEx::SetGuildID(int64 nGuildID)
+{
+	if(!m_pParamPool)
+		return;
+
+	return PARAM_SET_VALUE( m_pParamPool, guildid, nGuildID, true);
+}
+
+int16 AvatarSrvEx::GetSceneSID()
+{
+	if( m_nSceneID == SCENE_ID_NULL )
+		return SCENE_ID_NULL;
+
+	return SceneInfo::GetSceneSID(m_nSceneID);
+}
+
+int16 AvatarSrvEx::GetSceneInstanceID()
+{
+	if(m_nSceneID == SCENE_ID_NULL )
+		return SCENE_ID_NULL;
+
+	return SceneInfo::GetSceneInstanceID(m_nSceneID);
+}
+
+int64 AvatarSrvEx::GetTeamID()
+{
+	if(!m_pParamPool)
+		return INVALID_TEAM_ID;
+
+	int64 nTeamID = PARAM_GET_VALUE( m_pParamPool, teamid, INVALID_TEAM_ID);
+	return nTeamID;
+}
+
+void AvatarSrvEx::SetTeamID(int64 nID)
+{
+	if(!m_pParamPool)
+		return;
+	
+	PARAM_SET_VALUE( m_pParamPool, teamid, nID, true);
 }
 
 const char* AvatarSrvEx::GetName()

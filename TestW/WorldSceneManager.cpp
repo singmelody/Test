@@ -1,7 +1,11 @@
 #include "StdAfx.h"
 #include "WorldSceneManager.h"
 #include "SceneInfo.h"
-
+#include "WorldAvatarManager.h"
+#include "NodeSrvGrp.h"
+#include "Scene.h"
+#include "WorldSceneInfo_MainTrunk.h"
+#include "ServerManager.h"
 
 WorldSceneManager::WorldSceneManager(void)
 	: AvatarMgr( WorldAvatarManager::Instance())
@@ -54,7 +58,7 @@ SceneInfo* WorldSceneManager::CreateSceneInfo(int32 nSceneType, int32 nPlayerMax
 	case SceneInfo::eSceneCreate_TokenCopy:
 		pInfo = new WorldSceneInfo_TokenCopy();
 		break;
-	case SceneInfo::eSceneCreate_Scenario:
+	case SceneInfo::eSceneCreate_ScenarioCopy:
 		pInfo = new WorldSceneInfo_ScenarioCopy();
 		break;
 	case SceneInfo::eSceneCreate_TrunkCopy:
@@ -154,13 +158,18 @@ bool WorldSceneManager::GetSceneCreateParam( int16 nSceneSID, SceneCreateArg& ob
 WorldScene* WorldSceneManager::CreateWorldScene( SceneCreateArg& obj)
 {
 	int32 nNodeSrvID = arg.m_NodeSrvID;
-	INT32 nSceneID = arg.m_SceneID;
+	int32 nSceneID = arg.m_SceneID;
 
 	ServerInfo* pNodeInfo =  Servers.GetNodeInfo(nNodeSrvID);
 	if(!pNodeInfo)
 		return NULL;	// target srv not register  
 
 	balfadfa
+}
+
+WorldSceneInfo* WorldSceneManager::GetWorldSceneInfo(uint16 nSceneSID)
+{
+
 }
 
 void WorldSceneManager::OnNodeCrash(int32 nNodeID /*= SERVERID_NULL*/)

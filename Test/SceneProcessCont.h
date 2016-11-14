@@ -18,6 +18,8 @@ public:
 
 	SceneProcess*	GetProcess( uint16 nSceneSID);
 
+	int64 GetProcessBits();
+
 	SceneProcessMap	m_mapProcess;
 };
 

@@ -74,13 +74,13 @@ public:
 	int32 start() { return _pop; }
 	int32 next(int32 nPos)
 	{
-		if( pos == _push )
+		if( nPos == _push )
 			return -1;
 
-		pos++;
-		if( pos >= ELEMENTCOUNT)
-			pos = 0;
-		return pos;
+		nPos++;
+		if( nPos >= ELEMENTCOUNT)
+			nPos = 0;
+		return nPos;
 	}
 
 	void clear()

@@ -9,6 +9,8 @@ extern int32 Param_Name_Table[MAX_PARAM_NAME_DEFINE_SIZE][MAX_PARAM_NAME_INDEX];
 enum
 {
 	param_name_avatardid	= 0,
+	param_name_guildid		= 2,
+	param_name_teamid		= 6,
 	param_name_lastlandtime = 46,
 	param_name_create_time	= 49,
 
@@ -28,10 +30,12 @@ enum
 	param_name_ban_game_date= 132,
 	param_name_clt_ip		= 136,
 	param_name_left_point	= 137,
+	param_name_level		= 181,
 	param_name_viplevel		= 189,
 	param_name_title		= 207,
 	param_name_accountname	= 209,
 
+	param_name_process		= 305,
 	param_name_permanent	= 308,
 	param_name_ServerID		= 679,
 	param_name_SceneLoadValue = 708,

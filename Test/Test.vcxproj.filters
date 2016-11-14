@@ -477,6 +477,9 @@
     <ClInclude Include="MyMap.h">
       <Filter>Util\Container</Filter>
     </ClInclude>
+    <ClInclude Include="Team.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -880,6 +883,9 @@
     </ClCompile>
     <ClCompile Include="MyMap.cpp">
       <Filter>Util\Container</Filter>
+    </ClCompile>
+    <ClCompile Include="Team.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -98,3 +98,9 @@ PACKET_IMPL(PacketNodeDataSyncFin);
 PACKET_IMPL(PacketNodeDataSyncAllFinish);
 
 PACKET_IMPL(PacketNodeDataSyncAllFinishRet);
+
+PACKET_IMPL(PacketNoticeBillingLeaveGame);
+
+PACKET_IMPL(PacketCreateSceneRequest);
+
+PACKET_IMPL(PacketParallelInfo);

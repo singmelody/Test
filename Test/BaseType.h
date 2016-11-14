@@ -32,6 +32,8 @@ typedef unsigned long SM_KEY;
 
 #define PACKET_PROCESS_COUNT_PER_TICK 10000
 
+#define INVALID_GUILD_ID int64(0)
+
 class TiXmlDocument;
 class TiXmlElement;
 class TiXmlDeclaration;

@@ -12,8 +12,8 @@ public:
 	WorldScene(void);
 	virtual ~WorldScene(void);
 
-	int64	m_avatarDID;
-	int32   m_contentID;
+	int64	m_nAvatarDID;
+	int32   m_nContentID;
 
 	virtual void EnterScene( WorldAvatar* pAvatar);
 	virtual void ExitScene( WorldAvatar* pAvatar);

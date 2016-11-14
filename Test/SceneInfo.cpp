@@ -5,7 +5,7 @@
 
 SceneCreateArg::SceneCreateArg()
 {
-	m_SceneSID = SCENE_ID_NULL;
+	m_nSceneSID = SCENE_ID_NULL;
 	m_SceneID = SCENE_ID_NULL;
 	m_SceneLevel = 1;
 	m_NodeSrvID = SERVERID_NULL;
@@ -26,11 +26,13 @@ int16 SceneCreateArg::InstanceID()
 SceneInfo::SceneInfo(void)
 {
 	m_nNextSceneSID = SCENE_ID_NULL;
-	m_SceneSID = SCENE_ID_NULL;
+	m_nSceneSID = SCENE_ID_NULL;
 	m_bDynEnterSwitch = true;
 
 	m_SceneAttribute = 0;
 	m_bForceEnter = false;
+	m_nParalleCnt = 1;
+
 }
 
 
@@ -70,6 +72,12 @@ const EnterPointInfo* SceneInfo::GetEnterPointInfo(uint16 from_scenesid, int32 n
 		return NULL;
 
 	return pEnterInfo->Map.GetItem( nEnterType, true);
+}
+
+void SceneInfo::FillSceneCreateArg(SceneCreateArg& obj) const
+{
+	obj.m_nSceneSID = m_nSceneSID;
+	obj.m_SceneID = GenSceneID(m_nSceneSID);
 }
 
 EnterPointInfo::EnterPointInfo(DBRow& row)

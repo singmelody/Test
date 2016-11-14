@@ -43,3 +43,16 @@ void SceneProcess::ClearScenePermanent(ScenePermanentDefine bit)
 	PARAM_SET_VALUE( pPool, permanent, nValue, true);
 
 }
+
+int64 SceneProcess::GetProcessBits()
+{
+	if( HasResetFlag() )
+		return 0;
+
+	ParamPool* pPool = GetParamPool();
+	if(!pPool)
+		return 0;
+
+	int64 nProcessBit = PARAM_GET_VALUE( pPool, process, int64(0));
+	return nProcessBit;
+}

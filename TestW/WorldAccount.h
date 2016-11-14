@@ -35,6 +35,8 @@ public:
 
 	void NeedNoticeFCMState(bool b) { m_bNeedNoticeFCMStage = b; } 
 	bool NeedNoticeFCMState() const { return m_bNeedNoticeFCMStage; }
+
+	ParamPool* GetRecentRoleSet() { return m_pRecentRoleSet; }
 protected:
 	ParamPool*	m_pRoleDataSet[MAX_AVATAR_COUNT_ONE_USER];
 	ParamPool*	m_pRecentRoleSet;

@@ -12,6 +12,7 @@ class Scene;
 class SceneInfo;
 class WorldScene;
 class WorldAvatarManager;
+class WorldSceneInfo;
 
 class WorldSceneManager : public SceneManager, public WorldFuncManager, public Singleton<WorldSceneManager>
 {
@@ -35,6 +36,8 @@ public:
 	bool GetSceneCreateParam( int16 nSceneSID, SceneCreateArg& obj);
 	WorldScene* CreateWorldScene( SceneCreateArg& arg);
 	void OnNodeCrashed( int32 nNodeID = SERVERID_NULL);
+
+	WorldSceneInfo* GetWorldSceneInfo( uint16 nSceneSID);
 
 	typedef std::map< int32, WorldScene*> CreatingSceneMap;
 	CreatingSceneMap m_mapCreatingScenes;

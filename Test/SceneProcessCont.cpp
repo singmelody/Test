@@ -19,3 +19,5 @@ SceneProcess* SceneProcessCont::GetProcess(uint16 nSceneSID)
 
 	return itr->second;
 }
+
+

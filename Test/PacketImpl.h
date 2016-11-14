@@ -418,6 +418,28 @@ PACKET(PacketNodeDataSyncAllFinishRet, PacketBase)
 START_ADD_PACKET_MEMBER(PacketNodeDataSyncAllFinishRet)
 PACKET_END(PacketNodeDataSyncAllFinishRet)
 
+PACKET(PacketNoticeBillingLeaveGame, PacketBase)
+uint8 bSwitchRole;
+uint8 nAvatarLevel;
+uint8 nUseAccountLen;
+char  m_UserAccount[MAX_ACCOUNT];
+START_ADD_PACKET_MEMBER(PacketNoticeBillingLeaveGame)
+	ADD_PACKET_MEMBER( bSwitchRole, uint8, "");
+	ADD_PACKET_MEMBER( nAvatarLevel, uint8, "");
+	ADD_PACKET_MEMBER( nUseAccountLen, uint8, "");
+	ADD_PACKET_MEMBER_STR( m_UserAccount, MAX_ACCOUNT, "");
+PACKET_END(PacketNoticeBillingLeaveGame)
+
+PACKET( PacketCreateSceneRequest, PacketBase)
+int32 nSceneID;
+int32 nNodeID;
+int64 nSceneProcessBits;
+START_ADD_PACKET_MEMBER(PacketCreateSceneRequest)
+	ADD_PACKET_MEMBER( nSceneID, int32, "");
+ADD_PACKET_MEMBER( nNodeID, int32, "");
+ADD_PACKET_MEMBER( nSceneProcessBits, int64, "");
+PACKET_END(PacketCreateSceneRequest)
+
 PACKET_EX(PacketMulticast2Avatar, PacketBroadCastBase<int32>, new PoolPacketAllocator(40960))
 START_ADD_PACKET_MEMBER(PacketMulticast2Avatar)
 PACKET_END(PacketMulticast2Avatar)
@@ -518,3 +540,11 @@ ADD_PACKET_MEMBER( x, f32, "");
 ADD_PACKET_MEMBER( y, f32, "");
 ADD_PACKET_MEMBER( z, f32, "");
 PACKET_END(PacketCltSceneReq)
+
+PACKET_CLT( PacketParallelInfo, PacketBase)
+uint16 nSceneSID;
+uint32 nParallelBits;
+START_ADD_PACKET_MEMBER(PacketParallelInfo)
+ADD_PACKET_MEMBER( nSceneSID, uint16, "");
+ADD_PACKET_MEMBER( nParallelBits, uint32, "");
+PACKET_END(PacketParallelInfo)

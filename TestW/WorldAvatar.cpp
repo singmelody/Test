@@ -12,6 +12,8 @@
 #include <sstream>
 #include "WorldServer.h"
 #include "MyLog.h"
+#include "ParamPool.h"
+#include "WorldTeamManager.h"
 
 WorldAvatar* GetWorldAvatar(int32 nAvatarID)
 {
@@ -131,22 +133,22 @@ void WorldAvatar::NoticeBillingLogout(bool bExitGame)
 	{
 		if(Account.GetRecentRoleSet())
 		{
-			m_nLastAvatarLevel = PARAM_GET_VALUE( Account.GetRecentRoleSet(), level, uint(8));
+			m_nLastAvatarLevel = PARAM_GET_VALUE( Account.GetRecentRoleSet(), level, uint8(0));
 		}
 
 		PacketNoticeBillingLeaveGame pkt;
 		pkt.nAvatarLevel = m_nLastAvatarLevel;
 		pkt.bSwitchRole = 1;
-		pkt.UseAccountLen = uint8(Account.GetAccountName().size());
+		pkt.nUseAccountLen = uint8(Account.GetAccountName().size());
 
-		if( pkt.m_UserAccountLen <= sizeof(pkt.m_UserAccount))
+		if( pkt.nUseAccountLen <= sizeof(pkt.m_UserAccount))
 		{
-			memcpy( pkt.m_UserAccount, Account.GetAccountName().c_str(), pkt.m_UserAccountLen);
+			memcpy( pkt.m_UserAccount, Account.GetAccountName().c_str(), pkt.nUseAccountLen);
 			Send2Login(&pkt);
 		}
 		else
 		{
-			MyLog::error("WorldAvatar::NoticeBillingLogout Bad AccoutLen = [%d]", pkt.m_UserAccountLen);
+			MyLog::error("WorldAvatar::NoticeBillingLogout Bad AccoutLen = [%d]", pkt.nUseAccountLen);
 		}
 	}
 }
@@ -229,6 +231,15 @@ void WorldAvatar::RelaseComponent()
 {
 	//FACTORY_DELOBJ(m_pRelationComponent);
 	//FACTORY_DELOBJ(m_pCDComponent);
+}
+
+Team* WorldAvatar::GetTeam()
+{
+	int64 nTeamID = GetTeamID();
+	if( nTeamID == INVALID_TEAM_ID )
+		return NULL;
+
+	return WorldTeamManager::Instance().GetItem(nTeamID);
 }
 
 // make sure the uid is the only one in all srv,

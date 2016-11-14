@@ -71,6 +71,7 @@ public:
 	ServerInfo* GetLoginInfo();
 	ServerInfo*	GetDBAInfo();
 	ServerInfo* GetGateInfo(int32 nID);
+	ServerInfo* GetNodeInfo(int32 nID);
 
 	bool AddLocalWorld(int32 nSrvID, int32 nSocketID, SockAddr& addr);
 

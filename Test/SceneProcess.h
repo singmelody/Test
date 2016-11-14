@@ -22,5 +22,7 @@ public:
 	void ClearScenePermanent(ScenePermanentDefine bit);
 
 	bool HasResetFlag() { return CheckScenePermanent(eScenePermanent_Reset); }
+
+	int64 GetProcessBits();
 };
 

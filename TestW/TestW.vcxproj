@@ -151,7 +151,8 @@
     <ClInclude Include="WorldGroup.h" />
     <ClInclude Include="WorldScene.h" />
     <ClInclude Include="WorldSceneInfo.h" />
-    <ClInclude Include="WorldSceneInfo_MainTrunk.h" />
+    <ClInclude Include="WorldSceneInfoTypes.h" />
+    <ClInclude Include="WorldSceneTypes.h" />
     <ClInclude Include="WorldSceneManager.h" />
     <ClInclude Include="WorldServer.h" />
     <ClInclude Include="WorldServerNormal.h" />
@@ -172,6 +173,7 @@
     <ClInclude Include="WorldState_WaitingNodeData.h" />
     <ClInclude Include="WorldState_WaitLogining.h" />
     <ClInclude Include="WorldState_WritingDBA.h" />
+    <ClInclude Include="WorldTeam.h" />
     <ClInclude Include="WorldTeamManager.h" />
   </ItemGroup>
   <ItemGroup>
@@ -196,7 +198,8 @@
     <ClCompile Include="WorldGroup.cpp" />
     <ClCompile Include="WorldScene.cpp" />
     <ClCompile Include="WorldSceneInfo.cpp" />
-    <ClCompile Include="WorldSceneInfo_MainTrunk.cpp" />
+    <ClCompile Include="WorldSceneInfoTypes.cpp" />
+    <ClCompile Include="WorldSceneTypes.cpp" />
     <ClCompile Include="WorldSceneManager.cpp" />
     <ClCompile Include="WorldServer.cpp" />
     <ClCompile Include="WorldServerNormal.cpp" />
@@ -217,6 +220,7 @@
     <ClCompile Include="WorldState_WaitLogining.cpp" />
     <ClCompile Include="WorldState_WritingDBA.cpp" />
     <ClCompile Include="WorldStateGame.cpp" />
+    <ClCompile Include="WorldTeam.cpp" />
     <ClCompile Include="WorldTeamManager.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

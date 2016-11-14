@@ -1,6 +1,10 @@
 #pragma once
 #include "Singleton.h"
-class WorldTeamManager : public Singleton<WorldTeamManager>
+#include "ID2ItemMap.h"
+#include "WorldFuncExManager.h"
+#include "WorldTeam.h"
+
+class WorldTeamManager : public ID2ItemMap< int64, WorldTeam>, public WorldFuncExManager, public Singleton<WorldTeamManager>
 {
 public:
 	WorldTeamManager(void);

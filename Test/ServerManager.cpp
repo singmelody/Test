@@ -84,6 +84,18 @@ ServerInfo* ServerManager::GetGateInfo(int32 nID)
 	return m_GateGrp.GetServer(nID);
 }
 
+ServerInfo* ServerManager::GetNodeInfo(int32 nID)
+{
+	ServerInfo* pInfo = NULL;
+
+	if(IsSameGroup(nID))
+		pInfo = m_LocalNodeGrp.GetServer(nID);
+	else
+		pInfo = m_RemoteNodeGrp.GetServer(nID);
+
+	return pInfo;
+}
+
 ServerInfo* ServerManager::GetWarWorldInfo()
 {
 	return m_pWarWorld;
