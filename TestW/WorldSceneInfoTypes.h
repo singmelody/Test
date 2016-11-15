@@ -38,6 +38,9 @@ public:
 
 	virtual void OnSceneCreate( Scene* pScene);
 	virtual void OnSceneDestroy( Scene* pScene);
+
+	virtual void OnEnterScene(WorldAvatar* pAvatar, WorldScene* pScene);
+	virtual void OnLeaveScene(WorldAvatar* pAvatar, WorldScene* pScene);
 protected:
 	void UpdateParallelBits();
 	void BroadcastParallel2Nodes();
@@ -61,9 +64,14 @@ public:
 	virtual bool TryEnterTargetScene(WorldAvatar* pAvatar, int16 nInstanceID, int32& nFailReason);
 	virtual bool TryRebuildSceneCopy(WorldAvatar* pAvatar);
 
+	virtual bool HandleEnterSceneExist(int32 nSceneID, WorldAvatar* pAvatar);
+
 	virtual WorldScene* HandleCreateCopy( WorldAvatar* pAvatar, int64 nSceneProcessBits, int64 nSceneCustomData = 0);
 
 	virtual CreateSceneRst HandleCreateCopyRequest( WorldAvatar* pAvatar, int64 nSceneProcessBits);
+
+	virtual void OnSceneCreateSucceed(WorldScene* pScene);
+	virtual void OnSceneCreateFailed(WorldScene* pScene, int32 nErrorID);
 };
 
 class WorldSceneInfo_TeamCopy : public WorldSceneInfo_Copy
@@ -72,19 +80,23 @@ public:
 	WorldSceneInfo_TeamCopy();
 	virtual ~WorldSceneInfo_TeamCopy(){}
 
-	virtual bool HandleEnterSceneExist(int32 nSceneID, WorldAvatar* pAvatar);
 	virtual void OnEnterScene( WorldAvatar* pAvatar, WorldScene* pScene);
 
 	WorldScene* GetTeamExistScene( class WorldTeam* pTeam);
+	virtual bool HandleEnterSceneExist(int32 nSceneID, WorldAvatar* pAvatar);
 	virtual CreateSceneRst HandleCreateCopyRequest( WorldAvatar* pAvatar, int64 nSceneProcessBits);
 protected:
 	class WorldTeamManager& TeamMgr;
 };
 
+class WorldSceneInfo_TokenCopy : public WorldSceneInfo_Copy
+{};
+
 class WorldSceneInfo_MainTrunkCopy : public WorldSceneInfo_TeamCopy
-{
-};
+{};
 
 class WorldSceneInfo_ScenarioCopy : public WorldSceneInfo_TeamCopy
-{
-};
+{};
+
+class WorldSceneInfo_RootCopy : public WorldSceneInfo_TeamCopy
+{};

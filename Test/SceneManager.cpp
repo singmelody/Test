@@ -65,7 +65,7 @@ void SceneManager::OnSceneCreated(Scene* pScene)
 	m_nSceneLoadValue += pScene->GetLoadValue();
 }
 
-void SceneManager::OnSceneDestroied(Scene* pScene)
+void SceneManager::OnSceneDestroy(Scene* pScene)
 {
 	m_nSceneLoadValue -= pScene->GetLoadValue();
 }

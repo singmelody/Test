@@ -2,81 +2,9 @@
 #include "WorldScene.h"
 #include "PacketImpl.h"
 #include "ParamPool.h"
-
-WorldAccount::WorldAccount(void)
-	: m_bIsFCMAcount(false)
-	, m_nMilliSeconds(0)
-	, m_nAccTimeAfterLastHeartBeat(0)
-	, m_bNeedNoticeFCMStage(false)
-	, m_bIsBillingOl(false)
-	, m_bHasBillingOlOnce(false)
-{
-	memset( m_pRoleDataSet, 0, sizeof(m_pRoleDataSet));
-
-	m_pRecentRoleSet = NULL;
-}
-
-
-WorldAccount::~WorldAccount(void)
-{
-	DestroyAllRoleSet();
-}
-
-void WorldAccount::DestroyAllRoleSet()
-{
-	for (int32 i = 0; i < MAX_AVATAR_COUNT_ONE_USER; ++i)
-	{
-		FACTORY_DELOBJ(m_pRoleDataSet[i]);
-	}
-}
-
-void WorldAccount::AddRoleSet(class PacketUserData* pPkt)
-{
-	ParamPool* pPool = GetRoleSet( pPkt->nIndex );
-	if(!pPool)
-	{
-		if(!m_pRecentRoleSet)
-		{
-			int64 nRecentDID = PARAM_GET_VALUE( m_pRecentRoleSet, avatardid, int64(0));
-			if( nRecentDID == pPkt->nAvatarDID)
-			{
-				SetRoleSet( pPkt->nIndex, m_pRecentRoleSet);
-				m_pRecentRoleSet = NULL;
-				return;
-			}
-		}
-
-		pPool = CreateRoleSet( pPkt->nIndex, PARAM_ID( pPkt->m_ParamType), PARAM_DATA_ID( pPkt->m_ParamType));
-		if(!pPool)
-			return;
-	}
-
-	pPkt->UpdateParamPool( pPool );
-
-	if(pPkt->nAvatarDID != -1)
-		pPool->SetValue( "avatardid", pPkt->nAvatarDID);
-}
-
-bool WorldAccount::SetRoleSet(int32 nIdx, ParamPool* pPool)
-{
-	if( nIdx < 0 || nIdx >= MAX_AVATAR_COUNT_ONE_USER)
-		return false;
-
-	ParamPool*& pSet = m_pRoleDataSet[nIdx];
-	if(!pSet)
-		return false;
-
-	pSet = pPool;
-	return true;
-}
-
-void WorldAccount::SetRecentRoleSet(ParamPool* pPool)
-{
-	if( m_pRecentRoleSet != pPool )
-		FACTORY_DELOBJ( m_pRecentRoleSet );
-
-	m_pRecentRoleSet = pPool;
-}
+#include "WorldAvatar.h"
+#include "WorldSceneInfo.h"
+#include "WorldSceneManager.h"
 
 void WorldScene::EnterScene(WorldAvatar* pAvatar)
 {
@@ -96,7 +24,30 @@ void WorldScene::ExitScene(WorldAvatar* pAvatar)
 }
 
 
-void WorldScene* GetWorldScene(int32 nSceneID)
+void WorldScene::NotifyWaitingAvatars(int32 nErrorID)
+{
+	std::deque<int32>& queue = m_WaitingQueue;
+
+	while (!queue.empty() )
+	{
+		int32 nAvatarID = queue[0];
+		queue.pop_front();
+
+		WorldAvatar* pAvatar = GetWorldAvatar(nAvatarID);
+		if(pAvatar != NULL)
+			pAvatar->HandleCreateSceneResult( nErrorID, this);
+	}
+}
+
+void WorldScene::AddWaitingAvatar(WorldAvatar* pAvatar)
+{
+	m_WaitingQueue.push_back( pAvatar->GetAvatarID() );
+	pAvatar->SetCurState( eWS_WaitScene );
+	pAvatar->SetPendingCreateScene( GetSceneID());
+}
+
+WorldScene* GetWorldScene(int32 nSceneID)
 {
 	WorldScene* pScene = WorldSceneManager::Instance().GetWorldScene(nSceneID);
+	return pScene;
 }

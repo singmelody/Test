@@ -26,6 +26,9 @@ public:
 	virtual void OnEnterScene( WorldAvatar* pAvatar, WorldScene* pScene) {}
 	virtual void OnLeaveScene( WorldAvatar* pAvatar, WorldScene* pScene) {}
 
+	virtual void OnSceneCreateSucceed(WorldScene* pScene);
+	virtual void OnSceneCreateFailed(WorldScene* pScene, int32 nErrorID);
+
 	virtual bool TryEnterTargetScene(WorldAvatar* pAvatar, int16 nInstanceID, int32& nFailReason);
 
 	virtual int32 AllocSceneID();

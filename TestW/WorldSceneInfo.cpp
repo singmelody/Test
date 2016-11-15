@@ -31,12 +31,22 @@ bool WorldSceneInfo::LoadSceneInfo(DBRow& row)
 
 }
 
+void WorldSceneInfo::OnSceneCreateSucceed(WorldScene* pScene)
+{
+
+}
+
+void WorldSceneInfo::OnSceneCreateFailed(WorldScene* pScene, int32 nErrorID)
+{
+
+}
+
 bool WorldSceneInfo::TryEnterTargetScene(WorldAvatar* pAvatar, int16 nInstanceID, int32& nFailReason)
 {
 	if(nInstanceID == SCENE_ID_NULL)
 		return false;
 
-	int32 nTargetSceneID = SceneInfo::GenSceneID( m_SceneSID, nInstanceID);
+	int32 nTargetSceneID = SceneInfo::GenSceneID( m_nSceneSID, nInstanceID);
 
 	WorldScene* pScene = (WorldScene*)m_Instances.GetItem(nTargetSceneID);
 	if(!pScene)

@@ -78,3 +78,25 @@ public:
 protected:
 	int64 m_nTeamID;
 };
+
+class WorldScene_TokenCopy : public WorldScene_Copy
+{
+	DECLARE_FACTORY_ARG0( WorldScene_TokenCopy, -1, new PoolAllocator);
+public:
+	WorldScene_TokenCopy();
+
+	virtual void UpdateCopyOwner(WorldAvatar* pAvatar){}
+	virtual bool CheckCopyOwner(WorldAvatar* pAvatar) const;
+};
+
+class WorldScene_PersonalCopy : public WorldScene_Copy
+{
+	DECLARE_FACTORY_ARG0( WorldScene_PersonalCopy, -1, new PoolAllocator);
+
+};
+
+class WorldScene_GuildCopy : public WorldScene_Copy
+{
+	DECLARE_FACTORY_ARG0( WorldScene_GuildCopy, -1, new PoolAllocator);
+
+};

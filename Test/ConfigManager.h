@@ -72,6 +72,8 @@ public:
 	static bool	m_bCustomSectionValid;
 	static std::string m_strCustomSection;
 
+
+	static f32 MainTrunkCrowdedFactor;
 protected:
 	template <typename T>
 	static bool GetConfigValue2( const std::string& sectionName, const std::string& valueName, T& value)

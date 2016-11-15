@@ -14,6 +14,7 @@
 #include "MyLog.h"
 #include "ParamPool.h"
 #include "WorldTeamManager.h"
+#include "WorldEnterManager.h"
 
 WorldAvatar* GetWorldAvatar(int32 nAvatarID)
 {
@@ -176,6 +177,27 @@ void WorldAvatar::SetCurState( WorldStateID newStateID )
 		m_pCurStage->OnEnterState(this);
 
 	m_bStageChanging = false;
+}
+
+void WorldAvatar::HandleCreateSceneResult(int32 nResult, WorldScene* pScene /*= NULL*/)
+{
+	if(GetScene() == NULL)
+	{
+		SetPendingCreateScene(SCENE_ID_NULL);
+
+		if( nResult == eCreateScene_Succeed)
+			WorldEnterManager::Instance().HandleEnterScene( this, pScene);
+		else
+			OnEnterGameFailed();
+	}
+	else
+	{
+		if( nResult != eCreateScene_Succeed )
+			SetPendingCreateScene(SCENE_ID_NULL);
+
+		WorldSceneManager::Instance().NotifyCreateSceneResult( GetNodeSrvID(), GetAvatarID(), nResult, pScene);
+		SetCurState(eWS_Gaming);
+	}
 }
 
 void WorldAvatar::OnAvatarLeaveGame()

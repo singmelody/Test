@@ -5,6 +5,8 @@
 #include "WorldState_Gaming.h"
 #include "WorldAvatar.h"
 #include "WorldSceneInfo.h"
+#include "WorldSceneManager.h"
+#include "PacketProcessor.h"
 
 WorldState_Gaming::WorldState_Gaming(void)
 {
@@ -52,7 +54,7 @@ int32 WorldState_Gaming::ProcessCreateSceneRequest(class PacketCreateSceneReques
 	if(!pInfo->IsCopy())
 		return eCreateSceneError_CreateTrunk;
 
-	if(pInfo->HandleEnterSceneExit( nSceneSID, pAvatar))
+	if(pInfo->HandleEnterSceneExist( nSceneSID, pAvatar))
 		return eCreateScene_Succeed;
 
 	if( nSceneInstanceID != SCENE_ID_NULL )

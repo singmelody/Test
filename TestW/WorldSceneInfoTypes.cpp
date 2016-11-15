@@ -12,6 +12,9 @@
 #include "WorldTeamManager.h"
 #include <sstream>
 
+//----------------------------------------------
+// Trunk
+//----------------------------------------------
 WorldSceneInfo_Trunk::WorldSceneInfo_Trunk()
 {
 	nCreatingSceneCount = 0;
@@ -61,6 +64,9 @@ int32 WorldSceneInfo_Trunk::GetRequestTotalVolumn()
 	return nTotalVolumn;
 }
 
+//----------------------------------------------
+// MainTrunk
+//----------------------------------------------
 WorldSceneInfo_MainTrunk::WorldSceneInfo_MainTrunk(void)
 {
 
@@ -109,13 +115,44 @@ bool WorldSceneInfo_MainTrunk::TryEnterTargetScene(WorldAvatar* pAvatar, int16 n
 void WorldSceneInfo_MainTrunk::OnSceneCreate(Scene* pScene)
 {
 	WorldSceneInfo_Trunk::OnSceneCreate(pScene);
-	--_parallelCount;
 	UpdateParallelBits();
 }
 
 void WorldSceneInfo_MainTrunk::OnSceneDestroy(Scene* pScene)
 {
+	WorldSceneInfo_Trunk::OnSceneDestroy(pScene);
+	--_parallelCount;
+	UpdateParallelBits();
+}
 
+void WorldSceneInfo_MainTrunk::OnEnterScene(WorldAvatar* pAvatar, WorldScene* pScene)
+{
+	WorldSceneInfo_Trunk::OnEnterScene( pAvatar, pScene);
+
+	if(!pAvatar || !pScene)
+		return;
+
+	WorldTeam* pTeam = pAvatar->GetWorldTeam();
+	if(!pTeam)
+		return;
+
+	if( pTeam->GetLeaderDID() == pAvatar->GetAvatarDID() )
+		_teamInstance[pTeam->GetTeamID()] = SceneInfo::GetSceneInstanceID(pScene->GetSceneID());
+}
+
+void WorldSceneInfo_MainTrunk::OnLeaveScene(WorldAvatar* pAvatar, WorldScene* pScene)
+{
+	WorldSceneInfo_Trunk::OnLeaveScene(pAvatar, pScene);
+
+	if(!pAvatar || !pScene)
+		return;
+
+	WorldTeam* pTeam = pAvatar->GetWorldTeam();
+	if(!pTeam)
+		return;
+
+	if( pTeam->GetLeaderDID() == pAvatar->GetAvatarDID() )
+		_teamInstance.erase(pTeam->GetTeamID());
 }
 
 void WorldSceneInfo_MainTrunk::UpdateParallelBits()
@@ -144,11 +181,58 @@ void WorldSceneInfo_MainTrunk::BroadcastParallel2Nodes()
 }
 
 
-
 bool WorldSceneInfo_MainTrunk::TryEnterAnyParallel(WorldAvatar* pAvatar, int32& nFailReaon)
 {
 	// when player enter the main line try create other line
 	TryStartParallel();
+
+	// try enter the unbusy line first
+	Scene* pScene = m_Instances.GetFrontScene();
+	if(pScene)
+	{
+		if(TryEnterScene( pAvatar, (WorldScene*)pScene, nFailReaon))
+			return true;
+	}
+
+	// retry to enter the minload instance
+	pScene = m_Instances.GetMinLoadScene();
+	if(pScene)
+	{
+		if(TryEnterScene( pAvatar, (WorldScene*)pScene, nFailReaon))
+			return true;
+	}
+
+	bool bHasCreatingScene = false;
+
+
+	// retry to enter other line, because the minload line can't enter for some reason
+	for (SceneInstanceMgr::iterator itr = m_Instances.begin(); itr != m_Instances.end(); ++itr)
+	{
+		WorldScene* pScene = (WorldScene*)itr->second;
+
+		if(pScene->IsCreating())
+		{
+			bHasCreatingScene = true;
+			continue;
+		}
+
+		if(TryEnterScene( pAvatar, pScene, nFailReaon))
+			return true;
+	}
+
+	if(!bHasCreatingScene)
+	{
+		nFailReaon = eChangeSceneError_SceneIsFull;
+		return false;
+	}
+
+	int32 nContextID = pAvatar->GetAvatarID();
+	SceneRequestList& list = RequestList;
+
+	if(!list.push(nContextID))
+		return false;
+
+	pAvatar->SetCurState(eWS_WaitScene);
 
 	return true;
 }
@@ -202,20 +286,9 @@ bool WorldSceneInfo_MainTrunk::HasSceneOnNodeServer(int32 nNodeSrvID)
 	return false;
 }
 
-WorldSceneInfo_TeamCopy::WorldSceneInfo_TeamCopy()
-	: TeamMgr(WorldTeamManager::Instance())
+WorldSceneInfo_Copy::WorldSceneInfo_Copy()
 {
 
-}
-
-CreateSceneRst WorldSceneInfo_TeamCopy::HandleCreateCopyRequest(WorldAvatar* pAvatar, int64 nSceneProcessBits)
-{
-	WorldTeam* pTeam = (WorldTeam*)pAvatar->GetTeam();
-
-	if( pTeam && (pTeam->GetMemberCount() > (int32)m_nPlayerMax))
-		return eCreateSceneError_Team;
-
-	return WorldSceneInfo_Copy::HandleCreateCopyRequest( pAvatar, nSceneProcessBits);
 }
 
 bool WorldSceneInfo_Copy::TryEnterTargetScene(WorldAvatar* pAvatar, int16 nInstanceID, int32& nFailReason)
@@ -256,6 +329,26 @@ bool WorldSceneInfo_Copy::TryRebuildSceneCopy(WorldAvatar* pAvatar)
 	return true;
 }
 
+bool WorldSceneInfo_Copy::HandleEnterSceneExist(int32 nSceneID, WorldAvatar* pAvatar)
+{
+	int16 nInstanceID = SceneInfo::GetSceneInstanceID(nSceneID);
+
+	if( nInstanceID != SCENE_ID_NULL )
+	{
+		WorldScene* pScene = GetWorldScene(nSceneID);
+		if( pScene != NULL )
+		{
+			if( pScene->CheckEnterScene( pAvatar ))
+			{
+				pAvatar->HandleCreateSceneResult( eCreateScene_Succeed, pScene);
+				return true;
+			}
+		}
+	}
+
+	return false;
+}
+
 WorldScene* WorldSceneInfo_Copy::HandleCreateCopy(WorldAvatar* pAvatar, int64 nSceneProcessBits, int64 nSceneCustomData)
 {
 	int32 nNodeSrvID = ServerManager::Instance().m_LocalNodeGrp.GetLowSceneLoadNode();
@@ -292,18 +385,122 @@ CreateSceneRst WorldSceneInfo_Copy::HandleCreateCopyRequest(WorldAvatar* pAvatar
 	return eCreateScene_Succeed;
 }
 
-bool WorldSceneInfo_TeamCopy::HandleEnterSceneExist(int32 nSceneID, WorldAvatar* pAvatar)
+
+void WorldSceneInfo_Copy::OnSceneCreateSucceed(WorldScene* pScene)
 {
-	return true;
+	WorldSceneInfo::OnSceneCreateSucceed(pScene);
+	pScene->NotifyWaitingAvatars( eCreateScene_Succeed );
+}
+
+void WorldSceneInfo_Copy::OnSceneCreateFailed(WorldScene* pScene, int32 nErrorID)
+{
+	WorldSceneInfo::OnSceneCreateFailed(pScene, nErrorID);
+	pScene->NotifyWaitingAvatars( nErrorID );
+}
+
+WorldSceneInfo_TeamCopy::WorldSceneInfo_TeamCopy()
+	: TeamMgr(WorldTeamManager::Instance())
+{
+	m_strDftSceneClass = "WorldScene_TeamCopy";
+}
+
+CreateSceneRst WorldSceneInfo_TeamCopy::HandleCreateCopyRequest(WorldAvatar* pAvatar, int64 nSceneProcessBits)
+{
+	WorldTeam* pTeam = (WorldTeam*)pAvatar->GetTeam();
+
+	if( pTeam && (pTeam->GetMemberCount() > (int32)m_nPlayerMax))
+		return eCreateSceneError_TeamCopy;
+
+	return WorldSceneInfo_Copy::HandleCreateCopyRequest( pAvatar, nSceneProcessBits);
 }
 
 WorldScene* WorldSceneInfo_TeamCopy::GetTeamExistScene(WorldTeam* pTeam)
 {
+	if(!pTeam)
+		return NULL;
+
+	WorldAvatar* pLeader = pTeam->GetLeader();
+	if(pLeader != NULL)
+	{
+		WorldScene* pScene = (WorldScene*)pLeader->GetScene();
+		if( pScene && pScene->SceneSID() == m_nSceneSID )
+			return pScene;
+		else
+		{
+			if( pLeader->GetPendingCreateScene() != SCENE_ID_NULL &&
+				SceneInfo::GetSceneSID(pLeader->GetPendingCreateScene()) == m_nSceneSID)
+			{
+				return GetWorldScene(pLeader->GetPendingCreateScene());
+			}
+		}
+	}
+
+	Team::iterator itr = pTeam->begin();
+	Team::iterator endItr = pTeam->end();
+
+	for (; itr != endItr; ++itr)
+	{
+		WorldAvatar* pTeamMate = GetWorldAvatar( itr->second->m_nAvatarID );
+		if( pTeamMate )
+		{
+			WorldScene* pScene = (WorldScene*)pTeamMate->GetScene();
+			if( pScene && pScene->SceneSID() == m_nSceneSID )
+				return pScene;
+			else
+			{
+				if( pTeamMate->GetPendingCreateScene() != SCENE_ID_NULL &&
+					SceneInfo::GetSceneSID(pTeamMate->GetPendingCreateScene()) == m_nSceneSID)
+				{
+					return GetWorldScene(pTeamMate->GetPendingCreateScene());
+				}
+			}
+		}
+	}
+
 	return NULL;
 }
 
 void WorldSceneInfo_TeamCopy::OnEnterScene(WorldAvatar* pAvatar, WorldScene* pScene)
 {
-
+	WorldSceneInfo_Copy::OnEnterScene( pAvatar, pScene);
+	pScene->UpdateCopyOwner( pAvatar );
 }
+
+bool WorldSceneInfo_TeamCopy::HandleEnterSceneExist(int32 nSceneID, WorldAvatar* pAvatar)
+{
+	// 队伍副本优先或个人副本不存在
+	if( IsSelTeamCopyFirst() || !GetWorldScene( nSceneID ) )
+	{
+		WorldTeam* pTeam = pAvatar->GetWorldTeam();
+		if( pTeam && ( pTeam->GetMemberCount() > (int32)m_nPlayerMax ))
+		{
+			MyLog::error("Team or member...");
+			return false;
+		}
+
+		WorldScene* pTeamScene = GetTeamExistScene( pTeam );
+		if(!pTeamScene)
+		{
+			MyLog::error("TeamScene Error...");
+			return false;
+		}
+
+		if(!pTeamScene->CheckEnterScene( pAvatar ))
+		{
+			MyLog::error("WorldSceneInfo_TeamCopy HandleEnterSceneExist Error");
+			return false;
+		}
+
+		if( pTeamScene->IsCreating() )
+			pTeamScene->AddWaitingAvatar( pAvatar );
+		else
+			pAvatar->HandleCreateSceneResult( eCreateScene_Succeed, pTeamScene);
+
+		return true;
+	}
+
+	bool b = WorldSceneInfo_Copy::HandleEnterSceneExist( nSceneID, pAvatar);
+	return b;
+}
+
 

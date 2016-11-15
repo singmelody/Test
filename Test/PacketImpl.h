@@ -440,6 +440,16 @@ ADD_PACKET_MEMBER( nNodeID, int32, "");
 ADD_PACKET_MEMBER( nSceneProcessBits, int64, "");
 PACKET_END(PacketCreateSceneRequest)
 
+PACKET( PacketCreateSceneResult, PacketBase)
+int32 nSceneID;
+int32 nResult;
+int64 nSceneProcessBits;
+START_ADD_PACKET_MEMBER(PacketCreateSceneResult)
+ADD_PACKET_MEMBER( nSceneID, int32, "");
+ADD_PACKET_MEMBER( nResult, int32, "");
+ADD_PACKET_MEMBER( nSceneProcessBits, int64, "");
+PACKET_END(PacketCreateSceneResult)
+
 PACKET_EX(PacketMulticast2Avatar, PacketBroadCastBase<int32>, new PoolPacketAllocator(40960))
 START_ADD_PACKET_MEMBER(PacketMulticast2Avatar)
 PACKET_END(PacketMulticast2Avatar)

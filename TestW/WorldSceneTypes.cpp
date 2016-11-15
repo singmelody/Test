@@ -54,12 +54,29 @@ WorldScene_Copy::~WorldScene_Copy()
 
 }
 
+bool WorldScene_Copy::CheckEnterScene(WorldAvatar* pAvatar) const
+{
+	if(!CheckCopyOwner( pAvatar ))
+		return false;
+
+	return true;
+}
+
 void WorldScene_Copy::UpdateCopyOwner(WorldAvatar* pAvatar)
 {
 	if(!pAvatar)
 		return;
 
 	m_nAvatarDID = pAvatar->GetAvatarDID();
+}
+
+bool WorldScene_Copy::CheckCopyOwner(WorldAvatar* pAvatar) const
+{
+	int64 nAvatarID = pAvatar->GetAvatarDID();
+	if( nAvatarID != m_nAvatarDID )
+		return false;
+
+	return true;
 }
 
 
@@ -95,3 +112,16 @@ bool WorldScene_TeamCopy::CheckCopyOwner(WorldAvatar* pAvatar) const
 
 	return true;
 }
+
+FINISH_FACTORY_ARG0(WorldScene_TokenCopy);
+bool WorldScene_TokenCopy::CheckCopyOwner(WorldAvatar* pAvatar) const
+{
+	if(!m_pCopyOwnerArg)
+		return false;
+
+	return m_pCopyOwnerArg->CheckOwner(pAvatar);
+}
+
+
+FINISH_FACTORY_ARG0(WorldScene_PersonalCopy);
+FINISH_FACTORY_ARG0(WorldScene_GuildCopy);

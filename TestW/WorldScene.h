@@ -21,7 +21,7 @@ public:
 	void OnClose();
 	virtual void BlockScene();
 
-	void Set2CurNode( PacketBase* &pkt);
+	void Set2CurNode( class PacketBase* &pkt);
 
 	virtual bool CheckEnterScene(WorldAvatar* pAvatar) const { return true; }	
 	virtual void UpdateCopyOwner(WorldAvatar* pAvatar) {}

@@ -88,6 +88,8 @@ bool ConfigSection::GetConfigValue(const char* valueName, double& nValue)
 std::string ConfigManager::m_strMainPath;
 bool ConfigManager::m_bCustomSectionValid = false;
 std::string ConfigManager::m_strCustomSection;
+f32 ConfigManager::MainTrunkCrowdedFactor = 0.8f;
+
 ConfigSectionMap ConfigManager::m_values;
 
 ConfigManager::ConfigManager(void)

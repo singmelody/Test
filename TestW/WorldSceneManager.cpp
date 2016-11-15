@@ -4,8 +4,11 @@
 #include "WorldAvatarManager.h"
 #include "NodeSrvGrp.h"
 #include "Scene.h"
-#include "WorldSceneInfo_MainTrunk.h"
 #include "ServerManager.h"
+#include "WorldSceneInfoTypes.h"
+#include "PacketImpl.h"
+#include "MyLog.h"
+#include "WorldScene.h"
 
 WorldSceneManager::WorldSceneManager(void)
 	: AvatarMgr( WorldAvatarManager::Instance())
@@ -62,19 +65,21 @@ SceneInfo* WorldSceneManager::CreateSceneInfo(int32 nSceneType, int32 nPlayerMax
 		pInfo = new WorldSceneInfo_ScenarioCopy();
 		break;
 	case SceneInfo::eSceneCreate_TrunkCopy:
-		pInfo = new WorldSceneInfo_TrunkCopy();
+		pInfo = new WorldSceneInfo_MainTrunkCopy();
 		break;
 	case SceneInfo::eSceneCreate_RootCopy:
 		pInfo = new WorldSceneInfo_RootCopy();
 		break;
 	}
+
+	return pInfo;
 }
 
 void WorldSceneManager::TickCreatingScenes(int32 nFrameTime)
 {
 	CreatingSceneMap& map = m_mapCreatingScenes;
 
-	for (auto itr = map.beign(); itr != map.end(); ++itr)
+	for (auto itr = map.begin(); itr != map.end(); ++itr)
 	{
 		WorldScene* pScene = itr->second;
 
@@ -106,7 +111,7 @@ void WorldSceneManager::OnCreatingSceneTimeout(WorldScene* pScene)
 	if(!pInfo)
 		return;
 
-	pInfo->OnSceneCreatedFailed( pScene, CreateSceneError_Timeout);
+	pInfo->OnSceneCreateFailed( pScene, eCreateSceneError_Timeout);
 
 	PacketDestroyScene pkt;
 	pkt.SceneID = pScene->GetSceneID();
@@ -116,7 +121,24 @@ void WorldSceneManager::OnCreatingSceneTimeout(WorldScene* pScene)
 
 void WorldSceneManager::NotifyCreateSceneResult(int32 nNodeID, int32 nAvatarID, int32 nResult, WorldScene* pScene /*= NULL*/)
 {
+	PacketCreateSceneResult pkt;
 
+	pkt.SetAvatarID( nAvatarID );
+
+	if( pScene == NULL )
+	{
+		pkt.nSceneID = SCENE_ID_NULL;
+		pkt.nSceneProcessBits = 0;
+	}
+	else
+	{
+		pkt.nSceneID = pScene->GetSceneID();
+		pkt.nSceneProcessBits = pScene->m_nSceneProcessBits;
+	}
+
+	pkt.nResult = nResult;
+
+	Send2Node( pkt, nNodeID);
 }
 
 void WorldSceneManager::SyncParallelInfo2Node( int32 nNodeSrvID)

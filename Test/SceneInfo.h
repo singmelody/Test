@@ -109,6 +109,7 @@ public:
 		eSA_ChallengeCopy		= 1 << 1,	// 挑战副本
 		eSA_AutoResetProcess	= 1 << 2,	// 自动重置进度
 
+		eSA_SelTeamCopyFirst	= 1 << 3,
 		eSA_RebuildCopy			= 1 << 5,
 		eSA_DisableReEnter		= 1 << 10
 	};
@@ -134,6 +135,8 @@ public:
 	{
 		return m_bForceEnter & IsCopy();
 	}
+
+	inline bool IsSelTeamCopyFirst() const{ return ( m_SceneAttribute & eSA_SelTeamCopyFirst) != 0; }
 
 	inline bool DisableReEnter() const { return (m_SceneAttribute & eSA_DisableReEnter) != 0; }
 

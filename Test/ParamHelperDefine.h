@@ -37,6 +37,8 @@ enum
 
 	param_name_process		= 305,
 	param_name_permanent	= 308,
+	param_name_leaderdid	= 404,
+	param_name_teampost		= 467,
 	param_name_ServerID		= 679,
 	param_name_SceneLoadValue = 708,
 	param_name_CltCnt		= 734,

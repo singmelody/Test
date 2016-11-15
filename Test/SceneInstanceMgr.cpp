@@ -51,7 +51,7 @@ Scene* SceneInstanceMgr::GetMinLoadScene()
 		if(!pScene->IsRunning())
 			continue;
 
-		if(pMinScene)
+		if(!pMinScene)
 		{
 			pMinScene = pScene;
 			continue;
@@ -69,5 +69,21 @@ Scene* SceneInstanceMgr::GetMinLoadScene()
 
 Scene* SceneInstanceMgr::GetFrontScene()
 {
+	for (int32 i = 0; i < m_pSceneInfo->m_nParalleCnt; ++i)
+	{
+		int32 nInstanceID = i + 1;
+		int32 nSceneID = SceneInfo::GenSceneID( m_pSceneInfo->m_nSceneSID, nInstanceID);
+
+		Scene* pScene = GetItem( nSceneID );
+		if(!pScene)
+			continue;
+
+		if(!pScene->IsRunning())
+			continue;
+
+		if(!pScene->IsPlayersCrowded())
+			return pScene;
+	}
+
 	return NULL;
 }

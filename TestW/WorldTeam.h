@@ -8,4 +8,7 @@ class WorldTeam : public Team, public WorldGroup, public TeamSlotContainer
 public:
 	WorldTeam();
 	virtual ~WorldTeam();
+
+	WorldAvatar* GetLeader();
+
 };
