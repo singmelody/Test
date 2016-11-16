@@ -33,7 +33,6 @@ public:
 	virtual void SetOwner( CommonDataOwner* pOwner);
 	CommonDataOwner* GetOwner() { return m_pCommonDataOwner; }
 
-	void SetObjectFlag(int32 nFlag);
 
 	virtual bool InitObject();
 	virtual void AfterInitObject(){}
@@ -43,6 +42,13 @@ public:
 
 	virtual void NotifyCreate( int32 nFlag );
 	virtual void NotifyDelete();
+
+	bool CheckObjectFlag(int32 nFlag) { return (nFlag & m_nFlag) != 0; }
+	void SetObjectFlag(int32 nFlag);
+
+	bool NeedSync2World() { return CheckObjectFlag( eObjectFlag_WorldNotSave | eObjectFlag_SaveFlag  );}
+	bool NeedSync2DBA() { return CheckObjectFlag( eObjectFlag_SaveFlag );}
+	bool NeedSync2WClt() { return CheckObjectFlag( eObjectFlag_CltFlag );}
 
 	void SetIndex(int32 nIdx);
 

@@ -21,8 +21,10 @@ public:
 
 	virtual void RegPeerPktHandle( PacketProcessor* pProc);
 protected:
+	void ExitGame( WorldAvatar* pAvatar);
+
 	void PktNode_AvatarDataBackup( class PacketAvatarDataBackup* pPkt);	// roll data schedule save notify
-	void PktLogout2Login( class PacketLogOut2Login* pPkt);
+	void PktLogout2Login( class PacketLogout2Login* pPkt);
 	void PktNode_ChangeSceneRequest(class PacketChangeSceneRequest* pPkt);
 	void PktNode_TickOut(class PacketNodeKickOut* pPkt);
 

@@ -30,7 +30,9 @@ typedef unsigned long SM_KEY;
 #define SRV_THREAD_WATCHDOG_ID	1
 #define GAME_THREAD_WATCHDOG_ID	2
 
-#define PACKET_PROCESS_COUNT_PER_TICK 10000
+#define Create_Avatar_Pending_Time		100000
+
+#define PACKET_PROCESS_COUNT_PER_TICK	10000
 
 #define INVALID_GUILD_ID int64(0)
 

@@ -23,6 +23,8 @@ PACKET_IMPL(PacketCltSelectAvatar)
 
 PACKET_IMPL(PacketCommonDataInit)
 
+PACKET_IMPL(PacketCommonDataBase)
+
 PACKET_IMPL(PacketCommonDataCreate)
 
 PACKET_IMPL(PacketCommonDataUpdate)
@@ -108,3 +110,11 @@ PACKET_IMPL(PacketParallelInfo);
 PACKET_IMPL(PacketCreateSceneResult);
 
 PACKET_IMPL(PacketDestroyScene);
+
+PACKET_IMPL(PacketAvatarDataBackup);
+
+PACKET_IMPL(PacketChangeSceneRequest);
+
+PACKET_IMPL(PacketNodeKickOut);
+
+PACKET_IMPL(PacketKickOutNotifyClt);

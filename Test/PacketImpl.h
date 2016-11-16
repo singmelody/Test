@@ -96,17 +96,30 @@ PACKET(PacketCommonDataInit, PacketBase)
 START_ADD_PACKET_MEMBER(PacketCommonDataInit)
 PACKET_END(PacketCommonDataInit)
 
-PACKET(PacketCommonDataCreate, PacketBase)
+PACKET(PacketCommonDataBase, PacketBase)
+uint8 dataType;
+int16 nIdx;
+int64 nAvatarDID;
+int32 nOwnerAvatarID;
+START_ADD_PACKET_MEMBER(PacketCommonDataBase)
+	ADD_PACKET_MEMBER( dataType, uint8, "")
+	ADD_PACKET_MEMBER( nIdx, int16, "")
+	ADD_PACKET_MEMBER( nAvatarDID, int64, "")
+	ADD_PACKET_MEMBER( nOwnerAvatarID, int32, "")
+PACKET_END(PacketCommonDataBase)
+
+
+PACKET(PacketCommonDataCreate, PacketCommonDataBase)
 int32 nFlag;
 START_ADD_PACKET_MEMBER(PacketCommonDataCreate)
 	ADD_PACKET_MEMBER( nFlag, int32, nFlag)
 PACKET_END(PacketCommonDataCreate)
 
-PACKET(PacketCommonDataUpdate, PacketBase)
+PACKET(PacketCommonDataUpdate, PacketCommonDataBase)
 START_ADD_PACKET_MEMBER(PacketCommonDataUpdate)
 PACKET_END(PacketCommonDataUpdate)
 
-PACKET(PacketCommonDataDelete, PacketBase)
+PACKET(PacketCommonDataDelete, PacketCommonDataBase)
 int32 nDelFlag;
 START_ADD_PACKET_MEMBER(PacketCommonDataDelete)
 ADD_PACKET_MEMBER( nDelFlag, uint8, nDelFlag)
@@ -456,6 +469,49 @@ START_ADD_PACKET_MEMBER(PacketDestroyScene)
 ADD_PACKET_MEMBER( nSceneID, int32, "");
 PACKET_END(PacketDestroyScene)
 
+PACKET( PacketAvatarDataBackup, PacketBase)
+static const int8 FLAG_EXIT = int8( 1 << 0);
+static const int8 FLAG_STORAGE_ONLY = int8( 1 << 1);
+int8 nFlag;
+START_ADD_PACKET_MEMBER(PacketAvatarDataBackup)
+ADD_PACKET_MEMBER( nFlag, int8, "");
+PACKET_END(PacketAvatarDataBackup)
+
+PACKET( PacketChangeSceneRequest, PacketBase)
+int32 nTargetScene;
+int32 nWarInstanceID;
+f32 x,y,z;
+f32 dx,dy,dz;
+int8 GM_Enter;
+START_ADD_PACKET_MEMBER(PacketChangeSceneRequest)
+ADD_PACKET_MEMBER( nTargetScene, int32, "");
+ADD_PACKET_MEMBER( nWarInstanceID, int32, "");
+ADD_PACKET_MEMBER( x, f32, "");
+ADD_PACKET_MEMBER( y, f32, "");
+ADD_PACKET_MEMBER( z, f32, "");
+ADD_PACKET_MEMBER( dx, f32, "");
+ADD_PACKET_MEMBER( dy, f32, "");
+ADD_PACKET_MEMBER( dz, f32, "");
+ADD_PACKET_MEMBER( GM_Enter, int8, "");
+PACKET_END(PacketChangeSceneRequest)
+
+
+PACKET( PacketNodeKickOut, PacketBase)
+START_ADD_PACKET_MEMBER(PacketNodeKickOut)
+PACKET_END(PacketNodeKickOut)
+
+PACKET( PacketKickOutNotifyClt, PacketBase)
+int8 nReason;
+enum EReason
+{
+	eReason_NewLogin,	// same account other login
+	eReason_SrvMaintain,// srv maintain , before cloing tickout all
+	eReason_GM,			// GM operatoration
+};
+START_ADD_PACKET_MEMBER(PacketKickOutNotifyClt)
+PACKET_END(PacketKickOutNotifyClt)
+
+// PacketEx
 PACKET_EX(PacketMulticast2Avatar, PacketBroadCastBase<int32>, new PoolPacketAllocator(40960))
 START_ADD_PACKET_MEMBER(PacketMulticast2Avatar)
 PACKET_END(PacketMulticast2Avatar)

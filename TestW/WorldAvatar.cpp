@@ -15,6 +15,7 @@
 #include "ParamPool.h"
 #include "WorldTeamManager.h"
 #include "WorldEnterManager.h"
+#include "PacketImpl.h"
 
 WorldAvatar* GetWorldAvatar(int32 nAvatarID)
 {
@@ -59,8 +60,8 @@ WorldAvatar::WorldAvatar()
 	InitTickNode(this);
 
 	m_nCurStageID = eWS_Null;
-	m_pCurStage = NULL;
-	m_bStageChanging = false;
+	m_pCurState = NULL;
+	m_bStateChanging = false;
 
 	m_nChangeSceneState = 0;
 	m_bIsDestroy = false;
@@ -99,7 +100,7 @@ int64 WorldAvatar::GenUID()
 
 Scene* WorldAvatar::GetScene()
 {
-	return WorldSceneManager::Instance().GetScene(m_sceneID);
+	return WorldSceneManager::Instance().GetScene(m_nSceneID);
 }
 
 void WorldAvatar::Send2Gate(PacketBase* pPkt, bool bGateProc)
@@ -156,7 +157,7 @@ void WorldAvatar::NoticeBillingLogout(bool bExitGame)
 
 void WorldAvatar::SetCurState( WorldStateID newStateID )
 {
-	if( m_bStageChanging )
+	if( m_bStateChanging )
 	{
 		MyLog::error("SetCurStage error, avatarid[%d], curstage[%d], newStage[%d]", GetAvatarID(), m_nCurStageID, newStateID);
 		return;
@@ -165,18 +166,18 @@ void WorldAvatar::SetCurState( WorldStateID newStateID )
 	if( m_nCurStageID == newStateID )
 		return;
 
-	m_bStageChanging = true;
+	m_bStateChanging = true;
 
-	if( m_pCurStage != NULL)
-		m_pCurStage->OnLeaveState(this);
+	if( m_pCurState != NULL)
+		m_pCurState->OnLeaveState(this);
 
 	m_nCurStageID = newStateID;
-	m_pCurStage = WorldStateManager::Instance().GetState(m_nCurStageID);
+	m_pCurState = WorldStateManager::Instance().GetState(m_nCurStageID);
 
-	if( m_pCurStage != NULL)
-		m_pCurStage->OnEnterState(this);
+	if( m_pCurState != NULL)
+		m_pCurState->OnEnterState(this);
 
-	m_bStageChanging = false;
+	m_bStateChanging = false;
 }
 
 void WorldAvatar::HandleCreateSceneResult(int32 nResult, WorldScene* pScene /*= NULL*/)
@@ -253,6 +254,15 @@ void WorldAvatar::RelaseComponent()
 {
 	//FACTORY_DELOBJ(m_pRelationComponent);
 	//FACTORY_DELOBJ(m_pCDComponent);
+}
+
+void WorldAvatar::NotifyCltKickout(int8 nReason)
+{
+	MyLog::message("<KickAvatar> reason=[%d] accountname=[%s] avatardid=[%lld]", nReason, GetAccountName(), GetAvatarDID());
+
+	PacketKickOutNotifyClt notifyPkt;
+	notifyPkt.nReason = nReason;
+	SendPacket(&notifyPkt);
 }
 
 Team* WorldAvatar::GetTeam()

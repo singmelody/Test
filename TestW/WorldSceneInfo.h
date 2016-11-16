@@ -32,6 +32,8 @@ public:
 	virtual bool TryEnterTargetScene(WorldAvatar* pAvatar, int16 nInstanceID, int32& nFailReason);
 
 	virtual int32 AllocSceneID();
+
+	virtual bool HandleEnterSceneExist(int32 nSceneID, WorldAvatar* pAvatar){ return false;}
 protected:
 	bool TryEnterScene( WorldAvatar* pAvatar, WorldScene* pScene, int32& nFailReason);
 

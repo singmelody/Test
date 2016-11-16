@@ -10,10 +10,11 @@ enum CreateSceneRst
 	eCreateSceneError_SceneInfo	= 2,	// scene template info not exist
 	eCreateSceneError_Team		= 3,	// create team not exist
 	eCreateSceneError_CreateTrunk = 4,	// create other type except copy
+	eCreateSceneError_SceneNotExist = 6,
 	eCreateSceneError_Timeout	= 8,
 	eCreateSceneError_TeamCopy	= 9,
+	eCreateSceneError_GuildNotExist		= 12,
 	eCreateSceneError_CreateWorldScene	= 13,
-
 };
 
 enum ChangeSceneRst

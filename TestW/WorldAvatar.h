@@ -161,6 +161,9 @@ public:
 	void			SetAvatarFlag(int32 nFlag) { m_WorldAvatarFlag |= nFlag; }
 	void			CancelAvatarFlag(int32 nFlag) { m_WorldAvatarFlag &= (~nFlag); }
 	void			RelaseComponent();
+	WorldState*		GetCurState() { return m_pCurState; }
+
+	void			NotifyCltKickout(int8 nReason);
 
 	virtual Team*	GetTeam();
 
@@ -185,7 +188,7 @@ protected:
 	Vector3			m_target_scene_point;
 	Vector3			m_target_scene_dir;
 
-	WorldState*		m_pCurStage;
+	WorldState*		m_pCurState;
 
 
 
@@ -193,7 +196,7 @@ protected:
 
 	int8			m_worldArenaState;
 
-	bool			m_bStageChanging;
+	bool			m_bStateChanging;
 	bool			m_bHasGateAvatar;
 	bool			m_bLastAvatarInfoValid;
 

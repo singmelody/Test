@@ -7,6 +7,8 @@
 #include "LoadTemplateManager.h"
 #include "AvatarOnLineManager.h"
 #include "WorldSceneManager.h"
+#include "WorldAvatar.h"
+#include "WorldState.h"
 
 bool WorldServer::bUseBilling = false;
 
@@ -56,6 +58,22 @@ void WorldServer::OnAllocateSrvID(int32 nSrvType, int32 nSrvID, int32 nSocketID)
 
 }
 
+
+void WorldServer::TickOutAvatar(WorldAvatar* pAvatar)
+{
+	if(!pAvatar)
+		return;
+
+	if(pAvatar->GetType() != eType_Player)
+		return;
+
+	if(IsSrvShutingdown())
+		return;
+
+	pAvatar->NotifyCltKickout(PacketKickOutNotifyClt::eReason_GM);
+
+	pAvatar->GetCurState()->DestroyAvatar(pAvatar);
+}
 
 bool WorldServer::ClusterCheck()
 {

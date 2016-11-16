@@ -29,7 +29,7 @@ bool WorldState::CheckInState(WorldAvatar* pAvatar, const char* pSzErrorLocation
 	if(!pAvatar)
 		return false;
 
-	if(pAvatar->m_pCurStage == this)
+	if(pAvatar->m_pCurState == this)
 		return true;
 
 	CONSOLE_PINK;

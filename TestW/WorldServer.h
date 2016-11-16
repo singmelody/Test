@@ -33,6 +33,10 @@ public:
 	void OnRecvSrvConnectPkt( class PacketSrvConnect* pPkt);
 	virtual void OnAllocateSrvID( int32 nSrvType, int32 nSrvID, int32 nSocketID);
 
+	void TickOutAvatar(WorldAvatar* pAvatar);
+
+	inline bool IsSrvShutingdown() const { return m_shutdownStage != eSDS_None; }
+
 	static bool bUseBilling;
 protected:
 	enum ShutDownStage

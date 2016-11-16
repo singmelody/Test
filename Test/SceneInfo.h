@@ -99,7 +99,7 @@ public:
 		eSceneCreate_RootCopy		= 4,	// 起始副本
 
 		eSceneCreate_WarTrunk		= 5,
-		eSceneCreate_GuildCopy		= 6,
+		eSceneCreate_GuildCopy		= 6,	// guild public scene
 		eSceneCreate_TokenCopy		= 7,
 		eSceneCreate_GuildWar		= 8,
 	};
@@ -129,6 +129,7 @@ public:
 	bool IsTrunk() const { return m_CreateType == eSceneCreate_MainTrunk || m_CreateType == eSceneCreate_WarTrunk || m_CreateType == eSceneCreate_GuildWar; }
 	bool IsMainTrunk() const { return m_CreateType == eSceneCreate_MainTrunk; }
 	bool IsRootCopy() const { return m_CreateType == eSceneCreate_RootCopy; }
+	bool IsGuildCopy() const { return m_CreateType == eSceneCreate_GuildCopy; }
 	
 	virtual bool IsCopy() const { return IsTrunk(); }
 	virtual bool IsForceEnter() const 
@@ -136,14 +137,15 @@ public:
 		return m_bForceEnter & IsCopy();
 	}
 
+	inline bool IsChallengeCopy() const { return (m_SceneAttribute & eSA_ChallengeCopy) != 0;}
+
+	inline bool IsAutoResetProcess() const { return (m_SceneAttribute & eSA_AutoResetProcess) != 0; }
+
 	inline bool IsSelTeamCopyFirst() const{ return ( m_SceneAttribute & eSA_SelTeamCopyFirst) != 0; }
 
 	inline bool DisableReEnter() const { return (m_SceneAttribute & eSA_DisableReEnter) != 0; }
 
-	inline bool CanRebuildCopy() const
-	{
-		return (m_SceneAttribute & eSA_RebuildCopy) != 0;
-	}
+	inline bool CanRebuildCopy() const { return (m_SceneAttribute & eSA_RebuildCopy) != 0; }
 
 	void FillSceneCreateArg( SceneCreateArg& obj) const;
 

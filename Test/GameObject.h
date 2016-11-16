@@ -8,6 +8,13 @@ typedef MyListNode<GameObject>		TickNode;
 typedef MyListNode<GameObject>		*PTICKNODE;
 typedef MyList<TickNode>		TickList;
 
+enum GameObjectType
+{
+	eType_Unkown	= -1,
+	eType_Scene		= 0,
+	eType_Player	= 1,
+};
+
 class GameObject : public ParamPoolOwner
 {
 public:
