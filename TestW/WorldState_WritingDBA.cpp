@@ -28,7 +28,10 @@ void WorldState_WritingDBA::OnEnterState(WorldAvatar* pAvatar)
 	WorldStateGame::OnEnterState(pAvatar);
 
 	if(pAvatar->m_curDataOnSide == eCurDataOnDBA )
+	{
+		// 异常情况，角色没有成功进入游戏就一场退出，角色数据没有发生变化
 		pAvatar->SetPendingTime(0);
+	}
 	else
 	{
 		pAvatar->SetPendingTime(MAX_WAIT_TIME);

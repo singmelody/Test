@@ -9,6 +9,11 @@
 #include "WorldState_EnterGame.h"
 #include "WorldState_Jumping.h"
 #include "WorldState_Gaming.h"
+#include "WorldState_ExitGame.h"
+#include "WorldState_Billing.h"
+#include "WorldState_WaitLogining.h"
+#include "WorldState_WaitingNodeData.h"
+#include "WorldState_WritingDBA.h"
 #include "PacketProcessor.h"
 
 WorldStateManager::WorldStateManager(void)
@@ -42,9 +47,16 @@ WorldState* WorldStateManager::GetState(int32 nStateID)
 	return m_worldState[nStateID];
 }
 
-void WorldStateManager::OnNodeCrash()
+void WorldStateManager::OnNodeCrashed(int32 nNodeID /* = SERVERID_NULL */, bool bUse /* = false */)
 {
+	for (int32 i = 0; i < eWS_Count; ++i)
+	{
+		WorldState* pState = m_worldState[i];
+		if(!pState)
+			continue;
 
+		pState->OnNodeCrashed( nNodeID, bUse);
+	}
 }
 
 void WorldStateManager::RegPeerPktHandle(PacketProcessor* pProc)

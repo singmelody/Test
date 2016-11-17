@@ -15,16 +15,20 @@ enum GameObjectType
 	eType_Player	= 1,
 };
 
-class GameObject : public ParamPoolOwner
+class GameObject : public virtual ParamPoolOwner
 {
 public:
 	GameObject(void);
 	virtual ~GameObject(void);
 
-	void InitTickNode(GameObject* pObj){ _tick_node.Set(pObj); }
-
 	int32 GetType() { return m_Type; }
 	void SetType(int32 nType) { m_Type = nType; }
+
+	void InitTickNode(GameObject* pObj){ _tick_node.Set(pObj); }
+	MyListNode<GameObject>* GetTickNode() { return &_tick_node; }
+
+	virtual bool Tick(int32 nDeltaTime) { return false; }
+	virtual void LowTick(int32 nDeltaTime) {}
 protected:
 	bool		_bDestroy;
 	int32		m_Type;

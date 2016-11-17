@@ -4,6 +4,8 @@
 #include "Singleton.h"
 #include "WorldBase.h"
 
+class WorldAvatar;
+
 class WorldServer : public WorldBase, public Singleton<WorldServer>
 {
 	friend class WarCltManager;
@@ -20,8 +22,6 @@ public:
 
 	virtual bool ClusterCheck();
 
-
-
 	virtual void ProcessLogic( int32 nFrameTime);
 
 	virtual void OnConfigLoaded();
@@ -36,6 +36,8 @@ public:
 	void TickOutAvatar(WorldAvatar* pAvatar);
 
 	inline bool IsSrvShutingdown() const { return m_shutdownStage != eSDS_None; }
+
+	void SubWorld2WarWorld(class PacketBase* pPkt);
 
 	static bool bUseBilling;
 protected:

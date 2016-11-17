@@ -10,6 +10,7 @@
 #include "WorldAvatar.h"
 #include "WorldState.h"
 
+
 bool WorldServer::bUseBilling = false;
 
 WorldServer::WorldServer()
@@ -101,7 +102,6 @@ bool WorldServer::ClusterCheck()
 	return true;
 }
 
-
 void WorldServer::OnConfigLoaded()
 {
 	WorldBase::OnConfigLoaded();
@@ -115,4 +115,11 @@ void WorldServer::OnConfigLoaded()
 
 	SockAddr laddr( m_PeerIP, m_PeerPort);
 	Servers.AddLocalWorld( m_nSrvID, -1, laddr);
+}
+
+void WorldServer::SubWorld2WarWorld(class PacketBase* pPkt)
+{
+	ServerInfo* pWarInfo = Servers.GetWarWorldInfo();
+	if(pWarInfo)
+		PeerSend( pPkt, pWarInfo->nSocketID);
 }

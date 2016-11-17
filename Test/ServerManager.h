@@ -68,16 +68,20 @@ public:
 	void SetSrvType( SrvType nSrvType);
 
 	ServerInfo* GetWarWorldInfo();
+
+	ServerInfo* AddLogin(int32 nSrvID, int32 nSocketID, SockAddr& laddr);
 	ServerInfo* GetLoginInfo();
+
+	ServerInfo* AddDBA(int32 nSrvID, int32 nSocketID, SockAddr& addr);
 	ServerInfo*	GetDBAInfo();
+
 	ServerInfo* GetGateInfo(int32 nID);
+
+	ServerInfo* AddNode( int32 nSrvID, int32 nSocketID, SockAddr& laddr);
 	ServerInfo* GetNodeInfo(int32 nID);
 
 	bool AddLocalWorld(int32 nSrvID, int32 nSocketID, SockAddr& addr);
 
-	ServerInfo* AddDBA(int32 nSrvID, int32 nSocketID, SockAddr& addr);
-	ServerInfo* AddLogin(int32 nSrvID, int32 nSocketID, SockAddr& laddr);
-	ServerInfo* AddNode( int32 nSrvID, int32 nSocketID, SockAddr& laddr);
 
 	ServerInfo* AddSrvInfo( class SrvItem* pItem);
 	void AddSrvInfo( ServerInfo* pInfo);

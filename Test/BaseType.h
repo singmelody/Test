@@ -31,6 +31,7 @@ typedef unsigned long SM_KEY;
 #define GAME_THREAD_WATCHDOG_ID	2
 
 #define Create_Avatar_Pending_Time		100000
+#define MAX_SCENE_CREATE_PENDING_TIME	30000
 
 #define PACKET_PROCESS_COUNT_PER_TICK	10000
 

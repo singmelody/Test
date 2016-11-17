@@ -28,7 +28,10 @@ WorldSceneInfo::~WorldSceneInfo(void)
 
 bool WorldSceneInfo::LoadSceneInfo(DBRow& row)
 {
+	if(!SceneInfoEx::LoadSceneInfo(row))
+		return false;
 
+	return true;
 }
 
 void WorldSceneInfo::OnSceneCreateSucceed(WorldScene* pScene)

@@ -1,6 +1,8 @@
 #include "StdAfx.h"
 #include "WorldState.h"
-
+#include "WorldAvatar.h"
+#include "MyLog.h"
+#include "WorldAvatarManager.h"
 
 WorldState::WorldState(void)
 {
@@ -14,7 +16,7 @@ WorldState::~WorldState(void)
 void WorldState::OnEnterState(WorldAvatar* pAvatar)
 {
 	m_listAvatars.Add(pAvatar->GetTickNode());
-	pAvatar->SendPendingTime(Create_Avatar_Pending_Time);
+	pAvatar->SetPendingTime(Create_Avatar_Pending_Time);
 }
 
 void WorldState::OnLeaveState(WorldAvatar* pAvatar)
@@ -29,19 +31,19 @@ bool WorldState::CheckInState(WorldAvatar* pAvatar, const char* pSzErrorLocation
 	if(!pAvatar)
 		return false;
 
-	if(pAvatar->m_pCurState == this)
+	if(pAvatar->GetCurState() == this)
 		return true;
 
 	CONSOLE_PINK;
 	MyLog::error("Avatar Check Stage Failed, avatarid[%d], avatarstage[%d], tarstage[%d] location=[%s]",
-		pAvatar->GetAvatarID(), pAvatar->m_CurStageID, GetState(), pSzErrorLocation);
+		pAvatar->GetAvatarID(), pAvatar->m_nCurStageID, GetState(), pSzErrorLocation);
 
 	return false;
 }
 
 void WorldState::DestroyAvatar(WorldAvatar* pAvatar)
 {
-	AvatarMgr::RemoveWorldAvatar(pAvatar);
+	AvatarMgr.RemoveWorldAvatar(pAvatar);
 }
 
 void WorldState::OnGateClosed(int32 nSrvID)
@@ -64,7 +66,7 @@ void WorldState::OnGateClosed(int32 nSrvID)
 
 		pNode = list.GetNext(pNode);
 
-		if(pAvatar->m_GateSrvID == nSrvID)
+		if(pAvatar->GetGateSrvID() == nSrvID)
 			DestroyAvatar(pAvatar);
 	}
 }
@@ -76,7 +78,7 @@ WorldAvatar* WorldState::GetWorldAvatarAndCheckStage(int32 nAvatarID, const char
 	WorldAvatar* pAvatar = GetWorldAvatar(nAvatarID);
 	if(!pAvatar)
 	{
-		MyLog::error("GetWorldAvatar Fail! id=[%d] location=[%s]", avatarid, pSzaErrorLocation);
+		MyLog::error("GetWorldAvatar Fail! id=[%d] location=[%s]", nAvatarID, pSzaErrorLocation);
 		return 0;
 	}
 

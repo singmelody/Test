@@ -117,6 +117,8 @@ public:
 	SceneInfo(void);
 	virtual ~SceneInfo(void);
 
+	virtual bool LoadSceneInfo(DBRow& row);
+
 	static uint16 GetSceneSID(uint32 nSceneID);
 	static uint16 GetSceneInstanceID(uint32 nSceneID);
 

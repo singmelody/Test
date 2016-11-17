@@ -175,7 +175,7 @@ bool WorldState_DataReady::TryEnterNextScene(WorldAvatar* pAvatar)
 		return false;
 	}
 
-	uint16 fromSceneSID = ( pCurSD == NULL ) ? 0 : pCurSD->m_SceneSID;
+	uint16 fromSceneSID = ( pCurSD == NULL ) ? 0 : pCurSD->m_nSceneSID;
 
 	const EnterPointInfo* pEnter = pNextSD->GetEnterPointInfo( fromSceneSID );
 	if(pEnter == NULL)

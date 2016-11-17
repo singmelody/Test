@@ -9,5 +9,7 @@ class WorldTeamManager : public ID2ItemMap< int64, WorldTeam>, public WorldFuncE
 public:
 	WorldTeamManager(void);
 	~WorldTeamManager(void);
+
+	WorldTeam* GetWorldTeam(int64 nTeamID) { return (WorldTeam*)GetItem(nTeamID);}
 };
 

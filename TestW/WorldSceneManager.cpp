@@ -9,6 +9,11 @@
 #include "PacketImpl.h"
 #include "MyLog.h"
 #include "WorldScene.h"
+#include "SceneManagerBase.h"
+#include "PacketProcessor.h"
+#include "TimeManager.h"
+#include "WorldServer.h"
+#include "WorldSceneTypes.h"
 
 WorldSceneManager::WorldSceneManager(void)
 	: AvatarMgr( WorldAvatarManager::Instance())
@@ -18,6 +23,22 @@ WorldSceneManager::WorldSceneManager(void)
 
 WorldSceneManager::~WorldSceneManager(void)
 {
+}
+
+void WorldSceneManager::RegPeerPktHandle(class PacketProcessor* pProc)
+{
+	{WorldScene scene;}
+	{WorldScene_Copy scene;}
+	{WorldScene_PersonalCopy scene;}
+	{WorldScene_TeamCopy scene;}
+	{WorldScene_GuildCopy scene;}
+
+	REG_PACKET_HANDLER( pProc, PacketCreateSceneResult, WorldSceneManager, PktNode_CreateNodeSceneRst);
+	REG_PACKET_HANDLER( pProc, PacketSceneProcessBits, WorldSceneManager, PktNode_SceneProcessBits);
+	REG_PACKET_HANDLER( pProc, PacketDestroySceneRequest, WorldSceneManager, PktNode_DestroySceneRequest);
+
+	REG_PACKET_HANDLER( pProc, PacketWarScene, WorldSceneManager, PktNode_WarScene);
+
 }
 
 void WorldSceneManager::OnSceneCreated(Scene* pScene)
@@ -149,14 +170,14 @@ void WorldSceneManager::SyncParallelInfo2Node( int32 nNodeSrvID)
 		if(!pInfo->IsMainTrunk() )
 			continue;
 
-		if(pInfo->m_ParallelBits == 0)
+		if(pInfo->m_nParallelBits == 0)
 			continue;
 
 		((WorldSceneInfo_MainTrunk*)pInfo)->TryStartParallel();
 
 		PacketParallelInfo pkt;
-		pkt.sceneSID = pInfo->m_SceneSID;
-		pkt.parallelBits = pInfo->m_ParallelBits;
+		pkt.nSceneSID = pInfo->m_nSceneSID;
+		pkt.nParallelBits = pInfo->m_nParallelBits;
 
 		Send2Node( &pkt, nNodeSrvID);
 	}
@@ -177,7 +198,7 @@ bool WorldSceneManager::GetSceneCreateParam( int16 nSceneSID, SceneCreateArg& ob
 
 }
 
-WorldScene* WorldSceneManager::CreateWorldScene( SceneCreateArg& obj)
+WorldScene* WorldSceneManager::CreateWorldScene( SceneCreateArg& arg)
 {
 	int32 nNodeSrvID = arg.m_NodeSrvID;
 	int32 nSceneID = arg.m_SceneID;
@@ -186,15 +207,82 @@ WorldScene* WorldSceneManager::CreateWorldScene( SceneCreateArg& obj)
 	if(!pNodeInfo)
 		return NULL;	// target srv not register  
 
-	balfadfa
+	WorldScene* pScene = (WorldScene*)CreateScene(arg);
+	if(!pScene)
+		return NULL;
+
+	pScene->SetSceneState( Scene::eSceneState_Creating );
+	const SceneInfo* pInfo = pScene->GetSceneInfo();
+
+	pScene->SetNodeID( nNodeSrvID );
+	pScene->SetPendingTime( MAX_SCENE_CREATE_PENDING_TIME );
+	pScene->SetRequestTime(TimeManager::Instance().CurTime());
+	pScene->SetProcessBits( arg.m_nSceneProcessBits );
+
+	m_mapCreatingScenes.AddItem( nSceneID, pScene);
+
+	PacketCreateNodeScene pkt;
+	pkt.nNodeSrvID = nNodeSrvID;
+	pkt.nSceneID = pScene->GetSceneID();
+	pkt.nSceneLv = pScene->GetSceneLevel();
+	pkt.nArenaID = pScene->GetArenaID();
+	pkt.nRequestTime = pScene->GetRequestTime();
+	pkt.nSceneCustomData = arg.m_nSceneCustomData;
+
+	WorldSrv.Send2Node( &pkt, nNodeSrvID);
+
+	return pScene;
 }
 
 WorldSceneInfo* WorldSceneManager::GetWorldSceneInfo(uint16 nSceneSID)
 {
-
+	return (WorldSceneInfo*)GetSceneInfo(nSceneSID);
 }
 
 void WorldSceneManager::OnNodeCrash(int32 nNodeID /*= SERVERID_NULL*/)
+{
+	if(nNodeID == SERVERID_NULL )
+		return;
+
+	SceneDataMap& map = SceneInfos;
+
+	for (SceneDataMap::iterator itr = map.begin(); itr != map.end(); ++itr)
+	{
+		SceneInfoEx* pInfo = (SceneInfoEx*)itr->second;
+		assert(pInfo);
+
+		SceneInstanceMgr& mgr = pInfo->m_Instances;
+
+		for (auto subItr = mgr.begin(); subItr != mgr.end(); ++subItr)
+		{
+			Scene* pScene = subItr->second;
+			if(!pScene)
+				continue;
+
+			assert( pInfo == pScene->GetSceneInfo() );
+
+			if(pScene->GetNodeID() == nNodeID )
+				pScene->SetSceneState( Scene::eSceneState_Closing );
+		}
+	}
+}
+
+void WorldSceneManager::PktNode_CreateNodeSceneRst(class PacketCreateSceneResult* pPkt)
+{
+	
+}
+
+void WorldSceneManager::PktNode_SceneProcessBits(class PacketSceneProcessBits* pPkt)
+{
+
+}
+
+void WorldSceneManager::PktNode_DestroySceneRequest(class PacketDestroySceneRequest* pPkt)
+{
+
+}
+
+void WorldSceneManager::PktNode_WarScene(class PacketWarScene* pPkt)
 {
 
 }

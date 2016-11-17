@@ -55,6 +55,7 @@ public:
 #define CONSOLE_BLUE Console temp; temp.Blue();
 #define CONSOLE_YELLOW Console temp; temp.Yellow();
 #define CONSOLE_CYAN Console temp; temp.CYan();
+#define CONSOLE_PINK Console temp; temp.Pink();
 
 class MyLog : public Singleton<MyLog>
 {

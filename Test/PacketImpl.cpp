@@ -118,3 +118,11 @@ PACKET_IMPL(PacketChangeSceneRequest);
 PACKET_IMPL(PacketNodeKickOut);
 
 PACKET_IMPL(PacketKickOutNotifyClt);
+
+PACKET_IMPL(PacketCreateNodeScene);
+
+PACKET_IMPL(PacketSceneProcessBits);
+
+PACKET_IMPL(PacketDestroySceneRequest);
+
+PACKET_IMPL(PacketWarScene);

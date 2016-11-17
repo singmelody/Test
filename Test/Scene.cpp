@@ -2,6 +2,7 @@
 #include "Scene.h"
 #include "SceneInfo.h"
 #include "ConfigManager.h"
+#include "ParamPool.h"
 
 Scene::Scene(void)
 	:m_nSceneID(SCENE_ID_NULL)
@@ -55,4 +56,17 @@ int32 Scene::GetLoadValue()
 	}
 
 	return loadValue;
+}
+
+bool Scene::SetProcessBits(int64 nProcessBits)
+{
+	if( m_nSceneProcessBits == nProcessBits ) 
+		return false;
+
+	m_nSceneProcessBits = nProcessBits;
+
+	if( m_pParamPool )
+		PARAM_SET_VALUE( m_pParamPool, SceneProcessBits, nProcessBits, true);
+
+	return true;
 }

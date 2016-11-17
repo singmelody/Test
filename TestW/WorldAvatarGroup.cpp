@@ -67,4 +67,3 @@ void WorldAvatarGroup::SetWorldTeam(WorldTeam* pTeam)
 		SetTeamID( pTeam->GetTeamID() );
 }
 
-abadfajfa

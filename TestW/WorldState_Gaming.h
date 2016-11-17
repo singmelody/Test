@@ -2,7 +2,7 @@
 
 #include "WorldStateGame.h"
 
-class WorldState_Gaming : public WorldStateGameNode
+class WorldState_Gaming : public WorldStateGameNode, public Singleton<WorldState_Gaming>
 {
 public:
 	WorldState_Gaming(void);

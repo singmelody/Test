@@ -7,6 +7,7 @@
 #include <map>
 #include <list>
 #include "GameObject.h"
+#include "ID2ItemMap.h"
 
 class Scene;
 class SceneInfo;
@@ -21,6 +22,8 @@ public:
 	~WorldSceneManager(void);
 
 	WorldAvatarManager& AvatarMgr;
+
+	virtual void RegPeerPktHandle(class PacketProcessor* pProc);
 
 	virtual void OnSceneCreated( Scene* pScene);
 	virtual void OnSceneDestroy( Scene* pScene);
@@ -40,9 +43,16 @@ public:
 	WorldScene* GetWorldScene(int32 nSceneID) { return (WorldScene*)GetScene(nSceneID); }
 	WorldSceneInfo* GetWorldSceneInfo( uint16 nSceneSID);
 
-	typedef std::map< int32, WorldScene*> CreatingSceneMap;
+	void OnNodeCrash(int32 nNodeID = SERVERID_NULL);
+
+	typedef ID2ItemMap< int32, WorldScene> CreatingSceneMap;
 	CreatingSceneMap m_mapCreatingScenes;
-public:
+protected:
+	void PktNode_CreateNodeSceneRst(class PacketCreateSceneResult* pPkt);
+	void PktNode_SceneProcessBits(class PacketSceneProcessBits* pPkt);
+	void PktNode_DestroySceneRequest(class PacketDestroySceneRequest* pPkt);
+	void PktNode_WarScene(class PacketWarScene* pPkt);
+
 	TickList m_ScenesTickList;
 
 };

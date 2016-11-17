@@ -53,6 +53,12 @@ public:
 	void SetSceneLevel(int32 nSceneLv) { m_nSceneLv = nSceneLv; }
 	int32 GetSceneLevel() { return m_nSceneLv; }
 
+	uint64 GetRequestTime() { return m_nRequestTime; }
+	void SetRequestTime(uint64 time) { m_nRequestTime = time; }
+	uint64 m_nRequestTime;
+
+	virtual bool SetProcessBits( int64 nProcessBits);
+
 	inline void AddPlayerCount(int32 nNum)
 	{
 		m_nPlayerCnt += nNum;

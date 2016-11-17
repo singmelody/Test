@@ -41,11 +41,11 @@ public:
 
 	virtual void OnEnterScene(WorldAvatar* pAvatar, WorldScene* pScene);
 	virtual void OnLeaveScene(WorldAvatar* pAvatar, WorldScene* pScene);
+	void TryStartParallel();
 protected:
 	void UpdateParallelBits();
 	void BroadcastParallel2Nodes();
 	bool TryEnterAnyParallel(WorldAvatar* pAvatar, int32& nFailReaon);
-	void TryStartParallel();
 	bool HasSceneOnNodeServer(int32 nNodeSrvID);
 
 	std::map<int64, int16>	_teamInstance;

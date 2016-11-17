@@ -57,7 +57,7 @@ void WorldAvatarManager::RemoveWorldAvatar(WorldAvatar* pAvatar)
 
 	int32 nAvatarID = pAvatar->GetAvatarID();
 
-	MyLog::message("WorldRemoveAvatra [%]", nAvatarID);
+	MyLog::message("WorldRemoveAvatar [%]", nAvatarID);
 
 	if (pAvatar->HasGateAvatar())
 	{

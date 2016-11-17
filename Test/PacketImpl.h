@@ -155,6 +155,24 @@ START_ADD_PACKET_MEMBER(PacketRoleListRequest)
 	ADD_PACKET_MEMBER_STR( AccountName, MAX_ACCOUNT, AccountName)
 PACKET_END(PacketRoleListRequest)
 
+PACKET( PacketCreateNodeScene, PacketBase)
+int32 nNodeSrvID;
+int32 nSceneID;
+int32 nSceneLv;
+int32 nArenaID;
+int64 nSceneProcessBits;
+int64 nSceneCustomData;
+uint64 nRequestTime;
+START_ADD_PACKET_MEMBER(PacketCreateNodeScene)
+	ADD_PACKET_MEMBER( nNodeSrvID,	int32, "")
+	ADD_PACKET_MEMBER( nSceneID,	int32, "")
+	ADD_PACKET_MEMBER( nSceneLv,	int32, "")
+	ADD_PACKET_MEMBER( nArenaID,	int32, "")
+	ADD_PACKET_MEMBER( nSceneProcessBits,	int64, "")
+	ADD_PACKET_MEMBER( nSceneCustomData,	int64, "")
+	ADD_PACKET_MEMBER( nRequestTime,		uint64, "")
+PACKET_END(PacketCreateNodeScene)
+
 enum
 {
 	eAvatarData_Select = 0,
@@ -462,6 +480,34 @@ ADD_PACKET_MEMBER( nSceneID, int32, "");
 ADD_PACKET_MEMBER( nResult, int32, "");
 ADD_PACKET_MEMBER( nSceneProcessBits, int64, "");
 PACKET_END(PacketCreateSceneResult)
+
+PACKET( PacketSceneProcessBits, PacketBase)
+	int32 nSceneID;
+int32 nResult;
+int64 nSceneProcessBits;
+START_ADD_PACKET_MEMBER(PacketSceneProcessBits)
+	ADD_PACKET_MEMBER( nSceneID, int32, "");
+ADD_PACKET_MEMBER( nResult, int32, "");
+ADD_PACKET_MEMBER( nSceneProcessBits, int64, "");
+PACKET_END(PacketSceneProcessBits)
+
+PACKET( PacketDestroySceneRequest, PacketBase)
+int32 nSceneID;
+START_ADD_PACKET_MEMBER(PacketDestroySceneRequest)
+ADD_PACKET_MEMBER( nSceneID, int32, "");
+PACKET_END(PacketDestroySceneRequest)
+
+PACKET( PacketWarScene, PacketBase)
+int32 nSceneID;
+int64 nSrvID;
+int32 nArenaID;
+int32 nFlag;
+START_ADD_PACKET_MEMBER(PacketWarScene)
+ADD_PACKET_MEMBER( nSceneID, int32, "");
+ADD_PACKET_MEMBER( nSrvID, int32, "");
+ADD_PACKET_MEMBER( nArenaID, int32, "");
+ADD_PACKET_MEMBER( nFlag, int32, "");
+PACKET_END(PacketWarScene)
 
 PACKET( PacketDestroyScene, PacketBase)
 int32 nSceneID;

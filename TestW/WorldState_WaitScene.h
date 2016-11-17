@@ -3,7 +3,7 @@
 #include "WorldState.h"
 #include "Singleton.h"
 
-class WorldState_WaitScene : public WorldState
+class WorldState_WaitScene : public WorldState, public Singleton<WorldState_WaitScene>
 {
 public:
 	WorldState_WaitScene(void);

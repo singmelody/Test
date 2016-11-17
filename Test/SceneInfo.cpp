@@ -40,6 +40,11 @@ SceneInfo::~SceneInfo(void)
 {
 }
 
+bool SceneInfo::LoadSceneInfo(DBRow& row)
+{
+	return true;
+}
+
 uint16 SceneInfo::GetSceneSID(uint32 nSceneID)
 {
 	nSceneID >>= 16;
