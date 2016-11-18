@@ -6,6 +6,7 @@
 #include "ServerManager.h"
 #include "Thread.h"
 #include "TimeManager.h"
+#include "PacketProcessor.h"
 
 #define CONNECTION_INTERVAL 1000
 
@@ -31,6 +32,15 @@ bool PeerModuleBase::Init(int32 argc, char* argv[])
 		StartConnectionThread();
 
 	return true;
+}
+
+void PeerModuleBase::RegPeerPktHandle(PacketProcessor* pProc)
+{
+	PacketSender::RegSync2ModuleArg();
+
+	PeerBase::RegPeerPktHandle(pProc);
+
+	REG_PACKET_HANDLER( pProc, PacketSrvID, PeerModuleBase, PktHandlerSrvID);
 }
 
 void PeerModuleBase::OnAddServerInfo(ServerInfo* pInfo)
@@ -341,6 +351,16 @@ void PeerModuleBase::OnRecvSrvInfoPkt(PacketAddSrvInfo* pPkt)
 		SyncConnectServer(pItem);
 }
 
+void PeerModuleBase::CalculateStatistics()
+{
+	ModuleBase::CalculateStatistics();
+}
+
+void PeerModuleBase::ResetStatistics()
+{
+	ModuleBase::ResetStatistics();
+}
+
 void PeerModuleBase::SyncConnectServer(SrvItem* pItem)
 {
 	char* ip = pItem->listenIpPeer;
@@ -399,6 +419,18 @@ void PeerModuleBase::OnRecvSrvConnectPkt(class PacketSrvConnect* pPkt)
 		GetSrvTitle(pPkt->nType), pPkt->nID, pPkt->ListenIpPeer, pPkt->nListenPortClt);
 
 	Servers.AddSrvInfo(&item);
+}
+
+void PeerModuleBase::PktHandlerSrvID(class PacketSrvID* pPkt)
+{
+	if(!pPkt)
+		return;
+
+	if( pPkt->nType != m_nSrvType )
+		return;
+
+	SetSrvID( pPkt->nID );
+	OnServerIDChange(pPkt->nID);
 }
 
 SrvItem::SrvItem()

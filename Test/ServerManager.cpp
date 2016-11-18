@@ -2,6 +2,7 @@
 #include "ServerManager.h"
 #include "MyLog.h"
 #include "PeerModuleBase.h"
+#include "ConfigManager.h"
 
 const char* GetSrvTitle(int32 nSrvType)
 {
@@ -276,4 +277,12 @@ ServerInfo* ServerManager::GetSrvBySrvID(int32 nSrvID)
 		return itr->second;
 
 	return NULL;
+}
+
+void ServerManager::FillConfig()
+{
+	ConfigManager::GetConfigValue( "CommonConfig", "ZoneID", m_nZoneID);
+	ConfigManager::GetConfigValue( "CommonConfig", "GroupID", m_nGrpID);
+
+	MyLog::message("ZoneID[%d] GroupID[%d]!", m_nZoneID, m_nGrpID);
 }

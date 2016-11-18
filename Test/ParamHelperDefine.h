@@ -41,6 +41,23 @@ enum
 	param_name_teampost		= 467,
 	param_name_SceneProcessBits = 595,
 	param_name_ServerID			= 679,
+	param_name_DBAID			= 696,
+	param_name_LoginID			= 697,
+	param_name_GateCnt			= 698,
+	param_name_LocalNodeCnt		= 699,
+	param_name_RemoteNodeCnt	= 699,
+
+	param_name_SceneCnt			= 702,
+	param_name_TrunkCnt			= 703,
+	param_name_CopyCnt			= 704,
+	param_name_TeamCopyCnt		= 705,
+	param_name_TrunkCopyCnt		= 706,
+	param_name_RootCopyCnt		= 707,
+
+	param_name_ZoneID			= 714,
+	param_name_GroupID			= 715,
 	param_name_SceneLoadValue	= 708,
+	param_name_GuildCopyCnt		= 728,
+	param_name_WarWorld			= 729,
 	param_name_CltCnt			= 734,
 };

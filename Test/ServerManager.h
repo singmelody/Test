@@ -82,13 +82,14 @@ public:
 
 	bool AddLocalWorld(int32 nSrvID, int32 nSocketID, SockAddr& addr);
 
-
 	ServerInfo* AddSrvInfo( class SrvItem* pItem);
 	void AddSrvInfo( ServerInfo* pInfo);
 	void RemoveSrvInfo( ServerInfo* pInfo);
 
 	ServerInfo* GetSrvBySocketID(int32 nSocketID);
 	ServerInfo* GetSrvBySrvID(int32 nSrvID);
+
+	void FillConfig();
 
 	bool IsSameGroup(int32 nSrvID);
 

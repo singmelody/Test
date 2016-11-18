@@ -8,6 +8,15 @@ class ParamPool;
 class LoadTemplateManager;
 class ServerManager;
 
+#define DOG_SET_VALUE(paramPtr, paramName, Val) \
+	paramPtr->SetValue(ParamNameIndexHelper::GetParamIndex(paramPtr->GetParamDefineIndex(), param_name_##paramName), Val, true);
+
+#define DOG_SET_STRING(paramPtr, paramName, Val) \
+	paramPtr->SetValueString(ParamNameIndexHelper::GetParamIndex(paramPtr->GetParamDefineIndex(), param_name_##paramName), Val, true);
+
+#define MODULEDOG_SET_VALUE( paramName, Val) DOG_SET_VALUE( m_pModuleDogPool, paramName, Val)
+#define MODULEDOG_SET_STRING( paramName, Val) DOG_SET_STRING( m_pModuleDogPool, paramName, Val);
+
 class ModuleBase
 {
 public:
@@ -37,13 +46,19 @@ public:
 	inline bool IsExiting() const { return m_bExitLoop;}
 
 	bool IsDebug() const { return m_bDebug; }
-	const uint8 GetSrvType() { return m_nSrvType; }
 
+	void SetSrvID(int32 nSrvID);
+	const uint8 GetSrvType() { return m_nSrvType; }
 	int32 GetSrvID() { return m_nSrvID; }
 
 	typedef std::list<ParamPool*> DogDataList;
 	DogDataList m_listDogData;
 protected:
+	virtual void CalculateStatistics();
+	virtual void ResetStatistics();
+
+	void UpdateModuleTitle();
+
 	void InitLog( int32 argc, char* argv[]);
 
 	ServerManager& Servers;
@@ -58,6 +73,8 @@ protected:
 	std::string m_strModuelName;
 	int32		m_nFrameInterval;
 	bool		m_bDebug;
+	std::string m_strModueTitle;
+	int32		m_nAvgFrameTime;
 
 	uint64		m_nLastFrameTicks;
 	uint64		m_nLastTime;

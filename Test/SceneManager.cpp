@@ -126,3 +126,62 @@ Scene* SceneManager::GetScene(int32 nSceneID)
 	return siter->second;
 }
 
+void SceneManager::SumSceneCount()
+{
+	SceneDataMap& map = SceneInfos;
+
+	m_nTrunkCnt = 0;
+	m_nCopyCnt = 0;
+	m_nTeamCopyCnt = 0;
+	m_nScenarioCopyCnt = 0;
+	m_nGuildCopyCnt = 0;
+	m_nTokenCopyCnt = 0;
+	m_nTrunkCopyCnt = 0;
+	m_nRootCopyCnt = 0;
+
+
+	SceneDataMap::iterator lastItr = map.end();
+
+	for (SceneDataMap::iterator itr = map.begin(); itr != lastItr; ++itr)
+	{
+		SceneInfoEx* pInfo = (SceneInfoEx*)itr->second;
+
+		int32 nCount = (int32)pInfo->m_Instances.size();
+
+		switch( pInfo->m_CreateType )
+		{
+		case SceneInfo::eSceneCreate_MainTrunk:
+		case SceneInfo::eSceneCreate_WarTrunk:
+		case SceneInfo::eSceneCreate_GuildWar:
+			m_nTrunkCnt += nCount;
+			break;
+
+		case SceneInfo::eSceneCreate_TeamCopy:
+			m_nTeamCopyCnt += nCount;
+			break;
+
+		case SceneInfo::eSceneCreate_ScenarioCopy:
+			m_nSceneCnt += nCount;
+			break;
+
+		case SceneInfo::eSceneCreate_GuildCopy:
+			m_nGuildCopyCnt += nCount;
+			break;
+		
+		case SceneInfo::eSceneCreate_TokenCopy:
+			m_nTokenCopyCnt += nCount;
+			break;
+
+		case SceneInfo::eSceneCreate_TrunkCopy:
+			m_nTrunkCopyCnt += nCount;
+			break;
+
+		case SceneInfo::eSceneCreate_RootCopy:
+			m_nRootCopyCnt += nCount;
+			break;
+		}
+	}
+
+	m_nCopyCnt	= m_nTeamCopyCnt + m_nSceneCnt + m_nGuildCopyCnt + m_nTokenCopyCnt + m_nTrunkCopyCnt + m_nRootCopyCnt;
+	m_nSceneCnt = m_nTrunkCnt + m_nCopyCnt;
+ }

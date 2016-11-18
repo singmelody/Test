@@ -1,6 +1,10 @@
 #include "StdAfx.h"
 #include "WorldBase.h"
-#include ""
+#include "WatchDog.h"
+#include "MyLog.h"
+#include "ConfigManager.h"
+#include "ParamPool.h"
+#include "WorldSceneManager.h"
 
 WorldBase::WorldBase(void)
 	: PeerModuleBase( eSrv_World )
@@ -39,7 +43,7 @@ void WorldBase::ProcessConsole(int32 nFrameTime)
 			ResetStatistics();
 
 			WatchDog::Instance().NextStep(GAME_THREAD_WATCHDOG_ID);
-			MyLog::performance("[%s] Tick: %dms PlayerOnline: %d", m_strModuleTitle.c_str(), m_nAvgFrameTime, m_olAvatarCount);
+			MyLog::message("[%s] Tick: %dms PlayerOnline: %d", m_strModueTitle.c_str(), m_nAvgFrameTime, m_olAvatarCount);
 
 		}
 	}
@@ -66,10 +70,8 @@ void WorldBase::OnConfigLoaded()
 	Servers.FillConfig();
 
 	WORLDDOG_SET_VALUE( ZoneID, Servers.m_nZoneID);
-	WORLDDOG_SET_VALUE( GroupID, Servers.m_nGroupID);
+	WORLDDOG_SET_VALUE( GroupID, Servers.m_nGrpID);
 
-	int32 nSrvID = Servers.MakeServerID( Srv_World, 0);
-	SetSrvID( nSrvID );
 
 	m_strDBAIP = "127.0.0.1";
 	ConfigManager::GetConfigValue( "CommonConfig", "DBAIP", m_strDBAIP);
@@ -82,27 +84,44 @@ void WorldBase::OnConfigLoaded()
 	
 	WORLDDOG_SET_STRING( MotherIP, ServerConfig::MontherIP.c_str());
 	WORLDDOG_SET_VALUE( MotherPort, ServerConfig::MontherPort);
-
-			is there any code?
-
 }
 
 void WorldBase::UpdateDogPool(int32 nFrameTime)
 {
-			is there any code?
+	PeerModuleBase::UpdateDogPool(nFrameTime);
+
+	WORLDDOG_SET_VALUE( PlayerCnt, WorldAvatarManager::Instance().size());
+
+	{
+		WorldSceneManager& mgr = WorldSceneManager::Instance();
+
+		mgr.SumSceneCount();
+
+		WORLDDOG_SET_VALUE( SceneLoadValue, mgr.m_nSceneLoadValue);
+		WORLDDOG_SET_VALUE( SceneCnt, mgr.m_nSceneCnt);
+		WORLDDOG_SET_VALUE( TrunkCnt, mgr.m_nTrunkCnt);
+		WORLDDOG_SET_VALUE( CopyCnt, mgr.m_nCopyCnt);
+		WORLDDOG_SET_VALUE( TeamCopyCnt, mgr.m_nTeamCopyCnt);
+		WORLDDOG_SET_VALUE( GuildCopyCnt, mgr.m_nGuildCopyCnt);
+		WORLDDOG_SET_VALUE( TrunkCopyCnt, mgr.m_nTrunkCopyCnt);
+		WORLDDOG_SET_VALUE( RootCopyCnt, mgr.m_nRootCopyCnt);
+
+
+
+	}
 }
 
 void WorldBase::InitDogParamPool(ServerInfo* pInfo)
 {
 	PeerModuleBase::InitDogParamPool(pInfo);
 
-	Servers.LocalNodeGroup.InitDogDetailsPool( this, pInfo->ServerID);
+	Servers.m_LocalNodeGrp.InitDogDetailsPool( this, pInfo->nSrvID);
 }
 
 void WorldBase::BroadcastDogPool()
 {
 	PeerModuleBase::Broadcast2DogPool();
-	Servers.LocalNodeGroup.BroadcastDogDetailsPools(this);
+	Servers.m_LocalNodeGrp.BroadcastDogDetailsPools(this);
 }
 
 void WorldBase::OnAddServerInfo(ServerInfo* pInfo)

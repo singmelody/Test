@@ -55,10 +55,22 @@ public:
 	virtual Scene* GetScene(int32 nSceneID);
 	virtual Scene* NextScene(Scene* pScene) { return NULL; }
 
+	void SumSceneCount();
+
 	BornDataMap	m_bornDataMap;
 protected:
-
-	int32 m_nCopyCnt;
 	int32 m_nSceneLoadValue;
+
+	int32 m_nSceneCnt;
+
+	int32 m_nTrunkCnt;
+	
+	int32 m_nCopyCnt;
+	int32 m_nTeamCopyCnt;
+	int32 m_nScenarioCopyCnt;
+	int32 m_nGuildCopyCnt;
+	int32 m_nTokenCopyCnt;
+	int32 m_nTrunkCopyCnt;
+	int32 m_nRootCopyCnt;
 };
 

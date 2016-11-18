@@ -509,6 +509,14 @@ ADD_PACKET_MEMBER( nArenaID, int32, "");
 ADD_PACKET_MEMBER( nFlag, int32, "");
 PACKET_END(PacketWarScene)
 
+PACKET(PacketSrvID, PacketBase)
+int32 nType;
+int32 nID;
+START_ADD_PACKET_MEMBER(PacketSrvID)
+ADD_PACKET_MEMBER( nType, int32, "");
+ADD_PACKET_MEMBER( nID, int32, "");
+PACKET_END(PacketSrvID)
+
 PACKET( PacketDestroyScene, PacketBase)
 int32 nSceneID;
 START_ADD_PACKET_MEMBER(PacketDestroyScene)

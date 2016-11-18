@@ -56,6 +56,7 @@ public:
 	virtual void ProcessLogic(int32 nFrameTime);
 	virtual void Exit();
 	virtual void OnConfigLoaded();
+	virtual void RegPeerPktHandle(PacketProcessor* pProc);
 
 	virtual bool ProcessPacket();
 	virtual void OnServerIDChange(int32 nID){}
@@ -106,6 +107,9 @@ public:
 
 	ServerItemMap m_mapSrvItems;
 protected:
+	virtual void CalculateStatistics();
+	virtual void ResetStatistics();
+
 	void SyncConnectServer(SrvItem* pInfo);
 
 	virtual void OnWorldDisconnect(ServerInfo* pInfo) {}
@@ -119,6 +123,8 @@ protected:
 	void OnRecvSrvInfoPkt(PacketAddSrvInfo* pPkt);
 	void OnSendPacketSrvConnect(class PacketSrvConnect& pkt);
 	void OnRecvSrvConnectPkt(class PacketSrvConnect* pPkt);
+	
+	void PktHandlerSrvID(class PacketSrvID* pPkt);
 
 	#define THREADMAXCNT 4
 	CircularList<class MyThread*,THREADMAXCNT>	m_PeerThreadList;

@@ -126,3 +126,5 @@ PACKET_IMPL(PacketSceneProcessBits);
 PACKET_IMPL(PacketDestroySceneRequest);
 
 PACKET_IMPL(PacketWarScene);
+
+PACKET_IMPL(PacketSrvID);

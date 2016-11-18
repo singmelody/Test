@@ -6,6 +6,9 @@
 class ParamPool;
 class ServerInfo;
 
+#define WORLDDOG_SET_VALUE( paramName, Val) DOG_SET_VALUE( m_pWorldDogPool, paramName, Val)
+#define WORLDDOG_SET_STRING( paramName, Val) DOG_SET_STRING( m_pWorldDogPool, paramName, Val)
+
 class WorldBase : public PeerModuleBase
 {
 public:
@@ -30,7 +33,7 @@ public:
 
 	void OnServerInfoChanged( ServerInfo* pInfo);
 protected:
-	std::string strDBAIP;
+	std::string m_strDBAIP;
 	int32 m_nDBAPort;
 	int32 m_olAvatarCount;
 };

@@ -146,6 +146,66 @@ bool ModuleBase::CreateDogPool()
 	return false;
 }
 
+void ModuleBase::SetSrvID(int32 nSrvID)
+{
+	MyLog::message("Set Srv ID[%d]", nSrvID);
+	m_nSrvID = nSrvID;
+
+	Servers.m_nZoneID = ServerManager::GetZoneID(nSrvID);
+	Servers.m_nGrpID = ServerManager::GetGroupID(nSrvID);
+
+	if( m_pModuleDogPool != NULL )
+		MODULEDOG_SET_VALUE( ServerID, nSrvID);
+
+	UpdateModuleTitle();
+}
+
+void ModuleBase::CalculateStatistics()
+{
+
+}
+
+void ModuleBase::ResetStatistics()
+{
+
+}
+
+void ModuleBase::UpdateModuleTitle()
+{
+	char szTitle[100];
+	memset( szTitle, 0, 100);
+
+	int32 nZoneID = ServerManager::GetZoneID(m_nSrvID);
+	int32 nGroupID = ServerManager::GetZoneID(m_nSrvID);
+	int32 nSrvIdx = ServerManager::GetSrvIndex(m_nSrvID);
+
+	std::string name = m_strModuelName + "64";
+
+	switch(m_nSrvType)
+	{
+	case eSrv_World:
+	case eSrv_DBA:
+		sprintf( szTitle, "%s : %d", name.c_str(), nGroupID);
+		break;
+
+	case eSrv_Node:
+	case eSrv_Gate:
+	case eSrv_Collision:
+	case eSrv_NodeSHM:
+		sprintf( szTitle, "%s : %d.%d", name.c_str(), nGroupID, nSrvIdx);
+		break;
+
+	default:
+		sprintf( szTitle, "%s : %d", name.c_str(), nGroupID);
+		break;
+	}
+
+	SetConsoleTitle(szTitle);
+	GameUtil::Sleep(40);
+
+	m_strModueTitle = szTitle;
+}
+
 void ModuleBase::InitLog(int32 nArgc, char* argv[])
 {
 	assert(argv);
