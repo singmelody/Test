@@ -5,6 +5,8 @@
 #include <sstream>
 #include "DBInterface.h"
 
+#define Param_STRING_SIZE 32
+
 class ParamPool;
 
 enum ParamFlagType
@@ -267,3 +269,81 @@ void Param_Type<f32>::SetParamType()
 {
 	m_typeid = eTB_F32;	
 }
+
+
+class ParamStr : public ParamBase, public ClassMember_Char
+{
+public:
+	ParamStr()
+		: ClassMember_Char(Param_STRING_SIZE)
+	{
+		ClassMember_Char::AddTypeFlag(eTB_Flag_Sec);
+		m_typeid = eTypeID_str;
+	}
+
+	ParamStr(int32 nSize) : ClassMember_Char(nSize)
+	{
+		ClassMember_Char::AddTypeFlag(eTB_Flag_Sec);
+		m_typeid = eTypeID_str;
+	}
+
+	const char* TypeName() { return "string"; }
+
+	virtual int32 GetTypeInfo()
+	{
+		return ClassMember_Char::GetTypeInfo();
+	}
+
+	virtual const char* GetTypeName()
+	{
+		return ClassMember_Char::TypeName();
+	}
+
+	void Offset(int32 nOffset)
+	{
+		ClassMember_Char::ClassOffset(nOffset);
+	}
+
+	int32 Offset() { return ClassMember_Char::ClassOffset(); }
+
+	char* ParamRead(char* pParamBuff, char* pBuffer, bool& bDirty)
+	{
+		return ClassMember_Char::Read( pParamBuff, pBuffer, bDirty);
+	}
+
+	char* ParamWrite(char* pParamBuff, char* pBuffer)
+	{
+		return ClassMember_Char::Write( pParamBuff, pBuffer);
+	}
+
+	bool ParamCompare(char* pParamBuff, char* pBuff)
+	{
+		return false;
+	}
+
+	const char* Name() { return ClassMember_Char::Name(); }
+	void Name(const char* sName) { return ClassMember_Char::Name(sName); }
+
+	int32 ParamSize() { return ClassMember_Char::Size(); }
+
+	void SetValue( void* pClassObj, char* pValue)
+	{
+		ClassMember_Char::SetValue( pClassObj, pValue);
+	}
+
+	void SetValue(void* pClassObj, const char* pValue)
+	{
+		ClassMember_Char::SetValue( pClassObj, pValue);
+	}
+
+	void GetStringValue(void* pClassObj, char* pBuffer, size_t size)
+	{
+		char* tmpBuffer = ClassMember_Char::GetValue(pClassObj);
+		int32 nCopySize = ((m_charSize -1) > (int32)size) ? (int32)size : m_charSize -1;
+		memcpy( pBuffer, tmpBuffer, nCopySize);
+	}
+
+	virtual void LoadRowValue( void* pClassObj, DBRow& row, int32 nCol);
+	virtual const char* GetValueString(void* pClassObj);
+	virtual bool SetValueString( ParamPool* , char* pValue, bool bDirty);
+};

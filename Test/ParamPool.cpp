@@ -365,6 +365,40 @@ ParamPool* ParamSet::CreateNew(int32 nDefID, int32 nDataID, char* pBuff /*= 0*/)
 }
 
 
+void ParamPool::SetValueString(int32 nIdx, const char* Val, bool bDirty /*= true*/)
+{
+	if(!m_pDef)
+		return;
+
+	ParamBase* pBase = m_pDef->GetParam(nIdx);
+	SetValueString( pBase, Val, bDirty);
+}
+
+void ParamPool::SetValueString(const char* sName, const char* Val, bool bDirty /*= true*/)
+{
+	if(!m_pDef)
+		return;
+
+	ParamBase* pBase = m_pDef->GetParam(sName);
+	SetValueString( pBase, Val, bDirty);
+}
+
+void ParamPool::SetValueString(ParamBase* pParam, const char* Val, bool bDirty /*= true*/)
+{
+	if(!pParam)
+		return;
+
+	ParamStr* pVal = static_cast<ParamStr*>(pParam);
+	if(pVal)
+	{
+		PreSetValue( pParam, false);
+		pVal->SetValue( m_pParamBuffer, Val);
+		PostSetValue( pParam );
+	}
+
+	UpdateParambit( pParam, bDirty);
+}
+
 const char* ParamPool::GetValueString(int32 nIdx, const char* defVal)
 {
 	if(!m_pDef)

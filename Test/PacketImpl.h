@@ -517,6 +517,12 @@ ADD_PACKET_MEMBER( nType, int32, "");
 ADD_PACKET_MEMBER( nID, int32, "");
 PACKET_END(PacketSrvID)
 
+PACKET(PacketDogData, PacketParamPool)
+uint32 nParamType;
+START_ADD_PACKET_MEMBER(PacketDogData)
+	ADD_PACKET_MEMBER( nParamType, uint32, "");
+PACKET_END(PacketDogData)
+
 PACKET( PacketDestroyScene, PacketBase)
 int32 nSceneID;
 START_ADD_PACKET_MEMBER(PacketDestroyScene)

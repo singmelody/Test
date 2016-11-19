@@ -61,9 +61,9 @@ public:
 	virtual bool ProcessPacket();
 	virtual void OnServerIDChange(int32 nID){}
 
-	virtual void UpdateDogPool();
+	virtual void UpdateDogPool(int32 nFrameTime){}
 	virtual void InitDogParamPool( ServerInfo* pInfo);
-	void Broadcast2Dogs( ParamPool* pPool);
+	virtual void Broadcast2Dogs( ParamPool* pPool);
 
 	bool LoginWorldServer(int32 nMaxWaitTime = -1);
 	bool LoginPeerServer(std::string& ip, int32 nPort, bool bWait);

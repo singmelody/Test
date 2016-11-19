@@ -82,6 +82,12 @@ void PacketParamPool::SyncParam2Gate(class PacketSender* pSender, bool bGateProc
 	SyncParamPool( pSender, &PacketSender::Send2Gate, bGateProc, pPool, nParamFlag, nSyncFlag, nParamFlagExclude);
 }
 
+void PacketParamPool::SyncParam2Dog(class PacketSender* pSender, bool bGateProc, ParamPool* pPool, uint32 nParamFlag, uint32 nSyncFlag, uint32 nParamFlagExclude /*= 0*/)
+{
+	SyncParamPool( pSender, &PacketSender::Send2Dog, bGateProc, pPool, nParamFlag, nSyncFlag, nParamFlagExclude);
+
+}
+
 bool PacketParamPool::UpdateParamPool(ParamPoolOwner* pPool, bool bDirty /*= false*/)
 {
 	if(!pPool)

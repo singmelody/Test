@@ -5,6 +5,8 @@
 #include "ConfigManager.h"
 #include "ParamPool.h"
 #include "WorldSceneManager.h"
+#include "ServerConfig.h"
+#include "WorldAvatarManager.h"
 
 WorldBase::WorldBase(void)
 	: PeerModuleBase( eSrv_World )
@@ -80,10 +82,10 @@ void WorldBase::OnConfigLoaded()
 	ConfigManager::GetConfigValue( "CommonConfig", "DBAPort", m_nDBAPort);
 
 	WORLDDOG_SET_STRING( DBAIP, m_strDBAIP.c_str());
-	WORLDDOG_SET_VALUE( DBAPORT, m_nDBAPort );
+	WORLDDOG_SET_VALUE( DBAPort, m_nDBAPort );
 	
-	WORLDDOG_SET_STRING( MotherIP, ServerConfig::MontherIP.c_str());
-	WORLDDOG_SET_VALUE( MotherPort, ServerConfig::MontherPort);
+	WORLDDOG_SET_STRING( MotherIP, ServerConfig::sMotherIP.c_str());
+	WORLDDOG_SET_VALUE( MotherPort, ServerConfig::nMotherPort);
 }
 
 void WorldBase::UpdateDogPool(int32 nFrameTime)
@@ -106,16 +108,20 @@ void WorldBase::UpdateDogPool(int32 nFrameTime)
 		WORLDDOG_SET_VALUE( TrunkCopyCnt, mgr.m_nTrunkCopyCnt);
 		WORLDDOG_SET_VALUE( RootCopyCnt, mgr.m_nRootCopyCnt);
 
-
-
 	}
+
+	{
+		balbla
+	}
+
+	Servers.m_LocalNodeGrp.UpdateDogDetailsPools();
 }
 
 void WorldBase::InitDogParamPool(ServerInfo* pInfo)
 {
 	PeerModuleBase::InitDogParamPool(pInfo);
 
-	Servers.m_LocalNodeGrp.InitDogDetailsPool( this, pInfo->nSrvID);
+	Servers.m_LocalNodeGrp.InitDogDetailsPools( this, pInfo->nSrvID);
 }
 
 void WorldBase::BroadcastDogPool()
@@ -149,18 +155,28 @@ void WorldBase::OnServerInfoChanged(ServerInfo* pInfo)
 		break;
 
 	case eSrv_Gate:
-		WORLDDOG_SET_VALUE( GateCnt, Servers.GateGroup.ServerCnt());
+		WORLDDOG_SET_VALUE( GateCnt, Servers.m_GateGrp.ServerCnt());
 		break;
 
 	case eSrv_Node:
-		WORLDDOG_SET_VALUE( LocalNodeCnt, Servers.LocalNodeGroup.ServerCnt() );
-		WORLDDOG_SET_VALUE( RemoteNodeCnt, Servers.RemoteNodeGroup.ServerCnt() );
+		WORLDDOG_SET_VALUE( LocalNodeCnt, Servers.m_LocalNodeGrp.ServerCnt() );
+		WORLDDOG_SET_VALUE( RemoteNodeCnt, Servers.m_RemoteNodeGrp.ServerCnt() );
 		break;
 
-	case eSrv_Collision;
+	case eSrv_Collision:
 		break;
-		
-		is there any code?
 
+	case eSrv_World:
+		{
+			if(m_bWarWorld)
+			{
+				WORLDDOG_SET_VALUE( SubWorldCnt, Servers.m_RemoteWorldGrp.ServerCnt());
+			}
+			else
+			{
+				WORLDDOG_SET_VALUE( WarID, pInfo->nSrvID);
+			}
+		}
+ 		break;
 	}
 }

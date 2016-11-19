@@ -128,3 +128,5 @@ PACKET_IMPL(PacketDestroySceneRequest);
 PACKET_IMPL(PacketWarScene);
 
 PACKET_IMPL(PacketSrvID);
+
+PACKET_IMPL(PacketDogData);

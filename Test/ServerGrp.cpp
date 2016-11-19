@@ -4,6 +4,9 @@
 #include "ServerManager.h"
 #include "MyLog.h"
 #include "PeerModuleBase.h"
+#include "PacketImpl.h"
+#include "ParamPool.h"
+#include "ParamTypeDef.h"
 
 ServerGrp::ServerGrp(void)
 {
@@ -94,4 +97,45 @@ bool ServerGrp::RemoveServer(int32 nID)
 	OnRemoveServer(pInfo);
 
 	return true;
+}
+
+void ServerGrp::InitDogDetailsPools(PacketSender* pSender, int32 nDogSrvID)
+{
+	SrvInfoMap& map = m_SrvMap;
+
+	for (SrvInfoMap::iterator itr = map.begin(); itr != map.end(); ++itr)
+	{
+		ServerInfo* pInfo = (ServerInfo*)itr->second;
+
+		PacketDogData pkt;
+
+		ParamPool*& pPool = pInfo->m_pParamDetails;
+		if(!pPool)
+			pInfo->UpdateDetailsPool();
+
+		pkt.nParamType = pPool->GetParamTypeID();
+		pkt.SyncParam2Dog( pSender, nDogSrvID, pPool, eParam_Flag_Server, eParam_Sync_All);
+	}
+}
+
+void ServerGrp::BroadcastDogDetailsPools(class ModuleBase* pModule)
+{
+	SrvInfoMap& map = m_SrvMap;
+
+	for (SrvInfoMap::iterator itr = map.begin(); itr != map.end(); ++itr)
+	{
+		GateSrvInfo* pInfo = (GateSrvInfo*)itr->second;
+		pModule->Broadcast2Dogs( pInfo->m_pParamDetails );
+	}
+}
+
+void ServerGrp::UpdateDogDetailsPools()
+{
+	SrvInfoMap& map = m_SrvMap;
+
+	for (SrvInfoMap::iterator itr = map.begin(); itr != map.end(); ++itr)
+	{
+		GateSrvInfo* pInfo = (GateSrvInfo*)itr->second;
+		pInfo->UpdateDetailsPool();
+	}
 }

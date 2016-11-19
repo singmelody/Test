@@ -31,6 +31,9 @@ public:
 	virtual bool StartMainLoop( int32 nFrameInterval);
 	virtual bool CreateDogPool();
 
+	virtual void Broadcast2DogPool();
+	virtual void Broadcast2Dogs( ParamPool* pPool){}
+
 	enum RunState
 	{
 		eRS_Connecting = 0,

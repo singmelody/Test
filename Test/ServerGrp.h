@@ -6,6 +6,7 @@
 
 class ServerInfo;
 class ServerManager;
+class PacketSender;
 
 typedef std::map< int32, ServerInfo*> SrvInfoMap;
 
@@ -29,6 +30,9 @@ public:
 	virtual void SortList(){}
 
 	bool RemoveServer(int32 nID);
+	void InitDogDetailsPools( PacketSender* pSender, int32 nDogSrvID);
+	void BroadcastDogDetailsPools(class ModuleBase* pModule);
+	void UpdateDogDetailsPools();
 
 	SrvInfoMap		m_SrvMap;
 

@@ -7,6 +7,8 @@
 #include "Thread.h"
 #include "TimeManager.h"
 #include "PacketProcessor.h"
+#include "ParamPool.h"
+#include "ParamTypeDef.h"
 
 #define CONNECTION_INTERVAL 1000
 
@@ -41,6 +43,17 @@ void PeerModuleBase::RegPeerPktHandle(PacketProcessor* pProc)
 	PeerBase::RegPeerPktHandle(pProc);
 
 	REG_PACKET_HANDLER( pProc, PacketSrvID, PeerModuleBase, PktHandlerSrvID);
+}
+
+void PeerModuleBase::Broadcast2Dogs(ParamPool* pPool)
+{
+	if(pPool != NULL)
+	{
+		PacketDogData pkt;
+		pkt.nParamType = pPool->GetParamTypeID();
+
+		pkt.SyncParam2Dog( this, -1, pPool, eParam_Flag_Server, eParam_Sync_ClearDirty);
+	}
 }
 
 void PeerModuleBase::OnAddServerInfo(ServerInfo* pInfo)

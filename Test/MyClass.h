@@ -68,13 +68,17 @@ public:
 	inline int32 ClassOffset() { return m_offset;}
 	inline void ClassOffset(int32 nOffset) { m_offset = nOffset; }
 
-	inline uint32 GetTypeFlag() { return m_typeFlag; }
 
 	const char* Des() { return mDes.c_str(); }
 	void Des(const char* str) { mDes = str; }
 
+	inline void AddTypeFlag(uint32 flag) { m_typeFlag |= flag; }
 	inline void SetTypeFlag(uint32 flag) { m_typeFlag = flag; }
+	inline uint32 GetTypeFlag() { return m_typeFlag; }
 	inline bool CheckTypeFlag(uint32 flag) { return (m_typeFlag & flag) != 0; }
+
+	virtual int32 GetTypeInfo() { return m_classType; }
+	virtual bool CheckType(int32 nType) { return m_classType == nType; }
 
 	virtual char* Read(void* pClassObj, char* pBuffer);
 	virtual char* Read(void* pClassObj, char* pBuffer, bool& dirty);
@@ -284,6 +288,7 @@ public:
 
 	char* Read( void* pClassObj, char* buffer, int32 nFlag = eTB_Flag_Sec);
 	char* Write( void* pClassObj, char* buffer, int32 nFlag = eTB_Flag_Sec);
+
 protected:
 	int32 nClassID;
 	int32 nClassSize;

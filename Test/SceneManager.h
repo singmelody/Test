@@ -58,13 +58,13 @@ public:
 	void SumSceneCount();
 
 	BornDataMap	m_bornDataMap;
-protected:
+
 	int32 m_nSceneLoadValue;
 
 	int32 m_nSceneCnt;
 
 	int32 m_nTrunkCnt;
-	
+
 	int32 m_nCopyCnt;
 	int32 m_nTeamCopyCnt;
 	int32 m_nScenarioCopyCnt;
@@ -72,5 +72,6 @@ protected:
 	int32 m_nTokenCopyCnt;
 	int32 m_nTrunkCopyCnt;
 	int32 m_nRootCopyCnt;
+
 };
 

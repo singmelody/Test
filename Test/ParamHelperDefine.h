@@ -47,17 +47,27 @@ enum
 	param_name_LocalNodeCnt		= 699,
 	param_name_RemoteNodeCnt	= 699,
 
+	param_name_PlayerCnt		= 701,
 	param_name_SceneCnt			= 702,
 	param_name_TrunkCnt			= 703,
 	param_name_CopyCnt			= 704,
 	param_name_TeamCopyCnt		= 705,
 	param_name_TrunkCopyCnt		= 706,
 	param_name_RootCopyCnt		= 707,
+	param_name_SubWorldCnt		= 709,
+	param_name_WarID			= 710,
+
+	param_name_DBAPort			= 711,
+	param_name_MotherPort		= 712,
 
 	param_name_ZoneID			= 714,
 	param_name_GroupID			= 715,
 	param_name_SceneLoadValue	= 708,
 	param_name_GuildCopyCnt		= 728,
 	param_name_WarWorld			= 729,
+
+	param_name_DBAIP			= 730,
+	param_name_MotherIP			= 731,
+
 	param_name_CltCnt			= 734,
 };

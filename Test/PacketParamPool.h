@@ -44,6 +44,7 @@ public:
 
 
 	void SyncParam2Gate(class PacketSender* pSender, bool bGateProc, ParamPool* pPool, uint32 nParamFlag, uint32 nSyncFlag, uint32 nParamFlagExclude = 0);
+	void SyncParam2Dog(class PacketSender* pSender, bool bGateProc, ParamPool* pPool, uint32 nParamFlag, uint32 nSyncFlag, uint32 nParamFlagExclude = 0);
 
 
 	bool UpdateParamPool( ParamPoolOwner* pPool, bool bDirty = false);

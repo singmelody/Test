@@ -146,6 +146,15 @@ bool ModuleBase::CreateDogPool()
 	return false;
 }
 
+void ModuleBase::Broadcast2DogPool()
+{
+	for (DogDataList::iterator itr = m_listDogData.begin(); itr != m_listDogData.end(); ++itr)
+	{
+		ParamPool* pParam = *itr;
+		Broadcast2Dogs(pParam);
+	}
+}
+
 void ModuleBase::SetSrvID(int32 nSrvID)
 {
 	MyLog::message("Set Srv ID[%d]", nSrvID);

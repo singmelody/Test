@@ -53,6 +53,10 @@ public:
 	template <class T>
 	void SetValue( ParamBase* pBase, T val, bool bDirty);
 
+	void SetValueString( int32 nIdx, const char* Val, bool bDirty = true);
+	void SetValueString( const char* sName, const char* Val, bool bDirty = true);
+	void SetValueString( ParamBase* pParam, const char* Val, bool bDirty = true);
+
 	template <class T>
 	T GetValue( int32 nIdx, T defVal);
 
@@ -64,6 +68,8 @@ public:
 
 	template <class T>
 	T GetValue( ParamBase* pBase );
+
+
 
 	const char* GetValueString( int32 nIdx, const char* defVal);
 	const char* GetValueString( const char* sName, const char* defVal);
