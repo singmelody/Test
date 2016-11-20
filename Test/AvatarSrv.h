@@ -29,7 +29,7 @@ public:
 	int32 GetPendingTime() { return m_nPendingTime; }
 	int32 SubPendingTime(int32 nDeltaTime) { return m_nPendingTime -= nDeltaTime; }
 
-	virtual void SetState(int32 nState);
+	virtual bool SetState(int32 nState);
 	virtual bool ClearState(int32 nState) { return m_State.ClearBit( nState );}
 protected:
 	int32	m_nGateSrvID;

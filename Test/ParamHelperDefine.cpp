@@ -78,3 +78,5 @@ char* Param_Index_List[MAX_PARAM_NAME_INDEX] = {
 
 	"CltCnt"
 };
+
+int32 Param_Name_Table[MAX_PARAM_NAME_DEFINE_SIZE][MAX_PARAM_NAME_INDEX] = {-1};

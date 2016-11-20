@@ -31,7 +31,7 @@ public:
 	bool AsynRecv(PBYTE pData, long lDataSize);
 
 	void TryStartSending();
-	bool TryAysnSendPackets();
+	bool TryAsynSendPackets();
 
 	bool OnParsePacketsFromStream();
 

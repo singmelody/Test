@@ -406,7 +406,7 @@
     <ClCompile Include="DLAllocator.cpp" />
     <ClCompile Include="DLMalloc.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Itanium'">Use</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="DLMallocConfig.cpp">

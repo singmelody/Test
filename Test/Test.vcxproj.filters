@@ -37,14 +37,17 @@
     <Filter Include="ThirParty">
       <UniqueIdentifier>{86c95b8d-fa26-4504-9ec9-92084543cd61}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ThirParty\tinyxml">
-      <UniqueIdentifier>{1e6bcd4f-9f82-4f21-94a4-a1f9bac48f0d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Game\CommonData">
       <UniqueIdentifier>{4974a16d-2597-40a8-8a89-a7812c6cd6e0}</UniqueIdentifier>
     </Filter>
     <Filter Include="Util\Log">
       <UniqueIdentifier>{9de2929d-7f59-49a6-8c96-33d70056fbd8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirParty\Memory">
+      <UniqueIdentifier>{e62cb591-a19c-4ec6-bbe8-5aa3d91fe423}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirParty\Tinyxml">
+      <UniqueIdentifier>{1e6bcd4f-9f82-4f21-94a4-a1f9bac48f0d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -76,12 +79,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PoolAllocator.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DLMalloc.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DLMallocConfig.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ServerConfig.h">
@@ -364,10 +361,10 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="thirdparty\tinyxml\tinystr.h">
-      <Filter>ThirParty\tinyxml</Filter>
+      <Filter>ThirParty\Tinyxml</Filter>
     </ClInclude>
     <ClInclude Include="thirdparty\tinyxml\tinyxml.h">
-      <Filter>ThirParty\tinyxml</Filter>
+      <Filter>ThirParty\Tinyxml</Filter>
     </ClInclude>
     <ClInclude Include="CircularList.h">
       <Filter>Util\Container</Filter>
@@ -480,6 +477,12 @@
     <ClInclude Include="Team.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="DLMalloc.h">
+      <Filter>ThirParty\Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="DLMallocConfig.h">
+      <Filter>ThirParty\Memory</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -509,13 +512,7 @@
     <ClCompile Include="PoolAllocator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DLMalloc.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="MyMutex.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="DLMallocConfig.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="LoadTemplate.cpp">
@@ -768,16 +765,16 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="thirdparty\tinyxml\tinystr.cpp">
-      <Filter>ThirParty\tinyxml</Filter>
+      <Filter>ThirParty\Tinyxml</Filter>
     </ClCompile>
     <ClCompile Include="thirdparty\tinyxml\tinyxml.cpp">
-      <Filter>ThirParty\tinyxml</Filter>
+      <Filter>ThirParty\Tinyxml</Filter>
     </ClCompile>
     <ClCompile Include="thirdparty\tinyxml\tinyxmlerror.cpp">
-      <Filter>ThirParty\tinyxml</Filter>
+      <Filter>ThirParty\Tinyxml</Filter>
     </ClCompile>
     <ClCompile Include="thirdparty\tinyxml\tinyxmlparser.cpp">
-      <Filter>ThirParty\tinyxml</Filter>
+      <Filter>ThirParty\Tinyxml</Filter>
     </ClCompile>
     <ClCompile Include="CircularList.cpp">
       <Filter>Util\Container</Filter>
@@ -886,6 +883,12 @@
     </ClCompile>
     <ClCompile Include="Team.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DLMalloc.cpp">
+      <Filter>ThirParty\Memory</Filter>
+    </ClCompile>
+    <ClCompile Include="DLMallocConfig.cpp">
+      <Filter>ThirParty\Memory</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -3,6 +3,7 @@
 #include "ConfigManager.h"
 #include "ParamPool.h"
 #include "MyLog.h"
+#include "WorldSceneManager.h"
 
 WorldServerNormal::WorldServerNormal(void)
 {
@@ -18,6 +19,29 @@ WorldServerNormal::WorldServerNormal(void)
 
 WorldServerNormal::~WorldServerNormal(void)
 {
+}
+
+bool WorldServerNormal::Init(int32 nArgc, char* argv[])
+{
+	if(!WorldServer::Init( nArgc, argv))
+		return false;
+
+	return true;
+}
+
+void WorldServerNormal::ProcessLogic(int32 nFrameTime)
+{
+
+}
+
+void WorldServerNormal::RegPeerPktHandle(PacketProcessor* pProc)
+{
+
+}
+
+void WorldServerNormal::PacketWorldWarInit(class PacketWorldWarInit* pPkt)
+{
+
 }
 
 void WorldServerNormal::OnConfigLoaded()
@@ -39,4 +63,22 @@ void WorldServerNormal::OnConfigLoaded()
 
 	int32 nSrvID = Servers.MakeSrvID( eSrv_World, 0);
 	SetSrvID(nSrvID);
+}
+
+void WorldServerNormal::OnAddLoginInfo(ServerInfo* pInfo)
+{
+	WorldServer::OnAddLoginInfo(pInfo);
+
+	BroadcastServerInfo2Gate(pInfo);
+}
+
+void WorldServerNormal::OnAddNodeInfo(ServerInfo* pInfo)
+{
+	WorldServer::OnAddNodeInfo(pInfo);
+
+	//BroadcastServerInfo2Gates( pInfo );
+
+	WorldSceneManager::Instance().SyncParallelInfo2Node( pInfo->nSrvID );
+
+
 }

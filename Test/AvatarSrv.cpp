@@ -10,3 +10,9 @@ AvatarSrv::AvatarSrv(void)
 AvatarSrv::~AvatarSrv(void)
 {
 }
+
+bool AvatarSrv::SetState(int32 nState)
+{
+	bool b = m_State.SetBit(nState);
+	return b;
+}

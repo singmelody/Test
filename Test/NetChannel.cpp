@@ -236,7 +236,7 @@ bool NetChannel::OnAsynSendComplete(DWORD dwTransed)
 	m_cbData2Send = 0;
 	m_cbDataSended = 0;
 
-	if( !TryAysnSendPackets() )
+	if( !TryAsynSendPackets() )
 		return false;
 
 	return true;
@@ -360,7 +360,7 @@ void NetChannel::TryStartSending()
 	}
 }
 
-bool NetChannel::TryAysnSendPackets()
+bool NetChannel::TryAsynSendPackets()
 {
 	DataBufferArg arg;
 	arg.cbBuffer = CBBUFF;
@@ -375,6 +375,8 @@ bool NetChannel::TryAysnSendPackets()
 	AsynSend( m_pSendBuffer, m_cbData2Send);
 
 	m_totalSendByte += arg.cbData;
+
+	return true;
 }
 
 bool NetChannel::OnParsePacketsFromStream()

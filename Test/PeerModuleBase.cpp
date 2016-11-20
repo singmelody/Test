@@ -278,6 +278,14 @@ ConnectionItem* PeerModuleBase::GetConnectedItem()
 }
 
 
+void PeerModuleBase::BroadcastServerInfo2Gate(ServerInfo* pInfo)
+{
+	PacketAddSrvInfo pkt;
+	pInfo->FillPacket(&pkt);
+
+	Send2Gate( &pkt, -1, true);
+}
+
 void PeerModuleBase::OnPeerDisConnect(int32 nSocketID)
 {
 

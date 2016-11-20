@@ -104,6 +104,7 @@ public:
 
 	void AddConnectionItem( int32 nSrvID, int32 nSocketID);
 	ConnectionItem* GetConnectedItem();
+	void BroadcastServerInfo2Gate(ServerInfo* pInfo);
 
 	ServerItemMap m_mapSrvItems;
 protected:
