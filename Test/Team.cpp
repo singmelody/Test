@@ -10,7 +10,13 @@ TeamMember::TeamMember()
 	m_nSceneID = 0;
 }
 
+bool TeamUtil::SlotValid(int32 nTeamSlot)
+{
+	if( nTeamSlot < 0 || nTeamSlot >= MAX_TEAM_AVATAR_COUNT )
+		return false;
 
+	return true;
+}
 
 FINISH_FACTORY_ARG0(Team);
 Team::Team(void)
@@ -66,3 +72,10 @@ int32 Team::GetMemberCount() const
 {
 	return (int32)size();
 }
+
+bool TeamSlotContainer::SlotValid(int32 nSlotID) const
+{
+	return TeamUtil::SlotValid(nSlotID);
+}
+
+

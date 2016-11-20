@@ -54,6 +54,7 @@ enum
 	param_name_TeamCopyCnt		= 705,
 	param_name_TrunkCopyCnt		= 706,
 	param_name_RootCopyCnt		= 707,
+	param_name_SceneLoadValue	= 708,
 	param_name_SubWorldCnt		= 709,
 	param_name_WarID			= 710,
 
@@ -62,7 +63,19 @@ enum
 
 	param_name_ZoneID			= 714,
 	param_name_GroupID			= 715,
-	param_name_SceneLoadValue	= 708,
+
+	param_name_WS_Logining		= 716,		
+	param_name_WS_Logined		= 717,		
+	param_name_WS_DataLoading	= 718,	
+	param_name_WS_DataReady		= 719,
+	param_name_WS_WaitScene		= 720,
+	param_name_WS_Decommission	= 721,
+	param_name_WS_EnterGame		= 722,
+	param_name_WS_Jumping		= 723,
+	param_name_WS_Gaming		= 724,
+	param_name_WS_ExitGame		= 725,
+	param_name_WS_Billing		= 726,
+
 	param_name_GuildCopyCnt		= 728,
 	param_name_WarWorld			= 729,
 

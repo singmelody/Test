@@ -8,6 +8,19 @@
 #include "ServerConfig.h"
 #include "WorldAvatarManager.h"
 
+#include "WorldState_Logining.h"
+#include "WorldState_Logined.h"
+#include "WorldState_DataLoading.h"
+#include "WorldState_DataReady.h"
+#include "WorldState_WaitScene.h"
+#include "WorldState_Decommission.h"
+#include "WorldState_EnterGame.h"
+#include "WorldState_Jumping.h"
+#include "WorldState_Gaming.h"
+#include "WorldState_ExitGame.h"
+#include "WorldState_Billing.h"
+#include "WorldState_WaitLogining.h"
+
 WorldBase::WorldBase(void)
 	: PeerModuleBase( eSrv_World )
 {
@@ -111,7 +124,17 @@ void WorldBase::UpdateDogPool(int32 nFrameTime)
 	}
 
 	{
-		balbla
+		WORLDDOG_SET_VALUE( WS_Logining, WorldState_Logining::Instance().m_listAvatars.GetCount() );
+		WORLDDOG_SET_VALUE( WS_Logined, WorldState_Logined::Instance().m_listAvatars.GetCount() );
+		WORLDDOG_SET_VALUE( WS_DataLoading, WorldState_DataLoading::Instance().m_listAvatars.GetCount() );
+		WORLDDOG_SET_VALUE( WS_DataReady, WorldState_DataReady::Instance().m_listAvatars.GetCount() );
+		WORLDDOG_SET_VALUE( WS_WaitScene, WorldState_WaitScene::Instance().m_listAvatars.GetCount() );
+		WORLDDOG_SET_VALUE( WS_Decommission, WorldState_Decommission::Instance().m_listAvatars.GetCount() );
+		WORLDDOG_SET_VALUE( WS_EnterGame, WorldState_EnterGame::Instance().m_listAvatars.GetCount() );
+		WORLDDOG_SET_VALUE( WS_Jumping, WorldState_Jumping::Instance().m_listAvatars.GetCount() );
+		WORLDDOG_SET_VALUE( WS_Gaming, WorldState_Gaming::Instance().m_listAvatars.GetCount() );
+		WORLDDOG_SET_VALUE( WS_ExitGame, WorldState_ExitGame::Instance().m_listAvatars.GetCount() );
+		WORLDDOG_SET_VALUE( WS_Billing, WorldState_Billing::Instance().m_listAvatars.GetCount() );
 	}
 
 	Servers.m_LocalNodeGrp.UpdateDogDetailsPools();

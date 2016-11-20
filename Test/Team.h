@@ -6,10 +6,20 @@
 class TeamMember;
 class WorldAvatar;
 
+#define INVALID_TEAM_SLOT_INDEX		-1
+#define INVALID_TEAM_AVATARDID		0
+#define MAX_TEAM_AVATAR_COUNT		25
+
 enum{
 	eTeam_Post_Member	= 0,
 	eTeam_Post_Assit	= 1,
 	eTeam_Post_Leader	= 2,
+};
+
+class TeamUtil
+{
+public:
+	static bool SlotValid(int32 nTeamSlot);
 };
 
 class TeamSlotContainer
@@ -23,6 +33,11 @@ public:
 	int32 GetSlot(int64 nAvatarDID) const;
 	int32 GetFirstEmptySlot() const;
 	int32 GetEmptyCount() const;
+
+protected:
+	bool	SlotValid(int32 nSlotID) const;
+
+	int64	m_slots[MAX_TEAM_AVATAR_COUNT];
 };
 
 class TeamMember : public ParamPoolOwner

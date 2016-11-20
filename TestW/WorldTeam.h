@@ -11,4 +11,5 @@ public:
 
 	WorldAvatar* GetLeader();
 
+	virtual TeamMember* GetMemberBySlot(int32 nSlotID);
 };

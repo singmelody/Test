@@ -12,9 +12,23 @@ SceneManagerBase::~SceneManagerBase(void)
 	ReleaseSceneInfos();
 }
 
+bool SceneManagerBase::LoadDataFromDB(DBInterface* ptr)
+{
+	{
+		
+	}
+
+	return true;
+}
+
 const SceneInfo* SceneManagerBase::GetSceneInfo(uint16 nSceneSID)
 {
-	return SceneManagerBase::GetSceneInfo(nSceneSID);
+	auto itr = SceneInfos.find(nSceneSID);
+	if(itr == SceneInfos.end())
+		return NULL;
+
+	SceneInfo* pInfo = itr->second;
+	return pInfo;
 }
 
 void SceneManagerBase::ReleaseSceneInfos()

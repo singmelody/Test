@@ -10,6 +10,8 @@ public:
 	SceneManagerBase(void);
 	virtual ~SceneManagerBase(void);
 
+	virtual bool LoadDataFromDB(DBInterface* ptr);
+
 	static const SceneInfo* GetSceneInfo(uint16 nSceneSID);
 	void ReleaseSceneInfos();
 
