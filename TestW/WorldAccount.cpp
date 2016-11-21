@@ -38,6 +38,18 @@ ParamPool* WorldAccount::CreateRoleSet(int32 nIdx, int32 nType, int32 nData)
 	return pPool;
 }
 
+void WorldAccount::DestroyRoleSet(int32 nIdx)
+{
+	if( nIdx < 0 || nIdx >= MAX_AVATAR_COUNT_ONE_USER)
+		return;
+
+	ParamPool*& pSet = m_pRoleDataSet[nIdx];
+	if(!pSet)
+		return ;
+
+	FACTORY_DELOBJ(pSet);
+}
+
 void WorldAccount::DestroyAllRoleSet()
 {
 	for (int32 i = 0; i < MAX_AVATAR_COUNT_ONE_USER; ++i)

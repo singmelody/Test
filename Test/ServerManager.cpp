@@ -4,6 +4,18 @@
 #include "PeerModuleBase.h"
 #include "ConfigManager.h"
 
+const char* SrvTitle[eSrv_Count] = {
+	"Unkown",
+	"Login",
+	"DBA",	
+	"World",
+	"Gate",
+	"Node",
+	"NodeSHM",
+	"NodeDataSync",
+	"Collision"
+};
+
 const char* GetSrvTitle(int32 nSrvType)
 {
 	if( nSrvType < 0 || nSrvType >= eSrv_Count )

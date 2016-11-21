@@ -73,6 +73,11 @@ int32 Team::GetMemberCount() const
 	return (int32)size();
 }
 
+TeamSlotContainer::TeamSlotContainer()
+{
+	memset( m_slots, 0, sizeof(m_slots));
+}
+
 bool TeamSlotContainer::SlotValid(int32 nSlotID) const
 {
 	return TeamUtil::SlotValid(nSlotID);

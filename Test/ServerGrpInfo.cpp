@@ -4,7 +4,6 @@
 #include "FactoryManagerBase.h"
 #include "PacketImpl.h"
 
-
 ServerInfo::ServerInfo()
 {
 	nSrvType = eSrv_Unkown;

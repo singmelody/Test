@@ -888,7 +888,4 @@
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="Test.rc" />
-  </ItemGroup>
 </Project>

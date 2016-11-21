@@ -19,18 +19,6 @@ enum SrvType
 	eSrv_Count
 };
 
-const char* SrvTitle[eSrv_Count] = {
-	"Unkown",
-	"Login",
-	"DBA",	
-	"World",
-	"Gate",
-	"Node",
-	"NodeSHM",
-	"NodeDataSync",
-	"Collision"
-};
-
 class PacketAddSrvInfo;
 class ServerGrp;
 class ParamPool;

@@ -425,7 +425,9 @@
     <ClCompile Include="ID2ItemMap.cpp" />
     <ClCompile Include="IDPool.cpp" />
     <ClCompile Include="LZOCompressor.cpp" />
-    <ClCompile Include="minilzo.c" />
+    <ClCompile Include="minilzo.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="ModuleBase.cpp" />
     <ClCompile Include="ModuleFuncManager.cpp" />
     <ClCompile Include="MyClass.cpp" />
@@ -551,9 +553,6 @@
     <ClCompile Include="MyMath.cpp" />
     <ClCompile Include="TimeManager.cpp" />
     <ClCompile Include="UtilID.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="Test.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

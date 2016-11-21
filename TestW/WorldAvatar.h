@@ -101,7 +101,7 @@ public:
 	void BroadCastPacket2AllAvatar(PacketBase* pPkt);
 
 	virtual void Send2DBA( PacketBase* pPkt);
-	virtual void Send2Node( PacketBase* pPkt);	
+	virtual void Send2Node( PacketBase* pPkt, int32 nSrvID);	
 	virtual void Send2Login( PacketBase* pPkt);	
 	virtual void Send2Gate( PacketBase* pPkt, bool bGateProc = false);
 

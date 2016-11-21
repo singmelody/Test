@@ -23,7 +23,6 @@ AvatarOnLineManager::~AvatarOnLineManager(void)
 void AvatarOnLineManager::Tick(int32 nFrameTime)
 {
 	ProcOnlineUserInfo(nFrameTime);
-	ProcAccMaxOnlineUser(nFrameTime);
 }
 
 void AvatarOnLineManager::ProcOnlineUserInfo(int32 nFrameTime)
@@ -47,6 +46,11 @@ void AvatarOnLineManager::SyncOnlineUserInfo2Login()
 	Send2Login(pkt);
 }
 
+int32 AvatarOnLineManager::GetOnlineAvatarCount()
+{
+	return (int32)m_avatarMap.size();
+}
+
 WorldAvatar* AvatarOnLineManager::GetAvatarByName(const char* name)
 {
 	AvatarNameMap::iterator itr = m_avatarNameTable.find(name);
@@ -55,4 +59,3 @@ WorldAvatar* AvatarOnLineManager::GetAvatarByName(const char* name)
 
 	return NULL;
 }
-

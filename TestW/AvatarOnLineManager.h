@@ -43,8 +43,6 @@ public:
 	inline bool EnableAccMaxOnlineUser() const { return config_AccMaxOnlineUser_Enable; }
 	inline bool EnableAccMaxOnlineUser(bool v)  { config_AccMaxOnlineUser_Enable = v; }
 
-	void ProcAccMaxOnlineUser(int32 nFrameTime);
-
 protected:
 	std::map<std::string ,int32>	m_avatarMap;
 	std::map<std::string, int32>	m_accountMap;

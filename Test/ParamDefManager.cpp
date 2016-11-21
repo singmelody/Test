@@ -125,64 +125,64 @@ ParamBase* ParamDefManager::CreateParam(const char* sParamType, const char* sDft
 {
 	if(sParamType == "int64")
 	{
-		Param_Type<int64>* pParam = new Param_Type<int64>();
+		Param_int64* pParam = new Param_int64();
 		InitValue_A2Num<int64>( pParam, sDft, sMax, 0x7fffffffffffffff, sMin, ~0x7fffffffffffffff);
 		return pParam;
 	}
-	else if(sParamType == "uint64")
-	{
-		Param_Type<uint64>* pParam = new Param_Type<uint64>();
-		InitValue_A2Num<uint64>( pParam, sDft, sMax, 0xffffffffffffffff, sMin, 0);
-		return pParam;
-	}
-	else if(sParamType == "int32")
-	{
-		Param_Type<int32>* pParam = new Param_Type<int32>();
-		InitValue_A2Num<int32>( pParam, sDft, sMax, MAXINT32, sMin, MININT32);
-		return pParam;
-	}
-	else if(sParamType == "uint32")
-	{
-		Param_Type<uint32>* pParam = new Param_Type<uint32>();
-		InitValue_A2Num<uint32>( pParam, sDft, sMax, 0xffffffff, sMin, 0);
-		return pParam;
-	}
-	else if(sParamType == "int16")
-	{
-		Param_Type<int16>* pParam = new Param_Type<int16>();
-		InitValue_A2Num<int16>( pParam, sDft, sMax, MAXINT16, sMin, MININT16);
-		return pParam;
-	}
-	else if(sParamType == "uint16")
-	{
-		Param_Type<uint16>* pParam = new Param_Type<uint16>();
-		InitValue_A2Num<uint16>( pParam, sDft, sMax, 0xffff, sMin, 0);
-		return pParam;
-	}
-	else if(sParamType == "int8")
-	{
-		Param_Type<int8>* pParam = new Param_Type<int8>();
-		InitValue_A2Num<int8>( pParam, sDft, sMax, MAXINT8, sMin, MININT8);
-		return pParam;
-	}
-	else if(sParamType == "uint8")
-	{
-		Param_Type<uint8>* pParam = new Param_Type<uint8>();
-		InitValue_A2Num<uint8>( pParam, sDft, sMax, 0xff, sMin, 0);
-		return pParam;
-	}
-	else if(sParamType == "f64")
-	{
-		Param_Type<f64>* pParam = new Param_Type<f64>();
-		InitValue_A2Float<f64>( pParam, sDft, sMax, sMin);
-		return pParam;
-	}
-	else if(sParamType == "f32")
-	{
-		Param_Type<f32>* pParam = new Param_Type<f32>();
-		InitValue_A2Float<f32>( pParam, sDft, sMax, sMin);
-		return pParam;
-	}
+// 	else if(sParamType == "uint64")
+// 	{
+// 		Param_Type<uint64>* pParam = new Param_Type<uint64>();
+// 		InitValue_A2Num<uint64>( pParam, sDft, sMax, 0xffffffffffffffff, sMin, 0);
+// 		return pParam;
+// 	}
+// 	else if(sParamType == "int32")
+// 	{
+// 		Param_Type<int32>* pParam = new Param_Type<int32>();
+// 		InitValue_A2Num<int32>( pParam, sDft, sMax, MAXINT32, sMin, MININT32);
+// 		return pParam;
+// 	}
+// 	else if(sParamType == "uint32")
+// 	{
+// 		Param_Type<uint32>* pParam = new Param_Type<uint32>();
+// 		InitValue_A2Num<uint32>( pParam, sDft, sMax, 0xffffffff, sMin, 0);
+// 		return pParam;
+// 	}
+// 	else if(sParamType == "int16")
+// 	{
+// 		Param_Type<int16>* pParam = new Param_Type<int16>();
+// 		InitValue_A2Num<int16>( pParam, sDft, sMax, MAXINT16, sMin, MININT16);
+// 		return pParam;
+// 	}
+// 	else if(sParamType == "uint16")
+// 	{
+// 		Param_Type<uint16>* pParam = new Param_Type<uint16>();
+// 		InitValue_A2Num<uint16>( pParam, sDft, sMax, 0xffff, sMin, 0);
+// 		return pParam;
+// 	}
+// 	else if(sParamType == "int8")
+// 	{
+// 		Param_Type<int8>* pParam = new Param_Type<int8>();
+// 		InitValue_A2Num<int8>( pParam, sDft, sMax, MAXINT8, sMin, MININT8);
+// 		return pParam;
+// 	}
+// 	else if(sParamType == "uint8")
+// 	{
+// 		Param_Type<uint8>* pParam = new Param_Type<uint8>();
+// 		InitValue_A2Num<uint8>( pParam, sDft, sMax, 0xff, sMin, 0);
+// 		return pParam;
+// 	}
+// 	else if(sParamType == "f64")
+// 	{
+// 		Param_Type<f64>* pParam = new Param_Type<f64>();
+// 		InitValue_A2Float<f64>( pParam, sDft, sMax, sMin);
+// 		return pParam;
+// 	}
+// 	else if(sParamType == "f32")
+// 	{
+// 		Param_Type<f32>* pParam = new Param_Type<f32>();
+// 		InitValue_A2Float<f32>( pParam, sDft, sMax, sMin);
+// 		return pParam;
+// 	}
 
 	return NULL;
 }

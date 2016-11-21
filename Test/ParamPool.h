@@ -258,21 +258,21 @@ void ParamPool::SetValue( ParamBase* pBase, T val, bool bDirty)
 
 	switch(pBase->TypeID())
 	{
-	case eTB_Int16:
-		{
-			Param_Type<int16>* pVal = (Param_Type<int16>*)(pBase);
-			pVal->SetValue( m_pParamBuffer, (int16)val);
-			break;
-		}
-	case eTB_Int32:
-		{
-			Param_Type<int32>* pVal = (Param_Type<int32>*)(pBase);
-			pVal->SetValue( m_pParamBuffer, (int32)val);
-			break;
-		}
+// 	case eTB_Int16:
+// 		{
+// 			Param_Type<int16>* pVal = (Param_Type<int16>*)(pBase);
+// 			pVal->SetValue( m_pParamBuffer, (int16)val);
+// 			break;
+// 		}
+// 	case eTB_Int32:
+// 		{
+// 			Param_Type<int32>* pVal = (Param_Type<int32>*)(pBase);
+// 			pVal->SetValue( m_pParamBuffer, (int32)val);
+// 			break;
+// 		}
 	case eTB_Int64:
 		{
-			Param_Type<int64>* pVal = (Param_Type<int64>*)(pBase);
+			Param_int64* pVal = (Param_int64*)(pBase);
 			pVal->SetValue( m_pParamBuffer, (int64)val);
 			break;
 		}
@@ -325,21 +325,21 @@ T ParamPool::GetValueFromBuff(ParamBase* pBase, char* pBuffer)
 {
 	switch( pBase->TypeID() )
 	{
-	case eTB_Int16:
-		{
-			Param_Type<int16>* pVal = (Param_Type<int16>*)(pBase);
-			int16 nValue = pVal->GetValue(pBuffer);
-			return (T)nValue;
-		}
-	case eTB_Int32:
-		{
-			Param_Type<int32>* pVal = (Param_Type<int32>*)(pBase);
-			int32 nValue = pVal->GetValue(pBuffer);
-			return (T)nValue;
-		}
+// 	case eTB_Int16:
+// 		{
+// 			Param_Type<int16>* pVal = (Param_Type<int16>*)(pBase);
+// 			int16 nValue = pVal->GetValue(pBuffer);
+// 			return (T)nValue;
+// 		}
+// 	case eTB_Int32:
+// 		{
+// 			Param_Type<int32>* pVal = (Param_Type<int32>*)(pBase);
+// 			int32 nValue = pVal->GetValue(pBuffer);
+// 			return (T)nValue;
+// 		}
 	case eTB_Int64:
 		{
-			Param_Type<int64>* pVal = (Param_Type<int64>*)(pBase);
+			Param_int64* pVal = (Param_int64*)(pBase);
 			int64 nValue = pVal->GetValue(pBuffer);
 			return (T)nValue;
 		}

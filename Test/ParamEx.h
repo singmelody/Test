@@ -169,106 +169,129 @@ protected:
 	std::string m_stringValue;
 };
 
-template <class T>
-class Param_Type : public Param<T>
+
+class Param_int64 : public Param<int64>
 {
 public:
-	Param_Type() { SetParamType(); }
+	Param_int64();
 
-	void LoadRowValue( void* pClassObj, DBRow& row, int32 nCol);
-	bool SetValueString( ParamPool* pPool, char* pValue, bool bDirty);
-
-	void SetParamType();
+	virtual void LoadRowValue( void* pClassObj, DBRow& row, int32 nCol);
+	virtual bool SetValueString( ParamPool* pPool, char* pValue, bool bDirty);
 };
 
-template <class T>
-void Param_Type<T>::LoadRowValue(void* pClassObj, DBRow& row, int32 nCol)
+class Param_int32 : public Param<int32>
 {
-	T nValue;
-	row.Fill( nValue, nCol, T(0));
-	SetValue( pClassObj, nValue);
-}
+public:
+	Param_int32();
 
-template <class T>
-bool Param_Type<T>::SetValueString(ParamPool* pPool, char* pValue, bool bDirty)
-{
-	if(!pPool)
-		return false;
-	
-	T nValue = MyString::ToValue<T>(pValue);
-	pPool->SetValue<T>( this, nValue, bDirty);
-	
-	return true;
-}
+	virtual void LoadRowValue(void* pClassObj, DBRow& row, int32 nCol);
+	virtual bool SetValueString( ParamPool* pPool, char* pValue, bool bDirty);
+};
 
+// template <class T>
+// class Param_Type : public Param<T>
+// {
+// public:
+// 	Param_Type() { SetParamType(); }
+// 
+// 	void LoadRowValue( void* pClassObj, DBRow& row, int32 nCol);
+// 	bool SetValueString( ParamPool* pPool, char* pValue, bool bDirty);
+// 
+// 	void SetParamType();
+// };
 
-
-template <>
-void Param_Type<int64>::SetParamType()
-{
-	m_typeid = eTB_Int64;
-}
-
-template <>
-void Param_Type<uint64>::SetParamType()
-{
-	m_typeid = eTB_UInt64;
-	
-}
-
-
-template <>
-void Param_Type<int32>::SetParamType()
-{
-	m_typeid = eTB_Int32;
-}
-
-
-template <>
-void Param_Type<uint32>::SetParamType()
-{
-	m_typeid = eTB_UInt32;	
-}
-
-
-template <>
-void Param_Type<int16>::SetParamType()
-{
-	m_typeid = eTB_Int16;
-}
-
-
-template <>
-void Param_Type<uint16>::SetParamType()
-{
-	m_typeid = eTB_UInt16;	
-}
-
-
-template <>
-void Param_Type<int8>::SetParamType()
-{
-	m_typeid = eTB_Int8;	
-}
-
-
-template <>
-void Param_Type<uint8>::SetParamType()
-{
-	m_typeid = eTB_UInt8;	
-}
-
-template <>
-void Param_Type<f64>::SetParamType()
-{
-	m_typeid = eTB_F64;	
-}
-
-template <>
-void Param_Type<f32>::SetParamType()
-{
-	m_typeid = eTB_F32;	
-}
+// template <class T>
+// void Param_Type<T>::LoadRowValue(void* pClassObj, DBRow& row, int32 nCol)
+// {
+// 	T nValue;
+// 	row.Fill( nValue, nCol, T(0));
+// 	SetValue( pClassObj, nValue);
+// }
+// 
+// template <class T>
+// bool Param_Type<T>::SetValueString(ParamPool* pPool, char* pValue, bool bDirty)
+// {
+// 	if(!pPool)
+// 		return false;
+// 	
+// 	T nValue = MyString::ToValue<T>(pValue);
+// 	pPool->SetValue<T>( this, nValue, bDirty);
+// 	
+// 	return true;
+// }
+// 
+// template <class T>
+// void Param_Type<T>::SetParamType()
+// {
+// 	m_typeid = eTB_Null;
+// }
+// 
+// template <>
+// void Param_Type<int64>::SetParamType()
+// {
+// 	m_typeid = eTB_Int64;
+// }
+// 
+// template <>
+// void Param_Type<uint64>::SetParamType()
+// {
+// 	m_typeid = eTB_UInt64;
+// 	
+// }
+// 
+// 
+// template <>
+// void Param_Type<int32>::SetParamType()
+// {
+// 	m_typeid = eTB_Int32;
+// }
+// 
+// 
+// template <>
+// void Param_Type<uint32>::SetParamType()
+// {
+// 	m_typeid = eTB_UInt32;	
+// }
+// 
+// 
+// template <>
+// void Param_Type<int16>::SetParamType()
+// {
+// 	m_typeid = eTB_Int16;
+// }
+// 
+// 
+// template <>
+// void Param_Type<uint16>::SetParamType()
+// {
+// 	m_typeid = eTB_UInt16;	
+// }
+// 
+// 
+// template <>
+// void Param_Type<int8>::SetParamType()
+// {
+// 	m_typeid = eTB_Int8;	
+// }
+// 
+// 
+// template <>
+// void Param_Type<uint8>::SetParamType()
+// {
+// 	m_typeid = eTB_UInt8;	
+// }
+// 
+// template <>
+// void Param_Type<f64>::SetParamType()
+// {
+// 	m_typeid = eTB_F64;	
+// }
+// 
+// template <>
+// void Param_Type<f32>::SetParamType()
+// {
+// 	m_typeid = eTB_F32;	
+// }
 
 
 class ParamStr : public ParamBase, public ClassMember_Char

@@ -77,6 +77,8 @@ WorldAvatar::WorldAvatar()
 
 	m_nCommonDataMaskFinish = -1;
 	m_bTargetNodeAvatarCreated = false;
+
+	m_pWorld = NULL;
 }
 
 
@@ -103,6 +105,33 @@ Scene* WorldAvatar::GetScene()
 	return WorldSceneManager::Instance().GetScene(m_nSceneID);
 }
 
+void WorldAvatar::Send2DBA(PacketBase* pPkt)
+{
+	if(!pPkt)
+		return;
+
+	pPkt->SetAvatarID(GetAvatarID());
+	m_pWorld->Instance().Send2DBA(pPkt);
+}
+
+void WorldAvatar::Send2Node(PacketBase* pPkt, int32 nSrvID)
+{
+	if(!pPkt)
+		return;
+
+	pPkt->SetAvatarID(GetAvatarID());
+	m_pWorld->Instance().Send2Node( pPkt, nSrvID);
+}
+
+void WorldAvatar::Send2Login(PacketBase* pPkt)
+{
+	if(!pPkt)
+		return;
+
+	pPkt->SetAvatarID(GetAvatarID());
+	m_pWorld->Instance().Send2Login( pPkt);
+}
+
 void WorldAvatar::Send2Gate(PacketBase* pPkt, bool bGateProc)
 {
 	if(!pPkt)
@@ -110,6 +139,11 @@ void WorldAvatar::Send2Gate(PacketBase* pPkt, bool bGateProc)
 
 	pPkt->SetAvatarID(GetAvatarID());
 	m_pWorld->Send2Gate( pPkt, m_nGateSrvID, bGateProc);
+}
+
+void WorldAvatar::Send2CurNode(PacketBase& pkt)
+{
+	Send2Node( &pkt, GetNodeSrvID());
 }
 
 void WorldAvatar::NoticeBillingLogout(bool bExitGame)

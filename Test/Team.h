@@ -26,7 +26,7 @@ class TeamSlotContainer
 {
 public:
 	TeamSlotContainer();
-	virtual ~TeamSlotContainer();
+	virtual ~TeamSlotContainer(){}
 
 	virtual TeamMember* GetMemberBySlot(int32 nSlotID) = 0;
 

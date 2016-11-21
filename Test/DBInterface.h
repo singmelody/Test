@@ -243,3 +243,15 @@ protected:
 	DBConnection		m_connections[MAX_USE_CONNECTION];
 	int32				m_con;
 };
+
+template <typename T> T GetRowValue(DBRow& row, int32 nColumnID, T defaultValue)
+{
+	return GetValue( row, nColumnID, defaultValue);
+}
+
+template <typename T> T GetValue(DBRow& row, int32 nColumnID, T defaultValue)
+{
+	T val;
+	row.Fill( val, nColumnID, defaultValue);
+	return val;
+}

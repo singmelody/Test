@@ -1,12 +1,15 @@
 #include "StdAfx.h"
 #include "WorldTeam.h"
 #include "WorldAvatar.h"
+#include "WorldTeamManager.h"
 
+FINISH_FACTORY_ARG0(WorldTeam)
 WorldTeam::WorldTeam()
+: TeamMgr(WorldTeamManager::Instance())
 {
 
 }
-
+  
 WorldTeam::~WorldTeam()
 {
 
