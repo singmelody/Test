@@ -9,6 +9,7 @@
 #include "PacketProcessor.h"
 #include "ParamPool.h"
 #include "ParamTypeDef.h"
+#include "Time.h"
 
 #define CONNECTION_INTERVAL 1000
 
@@ -36,6 +37,21 @@ bool PeerModuleBase::Init(int32 argc, char* argv[])
 	return true;
 }
 
+void PeerModuleBase::ProcessLogic(int32 nFrameTime)
+{
+	ModuleBase::ProcessLogic(nFrameTime);
+
+	if(m_bUseConnectionThread)
+		ProcessConnection( nFrameTime );
+}
+
+void PeerModuleBase::Exit()
+{
+	PeerExit();
+
+	ModuleBase::Exit();
+}
+
 void PeerModuleBase::RegPeerPktHandle(PacketProcessor* pProc)
 {
 	PacketSender::RegSync2ModuleArg();
@@ -43,6 +59,8 @@ void PeerModuleBase::RegPeerPktHandle(PacketProcessor* pProc)
 	PeerBase::RegPeerPktHandle(pProc);
 
 	REG_PACKET_HANDLER( pProc, PacketSrvID, PeerModuleBase, PktHandlerSrvID);
+
+	REG_PACKET_HANDLER( pProc, PacketHeartBeat, PeerModuleBase, PktHandlerSrvHeartBeat);
 }
 
 void PeerModuleBase::Broadcast2Dogs(ParamPool* pPool)
@@ -286,6 +304,22 @@ void PeerModuleBase::BroadcastServerInfo2Gate(ServerInfo* pInfo)
 	Send2Gate( &pkt, -1, true);
 }
 
+SrvItem* PeerModuleBase::GetSrvItem(int32 nSrvID)
+{
+	AUTOLOCK( m_lockConnection );
+
+	ServerItemMap::iterator itr = m_mapSrvItems.find(nSrvID);
+	if( itr != m_mapSrvItems.end() )
+		return itr->second;
+
+	return NULL;
+}
+
+void PeerModuleBase::RemoveSrvItem(int32 nSrvID)
+{
+
+}
+
 void PeerModuleBase::OnPeerDisConnect(int32 nSocketID)
 {
 
@@ -427,6 +461,31 @@ void PeerModuleBase::SendPacketSrvConnect(int32 nSocketID)
 	PeerSend( &pkt, nSocketID);
 }
 
+void PeerModuleBase::ProcessConnection(int32 nFrameTime)
+{
+	while (true)
+	{
+		ConnectionItem* pItem = GetConnectedItem();
+		if(!pItem)
+			break;
+
+		int32 nSocketID = pItem->nSocketID;
+		if( nSocketID != -1)
+		{
+			SrvItem* pItemOrg = GetSrvItem(pItem->nSrvID);
+			if(!pItemOrg)
+				PeerDisconnect( nSocketID );
+			else
+			{
+				pItemOrg->nSocketID = nSocketID;
+				OnPeerConnected( pItemOrg );
+			}
+		}
+
+		SAFE_DELETE(pItem);
+	}
+}
+
 void PeerModuleBase::OnSendPacketSrvConnect(PacketSrvConnect& pkt)
 {
 
@@ -442,6 +501,11 @@ void PeerModuleBase::OnRecvSrvConnectPkt(class PacketSrvConnect* pPkt)
 	Servers.AddSrvInfo(&item);
 }
 
+void PeerModuleBase::PeerDisconnect(int32 nSocketID)
+{
+
+}
+
 void PeerModuleBase::PktHandlerSrvID(class PacketSrvID* pPkt)
 {
 	if(!pPkt)
@@ -452,6 +516,14 @@ void PeerModuleBase::PktHandlerSrvID(class PacketSrvID* pPkt)
 
 	SetSrvID( pPkt->nID );
 	OnServerIDChange(pPkt->nID);
+}
+
+void PeerModuleBase::PktHandlerSrvHeartBeat(class PacketHeartBeat* pPkt)
+{
+	if(!pPkt)
+		return;
+
+	uint64 nCurTime = Time::CurrentTime().MilliSecond();
 }
 
 SrvItem::SrvItem()

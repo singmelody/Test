@@ -571,6 +571,15 @@ enum EReason
 START_ADD_PACKET_MEMBER(PacketKickOutNotifyClt)
 PACKET_END(PacketKickOutNotifyClt)
 
+
+PACKET(PacketHeartBeat, PacketBase)
+uint64 nHeartBeatStartTime;
+int32  nSrvType;
+START_ADD_PACKET_MEMBER(PacketHeartBeat)
+	ADD_PACKET_MEMBER( nHeartBeatStartTime, uint64, ping_start_time)
+	ADD_PACKET_MEMBER( nSrvType, int32, nSrvType);
+PACKET_END(PacketHeartBeat)
+
 // PacketEx
 PACKET_EX(PacketMulticast2Avatar, PacketBroadCastBase<int32>, new PoolPacketAllocator(40960))
 START_ADD_PACKET_MEMBER(PacketMulticast2Avatar)

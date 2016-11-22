@@ -73,6 +73,8 @@ typedef TiXmlNode XmlNode;
 #define SERVER_NEW_CONNECTION_TIMEOUT	10000
 #define XIAOTUI_TIME					10000
 
+#define SRV_HEART_BEAT_INTERVAL			30000
+
 #define MIN_ACCOUNT						5
 #define MAX_ACCOUNT						50
 

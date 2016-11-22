@@ -130,3 +130,5 @@ PACKET_IMPL(PacketWarScene);
 PACKET_IMPL(PacketSrvID);
 
 PACKET_IMPL(PacketDogData);
+
+PACKET_IMPL(PacketHeartBeat);

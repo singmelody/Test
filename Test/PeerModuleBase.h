@@ -93,6 +93,7 @@ public:
 	void StartConnectionThread();
 	void ConnectThreadProc();
 	void SendPacketSrvConnect(int32 nSocket);
+	void ProcessConnection(int32 nFrameTime);
 
 	void OnPeerConnected(SrvItem* pItem);
 	void OnPeerDisConnect(int32 nSocketID);
@@ -105,6 +106,9 @@ public:
 	void AddConnectionItem( int32 nSrvID, int32 nSocketID);
 	ConnectionItem* GetConnectedItem();
 	void BroadcastServerInfo2Gate(ServerInfo* pInfo);
+
+	SrvItem* GetSrvItem(int32 nSrvID);
+	void RemoveSrvItem(int32 nSrvID);
 
 	ServerItemMap m_mapSrvItems;
 protected:
@@ -125,7 +129,10 @@ protected:
 	void OnSendPacketSrvConnect(class PacketSrvConnect& pkt);
 	void OnRecvSrvConnectPkt(class PacketSrvConnect* pPkt);
 	
+	virtual void PeerDisconnect(int32 nSocketID);
+
 	void PktHandlerSrvID(class PacketSrvID* pPkt);
+	void PktHandlerSrvHeartBeat(class PacketHeartBeat* pPkt);
 
 	#define THREADMAXCNT 4
 	CircularList<class MyThread*,THREADMAXCNT>	m_PeerThreadList;

@@ -3,6 +3,8 @@
 #include "MyLog.h"
 #include "PeerModuleBase.h"
 #include "ConfigManager.h"
+#include "PacketImpl.h"
+#include "Time.h"
 
 const char* SrvTitle[eSrv_Count] = {
 	"Unkown",
@@ -289,6 +291,46 @@ ServerInfo* ServerManager::GetSrvBySrvID(int32 nSrvID)
 		return itr->second;
 
 	return NULL;
+}
+
+void ServerManager::Tick(int32 nFrameTime)
+{
+	ProcServerHeartBeat(nFrameTime);
+}
+
+void ServerManager::ProcServerHeartBeat(int32 nFrameTime)
+{
+	static int32 nInterval = 0;
+	nInterval += nFrameTime;
+
+	if( nInterval < SRV_HEART_BEAT_INTERVAL)
+		return;
+
+	if( m_pPeerModule == NULL )
+		return;
+
+	PacketHeartBeat pkt;
+	pkt.SetPacketType(ePacketType_GateProc);
+	pkt.nHeartBeatStartTime = Time::CurrentTime().MilliSecond();
+	pkt.nSrvType = m_srvType;
+
+	if(m_pLocalWorld)
+		m_pPeerModule->PeerSend( &pkt, m_pLocalWorld->nSocketID);
+
+	if( m_pLogin )
+		m_pPeerModule->PeerSend( &pkt, m_pLogin->nSocketID);
+
+	if( m_pDBA )
+		m_pPeerModule->PeerSend( &pkt, m_pDBA->nSocketID);
+
+	if( m_pGMI )
+		m_pPeerModule->PeerSend( &pkt, m_pGMI->nSocketID);
+
+	m_LocalNodeGrp.BroadcastPacket(&pkt);
+	m_GateGrp.BroadcastPacket(&pkt);
+
+
+	nInterval = 0;
 }
 
 void ServerManager::FillConfig()

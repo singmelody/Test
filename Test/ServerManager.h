@@ -5,6 +5,7 @@
 #include "NodeSrvGrp.h"
 #include "GateSrvGrp.h"
 
+
 class PeerModuleBase;
 class ServerInfo;
 
@@ -89,6 +90,8 @@ public:
 	ServerInfo* GetSrvBySocketID(int32 nSocketID);
 	ServerInfo* GetSrvBySrvID(int32 nSrvID);
 
+	void Tick(int32 nFrameTime);
+
 	void FillConfig();
 
 	bool IsSameGroup(int32 nSrvID);
@@ -123,5 +126,8 @@ public:
 
 	SrvInfoMap		m_SrvBySrvID;
 	SrvInfoMap		m_SrvBySocketID;
+
+private:
+	void ProcServerHeartBeat(int32 nFrameTime);
 };
 

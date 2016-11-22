@@ -16,20 +16,20 @@ PoolAllocator::PoolAllocator()
 }
 
 
-// PoolAllocator::PoolAllocator(int32 nSize)
-// {
-// 	if( nSize < sizeof(MemoryCell*) )
-// 		nSize = sizeof(MemoryCell*);
-// 
-// 	m_objSize = nSize;
-// 	m_cellSize = nSize + sizeof(MemoryHead);
-// 	m_info.AllocInfo = 0;
-// 	m_info.MemInfo = 0x7cfcfcfc;	
-// 	m_cell = NULL;
-// 	m_memUsage = 0;
-// 	m_count = 0;
-// 	m_useCount = 0;
-// }
+PoolAllocator::PoolAllocator(int32 nSize)
+{
+	if( nSize < sizeof(MemoryCell*) )
+		nSize = sizeof(MemoryCell*);
+
+	m_objSize = nSize;
+	m_cellSize = nSize + sizeof(MemoryHead);
+	m_info.AllocInfo = 0;
+	m_info.MemInfo = 0x7cfcfcfc;	
+	m_head = NULL;
+	m_memUsage = 0;
+	m_count = 0;
+	m_useCount = 0;
+}
 
 PoolAllocator::~PoolAllocator()
 {
@@ -84,7 +84,8 @@ void* PoolAllocator::PopMemory()
 
 	if ( !m_head )
 	{
-		pRes = (char*)dlmalloc(m_cellSize);
+		//pRes = (char*)dlmalloc(m_cellSize);
+		pRes = (char*)malloc(m_cellSize);
 		if(!pRes)
 			return NULL;
 

@@ -57,6 +57,7 @@ public:
 	typedef std::list<ParamPool*> DogDataList;
 	DogDataList m_listDogData;
 protected:
+	virtual void ProcessLogic(int32 nFrameTime){}
 	virtual void CalculateStatistics();
 	virtual void ResetStatistics();
 

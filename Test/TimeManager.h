@@ -11,6 +11,18 @@ public:
 	void Tick();
 
 	inline uint64 CurTime();
+
+	int32 FrameTime()
+	{
+		return m_frameTime;
+	}
+
+	inline void FrameTime(int32 nTime)
+	{
+		m_frameTime = nTime;
+		if( m_frameTime <= 0 )
+			m_frameTime = 1;
+	}
 protected:
 	uint64	m_lastTime;
 	int32	m_frameTime;

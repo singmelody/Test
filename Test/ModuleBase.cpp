@@ -11,6 +11,7 @@
 #include "ServerConfig.h"
 #include "WatchDog.h"
 #include "ParamPool.h"
+#include "TimeManager.h"
 #include <sstream>
 
 #define DOG 1
@@ -131,6 +132,51 @@ void ModuleBase::Exit()
 	// MemoryLog::Shutdown();
 	LogThread::Instance().Stop();
 	SAFE_DELETE(g_pLog);
+}
+
+bool ModuleBase::StartMainLoop(int32 nFrameInterval)
+{
+	m_nFrameInterval = nFrameInterval;
+
+	TimeManager& timer = TimeManager::Instance();
+
+#if _WINDOWS
+#define PERFORMANCE_START LARGE_INTEGER t0; QueryPerformanceFrequency(&t0);
+#define PERFORMANCE_END LARGE_INTEGER t1; QueryPerformanceFrequency(&t1);
+#define PERFORMANCE_DELTA t1.QuadPart - t0.QuadPart;
+#endif
+
+#if DOG
+	WatchDog& dog = WatchDog::Instance();
+	dog.Start();
+#endif
+
+	ResetStatistics();
+
+	int64 nLogicProcTime = 0;
+	int64 nPacketProcTime = 0;
+
+	int32 nSleepPiece = 1;
+
+	while (!m_bExitLoop)
+	{
+		int32 nFrameTime = timer.FrameTime();
+
+		uint64 nStartTime = timer.CurTime();
+		uint64 nCurTime = nStartTime;
+
+		uint64 nDeadLine = nStartTime + m_nFrameInterval;
+
+		PERFORMANCE_START;
+
+		Servers.Tick(nFrameTime);
+
+		ProcessLogic(nFrameTime);
+
+		PERFORMANCE_END;
+
+		nLogicProcTime = PERFORMANCE_DELTA;
+	}
 }
 
 bool ModuleBase::CreateDogPool()
