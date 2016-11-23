@@ -17,8 +17,8 @@ public:
 
 	virtual bool Init(int32 nArgc, char* argv[]);
 
-	void LoginDBAServer();
-	bool Start();
+ 	void LoginDBAServer();
+ 	bool Start();
 
 	virtual bool ClusterCheck();
 
@@ -38,6 +38,8 @@ public:
 	inline bool IsSrvShutingdown() const { return m_shutdownStage != eSDS_None; }
 
 	void SubWorld2WarWorld(class PacketBase* pPkt);
+
+	static bool PreProcessShutdown( int32 nArgc, char* argv[]);
 
 	static bool bUseBilling;
 protected:

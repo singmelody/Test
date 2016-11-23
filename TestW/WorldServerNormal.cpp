@@ -65,6 +65,38 @@ void WorldServerNormal::OnConfigLoaded()
 	SetSrvID(nSrvID);
 }
 
+bool WorldServerNormal::ClusterCheck()
+{
+	if(!WorldServer::ClusterCheck())
+		return false;
+
+	int32 nCurGateCnt = Servers.m_GateGrp.ServerCnt();
+
+	if( nCurGateCnt < m_nGateCount )
+	{
+		MyLog::message("Gate Check CurCount[%d] NeedCount[%d]", nCurGateCnt, m_nGateCount);
+		return false;
+	}
+
+	if(Servers.GetLoginInfo() == NULL)
+	{
+		MyLog::error("Login Check Failed");
+		return false;
+	}
+
+	return true;
+}
+
+void WorldServerNormal::OnWorldConnect(int32 nSrvID, int32 nSocketID, bool bWarGrp, SockAddr& laddr)
+{
+	return;
+}
+
+void WorldServerNormal::OnRecvSrvInfoPkt(PacketAddSrvInfo* pPkt)
+{
+	WorldServer::OnRecvSrvInfoPkt(pPkt);
+}
+
 void WorldServerNormal::OnAddLoginInfo(ServerInfo* pInfo)
 {
 	WorldServer::OnAddLoginInfo(pInfo);

@@ -1,6 +1,7 @@
 #include "StdAfx.h"
-#include "WorldAvatar.h"
 #include "WorldServer.h"
+
+#include "WorldAvatar.h"
 #include "WorldAvatarManager.h"
 #include "ConfigManager.h"
 #include "MyLog.h"
@@ -35,6 +36,12 @@ bool WorldServer::Init(int32 nArgc, char* argv[])
 	Templates.Load("WorldServer");
 	MyLog::message("End LoadMoule[WorldSrv]");
 
+
+	return true;
+}
+
+bool WorldServer::Start()
+{
 	return true;
 }
 
@@ -122,4 +129,9 @@ void WorldServer::SubWorld2WarWorld(class PacketBase* pPkt)
 	ServerInfo* pWarInfo = Servers.GetWarWorldInfo();
 	if(pWarInfo)
 		PeerSend( pPkt, pWarInfo->nSocketID);
+}
+
+bool WorldServer::PreProcessShutdown(int32 nArgc, char* argv[])
+{
+	return true;
 }

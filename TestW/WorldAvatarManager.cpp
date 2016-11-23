@@ -3,8 +3,10 @@
 #include "WorldAvatar.h"
 #include "MyLog.h"
 #include "AvatarOnLineManager.h"
+#include "WorldSceneManager.h"
 
 WorldAvatarManager::WorldAvatarManager(void)
+	: SceneMgr(WorldSceneManager::Instance())
 {
 	m_ConnectCount = 0;
 }

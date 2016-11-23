@@ -28,6 +28,9 @@
     <Filter Include="Game\Team">
       <UniqueIdentifier>{59999e55-77f0-4d97-bbd4-ae3de0f06cfa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Server">
+      <UniqueIdentifier>{198965c3-aff4-4b76-88c8-e4afc6de60c7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -39,16 +42,10 @@
     <ClInclude Include="WorldBase.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="WorldServer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="WorldAsynContextManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="WorldGroup.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="WorldServerNormal.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="WorldTeamManager.h">
@@ -159,6 +156,12 @@
     <ClInclude Include="WorldSceneTypes.h">
       <Filter>Game\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="WorldServer.h">
+      <Filter>Game\Server</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldServerNormal.h">
+      <Filter>Game\Server</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -170,16 +173,10 @@
     <ClCompile Include="WorldBase.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="WorldServer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="WorldAsynContextManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="WorldGroup.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="WorldServerNormal.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="WorldTeamManager.cpp">
@@ -286,6 +283,12 @@
     </ClCompile>
     <ClCompile Include="WorldSceneTypes.cpp">
       <Filter>Game\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldServer.cpp">
+      <Filter>Game\Server</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldServerNormal.cpp">
+      <Filter>Game\Server</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

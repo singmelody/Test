@@ -142,6 +142,11 @@ bool PeerBase::PeerExit()
 	return true;
 }
 
+int PeerBase::PeerProcPacket()
+{
+	return m_PeerPktProc->DoProc();
+}
+
 void PeerBase::PeerSend(PacketBase* pPkt, int32 nSocketID)
 {
 	assert( pPkt && m_pPeerNetManager);

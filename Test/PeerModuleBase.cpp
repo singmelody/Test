@@ -63,6 +63,11 @@ void PeerModuleBase::RegPeerPktHandle(PacketProcessor* pProc)
 	REG_PACKET_HANDLER( pProc, PacketHeartBeat, PeerModuleBase, PktHandlerSrvHeartBeat);
 }
 
+bool PeerModuleBase::ProcessPacket()
+{
+	return PeerProcPacket() > 0;
+}
+
 void PeerModuleBase::Broadcast2Dogs(ParamPool* pPool)
 {
 	if(pPool != NULL)

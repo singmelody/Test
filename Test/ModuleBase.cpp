@@ -134,6 +134,11 @@ void ModuleBase::Exit()
 	SAFE_DELETE(g_pLog);
 }
 
+void ModuleBase::AppendLoadTemplate()
+{
+
+}
+
 bool ModuleBase::StartMainLoop(int32 nFrameInterval)
 {
 	m_nFrameInterval = nFrameInterval;
@@ -177,6 +182,8 @@ bool ModuleBase::StartMainLoop(int32 nFrameInterval)
 
 		nLogicProcTime = PERFORMANCE_DELTA;
 	}
+
+	return true;
 }
 
 bool ModuleBase::CreateDogPool()

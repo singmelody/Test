@@ -12,11 +12,12 @@ public:
 
 	virtual void Send2World(PacketBase* pPkt){}
 	virtual void Send2DBA( PacketBase* pPkt){}
-	virtual void Send2Node( class PacketBase* pPkt, int32 nSrvID);
+	virtual void Send2Node( class PacketBase* pPkt, int32 nSrvID){}
 	virtual void Send2Gate( class PacketBase* pPkt, bool bGateProc = false){}
 	virtual void Send2Dog( class PacketBase* pPkt, int32 nSrvID = -1) {}
 
-	virtual void MulticastGate( PacketBase* pPkt, class CasterTrunkGate* pTrunk, int32 exceptGateSrvID, int32 exceptGateChannelID);
+	virtual void Multicast2Gate( PacketBase* pPkt, class CasterTrunkGate* pTrunk, int32 nExceptID, int32 exceptGateChannelID){}
+	virtual void Multicast2Node( PacketBase* pPkt, class CasterTrunkGate* pTrunk, int32 nExceptID){}
 };
 
 class SyncPacketArg

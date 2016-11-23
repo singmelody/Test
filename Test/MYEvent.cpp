@@ -27,6 +27,17 @@ bool MYEvent::SetEvent()
 }
 
 
+bool MYEvent::ResetEvent()
+{
+	if(!m_bValid)
+	{
+		MyLog::warning(" MYEvent::ResetEvent not valid");
+		return false;
+	}
+
+	return true == (bool)::ResetEvent(hEvent);
+}
+
 void MYEvent::CreateEvent(bool bManualReset, bool bInitState)
 {
 	assert(!m_bValid);

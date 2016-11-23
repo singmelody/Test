@@ -8,6 +8,7 @@
 
 class CreateWorldAvatarArg;
 class WorldAvatar;
+class WorldSceneManager;
 
 class WorldAvatarManager : public AvatarManager, public WorldFuncManager, public Singleton<WorldAvatarManager>
 {
@@ -19,6 +20,8 @@ public:
 	void RemoveWorldAvatar( WorldAvatar* pAvatar);
 
 	int32 CheckAccountOnline( const char* pAccout, int32& nAvatarID);
+
+	WorldSceneManager& SceneMgr;
 protected:
 	int32 m_ConnectCount;
 	std::map< std::string, int32>	m_titleMap;		// title - avatarid
