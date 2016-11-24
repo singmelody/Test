@@ -60,6 +60,59 @@ bool NetChannelBase::OnWritePackets2Stream()
 	return bGood;
 }
 
+bool NetChannelBase::FlushStream()
+{
+	bool bError = false;
+	while (m_StreamOut.GetSize() > 0)
+	{
+		int32 nLen = (int32)m_StreamOut.GetSize();
+
+		int32 nRet = m_socket.Send((char*)m_StreamOut.GetBufferStart(), nLen);
+
+		if( nRet < 0 )
+		{
+			int32 nError = Socket::GetSysError();
+			if( nError == MY_EWOULDBLOCK || nError == MY_EAGAIN )
+				break;
+			else if( nError == MY_ECONNRESET )
+				nRet = 0;
+			else
+			{
+				SockAddr addr;
+				m_socket.GetSockAddr(addr);
+
+				MyLog::error("[%s:%u] IO Error [%d] when sending data !", addr.GetIP().c_str(), addr.GetPort(), GetID(), nError);
+
+				DisConnect();
+				nError = true;
+				break;
+			}
+		}
+
+		if( nRet == 0 )
+		{
+			SockAddr addr;
+			m_socket.GetPeerAddr(addr);
+
+			MyLog::error("NetChannelBase::flushStream() [%s:%u][%u] connection is closed!", addr.GetIP().c_str(), addr.GetPort(), GetID());
+
+			DisConnect();
+			bError = true;
+			break;
+		}
+
+		m_pMgr->BytesSend().Add(nRet);
+
+		m_StreamOut.Remove(nRet);
+		m_nTotalSendByte += nRet;
+
+		if( nRet < nLen )
+			break;
+	}
+
+	return !bError;
+}
+
 bool NetChannelBase::Fetch2Stream()
 {
 	assert( m_StreamIn.GetSpaceBeforeData() == 0 && m_StreamIn.GetSpaceAfterData() == m_StreamIn.GetSpace());

@@ -85,8 +85,8 @@ protected:
 
 	int32		m_ID;
 	uint32		m_PacketIdx;
-	uint32		m_totalSendByte;
-	uint32		m_totalRecvByte;
+	uint32		m_nTotalSendByte;
+	uint32		m_nTotalRecvByte;
 
 	char		m_sendPacketBuffer[CBBUFF];
 	char		m_recvPacketBuffer[CBBUFF];

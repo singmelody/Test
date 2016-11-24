@@ -21,6 +21,9 @@ NetChannel::NetChannel(void)
 
 	m_BlockHead = 0;
 	m_bHasStartSending = false;
+
+	m_totalSendByte = 0;
+	m_totalRecvByte = 0;
 }
 
 NetChannel::~NetChannel(void)
