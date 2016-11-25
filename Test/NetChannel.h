@@ -33,8 +33,6 @@ public:
 	void TryStartSending();
 	bool TryAsynSendPackets();
 
-	bool OnParsePacketsFromStream();
-
 	virtual void OnExitSending();
 	virtual void OnExitReceiving();
 protected:
@@ -54,6 +52,8 @@ protected:
 	};
 
 	bool FillPackets2Block( DataBufferArg& arg);
+
+	bool OnParsePacketsFromStream();
 	bool FetchBlockFromStreamAndProcess();
 	bool ParsePacketsInBlock( BlockHeadT blockHead, char* pBuffer, uint32 nDataLen);
 

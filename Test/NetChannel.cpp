@@ -22,8 +22,8 @@ NetChannel::NetChannel(void)
 	m_BlockHead = 0;
 	m_bHasStartSending = false;
 
-	m_totalSendByte = 0;
-	m_totalRecvByte = 0;
+	m_nTotalSendByte = 0;
+	m_nTotalRecvByte = 0;
 }
 
 NetChannel::~NetChannel(void)
@@ -220,6 +220,71 @@ bool NetChannel::FillPackets2Block(DataBufferArg& arg)
 	return true;
 }
 
+bool NetChannel::OnParsePacketsFromStream()
+{
+	while(FetchBlockFromStreamAndProcess());
+
+	return false;
+}
+
+bool NetChannel::FetchBlockFromStreamAndProcess()
+{
+	const uint32 nStreamSize = m_StreamIn.GetSize();
+
+	if(nStreamSize <= sizeof(BlockHeadT))
+		return false;
+
+	BlockHeadT blockHead = *((BlockHeadT*)m_StreamIn.GetBufferStart());
+	uint32 nBlockSize = (blockHead & BLOCK_SIZE_MASK);
+
+	if( nBlockSize > SOCKET_MY_MAX_DATA_BLOCK_SIZE )
+	{
+		MyLog::message("NetChannel::fetchBlockFromStreamAndProcess bad blocksize = [%u]", nBlockSize);
+		DisConnect();
+		return false;
+	}
+
+	if( nStreamSize < sizeof(blockHead) + nBlockSize )
+		return false;
+
+	m_StreamIn.Remove(sizeof(blockHead));
+	char* pBuffer = (char*)m_StreamIn.GetBufferStart();
+	m_StreamIn.Remove(nBlockSize);
+
+	return ParsePacketsInBlock( blockHead, pBuffer, nBlockSize);
+}
+
+bool NetChannel::ParsePacketsInBlock(BlockHeadT blockHead, char* pBuffer, uint32 nBlockSize)
+{
+	char* pTempBuffer = m_recvPacketBuffer;
+
+#if LZO_COMPRESS
+	if( m_pGLZOCompressor && ( 0 != (blockHead & BLOCK_FLAG_LZO)))
+	{
+		uint32 nDestLen = CBBUFF;
+
+		if( !m_pGLZOCompressor->DeCompress( pBuffer, nBlockSize, pTempBuffer, nDestLen))
+		{
+			MyLog::message("NetChannel::ParsePacketsInBlock Fail to DeCompress");
+			return false;
+		}
+
+		nBlockSize = nDestLen;
+		std::swap( pBuffer, pTempBuffer);
+	}
+#endif
+
+	blabla
+}
+
+bool NetChannel::StartNewRecv(long lDataSize)
+{
+	m_cbData2Recv = lDataSize;
+	m_cbDataRecved = 0;
+
+	return AsynRecv( m_pRecvBuffer, m_cbData2Recv);
+}
+
 bool NetChannel::OnAsynSendComplete(DWORD dwTransed)
 {
 	if( dwTransed > 0 )
@@ -377,17 +442,11 @@ bool NetChannel::TryAsynSendPackets()
 
 	AsynSend( m_pSendBuffer, m_cbData2Send);
 
-	m_totalSendByte += arg.cbData;
+	m_nTotalSendByte += arg.cbData;
 
 	return true;
 }
 
-bool NetChannel::OnParsePacketsFromStream()
-{
-	while(FetchBlockFromStreamAndProcess());
-
-	return false;
-}
 
 void NetChannel::OnExitSending()
 {
