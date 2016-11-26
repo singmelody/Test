@@ -5,6 +5,7 @@
 #include "LZOCompressor.h"
 #include "MyLog.h"
 #include <assert.h>
+#include "IRecvPacketFilter.h"
 
 NetChannel::NetChannel(void)
 {
@@ -274,7 +275,107 @@ bool NetChannel::ParsePacketsInBlock(BlockHeadT blockHead, char* pBuffer, uint32
 	}
 #endif
 
-	blabla
+	uint32 nDataLen = nBlockSize;
+
+	int64 nPacketRecved = 0;
+	bool bError = false;
+	while( nDataLen > 0 && !bError )
+	{
+		const int32 nPktID = *((int32*)pBuffer);
+
+		PacketBase* pPkt = (PacketBase*)PacketFactory::Instance().New(nPktID);
+
+		if(pPkt)
+		{
+		#if PACKET_USE_INDEX_DATA
+			pPkt->IsUseIndex( m_pMgr->UseIndexWhenRecv());
+		#endif
+			++nPacketRecved;
+
+			IRecvPacketFilter* pFilter = m_pMgr->GetRecvPacketFilter();
+
+			if( pFilter && (!pFilter->Thread_CheckPacketTypeValid(*pPkt)))
+			{
+				bError = true;
+
+				const char* pPktName = pPkt->GetClassName();
+				MyLog::error("NetChannel::RecvPacket() Packet Type Check Failed, Will Disconnect Socket! pktName=[%s] pktID=[%d]", \
+					pPktName ? pPktName : "UNKOWN", pPkt->GetPacketID());
+			}
+
+			if(!bError)
+			{
+				char* pPacketEnd = pPkt->ReadPacket(pBuffer);
+				if( 0 == pPacketEnd )
+				{
+					bError = true;
+					const char* pPktName = pPkt->ReadPacket(pBuffer);
+					MyLog::message("NetChannel::RecvPacket() Read Packet Failed, Will Disconnect Socket! pktName=[%s] pktID=[%d]", \
+						pPktName ? pPktName :  "UNKOWN", pPkt->GetPacketID());
+				}
+				else
+				{
+					uint32 nPktDataLen = uint32(pPacketEnd - pBuffer);
+					if( nPktDataLen > nDataLen )
+					{
+						bError = true;
+						const char* pPktName = pPkt->GetClassName();
+						MyLog::message("NetChannel::RecvPacket() Read Packet Failed, Will Disconnect Socket! pktName=[%s] pktID=[%d]", \
+							pPktName ? pPktName :  "UNKOWN", pPkt->GetPacketID());
+					}
+					else
+					{
+						pBuffer += nPktDataLen;
+						nDataLen -= nPktDataLen;
+					}
+				}
+			}
+
+			if(!bError)
+			{
+				MyLog::message("Recv Packet sock= %d id= %d \n", m_ID, nPktID);
+
+				pPkt->SetSocketID( m_ID );
+
+#if PACKET_USE_INDEX_DATA
+				if( pPkt->IsUseIndex() && ( pPkt->GetPacketIndex() != m_nIndexOfRecv++ ))
+				{
+					MyLog::error("NetChannel::ParsePacketsInBlock Bad Index Recv! sock = [%d],pkt=[%s]", GetID(), pPkt->GetClass());
+					bError = true;
+					FACTORY_DEL_PACKET(pPkt);
+				}
+				else
+#endif
+				{
+					OnPacketParsed(pPkt);
+				}
+			}
+			else
+			{
+				FACTORY_DEL_PACKET(pPkt);
+			}
+		}
+		else
+		{
+			bError = true;
+			FactoryBase_Arg0* pFactory = PacketFactory::Instance().GetFactoryByPacketID(nPktID);
+			if(pFactory)
+			{
+				MyLog::error("Packet Factory Create Packet name [%s] id[%d] fail", pFactory->ClassName(), nPktID);
+			}
+			else
+			{
+				MyLog::error("Packet Factroy Create Packet id[%d] fail", nPktID);
+			}
+		}
+	}
+
+	m_pMgr->PacketsRecv().Add(nPacketRecved);
+
+	if(bError)
+		DisConnect();
+
+	return !bError;
 }
 
 bool NetChannel::StartNewRecv(long lDataSize)

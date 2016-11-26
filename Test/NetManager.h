@@ -88,6 +88,8 @@ public:
 
 	void SetEventWaitTime(int32 nWaitMS) { m_nEventWaitTimeMs = nWaitMS;}
 	int32 GetEventWaitTime() const { return m_nEventWaitTimeMs;}
+
+	IRecvPacketFilter* GetRecvPacketFilter() const { return m_pIRecvPacketFilter; }
 protected:
 
 	void ProcNewConnection();
