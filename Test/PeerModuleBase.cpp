@@ -13,7 +13,8 @@
 
 #define CONNECTION_INTERVAL 1000
 
-PeerModuleBase::PeerModuleBase(SrvType nModuleType) : ModuleBase(nModuleType), m_bUseConnectionThread(false)
+PeerModuleBase::PeerModuleBase(SrvType nModuleType) 
+	: ModuleBase(nModuleType), m_bUseConnectionThread(false)
 {
 	Servers.SetPeerModule(this);
 }
@@ -50,6 +51,13 @@ void PeerModuleBase::Exit()
 	PeerExit();
 
 	ModuleBase::Exit();
+}
+
+void PeerModuleBase::OnConfigLoaded()
+{
+	ModuleBase::OnConfigLoaded();
+
+	MODULEDOG_SET_VALUE( PeerIOCP, m_bPeerUseIOCP);
 }
 
 void PeerModuleBase::RegPeerPktHandle(PacketProcessor* pProc)

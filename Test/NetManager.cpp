@@ -231,6 +231,12 @@ PacketBase* NetManager::DuplicatePacket(PacketBase& pkt)
 	return pPktTmp;
 }
 
+void NetManager::Disconnect(int32 nSocketID)
+{
+	AUTOLOCK(m_closingQueueLock);
+	m_closingQueue.push_back(nSocketID);
+}
+
 void NetManager::ProcNewConnection()
 {
 	std::deque<NetChannelBase*> tmpQueue;

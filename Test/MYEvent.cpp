@@ -3,11 +3,11 @@
 #include "MyLog.h"
 #include <assert.h>
 
-MYEvent::MYEvent(void) : m_bValid(false)
+MyEvent::MyEvent(void) : m_bValid(false)
 {
 }
 
-MYEvent::~MYEvent(void)
+MyEvent::~MyEvent(void)
 {
 	if(!m_bValid)
 		return;
@@ -15,7 +15,7 @@ MYEvent::~MYEvent(void)
 	::CloseHandle(hEvent);
 }
 
-bool MYEvent::SetEvent()
+bool MyEvent::SetEvent()
 {
 	if(!m_bValid)
 	{
@@ -27,7 +27,7 @@ bool MYEvent::SetEvent()
 }
 
 
-bool MYEvent::ResetEvent()
+bool MyEvent::ResetEvent()
 {
 	if(!m_bValid)
 	{
@@ -38,7 +38,26 @@ bool MYEvent::ResetEvent()
 	return true == (bool)::ResetEvent(hEvent);
 }
 
-void MYEvent::CreateEvent(bool bManualReset, bool bInitState)
+bool MyEvent::Wait(int32 nWaitTimeInMillSeconds /*= -1*/)
+{
+	if(!m_bValid)
+	{
+		MyLog::warning("MyEvent::Wait (%d) not valid", nWaitTimeInMillSeconds);
+		return true;
+	}
+
+#ifdef _WINDOWS
+	DWORD nRet = WaitForSingleObject( hEvent, nWaitTimeInMillSeconds >= 0 ? nWaitTimeInMillSeconds : INFINITE);
+	return nRet == WAIT_OBJECT_0;
+#endif
+}
+
+bool MyEvent::IsValid()
+{
+	return m_bValid;
+}
+
+void MyEvent::CreateEvent(bool bManualReset, bool bInitState)
 {
 	assert(!m_bValid);
 

@@ -85,8 +85,8 @@ protected:
 	DWORD		m_cbData2Send;
 	DWORD		m_cbDataSended;
 
-	MYEvent		m_hExitSending;
-	MYEvent		m_hExitReceiving;
+	MyEvent		m_hExitSending;
+	MyEvent		m_hExitReceiving;
 
 	struct MYOVERLAPPED
 	{

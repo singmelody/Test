@@ -54,6 +54,8 @@ public:
 	const uint8 GetSrvType() { return m_nSrvType; }
 	int32 GetSrvID() { return m_nSrvID; }
 
+	void SetModuleName(const std::string& name);
+
 	typedef std::list<ParamPool*> DogDataList;
 	DogDataList m_listDogData;
 protected:

@@ -40,12 +40,21 @@ enum
 	param_name_leaderdid	= 404,
 	param_name_teampost		= 467,
 	param_name_SceneProcessBits = 595,
+
 	param_name_ServerID			= 679,
+
+	param_name_DBType			= 682,
+
+	param_name_PeerIOCP			= 692,
+	param_name_PeerIP			= 693,
+
+	param_name_DBCName			= 695,
+
 	param_name_DBAID			= 696,
 	param_name_LoginID			= 697,
 	param_name_GateCnt			= 698,
 	param_name_LocalNodeCnt		= 699,
-	param_name_RemoteNodeCnt	= 699,
+	param_name_RemoteNodeCnt	= 700,
 
 	param_name_PlayerCnt		= 701,
 	param_name_SceneCnt			= 702,
@@ -83,4 +92,6 @@ enum
 	param_name_MotherIP			= 731,
 
 	param_name_CltCnt			= 734,
+
+	param_name_DBName			= 750,
 };

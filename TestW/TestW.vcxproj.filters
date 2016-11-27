@@ -162,6 +162,9 @@
     <ClInclude Include="WorldServerNormal.h">
       <Filter>Game\Server</Filter>
     </ClInclude>
+    <ClInclude Include="WorldGuildManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -289,6 +292,9 @@
     </ClCompile>
     <ClCompile Include="WorldServerNormal.cpp">
       <Filter>Game\Server</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldGuildManager.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

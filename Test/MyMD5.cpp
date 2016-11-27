@@ -73,6 +73,8 @@ void MyMD::Final()
 	Transform(pdw);
 }
 
+const byte MyMD::m_abyPadding[MD_BUFFER_SIZE] = { 0x80 };
+
 void MyMD4::Transform(const uint32 *in)
 {
 

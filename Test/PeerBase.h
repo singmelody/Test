@@ -59,7 +59,7 @@ protected:
 
 	std::string			m_PeerIP;
 	int32				m_PeerPort;
-	bool				m_PeerUseIOCP;
+	bool				m_bPeerUseIOCP;
 
 	PacketSendCounter	m_PeerSendPacketCounter;
 

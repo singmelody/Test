@@ -18,6 +18,12 @@ NetChannelBase::~NetChannelBase(void)
 {
 }
 
+void NetChannelBase::AppendPacket(PacketBase* pPkt)
+{
+	assert( pPkt );
+	m_queueSendingPacket.Push_Back(pPkt);
+}
+
 bool NetChannelBase::InitChannel(NetManager* pMgr, int32 nSockRcBuffSize, int32 nStreamRcSize, int32 nSockSnBuffSize, int32 nStreamSnSize,Socket* pSocket /*= 0*/)
 {
 	assert( pMgr );
@@ -209,13 +215,13 @@ void NetChannelBase::HandleOutput()
 
 void NetChannelBase::HandleException()
 {
-	MyLog::error("NetChannelBase::HandleException() channelid = %d", m_ID);
+	MyLog::error("NetChannelBase::HandleException() channelid = %d", m_nID);
 	DisConnect();
 }
 
 void NetChannelBase::HandleClose()
 {
-	MyLog::error("NetChannelBase::HandleClose() ChannelID = %d", m_ID);
+	MyLog::error("NetChannelBase::HandleClose() ChannelID = %d", m_nID);
 	DisConnect();
 }
 
@@ -241,4 +247,15 @@ bool NetChannelBase::Connect(char* sAddr, int32 nPort)
 
 	m_state = CS_CONNECTED;
 	return true;
+}
+
+void NetChannelBase::DisConnect()
+{
+	if(!m_bIsClosing)
+	{
+		m_bIsClosing = true;
+
+		if(m_pMgr)
+			m_pMgr->Disconnect(m_nID);
+	}
 }

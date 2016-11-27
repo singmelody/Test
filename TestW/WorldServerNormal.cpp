@@ -4,6 +4,7 @@
 #include "ParamPool.h"
 #include "MyLog.h"
 #include "WorldSceneManager.h"
+#include "WorldGuildManager.h"
 
 WorldServerNormal::WorldServerNormal(void)
 {
@@ -65,6 +66,13 @@ void WorldServerNormal::OnConfigLoaded()
 	SetSrvID(nSrvID);
 }
 
+void WorldServerNormal::AppendLoadTemplate()
+{
+	WorldServer::AppendLoadTemplate();
+
+
+}
+
 bool WorldServerNormal::ClusterCheck()
 {
 	if(!WorldServer::ClusterCheck())
@@ -89,7 +97,30 @@ bool WorldServerNormal::ClusterCheck()
 
 void WorldServerNormal::OnWorldConnect(int32 nSrvID, int32 nSocketID, bool bWarGrp, SockAddr& laddr)
 {
-	return;
+	if( bWarGrp )
+	{
+		AUTOLOCK(m_lockLoginWar);
+
+		ServerInfo* pInfo = Servers.AddWarWorld( nSrvID, nSocketID, laddr);
+		if( pInfo != NULL )
+		{
+			m_nConnectWarState = eCWS_Succeed;
+			SetModuleName("SubWorld");
+
+			WorldGuildManager::Instance().OnConnectWarWorld();
+		}
+	}
+	else
+	{
+		MyLog::error("World connect to World Error !");
+		return;
+	}
+
+}
+
+void WorldServerNormal::OnWorldDisconnect(ServerInfo* pInfo)
+{
+
 }
 
 void WorldServerNormal::OnRecvSrvInfoPkt(PacketAddSrvInfo* pPkt)

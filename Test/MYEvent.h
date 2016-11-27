@@ -2,11 +2,11 @@
 
 #include "BaseType.h"
 #include <windows.h>
-class MYEvent
+class MyEvent
 {
 public:
-	MYEvent(void);
-	~MYEvent(void);
+	MyEvent(void);
+	~MyEvent(void);
 
 	void CreateEvent(bool bManualReset, bool bInitState);
 
@@ -17,8 +17,8 @@ public:
 	bool IsValid();
 
 private:
-	MYEvent( const MYEvent& );
-	MYEvent& operator= (const MYEvent& );
+	MyEvent( const MyEvent& );
+	MyEvent& operator= (const MyEvent& );
 
 private:
 	bool m_bValid;

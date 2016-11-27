@@ -111,6 +111,23 @@ ServerInfo* ServerManager::GetNodeInfo(int32 nID)
 	return pInfo;
 }
 
+ServerInfo* ServerManager::AddWarWorld(int32 nSrvID, int32 nSocketID, SockAddr& laddr)
+{
+	if(m_pWarWorld != NULL)
+		return false;
+
+	MyLog::message("Server Manager Register WarWorld nSocketID = %d\n", nSocketID);
+
+	ServerInfo* pInfo = new ServerInfo( eSrv_World, nSrvID, nSocketID, laddr);
+	if(!pInfo)
+		return false;
+
+	m_pWarWorld = pInfo;
+	AddSrvInfo(pInfo);
+
+	return m_pWarWorld;
+}
+
 ServerInfo* ServerManager::GetWarWorldInfo()
 {
 	return m_pWarWorld;

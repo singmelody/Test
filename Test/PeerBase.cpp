@@ -24,10 +24,10 @@ PeerBase::PeerBase(void)
 	m_PeerIP				= "127.0.0.1";
 	m_PeerPort				= 10001;
 
-	m_PeerUseIOCP			= false;
+	m_bPeerUseIOCP			= false;
 
 #ifdef USEIOCP
-	m_PeerUseIOCP			= true;
+	m_bPeerUseIOCP			= true;
 #endif
 
 	m_PeerMaxSockets		= PEER_MIN_SOCKETS;

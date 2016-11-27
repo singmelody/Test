@@ -4,7 +4,28 @@
 #include "sql.h"
 #include "sqlext.h"
 
-class DB_Static_DS;
+struct DB_Static_DS : public NoCopyable
+{
+	std::string strSqlFeature;
+	int32 nCounts;
+	int32 nTimeUse;
+	int32 nMinTime;
+	int32 nMaxTime;
+
+	DB_Static_DS(const std::string& str)
+		: strSqlFeature(str)
+	{
+		Reset();
+	}
+
+	void Reset()
+	{
+		nCounts = 0;
+		nTimeUse = 0;
+		nMaxTime = 0;
+		nMinTime = 999999;
+	}
+};
 
 struct DB_DS : public NoCopyable
 {

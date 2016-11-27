@@ -81,6 +81,8 @@ public:
 	ServerInfo* AddNode( int32 nSrvID, int32 nSocketID, SockAddr& laddr);
 	ServerInfo* GetNodeInfo(int32 nID);
 
+	ServerInfo* AddWarWorld(int32 nSrvID, int32 nSocketID, SockAddr& laddr);
+
 	bool AddLocalWorld(int32 nSrvID, int32 nSocketID, SockAddr& addr);
 
 	ServerInfo* AddSrvInfo( class SrvItem* pItem);

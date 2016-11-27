@@ -476,3 +476,22 @@ DBConnection* ODBCConnectionManager::GetDBInterface()
 	return NULL;
 }
 
+DB_DS::~DB_DS()
+{
+	for (auto itr = m_mapHashID2Statics.begin();  itr != m_mapHashID2Statics.end(); ++itr)
+		SAFE_DELETE(itr->second);
+}
+
+void DB_DS::Reset()
+{
+	AUTOLOCK(m_lock);
+
+	nTotalCount = 0;
+	nTotalTimeUse = 0;
+
+	for (auto itr = m_mapHashID2Statics.begin();  itr != m_mapHashID2Statics.end(); ++itr)
+	{
+		assert(itr->second);
+		itr->second->Reset();
+	}
+}

@@ -124,6 +124,13 @@ void WorldServer::OnConfigLoaded()
 	Servers.AddLocalWorld( m_nSrvID, -1, laddr);
 }
 
+void WorldServer::AppendLoadTemplate()
+{
+	WorldBase::AppendLoadTemplate();
+
+	Templates.AddTemplate("SceneManager", WorldSceneManager::InstancePtr());
+}
+
 void WorldServer::SubWorld2WarWorld(class PacketBase* pPkt)
 {
 	ServerInfo* pWarInfo = Servers.GetWarWorldInfo();

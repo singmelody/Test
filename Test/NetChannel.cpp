@@ -88,6 +88,13 @@ void NetChannel::CloseChannel()
 	m_hExitSending.Wait();
 }
 
+void NetChannel::AppendPacket(PacketBase* pPkt)
+{
+	NetChannelBase::AppendPacket(pPkt);
+
+	TryStartSending();
+}
+
 bool NetChannel::FillPackets2Block(DataBufferArg& arg)
 {
 	const uint32 cbHeader = sizeof(BlockHeadT);
@@ -333,9 +340,9 @@ bool NetChannel::ParsePacketsInBlock(BlockHeadT blockHead, char* pBuffer, uint32
 
 			if(!bError)
 			{
-				MyLog::message("Recv Packet sock= %d id= %d \n", m_ID, nPktID);
+				MyLog::message("Recv Packet sock= %d id= %d \n", m_nID, nPktID);
 
-				pPkt->SetSocketID( m_ID );
+				pPkt->SetSocketID( m_nID );
 
 #if PACKET_USE_INDEX_DATA
 				if( pPkt->IsUseIndex() && ( pPkt->GetPacketIndex() != m_nIndexOfRecv++ ))

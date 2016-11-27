@@ -134,6 +134,25 @@ void ModuleBase::Exit()
 	SAFE_DELETE(g_pLog);
 }
 
+void ModuleBase::OnConfigLoaded()
+{
+	std::string peerIP = "";
+
+	ConfigManager::GetConfigValue( "CommonConfig", "PeerIP", peerIP, true);
+	MODULEDOG_SET_STRING( PeerIP, peerIP.c_str());
+
+	MyLog::message("PeerIP = %s", peerIP.c_str());
+
+	int32 nPeerPort = 0;
+	ConfigManager::GetConfigValue("CommonConfig", "PeerPort", nPeerPort, true);
+
+	MyLog::message("PeerPort = %d", nPeerPort);
+
+	MODULEDOG_SET_VALUE( DBType, CommonConfig::DBType);
+	if( CommonConfig::DBType == eDBType_DBC )
+		MODULEDOG_SET_VALUE( DBCName, CommonConfig::DBCName.c_str());
+}
+
 void ModuleBase::AppendLoadTemplate()
 {
 
@@ -219,6 +238,12 @@ void ModuleBase::SetSrvID(int32 nSrvID)
 	if( m_pModuleDogPool != NULL )
 		MODULEDOG_SET_VALUE( ServerID, nSrvID);
 
+	UpdateModuleTitle();
+}
+
+void ModuleBase::SetModuleName(const std::string& name)
+{
+	m_strModuelName = name;
 	UpdateModuleTitle();
 }
 

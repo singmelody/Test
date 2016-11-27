@@ -23,8 +23,8 @@ public:
 	virtual void AppendPacket( PacketBase* pPkt);
 	virtual bool InitChannel( NetManager* pMgr, int32 nSockRcBuffSize, int32 nStreamRcSize, int32 nSockSnBuffSize, int32 nStreamSnSize,Socket* pSocket = 0);
 
-	int32 GetID() const { return m_ID;}
-	void SetID(int32 nID) { m_ID = nID; }
+	int32 GetID() const { return m_nID;}
+	void SetID(int32 nID) { m_nID = nID; }
 
 
 	virtual bool OnWritePackets2Stream();
@@ -53,7 +53,7 @@ protected:
 		CBBUFF = SOCKET_MY_MAX_DATA_BLOCK_SIZE * 4
 	};
 
-	virtual bool StartChannel();
+	virtual bool StartChannel(){ return true; }
 
 	int32 m_RefCount;
 
@@ -63,7 +63,7 @@ protected:
 	bool Connect( char* sAddr, int32 nPort);
 
 	virtual void DisConnect();
-	virtual void CloseChannel();
+	virtual void CloseChannel(){}
 
 	void SetSocket(SOCKET socket);
 	SOCKET GetSocket() const { return m_socket.GetSocket(); }
@@ -83,7 +83,7 @@ protected:
 
 	class LZOCompressor*	m_pLZOCompressor;
 
-	int32		m_ID;
+	int32		m_nID;
 	uint32		m_PacketIdx;
 	uint32		m_nTotalSendByte;
 	uint32		m_nTotalRecvByte;
@@ -92,6 +92,6 @@ protected:
 	char		m_recvPacketBuffer[CBBUFF];
 
 	bool		m_bCreateByAccept;
-	MYEvent		m_hProcNewNotify;
+	MyEvent		m_hProcNewNotify;
 };
 
