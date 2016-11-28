@@ -2,6 +2,8 @@
 #include "SceneManagerBase.h"
 
 
+SceneManagerBase::SceneDataMap SceneManagerBase::SceneInfos;
+
 SceneManagerBase::SceneManagerBase(void)
 {
 }

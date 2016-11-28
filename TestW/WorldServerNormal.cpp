@@ -161,3 +161,13 @@ void WorldServerNormal::OnAddGateInfo(ServerInfo* pInfo)
 
 	SendServerInfos( pInfo->nSocketID, eSM_Login | eSM_LocalNode | eSM_RemoteNode);
 }
+
+void WorldServerNormal::OnGMIServerStateReq(class PacketGMIServerStateReq* pPkt)
+{
+
+}
+
+void WorldServerNormal::OnWriteWorldData2DB()
+{
+	//WorldLoginActionManager::Instance().Save2DB();
+}

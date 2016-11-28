@@ -92,11 +92,9 @@ ADD_PACKET_MEMBER( nReason, uint8, nReason)
 ADD_PACKET_MEMBER( nParam, uint8, nParam)
 PACKET_END(PacketCltSelectAvatarFailed)
 
-PACKET(PacketCommonDataInit, PacketBase)
-START_ADD_PACKET_MEMBER(PacketCommonDataInit)
-PACKET_END(PacketCommonDataInit)
 
-PACKET(PacketCommonDataBase, PacketBase)
+
+PACKET(PacketCommonDataBase, PacketParamPool)
 uint8 dataType;
 int16 nIdx;
 int64 nAvatarDID;
@@ -108,6 +106,9 @@ START_ADD_PACKET_MEMBER(PacketCommonDataBase)
 	ADD_PACKET_MEMBER( nOwnerAvatarID, int32, "")
 PACKET_END(PacketCommonDataBase)
 
+PACKET(PacketCommonDataInit, PacketCommonDataBase)
+START_ADD_PACKET_MEMBER(PacketCommonDataInit)
+PACKET_END(PacketCommonDataInit)
 
 PACKET(PacketCommonDataCreate, PacketCommonDataBase)
 int32 nFlag;
@@ -172,6 +173,32 @@ START_ADD_PACKET_MEMBER(PacketCreateNodeScene)
 	ADD_PACKET_MEMBER( nSceneCustomData,	int64, "")
 	ADD_PACKET_MEMBER( nRequestTime,		uint64, "")
 PACKET_END(PacketCreateNodeScene)
+
+PACKET( PacketBlockingScene, PacketBase)
+int32 nSceneID;
+START_ADD_PACKET_MEMBER(PacketBlockingScene)
+	ADD_PACKET_MEMBER( nSceneID,	int32, "")
+PACKET_END(PacketBlockingScene)
+
+PACKET( PacketLoginActionInfo, PacketBase)
+int32 nFlag;
+int32 nTypeID;
+int32 nData1;
+int32 nData2;
+int32 nData3;
+uint32 nCreateTime;
+int64 nAvatarDID;
+START_ADD_PACKET_MEMBER(PacketLoginActionInfo)
+	ADD_PACKET_MEMBER( nFlag,	int32, "")
+	ADD_PACKET_MEMBER( nTypeID,	int32, "")
+	ADD_PACKET_MEMBER( nData1,	int32, "")
+	ADD_PACKET_MEMBER( nData2,	int32, "")
+	ADD_PACKET_MEMBER( nData3,	int32, "")
+	ADD_PACKET_MEMBER( nCreateTime,	uint32, "")
+	ADD_PACKET_MEMBER( nAvatarDID,	int64, "")
+PACKET_END(PacketLoginActionInfo)
+
+
 
 enum
 {

@@ -268,6 +268,8 @@ public:
 	uint32 GetMaxBufferSize() { return nPacketSize; }
 	uint32 GetCurBufferSize() { return m_buffSize; }
 	uint32 GetBufferFreeSize() { return nPacketSize - m_buffSize; }
+
+	static const int32 MAX_PACKET_BUFFER_SIZE = nPacketSize;
 protected:
 	char		m_buffer[nPacketSize];
 	uint16		m_buffSize;

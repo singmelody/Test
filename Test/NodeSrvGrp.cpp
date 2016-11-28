@@ -43,6 +43,11 @@ void NodeSrvInfo::AddupSceneLoadValue(Scene* pScene, bool bAdd)
 }
 
 
+ServerInfo* NodeSrvGrp::CreateSrvInfo(int32 nSrvType, int32 nSrvID, int32 nSocketID, SockAddr& laddr)
+{
+	return new NodeSrvInfo( nSrvType, nSrvID, nSocketID, laddr);
+}
+
 void NodeSrvGrp::SortList()
 {
 	std::sort( m_listByTrunkValue.begin(), m_listByTrunkValue.end(), TrunkCmp());

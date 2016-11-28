@@ -67,7 +67,7 @@ void WorldServer::OnAllocateSrvID(int32 nSrvType, int32 nSrvID, int32 nSocketID)
 }
 
 
-void WorldServer::TickOutAvatar(WorldAvatar* pAvatar)
+void WorldServer::KickOutAvatar(WorldAvatar* pAvatar)
 {
 	if(!pAvatar)
 		return;

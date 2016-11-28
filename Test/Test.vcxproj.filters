@@ -291,9 +291,6 @@
     <ClInclude Include="MyListNode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TimeManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="PeerSrvModuleBase.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -482,6 +479,9 @@
     </ClInclude>
     <ClInclude Include="DLMallocConfig.h">
       <Filter>ThirParty\Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="TimeManager.h">
+      <Filter>Util\Time</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -701,9 +701,6 @@
     <ClCompile Include="MyListNode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TimeManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="PeerSrvModuleBase.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -889,6 +886,9 @@
     </ClCompile>
     <ClCompile Include="DLMallocConfig.cpp">
       <Filter>ThirParty\Memory</Filter>
+    </ClCompile>
+    <ClCompile Include="TimeManager.cpp">
+      <Filter>Util\Time</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

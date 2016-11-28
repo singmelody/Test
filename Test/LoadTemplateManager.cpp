@@ -312,3 +312,8 @@ DBConnection* DBLoader::GetDBConnection()
 
 	return m_pDBMgr->GetDBInterface();
 }
+
+void DBLoader::SetDBFile(const char* strDBFile)
+{
+	m_strDBFile = strDBFile;
+}

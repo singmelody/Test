@@ -165,6 +165,12 @@
     <ClInclude Include="WorldGuildManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="WorldLoginActionManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LoginActionDefine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -294,6 +300,12 @@
       <Filter>Game\Server</Filter>
     </ClCompile>
     <ClCompile Include="WorldGuildManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldLoginActionManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LoginActionDefine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

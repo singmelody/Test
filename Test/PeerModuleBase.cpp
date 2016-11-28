@@ -576,3 +576,12 @@ SrvItem::SrvItem(class PacketSrvConnect* pPkt)
 
 	nLastConnectTime = 0;
 }
+
+ConnectionItem::ConnectionItem()
+{
+	nSrvID = 0;
+	nSocketID = -1;
+
+	nListenPort = 0;
+	memset( listenIP, 0, IPLEN);
+}

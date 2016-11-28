@@ -61,6 +61,22 @@ void CommonDataObject::NotifyDelete()
 		pMgr->NotifyDelete(this);
 }
 
+void CommonDataObject::ReadParamPoolData(class PacketParamPool* pPkt, int32 nVcMode, bool bDirty /*= false*/)
+{
+	if(!pPkt)
+		return;
+
+	m_nValueChangeMode = nVcMode;
+
+	char tmpBuffer[PacketParamPool::MAX_PACKET_BUFFER_SIZE] = {0};
+
+	int32 nBuffLen = pPkt->ReadBuffer( tmpBuffer, sizeof(tmpBuffer));
+
+	m_pParamPool->Read( tmpBuffer, bDirty);
+
+	m_nValueChangeMode = eVCM_None;
+}
+
 void CommonDataObject::SetIndex(int32 nIdx)
 {
 	m_nIdx = nIdx;

@@ -43,6 +43,8 @@ public:
 	virtual void NotifyCreate( int32 nFlag );
 	virtual void NotifyDelete();
 
+	void ReadParamPoolData(class PacketParamPool* pPkt, int32 nVcMode, bool bDirty = false);
+
 	bool CheckObjectFlag(int32 nFlag) { return (nFlag & m_nFlag) != 0; }
 	void SetObjectFlag(int32 nFlag);
 
@@ -51,6 +53,7 @@ public:
 	bool NeedSync2WClt() { return CheckObjectFlag( eObjectFlag_CltFlag );}
 
 	void SetIndex(int32 nIdx);
+	int32 GetIndex() const { return m_nIdx; }
 
 	inline CommonDataObject* prev() { return _prev; }
 	inline void prev(CommonDataObject* _p) { _prev = _p; }

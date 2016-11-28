@@ -132,3 +132,7 @@ PACKET_IMPL(PacketSrvID);
 PACKET_IMPL(PacketDogData);
 
 PACKET_IMPL(PacketHeartBeat);
+
+PACKET_IMPL(PacketBlockingScene);
+
+PACKET_IMPL(PacketLoginActionInfo);

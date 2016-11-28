@@ -2,6 +2,11 @@
 #include "MyFactory.h"
 
 
+PoolPacketAllocator::~PoolPacketAllocator()
+{
+
+}
+
 void* PoolPacketAllocator::TMalloc(int32 nSize)
 {
 	void* res = PoolAllocatorEx::TMalloc(nSize);

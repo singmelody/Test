@@ -13,7 +13,7 @@ public:
 	virtual ~WorldScene(void);
 
 	int64	m_nAvatarDID;
-	int32   m_nContentID;
+	int32   m_nContextID;
 
 	virtual void EnterScene( WorldAvatar* pAvatar);
 	virtual void ExitScene( WorldAvatar* pAvatar);
@@ -21,7 +21,7 @@ public:
 	void OnClose();
 	virtual void BlockScene();
 
-	void Set2CurNode( class PacketBase* &pkt);
+	void Set2CurNode( class PacketBase &pkt);
 
 	virtual bool CheckEnterScene(WorldAvatar* pAvatar) const { return true; }	
 	virtual void UpdateCopyOwner(WorldAvatar* pAvatar) {}

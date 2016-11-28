@@ -5,6 +5,21 @@
 #include "WorldAvatar.h"
 #include "WorldSceneInfo.h"
 #include "WorldSceneManager.h"
+#include "ServerManager.h"
+#include "ServerGrpInfo.h"
+#include "WorldServer.h"
+
+WorldScene::WorldScene(void)
+{
+	m_nContextID = 0;
+	m_nAvatarDID = 0;
+	m_nPendingTime = 0;
+}
+
+WorldScene::~WorldScene(void)
+{
+
+}
 
 void WorldScene::EnterScene(WorldAvatar* pAvatar)
 {
@@ -23,6 +38,22 @@ void WorldScene::ExitScene(WorldAvatar* pAvatar)
 	((WorldSceneInfo*)m_pSceneInfo)->OnLeaveScene( pAvatar, this);
 }
 
+
+void WorldScene::BlockScene()
+{
+	PacketBlockingScene pkt;
+	pkt.nSceneID = GetSceneID();
+	Set2CurNode(pkt);
+}
+
+void WorldScene::Set2CurNode(class PacketBase &pkt)
+{
+	ServerInfo* pInfo = ServerManager::Instance().GetNodeInfo( m_nNodeID );
+	if(!pInfo)
+		return;
+
+	WorldServer::Instance().PeerSend( &pkt, pInfo->nSocketID);
+}
 
 void WorldScene::NotifyWaitingAvatars(int32 nErrorID)
 {

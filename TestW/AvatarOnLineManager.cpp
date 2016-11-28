@@ -2,6 +2,8 @@
 #include "AvatarOnLineManager.h"
 #include "PacketImpl.h"
 #include "WorldAvatar.h"
+#include "ConfigManager.h"
+#include "MyLog.h"
 
 AvatarOnLineManager::AvatarOnLineManager(void)
 	: m_nMaxOnlineUser(0)
@@ -18,6 +20,15 @@ AvatarOnLineManager::AvatarOnLineManager(void)
 
 AvatarOnLineManager::~AvatarOnLineManager(void)
 {
+}
+
+void AvatarOnLineManager::OnConfigLoaded()
+{
+	ConfigManager::GetConfigValue("WorldConfig", "MaxOnlineUser", config_MaxOnlineUser);
+
+	MyLog::message("MaxOnlineUser=%d", config_MaxOnlineUser);
+
+	SetMaxOnlineUser(config_MaxOnlineUser);
 }
 
 void AvatarOnLineManager::Tick(int32 nFrameTime)

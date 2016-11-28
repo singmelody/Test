@@ -183,7 +183,7 @@ void WorldState_Gaming::PktNode_TickOut(class PacketNodeKickOut* pPkt)
 	if(!pPlayer)
 		return;
 
-	WorldSrv.TickOutAvatar(pPlayer);
+	WorldSrv.KickOutAvatar(pPlayer);
 }
 
 void WorldState_Gaming::PktNode_CommonDataUpdate(class PacketCommonDataUpdate* pPkt)

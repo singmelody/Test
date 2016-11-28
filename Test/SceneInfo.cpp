@@ -109,6 +109,12 @@ EnterPointInfo::EnterPointInfo(DBRow& row)
 	row.Fill( vDir, nCol_Dx, nCol_Dy, nCol_Dz);
 }
 
+PointInfo::PointInfo()
+{
+	fRange = 0.0f;
+	nEnterMode = eEnterMode_PosDir;
+}
+
 Vector3 PointInfo::GetRandPos() const
 {
 	f32 x = 0;
@@ -132,4 +138,29 @@ EnterInfo::EnterInfo(DBRow& row)
 EnterInfo::~EnterInfo()
 {
 
+}
+
+SceneInfoEx::SceneInfoEx()
+{
+
+}
+
+void SceneInfoEx::OnSceneCreate(Scene* pScene)
+{
+
+}
+
+void SceneInfoEx::OnSceneDestroy(Scene* pScene)
+{
+
+}
+
+Scene* SceneInfoEx::CreateSceneObj()
+{
+	Scene* pScene = (Scene*)FactoryManager::Instance().New(m_strSceneClass.c_str());
+	if(pScene)
+		return pScene;
+
+	pScene = (Scene*)FactoryManager::Instance().New(m_strDftSceneClass.c_str());
+	return pScene;
 }

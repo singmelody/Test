@@ -135,9 +135,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="AvatarOnLineManager.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClInclude>
+    <ClInclude Include="AvatarOnLineManager.h" />
+    <ClInclude Include="LoginActionDefine.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
@@ -169,18 +168,11 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="WorldGuildManager.h" />
-    <ClInclude Include="WorldScene.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="WorldSceneInfo.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="WorldSceneInfoTypes.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="WorldSceneTypes.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClInclude>
+    <ClInclude Include="WorldLoginActionManager.h" />
+    <ClInclude Include="WorldScene.h" />
+    <ClInclude Include="WorldSceneInfo.h" />
+    <ClInclude Include="WorldSceneInfoTypes.h" />
+    <ClInclude Include="WorldSceneTypes.h" />
     <ClInclude Include="WorldSceneManager.h" />
     <ClInclude Include="WorldServer.h" />
     <ClInclude Include="WorldServerNormal.h" />
@@ -241,9 +233,8 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AvatarOnLineManager.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClCompile>
+    <ClCompile Include="AvatarOnLineManager.cpp" />
+    <ClCompile Include="LoginActionDefine.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -279,18 +270,11 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="WorldGuildManager.cpp" />
-    <ClCompile Include="WorldScene.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="WorldSceneInfo.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="WorldSceneInfoTypes.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="WorldSceneTypes.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClCompile>
+    <ClCompile Include="WorldLoginActionManager.cpp" />
+    <ClCompile Include="WorldScene.cpp" />
+    <ClCompile Include="WorldSceneInfo.cpp" />
+    <ClCompile Include="WorldSceneInfoTypes.cpp" />
+    <ClCompile Include="WorldSceneTypes.cpp" />
     <ClCompile Include="WorldSceneManager.cpp" />
     <ClCompile Include="WorldServer.cpp" />
     <ClCompile Include="WorldServerNormal.cpp" />

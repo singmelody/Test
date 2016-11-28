@@ -33,7 +33,7 @@ public:
 	virtual void OnRemoveNodeInfo( ServerInfo* pInfo);
 
 	virtual void OnGMIServerStateReq(class PacketGMIServerStateReq* pPkt);
-	virtual void OnRecvGMIQuery(class PacketGMIQuery* pPkt);
+	virtual void OnRecvGMIQuery(class PacketGMIQuery* pPkt){}
 
 	virtual void OnWriteWorldData2DB();
 
