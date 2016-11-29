@@ -22,6 +22,14 @@ public:
 
 	ParamPool* GetParamPool() { return m_pParamPool; }
 
+	inline int32 GetParamTypeID() const { return m_nParamTypeID; }
+	inline void SetParamTypeID(int32 nTypeID){ m_nParamTypeID = nTypeID; }
+
+	inline int32 GetParamDefID() const { return m_nParamDefID; }
+	inline void SetParamDefID(int32 nDefID){ m_nParamDefID = nDefID; }
+
+	inline int32 GetParamDataID() const { return m_nParamDataID; }
+	inline void SetParamDataID(int32 nDataID){ m_nParamDataID = nDataID; }
 protected:
 	ParamPool*	m_pParamPool;
 	int32		m_nParamTypeID;

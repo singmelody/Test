@@ -234,6 +234,36 @@ WorldScene* WorldSceneManager::CreateWorldScene( SceneCreateArg& arg)
 	return pScene;
 }
 
+void WorldSceneManager::OnNodeCrashed(int32 nNodeID /*= SERVERID_NULL*/)
+{
+	if( nNodeID == SERVERID_NULL )
+		return;
+
+	SceneDataMap& map = SceneInfos;
+
+	for (SceneDataMap::iterator itr = map.begin(); itr != map.end(); ++itr)
+	{
+		SceneInfoEx* pInfoEx = (SceneInfoEx*)itr->second;
+		assert(pInfoEx);
+
+		SceneInstanceMgr& pMgr = pInfoEx->m_Instances;
+
+		for (SceneInstanceMgr::iterator sIter = pMgr.begin(); sIter != pMgr.end(); ++sIter)
+		{
+			Scene* pScene = sIter->second;
+			if(!pScene)
+				continue;
+
+			assert( pInfoEx == pScene->GetSceneInfo());
+
+			if( pScene->GetNodeID() == nNodeID )
+			{
+				pScene->SetSceneState(Scene::eSceneState_Closing);
+			}
+		}
+	}
+}
+
 WorldSceneInfo* WorldSceneManager::GetWorldSceneInfo(uint16 nSceneSID)
 {
 	return (WorldSceneInfo*)GetSceneInfo(nSceneSID);

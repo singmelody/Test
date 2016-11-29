@@ -40,7 +40,7 @@ protected:
 	int64	m_slots[MAX_TEAM_AVATAR_COUNT];
 };
 
-class TeamMember : public ParamPoolOwner
+class TeamMember : public virtual ParamPoolOwner
 {
 	DECLARE_FACTORY_ARG0( TeamMember, -1, new PoolAllocator)
 public:

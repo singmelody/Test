@@ -5,11 +5,11 @@
 #include "PacketSender.h"
 
 PACKET(PacketParamPoolBase, PacketBaseEx<PACKET_EX_BUFF_SIZE>)
-uint32	m_ParamType;
-uint8	m_ParamFlag;
+uint32	m_nParamType;
+uint8	m_nParamFlag;
 START_ADD_PACKET_MEMBER(PacketParamPoolBase)
-	ADD_PACKET_MEMBER( m_ParamType, uint32, m_ParamType);
-	ADD_PACKET_MEMBER( m_ParamFlag, uint8, m_ParamFlag);
+	ADD_PACKET_MEMBER( m_nParamType, uint32, m_ParamType);
+	ADD_PACKET_MEMBER( m_nParamFlag, uint8, m_ParamFlag);
 PACKET_END(PacketParamPoolBase)
 
 class SyncPacketArg;
@@ -33,7 +33,7 @@ public:
 	inline bool IsLastPacket() { return CheckFlag(ePacketLast); }
 	inline bool IsFullPacket() { return CheckFlag(ePacketFull); }
 
-	bool CheckFlag(int8 bit) { return (m_ParamFlag & bit) == bit; }
+	bool CheckFlag(int8 bit) { return (m_nParamFlag & bit) == bit; }
 
 	void SyncParamPool( SyncPacketArg& arg, ParamPool* pPool, uint32 paramFlag, uint32 syncFlag, uint32 nParamFlagExclude = 0);
 	void SyncParamPool( PacketPack* pPack, ParamPool* pPool, uint32 paramFlag, uint32 syncFlag, uint32 nParamFlagExclude = 0);

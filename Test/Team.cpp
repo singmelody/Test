@@ -10,6 +10,11 @@ TeamMember::TeamMember()
 	m_nSceneID = 0;
 }
 
+TeamMember::~TeamMember()
+{
+	FACTORY_DELOBJ(m_pParamPool);
+}
+
 bool TeamUtil::SlotValid(int32 nTeamSlot)
 {
 	if( nTeamSlot < 0 || nTeamSlot >= MAX_TEAM_AVATAR_COUNT )

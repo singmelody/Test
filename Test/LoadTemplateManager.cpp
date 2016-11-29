@@ -256,7 +256,7 @@ void LoadTemplateManager::InternalLoadTemplates(LoadBatch& list, int32 nThreadCo
 	LoadThreadBatch threads;
 
 	if( nThreadCount > (int32)list.m_list.size() )
-		nThreadCount = list.m_list.size();
+		nThreadCount = (int32)list.m_list.size();
 
 	threads.StartBatchLoad( this, &list, nThreadCount);
 

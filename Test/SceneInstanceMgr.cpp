@@ -42,6 +42,12 @@ uint32 SceneInstanceMgr::AllocSceneID(bool bRand)
 	return SCENE_ID_NULL;
 }
 
+bool SceneInstanceMgr::InitScene(Scene* pScene)
+{
+	pScene->m_pSceneInfo = this->m_pSceneInfo;
+	return true;
+}
+
 Scene* SceneInstanceMgr::GetMinLoadScene()
 {
 	Scene* pMinScene = NULL;

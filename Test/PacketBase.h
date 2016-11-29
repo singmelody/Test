@@ -114,7 +114,7 @@ protected:
 };
 
 class PacketSender;
-class SyncPackArg;
+class SyncPacketArg;
 class CasterTrunkGate;
 
 
@@ -150,11 +150,11 @@ public:
 
 	bool FillPacket( PacketBase* pPkt);
 	void SendPacket( PacketBase& pPkt, int32 nSocketID);
+	void SendPacket();
 
-
-	SyncPackArg*	m_pSyncPacketArg;
+	SyncPacketArg*	m_pSyncPacketArg;
 	
-	void	SetSyncArg( SyncPackArg* pArg);
+	void	SetSyncArg( SyncPacketArg* pArg);
 	
 	void	SetDBASyncArg( PacketSender* pSender);
 	void	SetWorldSyncArg( PacketSender* pSender);	

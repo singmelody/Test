@@ -3,6 +3,7 @@
 #include "PacketFactory.h"
 #include "DataSerialization.h"
 #include "MyClass.h"
+#include "PacketSender.h"
 //-----------------------------------------
 // PacketPackBase
 //-----------------------------------------
@@ -128,6 +129,23 @@ void PacketPackBase::Reset()
 
 	m_PacketCnt = 0;
 	m_ContentSize = 100;
+}
+
+void PacketPackBase::SendPacket()
+{
+	if(IsEmpty())
+		return;
+
+	if( m_pSyncPacketArg != NULL )
+		m_pSyncPacketArg->SendPacket(this);
+
+	Reset();
+}
+
+void PacketPackBase::SetSyncArg(SyncPacketArg* pArg)
+{
+	FACTORY_DELOBJ(m_pSyncPacketArg);
+	m_pSyncPacketArg = pArg;
 }
 
 void PacketPackBase::SetDBASyncArg(PacketSender* pSender)

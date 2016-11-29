@@ -2,6 +2,7 @@
 #include "WorldAccount.h"
 #include "PacketImpl.h"
 #include "ParamPool.h"
+#include <algorithm>
 
 WorldAccount::WorldAccount(void)
 	: m_bIsFCMAcount(false)
@@ -74,7 +75,7 @@ void WorldAccount::AddRoleSet(class PacketUserData* pPkt)
 			}
 		}
 
-		pPool = CreateRoleSet( pPkt->nIndex, PARAM_ID( pPkt->m_ParamType), PARAM_DATA_ID( pPkt->m_ParamType));
+		pPool = CreateRoleSet( pPkt->nIndex, PARAM_ID( pPkt->m_nParamType), PARAM_DATA_ID( pPkt->m_nParamType));
 		if(!pPool)
 			return;
 	}
@@ -104,6 +105,14 @@ bool WorldAccount::SetRoleSet(int32 nIdx, ParamPool* pPool)
 
 	pSet = pPool;
 	return true;
+}
+
+void WorldAccount::SetAccountName(const std::string& strAccount)
+{
+	m_AccountName = strAccount;
+	
+	std::transform( strAccount.begin(), strAccount.end(), m_AccountName.begin(), ::tolower);
+	assert( strAccount == m_AccountName);
 }
 
 void WorldAccount::SetRecentRoleSet(ParamPool* pPool)

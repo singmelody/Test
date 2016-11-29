@@ -5,6 +5,7 @@
 #include "CommonDataManager.h"
 #include "ParamPool.h"
 #include "MyLog.h"
+#include "PacketImpl.h"
 
 CommonDataObject::CommonDataObject()
 	: m_nIdx(-1), m_nFlag(eObject_NodeTick|eObject_WorldTick)
@@ -21,6 +22,27 @@ CommonDataObject::CommonDataObject()
 	m_nValueChangeMode = eVCM_None;
 
 	m_nCommonDataType = -1;
+}
+
+void CommonDataObject::SetOwner(CommonDataOwner* pOwner)
+{
+	m_pCommonDataOwner = pOwner;
+
+	static bool s_bNodeAndSHMEnable = ParamDefManager::Instance().IsNodeServer() && ParamDefManager::Instance().IsSHMEnable();
+
+	if(!s_bNodeAndSHMEnable)
+		return;
+
+	ParamPool* pPool = GetParamPool();
+	if(pPool)
+	{
+		int64 nDID = ( pOwner != NULL) ? pOwner->GetAvatarDID() : 0;
+		pPool->NodeServer_WriteSHM_AvatarDID(nDID);
+	}
+	else
+	{
+		MyLog::message("CommonDataObject::SetOwner No ParamPool or no Owner");
+	}
 }
 
 void CommonDataObject::SetObjectFlag(int32 nFlag)
@@ -76,6 +98,44 @@ void CommonDataObject::ReadParamPoolData(class PacketParamPool* pPkt, int32 nVcM
 
 	m_nValueChangeMode = eVCM_None;
 }
+
+void CommonDataObject::InitBasePacket(class PacketCommonDataBase& pkt, CommonDataOwner* pOwner)
+{
+	if(!m_pParamPool)
+		return;
+
+	pkt.m_nParamType = m_pParamPool->GetParamTypeID();
+	pkt.nDataType = m_nCommonDataType;
+	pkt.nIdx = m_nIdx;
+
+	if(pOwner)
+	{
+		pkt.nOwnerAvatarID = m_pCommonDataOwner->GetAvatarID();
+		pkt.nAvatarDID = m_pCommonDataOwner->GetAvatarDID();
+	}
+}
+
+void CommonDataObject::InitPacket(class PacketCommonDataCreate& pkt, CommonDataOwner* pOwner)
+{
+	InitBasePacket( pkt, pOwner);
+	pkt.nFlag = m_nFlag;
+}
+
+void CommonDataObject::InitPacket(class PacketCommonDataInit& pkt, CommonDataOwner* pOwner)
+{
+	InitBasePacket( pkt, pOwner);
+}
+
+void CommonDataObject::InitPacket(class PacketCommonDataUpdate& pkt, CommonDataOwner* pOwner)
+{
+	InitBasePacket( pkt, pOwner);
+}
+
+void CommonDataObject::InitPacket( class PacketCommonDataDelete& pkt, CommonDataOwner* pOwner)
+{
+	InitBasePacket( pkt, pOwner);
+}
+
 
 void CommonDataObject::SetIndex(int32 nIdx)
 {

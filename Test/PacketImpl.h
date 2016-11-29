@@ -95,12 +95,12 @@ PACKET_END(PacketCltSelectAvatarFailed)
 
 
 PACKET(PacketCommonDataBase, PacketParamPool)
-uint8 dataType;
+uint8 nDataType;
 int16 nIdx;
 int64 nAvatarDID;
 int32 nOwnerAvatarID;
 START_ADD_PACKET_MEMBER(PacketCommonDataBase)
-	ADD_PACKET_MEMBER( dataType, uint8, "")
+	ADD_PACKET_MEMBER( nDataType, uint8, "")
 	ADD_PACKET_MEMBER( nIdx, int16, "")
 	ADD_PACKET_MEMBER( nAvatarDID, int64, "")
 	ADD_PACKET_MEMBER( nOwnerAvatarID, int32, "")
@@ -198,7 +198,18 @@ START_ADD_PACKET_MEMBER(PacketLoginActionInfo)
 	ADD_PACKET_MEMBER( nAvatarDID,	int64, "")
 PACKET_END(PacketLoginActionInfo)
 
-
+PACKET( PacketAvatarDataSend2DBAFin, PacketBase)
+enum
+{
+	eInterbackup	= 0,
+	eExitGame		= 1,
+};
+int8 nMode;
+int64 nAvatarDID;
+START_ADD_PACKET_MEMBER(PacketAvatarDataSend2DBAFin)
+	ADD_PACKET_MEMBER( nMode, int8, "")
+	ADD_PACKET_MEMBER( nAvatarDID, int64, "")
+PACKET_END(PacketAvatarDataSend2DBAFin)
 
 enum
 {

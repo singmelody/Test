@@ -57,6 +57,28 @@ void AvatarOnLineManager::SyncOnlineUserInfo2Login()
 	Send2Login(pkt);
 }
 
+void AvatarOnLineManager::AddAvatar(WorldAvatar* pAvatar)
+{
+	if(!pAvatar)
+		return;
+
+	if(m_accountMap.find(pAvatar->GetAccountName()) != m_accountMap.end())
+		return;
+
+	const int32 nID = pAvatar->GetAvatarID();
+
+	std::string name = pAvatar->GetName();
+
+	m_avatarMap.insert( std::make_pair( name, pAvatar->GetAvatarID() ));
+	m_avatarDIDTable.insert( std::make_pair(pAvatar->GetAvatarDID(), pAvatar->GetAvatarID()) );
+	m_avatarNameTable.insert( std::make_pair( name, pAvatar->GetAvatarID()));
+}
+
+void AvatarOnLineManager::DelAvatar(WorldAvatar* pAvatar)
+{
+
+}
+
 int32 AvatarOnLineManager::GetOnlineAvatarCount()
 {
 	return (int32)m_avatarMap.size();

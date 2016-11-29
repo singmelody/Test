@@ -36,7 +36,7 @@ bool ParamPoolOwner::CreateParamPool(int32 nDefID, int32 nDataID)
 }
 
 void ParamPoolOwner::SetParamPool(ParamPool* pPool)
-{
+ {
 	if(!pPool)
 		return;
 	

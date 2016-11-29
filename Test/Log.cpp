@@ -156,7 +156,7 @@ void Log::CacheLog(int32 logID, const char* msg)
 	if( logID < 0 || logID >= LOG_COUNT)
 		return;
 
-	int32 nLen = strlen(msg);
+	int32 nLen = (int32)strlen(msg);
 	if(nLen <= 0)
 		return;
 

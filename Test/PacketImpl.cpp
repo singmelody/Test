@@ -136,3 +136,7 @@ PACKET_IMPL(PacketHeartBeat);
 PACKET_IMPL(PacketBlockingScene);
 
 PACKET_IMPL(PacketLoginActionInfo);
+
+PACKET_IMPL(PacketAvatarDataSend2DBAFin);
+
+PACKET_IMPL(PacketAvatarCommission);

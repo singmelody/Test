@@ -36,7 +36,9 @@ public:
 
 	virtual CommonDataObject*	First() = 0;
 	virtual CommonDataObject*	Next() = 0;
+	virtual CommonDataObject*	Get(int32 nIdx) const = 0;
 	virtual CommonDataObject*	GetNext( CommonDataObject* pObj = NULL ) = 0;
+	virtual int32				GetMaxSize() const = 0;
 
 	virtual CommonDataObject*	NewObject(int32 nDataID) = 0;
 	virtual void				FreeObject(CommonDataObject* pObj) = 0;

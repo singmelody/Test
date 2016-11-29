@@ -137,6 +137,11 @@ void WorldServerNormal::OnRecvSrvInfoPkt(PacketAddSrvInfo* pPkt)
 	WorldServer::OnRecvSrvInfoPkt(pPkt);
 }
 
+void WorldServerNormal::OnSrvConnectError(int32 nSrvID, int32 nErrorID)
+{
+	WorldServer::OnSrvConnectError( nSrvID, nErrorID);
+}
+
 void WorldServerNormal::OnAddLoginInfo(ServerInfo* pInfo)
 {
 	WorldServer::OnAddLoginInfo(pInfo);

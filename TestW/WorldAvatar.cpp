@@ -16,6 +16,9 @@
 #include "WorldTeamManager.h"
 #include "WorldEnterManager.h"
 #include "PacketImpl.h"
+#include "ParamTypeDef.h"
+#include "WorldAvatarCommonData.h"
+#include "CommonDataObj.h"
 
 WorldAvatar* GetWorldAvatar(int32 nAvatarID)
 {
@@ -105,6 +108,15 @@ Scene* WorldAvatar::GetScene()
 	return WorldSceneManager::Instance().GetScene(m_nSceneID);
 }
 
+void WorldAvatar::SendPacket(PacketBase* pkt)
+{
+	if(!pkt || !m_pWorld)
+		return;
+
+	pkt->SetAvatarID( GetAvatarID());
+	m_pWorld->Send2Gate( pkt, m_nGateSrvID);
+}
+
 void WorldAvatar::Send2DBA(PacketBase* pPkt)
 {
 	if(!pPkt)
@@ -144,6 +156,14 @@ void WorldAvatar::Send2Gate(PacketBase* pPkt, bool bGateProc)
 void WorldAvatar::Send2CurNode(PacketBase& pkt)
 {
 	Send2Node( &pkt, GetNodeSrvID());
+}
+
+void WorldAvatar::SetParamPool(ParamPool* p)
+{
+	if(!p)
+		return;
+
+	AvatarSrv::SetParamPool(p);
 }
 
 void WorldAvatar::NoticeBillingLogout(bool bExitGame)
@@ -214,6 +234,7 @@ void WorldAvatar::SetCurState( WorldStateID newStateID )
 	m_bStateChanging = false;
 }
 
+
 void WorldAvatar::HandleCreateSceneResult(int32 nResult, WorldScene* pScene /*= NULL*/)
 {
 	if(GetScene() == NULL)
@@ -235,6 +256,11 @@ void WorldAvatar::HandleCreateSceneResult(int32 nResult, WorldScene* pScene /*= 
 	}
 }
 
+void WorldAvatar::OnEnterGameFailed()
+{
+	SetCurState(eWS_ExitGame);
+}
+
 void WorldAvatar::OnAvatarLeaveGame()
 {
 	int32 nAvatarID = GetAvatarID();
@@ -243,6 +269,65 @@ void WorldAvatar::OnAvatarLeaveGame()
 
 
 	m_nComState = 0;
+}
+
+void WorldAvatar::SyncAvatarData2DB(bool bExitGame, int32 nSyncFlag)
+{
+	
+	ParamPool* pPool = GetParamPool();
+	if(!pPool)
+	{
+		PacketAvatarData2DBA pkt;
+		pkt.nParamType = GetParamTypeID();
+		pkt.nSrcAvatarID = GetAvatarID();
+		pkt.nAvatarDID = GetAvatarDID();
+		pkt.nFlag = eAvatarData_Destroy;
+
+		pkt.SyncParamPool( this, &AvatarSrv::Send2DBA, pPool, eParam_Flag_Save, nSyncFlag);
+	}
+
+	int32 nAvatarID = GetAvatarID();
+	WorldAvatarCommonData* pMgr = GetCommonDataManager();
+	if( pMgr != NULL )
+	{
+		PacketPack pack;
+		pack.SetDBASyncArg(this);
+
+		for (int32 i = 0; i < eCommonData_Max; ++i)
+		{
+			CommonDataCont* pCont = pMgr->GetCont(CommonDataType(i));
+			if(pCont)
+			{
+				for (int32 j = 0; j < pCont->GetMaxSize(); ++j)
+				{
+					CommonDataObject* pObj = pCont->Get(j);
+					if(!pObj)
+						continue;
+
+					if(pObj->NeedSync2DBA())
+					{
+						PacketCommonDataUpdate pkt;
+						pkt.SetAvatarID( nAvatarID );
+						pObj->InitPacket( pkt, this);
+
+						pkt.SyncParamPool( &pack, pObj->GetParamPool(), eParam_Flag_Save, nSyncFlag);
+					}
+				}
+			}
+		}
+
+		pack.SendPacket();
+	}
+
+
+	{
+		PacketAvatarDataSend2DBAFin pkt;
+
+		pkt.SetAvatarID(GetAvatarID());
+		pkt.nMode = bExitGame ? PacketAvatarDataSend2DBAFin::eExitGame : PacketAvatarDataSend2DBAFin::eInterbackup;
+		pkt.nAvatarDID = GetAvatarDID();
+		Send2DBA(&pkt);
+	}
 }
 
 bool WorldAvatar::Tick(int32 nDelaTime)
@@ -282,6 +367,15 @@ int32 WorldAvatar::GetChatInterval(int32 nChannel)
 		return INT_MAX;
 
 	return m_charInterval[nChannel];
+}
+
+void WorldAvatar::TickComponent(int32 nDeltaTime)
+{
+// 	if(m_pRelationCom)
+// 		m_pRelationCom->WorldTick( *this, nDeltaTime);
+// 
+// 	if(m_pCDCom)
+// 		m_pCDCom->WorldTick(nDeltaTime);
 }
 
 void WorldAvatar::RelaseComponent()
@@ -332,6 +426,11 @@ void WorldAvatar::ReleaseComponent()
 {
 	//FACTORY_DELOBJ( m_pRelationCom );
 
+}
+
+void WorldAvatar::ClearParamPool()
+{
+	m_pParamPool = NULL;
 }
 
 bool WorldAvatar::Init(CreateWorldAvatarArg& args)

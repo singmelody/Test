@@ -49,6 +49,9 @@
     <Filter Include="ThirParty\Tinyxml">
       <UniqueIdentifier>{1e6bcd4f-9f82-4f21-94a4-a1f9bac48f0d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Net">
+      <UniqueIdentifier>{42576d59-27be-425f-a752-a6c6612d53c2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />

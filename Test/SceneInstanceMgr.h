@@ -17,6 +17,6 @@ public:
 	Scene*	GetMinLoadScene();
 	Scene*  GetFrontScene();
 
-	const SceneInfo* m_pSceneInfo;
+	SceneInfo* m_pSceneInfo;
 };
 

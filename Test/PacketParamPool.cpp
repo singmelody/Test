@@ -23,7 +23,7 @@ void PacketParamPool::SyncParamPool(SyncPacketArg& arg, ParamPool* pPool, uint32
 		return;
 
 	char pBuffer[PACKET_EX_BUFF_SIZE] = {0};
-	m_ParamType = pPool->GetParamTypeID();
+	m_nParamType = pPool->GetParamTypeID();
 
 	bool bAll = (syncFlag & eParam_Sync_All) != 0;
 	bool bClearDirty = (syncFlag & eParam_Sync_ClearDirty) != 0;
@@ -32,13 +32,13 @@ void PacketParamPool::SyncParamPool(SyncPacketArg& arg, ParamPool* pPool, uint32
 	int32 nStartPos = 0;
 	while (true)
 	{
-		m_ParamFlag = 0;
+		m_nParamFlag = 0;
 
 		if(nStartPos == 0)
 		{
-			m_ParamFlag |= ePacketFirst;	// first packet
+			m_nParamType |= ePacketFirst;	// first packet
 			if(bAll)
-				m_ParamFlag |= ePacketFull;	// all packet
+				m_nParamType |= ePacketFull;	// all packet
 		}
 
 		int32 nWriteSize = PACKET_EX_BUFF_SIZE;
@@ -48,7 +48,7 @@ void PacketParamPool::SyncParamPool(SyncPacketArg& arg, ParamPool* pPool, uint32
 			break;
 
 		if(bFinish)
-			m_ParamFlag |= ePacketLast;
+			m_nParamType |= ePacketLast;
 
 		WriteBuffer( pBuffer, nWriteSize);
 		arg.SendPacket(this);

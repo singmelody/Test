@@ -94,6 +94,8 @@ public:
 		return m_Objs[nIdx];
 	}
 
+	virtual int32				GetMaxSize() const { return MAX_SIZE; }
+
 	virtual bool IsIndexOccupied(int32 nIdx) { return false; }
 protected:
 	CommonDataObject*			m_Objs[MAX_SIZE];

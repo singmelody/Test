@@ -52,6 +52,13 @@ public:
 	bool NeedSync2DBA() { return CheckObjectFlag( eObjectFlag_SaveFlag );}
 	bool NeedSync2WClt() { return CheckObjectFlag( eObjectFlag_CltFlag );}
 
+	void InitBasePacket( class PacketCommonDataBase& pkt, CommonDataOwner* pOwner);
+
+	void InitPacket( class PacketCommonDataCreate& pkt, CommonDataOwner* pOwner);
+	void InitPacket( class PacketCommonDataInit& pkt, CommonDataOwner* pOwner);
+	void InitPacket( class PacketCommonDataUpdate& pkt, CommonDataOwner* pOwner);
+	void InitPacket( class PacketCommonDataDelete& pkt, CommonDataOwner* pOwner);
+
 	void SetIndex(int32 nIdx);
 	int32 GetIndex() const { return m_nIdx; }
 

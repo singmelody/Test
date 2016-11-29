@@ -24,8 +24,8 @@ WorldState_Logining::~WorldState_Logining(void)
 
 void WorldState_Logining::RegPeerPktHandle(PacketProcessor* pProc)
 {
-// 	REG_PACKET_HANDLER( pProc, PacketUserData, WorldState_Logining, PktDBA_UserData);
-// 	REG_PACKET_HANDLER( pProc, PacketUserDataRegFinish, WorldState_Logining, PktDBA_UserDataReqFinish);
+	REG_PACKET_HANDLER( pProc, PacketUserData, WorldState_Logining, PktDBA_UserData);
+	REG_PACKET_HANDLER( pProc, PacketUserDataRegFinish, WorldState_Logining, PktDBA_UserDataReqFinish);
 }
 
 void WorldState_Logining::PktDBA_UserData(class PacketUserData* pPkt)

@@ -90,6 +90,8 @@ public:
 	virtual void OnRemoveGateInfo( ServerInfo* pInfo) {}
 	virtual void OnRemoveNodeInfo( ServerInfo* pInfo) {}
 
+	virtual void OnSrvConnectError(int32 nSrvID, int32 nErrorID){}
+
 	void StartConnectionThread();
 	void ConnectThreadProc();
 	void SendPacketSrvConnect(int32 nSocket);

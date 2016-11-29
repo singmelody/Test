@@ -3,6 +3,7 @@
 #include "FactoryManagerBase.h"
 #include "CommonDataObj.h"
 #include "PacketImpl.h"
+#include "ParamPool.h"
 
 CommonDataManager::CommonDataManager()
 {
@@ -59,6 +60,23 @@ CommonDataCont* CommonDataManager::GetCont(CommonDataType type) const
 	return m_pCont[type];
 }
 
+CommonDataObject* CommonDataManager::CreateCommonDataObj(class PacketCommonDataBase* pPkt)
+{
+	if(!pPkt)
+		return NULL;
+
+	return CreateCommonDataObj( (CommonDataType)pPkt->nDataType, PARAM_DATA_ID(pPkt->m_nParamType), pPkt->nIdx);
+}
+
+CommonDataObject* CommonDataManager::CreateCommonDataObj(CommonDataType nType ,int32 nDataID, int32 nIdx)
+{
+	CommonDataCont* pCont = GetCont(nType);
+	if(!pCont)
+		return NULL;
+
+	return pCont->CreateCommonDataObj( nDataID, nIdx);
+}
+
 CommonDataObject* CommonDataManager::OnRecvCreatePacket(class PacketCommonDataCreate* pPkt)
 {
 	CommonDataObject* pObj = CreateCommonDataObj(pPkt);
@@ -75,6 +93,24 @@ CommonDataObject* CommonDataManager::OnRecvCreatePacket(class PacketCommonDataCr
 
 	OnCreateObj(pObj);
 	return pObj;
+}
+
+CommonDataObject* CommonDataManager::GetCommonDataObj(class PacketCommonDataBase* pPkt)
+{
+	if(!pPkt)
+		return NULL;
+
+	CommonDataObject* pObj = GetCommonDataObj( (CommonDataType)pPkt->nDataType, pPkt->nIdx);
+	return pObj;
+}
+
+CommonDataObject* CommonDataManager::GetCommonDataObj(CommonDataType type ,int32 nIdx)
+{
+	CommonDataCont* pCont = GetCont(type);
+	if(!pCont)
+		return NULL;
+
+	return pCont->Get(nIdx);
 }
 
 void CommonDataManager::DeleteCommonDataObj(CommonDataObject* pObj, bool bDestroy /*= true*/)
@@ -159,4 +195,29 @@ void CommonDataManagerGame::NotifyOberserver(CommonDataObject* pObj, NOTIFYFUNC 
 			((*itr)->*pFunc)(pObj);
 		}
 	}
+}
+
+void CommonDataManagerGame::OnCreateObj(CommonDataObject* pObj)
+{
+	NotifyOberserver( pObj, &CommonDataObserver::OnCreate);
+}
+
+void CommonDataManagerGame::OnInitObj(CommonDataObject* pObj)
+{
+	NotifyOberserver( pObj, &CommonDataObserver::OnInit);
+}
+
+void CommonDataManagerGame::OnPreUpdateObj(CommonDataObject* pObj)
+{
+	NotifyOberserver( pObj, &CommonDataObserver::OnPreUpdate);
+}
+
+void CommonDataManagerGame::OnUpdateObj(CommonDataObject* pObj)
+{
+	NotifyOberserver( pObj, &CommonDataObserver::OnUpdate);
+}
+
+void CommonDataManagerGame::OnDeleteObj(CommonDataObject* pObj)
+{
+	NotifyOberserver( pObj, &CommonDataObserver::OnDelete);
 }
