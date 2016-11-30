@@ -42,7 +42,7 @@ WorldAvatar* WorldAvatarManager::CreateWorldAvatar(CreateWorldAvatarArg& arg)
 		return NULL;
 	}
 
-	m_accountMap.insert(std::make_pair(arg.strUserAccount, pAvatar->GetAvatarNameID()));
+	m_accountMap.insert(std::make_pair(arg.strUserAccount, pAvatar->GetAvatarID()));
 	pAvatar->m_account.SetAccountName(arg.strUserAccount);
 	pAvatar->SetWorld(&WorldSrv);
 

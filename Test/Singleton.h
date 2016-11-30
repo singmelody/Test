@@ -13,8 +13,8 @@ public:
 	{
 		if(!m_ptr)
 		{
-			//m_ptr = (T*)dlmalloc(sizeof(T));
-			m_ptr = (T*)malloc(sizeof(T));
+			m_ptr = (T*)dlmalloc(sizeof(T));
+			//m_ptr = (T*)malloc(sizeof(T));
 			if(m_ptr)
 				new(m_ptr)T();
 		}

@@ -67,3 +67,8 @@ void WorldAvatarGroup::SetWorldTeam(WorldTeam* pTeam)
 		SetTeamID( pTeam->GetTeamID() );
 }
 
+bool WorldAvatarGroup::CheckState(int32 nState)
+{
+	return AvatarSrvEx::CheckState(nState);
+}
+

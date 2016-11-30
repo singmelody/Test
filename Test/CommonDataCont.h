@@ -5,6 +5,7 @@ enum CommonDataType
 	eCommonData_Min				= -1,
 	eCommonData_Pet				= 0,
 	eCommonData_Buff			= 1,
+	eCommonData_Item			= 3,
 	eCommonData_SceneProcess	= 10,
 	eCommonData_Max
 };

@@ -165,6 +165,9 @@ public:
 
 	void			NotifyCltKickout(int8 nReason);
 
+	void			SyncAvatarStorageItemData2DB();
+	virtual	void	OnAfterPullDataFromNode();
+
 	virtual Team*	GetTeam();
 
 	int64			GenGalaxyUID();
@@ -204,9 +207,13 @@ protected:
 	WorldServer*	m_pWorld;
 	uint8			m_nLastAvatarLevel;
 
+	bool			m_bStorageDataOnNode;
+
 // 	WorldTalenTreeData*			m_pTalentTreeCom;
 // 	WorldRelationComponent*		m_pRelationCom;
 // 	WorldAbilityComponent*		m_pWorldAbilityCom;
 // 	WorldManufactureComponent*	m_pManufactureCom;
 // 	WorldArenaRankComponent*	m_pArenaRankComponent;
 };
+
+bool IsStorageItem(ParamPool& pool);

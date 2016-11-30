@@ -15,6 +15,7 @@ enum CreateSceneRst
 	eCreateSceneError_TeamCopy	= 9,
 	eCreateSceneError_GuildNotExist		= 12,
 	eCreateSceneError_CreateWorldScene	= 13,
+	eCreateSceneError_CreateNodeScene	= 14,
 };
 
 enum ChangeSceneRst

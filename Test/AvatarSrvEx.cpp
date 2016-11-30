@@ -6,7 +6,7 @@
 AvatarSrvEx::AvatarSrvEx(void)
 {
 	m_nSceneID = SCENE_ID_NULL;
-// 	m_pCommonDataMgr = NULL;
+ 	m_pCommonDataMgr = NULL;
 // 	m_pCDComponent = NULL;
 	
 }
@@ -14,6 +14,19 @@ AvatarSrvEx::AvatarSrvEx(void)
 
 AvatarSrvEx::~AvatarSrvEx(void)
 {
+}
+
+void AvatarSrvEx::SetCommonDataManager(CommonDataManager* pMgr)
+{
+	if(!pMgr)
+		pMgr->SetOwner(this);
+
+	m_pCommonDataMgr = pMgr;
+}
+
+CommonDataManager* AvatarSrvEx::GetCommonDataManager()
+{
+	return m_pCommonDataMgr;
 }
 
 Scene* AvatarSrvEx::GetScene()

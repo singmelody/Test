@@ -57,6 +57,20 @@ void WorldState_Decommission::Tick(int32 nFrameTime)
 	}
 }
 
+void WorldState_Decommission::OnPullAvatarDataFinish(WorldAvatar* pAvatar)
+{
+	WorldStateGame::OnPullAvatarDataFinish(pAvatar);
+
+	if(pAvatar->m_bIsDestroy)
+	{
+		pAvatar->SetCurState( eWS_WritingDBA );
+		DestroyDummyNodeAvatar(pAvatar);
+		return;
+	}
+
+	TryCommissionNodeAvatar(pAvatar);
+}
+
 void WorldState_Decommission::OnPullAvatarDataFailed(WorldAvatar* pAvatar)
 {
 	MyLog::error("WS_Decommission Error ! Wait pull avatar data Time out Error id = %d", pAvatar->GetAvatarID());

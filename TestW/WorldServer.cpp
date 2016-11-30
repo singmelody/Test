@@ -109,6 +109,13 @@ bool WorldServer::ClusterCheck()
 	return true;
 }
 
+void WorldServer::ProcessLogic(int32 nFrameTime)
+{
+	WorldBase::ProcessLogic( nFrameTime );
+
+	WorldSceneManager::Instance().Tick( nFrameTime );
+}
+
 void WorldServer::OnConfigLoaded()
 {
 	WorldBase::OnConfigLoaded();

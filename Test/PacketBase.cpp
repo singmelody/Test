@@ -3,7 +3,7 @@
 #include "PacketFactory.h"
 #include "DataSerialization.h"
 #include "MyClass.h"
-#include "PacketSender.h"
+#include "PacketImpl.h"
 //-----------------------------------------
 // PacketPackBase
 //-----------------------------------------
@@ -129,6 +129,24 @@ void PacketPackBase::Reset()
 
 	m_PacketCnt = 0;
 	m_ContentSize = 100;
+}
+
+bool PacketPackBase::FillPacket(PacketBase* pPkt)
+{
+	if(false)
+	{
+		if( m_pSyncPacketArg )
+			m_pSyncPacketArg->SendPacket( pPkt );
+
+		return true;
+	}
+
+	if(AddupPacket(pPkt))
+		return true;
+
+	SendPacket();
+	bool b = AddupPacket(pPkt);
+	return b;
 }
 
 void PacketPackBase::SendPacket()

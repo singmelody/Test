@@ -37,6 +37,9 @@ enum
 
 	param_name_process		= 305,
 	param_name_permanent	= 308,
+
+	param_name_bagtype		= 337,
+
 	param_name_leaderdid	= 404,
 	param_name_teampost		= 467,
 	param_name_SceneProcessBits = 595,

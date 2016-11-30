@@ -141,26 +141,16 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="WorldAccount.h" />
-    <ClInclude Include="WorldAsynContextManager.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClInclude>
+    <ClInclude Include="WorldAsynContextManager.h" />
     <ClInclude Include="WorldAvatar.h" />
-    <ClInclude Include="WorldAvatarCommonData.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="WorldAvatarGroup.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClInclude>
+    <ClInclude Include="WorldAvatarCommonData.h" />
+    <ClInclude Include="WorldAvatarGroup.h" />
     <ClInclude Include="WorldAvatarManager.h" />
     <ClInclude Include="WorldBase.h" />
-    <ClInclude Include="WorldEnterManager.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClInclude>
+    <ClInclude Include="WorldEnterManager.h" />
     <ClInclude Include="WorldFuncExManager.h" />
     <ClInclude Include="WorldFuncManager.h" />
-    <ClInclude Include="WorldGroup.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClInclude>
+    <ClInclude Include="WorldGroup.h" />
     <ClInclude Include="WorldGuildManager.h" />
     <ClInclude Include="WorldLoginActionManager.h" />
     <ClInclude Include="WorldScene.h" />
@@ -187,12 +177,8 @@
     <ClInclude Include="WorldState_WaitingNodeData.h" />
     <ClInclude Include="WorldState_WaitLogining.h" />
     <ClInclude Include="WorldState_WritingDBA.h" />
-    <ClInclude Include="WorldTeam.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="WorldTeamManager.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClInclude>
+    <ClInclude Include="WorldTeam.h" />
+    <ClInclude Include="WorldTeamManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AvatarOnLineManager.cpp" />
@@ -205,26 +191,16 @@
     </ClCompile>
     <ClCompile Include="TestW.cpp" />
     <ClCompile Include="WorldAccount.cpp" />
-    <ClCompile Include="WorldAsynContextManager.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClCompile>
+    <ClCompile Include="WorldAsynContextManager.cpp" />
     <ClCompile Include="WorldAvatar.cpp" />
-    <ClCompile Include="WorldAvatarCommonData.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="WorldAvatarGroup.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClCompile>
+    <ClCompile Include="WorldAvatarCommonData.cpp" />
+    <ClCompile Include="WorldAvatarGroup.cpp" />
     <ClCompile Include="WorldAvatarManager.cpp" />
     <ClCompile Include="WorldBase.cpp" />
-    <ClCompile Include="WorldEnterManager.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClCompile>
+    <ClCompile Include="WorldEnterManager.cpp" />
     <ClCompile Include="WorldFuncExManager.cpp" />
     <ClCompile Include="WorldFuncManager.cpp" />
-    <ClCompile Include="WorldGroup.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClCompile>
+    <ClCompile Include="WorldGroup.cpp" />
     <ClCompile Include="WorldGuildManager.cpp" />
     <ClCompile Include="WorldLoginActionManager.cpp" />
     <ClCompile Include="WorldScene.cpp" />
@@ -251,12 +227,8 @@
     <ClCompile Include="WorldState_WaitLogining.cpp" />
     <ClCompile Include="WorldState_WritingDBA.cpp" />
     <ClCompile Include="WorldStateGame.cpp" />
-    <ClCompile Include="WorldTeam.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="WorldTeamManager.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClCompile>
+    <ClCompile Include="WorldTeam.cpp" />
+    <ClCompile Include="WorldTeamManager.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

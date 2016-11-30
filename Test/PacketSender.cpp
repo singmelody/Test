@@ -23,3 +23,5 @@ SyncPacketArg::SyncPacketArg()
 
 
 FINISH_FACTORY_ARG0(Sync2DBAArg)
+FINISH_FACTORY_ARG0(Sync2WorldArg);
+FINISH_FACTORY_ARG0(Sync2NodeArg);

@@ -229,6 +229,16 @@ START_ADD_PACKET_MEMBER(PacketAvatarData2DBA)
 	ADD_PACKET_MEMBER( nAvatarDID, int64, nAvatarDID)
 PACKET_END(PacketAvatarData2DBA)
 
+PACKET_EX( PacketAvatarData, PacketParamPool, new PoolPacketAllocator(2048))
+uint32 nParamType;
+int32 nSrcAvatarID;
+int32 nFlag;
+START_ADD_PACKET_MEMBER(PacketAvatarData)
+	ADD_PACKET_MEMBER( nParamType, uint32, nParamType)
+	ADD_PACKET_MEMBER( nSrcAvatarID, int32, nSrcAvatarID)
+	ADD_PACKET_MEMBER( nFlag, int32, nFlag)
+PACKET_END(PacketAvatarData)
+
 // dba 2 world
 PACKET(PacketUserSelectData, PacketParamPool)
 int64 nAvatarDID;
@@ -448,11 +458,16 @@ ADD_PACKET_MEMBER( nNodeID, int32, "");
 ADD_PACKET_MEMBER( nFlag, int32, "");
 PACKET_END(PacketChangeSceneNotify)
 
+PACKET(PacketNodeDestroyAvatar, PacketBase)
+START_ADD_PACKET_MEMBER(PacketNodeDestroyAvatar)
+PACKET_END(PacketNodeDestroyAvatar)
+
 PACKET(PacketDestroyAvatar, PacketBase)
 int32 nAvatarID;
 START_ADD_PACKET_MEMBER(PacketDestroyAvatar)
 	ADD_PACKET_MEMBER( nAvatarID, int32, "");
 PACKET_END(PacketDestroyAvatar)
+
 
 
 //----------------------------------------
@@ -518,6 +533,22 @@ ADD_PACKET_MEMBER( nSceneID, int32, "");
 ADD_PACKET_MEMBER( nResult, int32, "");
 ADD_PACKET_MEMBER( nSceneProcessBits, int64, "");
 PACKET_END(PacketCreateSceneResult)
+
+enum
+{
+	eScene_Create_Succeed,
+	eScene_Create_Failed,
+};
+
+PACKET( PacketCreateNodeSceneRst, PacketBase)
+int32 nSceneID;
+int32 nArenaID;
+int32 nCreateFlag;
+START_ADD_PACKET_MEMBER(PacketCreateNodeSceneRst)
+ADD_PACKET_MEMBER( nSceneID, int32, "");
+ADD_PACKET_MEMBER( nArenaID, int32, "");
+ADD_PACKET_MEMBER( nCreateFlag, int64, "");
+PACKET_END(PacketCreateNodeSceneRst)
 
 PACKET( PacketSceneProcessBits, PacketBase)
 	int32 nSceneID;
@@ -617,6 +648,15 @@ START_ADD_PACKET_MEMBER(PacketHeartBeat)
 	ADD_PACKET_MEMBER( nHeartBeatStartTime, uint64, ping_start_time)
 	ADD_PACKET_MEMBER( nSrvType, int32, nSrvType);
 PACKET_END(PacketHeartBeat)
+
+PACKET( PacketDelSrvInfo, PacketBase)
+int32 nSrvType;
+int32 nSrvID;
+START_ADD_PACKET_MEMBER(PacketDelSrvInfo)
+	ADD_PACKET_MEMBER( nSrvType, int32, nSrvType)
+	ADD_PACKET_MEMBER( nSrvID, int32, nSrvID);
+PACKET_END(PacketDelSrvInfo)
+
 
 // PacketEx
 PACKET_EX(PacketMulticast2Avatar, PacketBroadCastBase<int32>, new PoolPacketAllocator(40960))

@@ -114,6 +114,12 @@ bool WorldScene_TeamCopy::CheckCopyOwner(WorldAvatar* pAvatar) const
 }
 
 FINISH_FACTORY_ARG0(WorldScene_TokenCopy);
+
+WorldScene_TokenCopy::WorldScene_TokenCopy()
+{
+
+}
+
 bool WorldScene_TokenCopy::CheckCopyOwner(WorldAvatar* pAvatar) const
 {
 	if(!m_pCopyOwnerArg)

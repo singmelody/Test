@@ -14,13 +14,13 @@ protected:
 	virtual void OnEnterState( WorldAvatar* pAvatar);
 	virtual void OnLeaveState( WorldAvatar* pAvatar);
 
-	virtual void OnPullAvatarDataFinish( WorldAvatar* pAvatar);
 
 	void TryCommissionNodeAvatar( WorldAvatar* pAvatar);
 
 	bool CommisionNodeAvatar( WorldAvatar* pAvatar);
 	void DecommisionNodeAvatar( WorldAvatar* pAvatar);
 
+	virtual void OnPullAvatarDataFinish( WorldAvatar* pAvatar);
 	void PullAvatarDataFromNode( WorldAvatar* pAvatar, bool bLogout);
 
 protected:

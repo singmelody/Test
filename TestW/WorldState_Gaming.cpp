@@ -40,6 +40,71 @@ void WorldState_Gaming::OnEnterState(WorldAvatar* pAvatar)
 	}
 }
 
+void WorldState_Gaming::Tick(int32 nFrameTime)
+{
+	TickFCMAvatars(nFrameTime);
+	
+	TickList& list = m_listAvatars;
+	PTICKNODE pNode = list.GetNext(NULL);
+
+	while (pNode != NULL)
+	{
+		WorldAvatar* pAvatar = (WorldAvatar*)(pNode->Get());
+		if(!pAvatar)
+		{
+			pNode = list.Remove(pNode);
+			continue;
+		}
+
+		pNode = list.GetNext(pNode);
+
+		if(pAvatar->m_bIsDestroy)
+		{
+			ExitGame(pAvatar);
+			continue;
+		}
+
+		if(pAvatar->Tick(nFrameTime))
+		{
+			pNode = list.Remove(pNode);
+			continue;
+		}
+	}
+}
+
+void WorldState_Gaming::OnGateClosed(int32 nSrvID)
+{
+	WorldState::OnGateClosed(nSrvID);
+}
+
+void WorldState_Gaming::OnSceneClosed(Scene* pScene)
+{
+	if(!pScene)
+		return;
+
+}
+
+void WorldState_Gaming::OnNodeCrashed(int32 nSrvID, bool bUseSHM, WorldAvatar* pAvatar, bool bWaitData)
+{
+	if( pAvatar->GetNodeSrvID() == nSrvID )
+	{
+		if(bUseSHM && bWaitData)
+			pAvatar->SetCurState( eWS_WaitingNodeData );
+		else
+		{
+			pAvatar->SetNodeSrvID(nSrvID);
+			pAvatar->m_curDataOnSide = eCurDataOnWorld;
+			pAvatar->SetCurState(eWS_ExitGame);
+		}
+	}
+}
+
+void WorldState_Gaming::DestroyAvatar(WorldAvatar* pAvatar)
+{
+	pAvatar->m_bIsDestroy = true;
+	ExitGame(pAvatar);
+}
+
 int32 WorldState_Gaming::ProcessCreateSceneRequest(class PacketCreateSceneRequest* pPkt)
 {
 	WorldAvatar* pAvatar = GetWorldAvatarAndCheckStage( pPkt->GetAvatarID(), "WorldState_Gaming::ProcessCreateSceneRequest");

@@ -43,6 +43,16 @@ void ModuleFuncManager::Send2Login(PacketBase* pkt)
 	PeerModule.Send2Login(pkt);
 }
 
+void ModuleFuncManager::Send2DBA(PacketBase& pkt)
+{
+	PeerModule.Send2DBA(&pkt);
+}
+
+void ModuleFuncManager::Send2DBA(PacketBase* pkt)
+{
+	PeerModule.Send2DBA(pkt);
+}
+
 void ModuleFuncManager::PeerSend(int32 nSocketID, PacketBase& pkt)
 {
 	PeerModule.PeerSend( &pkt, nSocketID);

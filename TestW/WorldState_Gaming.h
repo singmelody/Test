@@ -14,7 +14,7 @@ public:
 
 	virtual void OnGateClosed(int32 nSrvID);
 	virtual void OnSceneClosed( Scene* pScene);
-	virtual void OnNodeCrashed( int32 nSrvID, bool bUseSHM, WorldAvatar* pAvatar);
+	virtual void OnNodeCrashed( int32 nSrvID, bool bUseSHM, WorldAvatar* pAvatar, bool bWaitData);
 
 	virtual void DestroyAvatar( WorldAvatar* pAvatar);
 	int32 ProcessCreateSceneRequest( class PacketCreateSceneRequest* pPkt);

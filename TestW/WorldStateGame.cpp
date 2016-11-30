@@ -109,6 +109,17 @@ void WorldStateGame::DecommisionNodeAvatar(WorldAvatar* pAvatar)
 	}
 }
 
+void WorldStateGame::OnPullAvatarDataFinish(WorldAvatar* pAvatar)
+{
+	pAvatar->OnAfterPullDataFromNode();
+	DecommisionNodeAvatar(pAvatar);
+}
+
+void WorldStateGame::PullAvatarDataFromNode(WorldAvatar* pAvatar, bool bLogout)
+{
+
+}
+
 // Node Crash influence following game state : Jumping/Gaming/ExitGame
 void WorldStateGame::OnNodeCrashed(int32 nSrvID, bool bUseSHM)
 {
@@ -151,6 +162,14 @@ void WorldStateGame::ReleaseBillingAndDestroy(WorldAvatar* pAvatar)
 	}
 	else
 		AvatarMgr.RemoveWorldAvatar(pAvatar);
+}
+
+void WorldStateGame::DestroyDummyNodeAvatar(WorldAvatar* pAvatar)
+{
+	PacketNodeDestroyAvatar pkt;
+
+	pkt.SetAvatarID( pAvatar->GetAvatarID() );
+	Send2Node( pkt, pAvatar->m_nTargetNodeID);
 }
 
 void WorldStateGame::TickFCMAvatars(int32 nFrameTime)

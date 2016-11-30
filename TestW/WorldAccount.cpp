@@ -59,6 +59,22 @@ void WorldAccount::DestroyAllRoleSet()
 	}
 }
 
+ParamPool* WorldAccount::PickRoleSet(int32 nIdx)
+{
+	ParamPool* pSet = NULL;
+
+	if( nIdx >= 0 && nIdx < MAX_AVATAR_COUNT_ONE_USER )
+	{
+		pSet = m_pRoleDataSet[nIdx];
+		m_pRoleDataSet[nIdx] = NULL;
+	}
+
+	if( pSet != NULL)
+		DestroyAllRoleSet();
+
+	return pSet;
+}
+
 void WorldAccount::AddRoleSet(class PacketUserData* pPkt)
 {
 	ParamPool* pPool = GetRoleSet( pPkt->nIndex );

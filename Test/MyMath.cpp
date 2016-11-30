@@ -5,7 +5,7 @@ namespace Math{
 
 	bool PointInPloygon(const Point2& point, std::vector<Point2>& regionPts)
 	{
-		int32 nCount = regionPts.size();
+		int32 nCount = (int32)regionPts.size();
 		if(nCount < 3)
 			return false;
 

@@ -14,6 +14,9 @@ enum ParamType
 	eParam_Skill = 2,
 	eParam_Coin = 3,
 
+	eParam_Item = 10,
+
+
 	eParam_Scene = 40,
 
 	eParam_Max,	

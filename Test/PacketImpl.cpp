@@ -140,3 +140,13 @@ PACKET_IMPL(PacketLoginActionInfo);
 PACKET_IMPL(PacketAvatarDataSend2DBAFin);
 
 PACKET_IMPL(PacketAvatarCommission);
+
+PACKET_IMPL(PacketNodeDestroyAvatar);
+
+PACKET_IMPL(PacketCreateNodeSceneRst);
+
+PACKET_IMPL(PacketDelSrvInfo);
+
+PACKET_IMPL(PacketRoleListRequest);
+
+PACKET_IMPL(PacketAvatarData);

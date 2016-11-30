@@ -5,6 +5,9 @@
 #include "MyLog.h"
 #include "WorldSceneManager.h"
 #include "WorldGuildManager.h"
+#include "WorldServerNormal.h"
+#include "PacketImpl.h"
+#include "WorldLoginActionManager.h"
 
 WorldServerNormal::WorldServerNormal(void)
 {
@@ -167,6 +170,18 @@ void WorldServerNormal::OnAddGateInfo(ServerInfo* pInfo)
 	SendServerInfos( pInfo->nSocketID, eSM_Login | eSM_LocalNode | eSM_RemoteNode);
 }
 
+void WorldServerNormal::OnRemoveNodeInfo(ServerInfo* pInfo)
+{
+	WorldServer::OnRemoveNodeInfo(pInfo);
+
+	PacketDelSrvInfo pkt;
+
+	pkt.nSrvType = pInfo->nSrvType;
+	pkt.nSrvID = pInfo->nSrvID;
+
+	Send2Gate( &pkt, -1, true);
+}
+
 void WorldServerNormal::OnGMIServerStateReq(class PacketGMIServerStateReq* pPkt)
 {
 
@@ -174,5 +189,5 @@ void WorldServerNormal::OnGMIServerStateReq(class PacketGMIServerStateReq* pPkt)
 
 void WorldServerNormal::OnWriteWorldData2DB()
 {
-	//WorldLoginActionManager::Instance().Save2DB();
+	WorldLoginActionManager::Instance().Save2DB();
 }

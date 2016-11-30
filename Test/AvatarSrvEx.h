@@ -13,6 +13,9 @@ public:
 	AvatarSrvEx(void);
 	virtual ~AvatarSrvEx(void);
 
+	void SetCommonDataManager( CommonDataManager* pMgr);
+	virtual CommonDataManager* GetCommonDataManager();
+
 	virtual Scene* GetScene();
 	virtual void SetScene( Scene* pScene);
 

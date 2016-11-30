@@ -14,8 +14,8 @@ DLAllocator::~DLAllocator(void)
 void* DLAllocator::TMalloc(int32 nSize)
 {
 	int32 nRealSize = nSize + sizeof(MemoryHead);
-	//void* result = dlmalloc(nRealSize);
-	void* result = malloc(nRealSize);
+	void* result = dlmalloc(nRealSize);
+	//void* result = malloc(nRealSize);
 	if(!result)
 		return NULL;
 

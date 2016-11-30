@@ -20,7 +20,7 @@ public:
 	Scene(void);
 	virtual ~Scene(void);
 
-	virtual void OnCreate( SceneCreateArg& arg);
+	virtual void OnCreate( SceneCreateArg& arg){}
 	virtual bool Tick( int32 nDeltaTime );
 
 	int32 Instance() { return SceneInfo::GetSceneInstanceID(m_nSceneID); }

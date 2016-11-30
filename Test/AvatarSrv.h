@@ -29,6 +29,8 @@ public:
 	int32 GetPendingTime() { return m_nPendingTime; }
 	int32 SubPendingTime(int32 nDeltaTime) { return m_nPendingTime -= nDeltaTime; }
 
+	virtual bool CheckState(int32 nState) { return m_State.CheckBit(nState); }
+	bool GetStateData(int32 nIdx, uint32& nData) { return m_State.GetData( nIdx, nData); }
 	virtual bool SetState(int32 nState);
 	virtual bool ClearState(int32 nState) { return m_State.ClearBit( nState );}
 protected:

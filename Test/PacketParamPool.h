@@ -42,10 +42,12 @@ public:
 	void SyncParamPool( PacketSender* pPack, SENDPARAMFUNC2 pFunc, int32 nParam, ParamPool* pPool, uint32 paramFlag, uint32 syncFlag, uint32 nParamFlagExclude = 0);
 	void SyncParamPool( PacketSender* pPack, SENDPARAMFUNC3 pFunc, bool bParam, ParamPool* pPool, uint32 paramFlag, uint32 syncFlag, uint32 nParamFlagExclude = 0);
 
-
+	void SyncParam2DBA(class PacketSender* pSender, ParamPool* pPool, uint32 nParamFlag, uint32 nSyncFlag, uint32 nParamFlagExclude = 0);
+	void SyncParam2World(class PacketSender* pSender, ParamPool* pPool, uint32 nParamFlag, uint32 nSyncFlag, uint32 nParamFlagExclude = 0);
+	void SyncParam2Login(class PacketSender* pSender, ParamPool* pPool, uint32 nParamFlag, uint32 nSyncFlag, uint32 nParamFlagExclude = 0);
+	void SyncParam2Node(class PacketSender* pSender,  int32 nSrvID, ParamPool* pPool, uint32 nParamFlag, uint32 nSyncFlag, uint32 nParamFlagExclude = 0);
+	void SyncParam2Dog(class PacketSender* pSender, int32 nSrvID, ParamPool* pPool, uint32 nParamFlag, uint32 nSyncFlag, uint32 nParamFlagExclude = 0);
 	void SyncParam2Gate(class PacketSender* pSender, bool bGateProc, ParamPool* pPool, uint32 nParamFlag, uint32 nSyncFlag, uint32 nParamFlagExclude = 0);
-	void SyncParam2Dog(class PacketSender* pSender, bool bGateProc, ParamPool* pPool, uint32 nParamFlag, uint32 nSyncFlag, uint32 nParamFlagExclude = 0);
-
 
 	bool UpdateParamPool( ParamPoolOwner* pPool, bool bDirty = false);
 	bool UpdateParamPool( ParamPool* pPool, bool bDirty = false);

@@ -19,6 +19,8 @@
 #include "ParamTypeDef.h"
 #include "WorldAvatarCommonData.h"
 #include "CommonDataObj.h"
+#include "WorldLoginActionManager.h"
+#include "ParamPool.h"
 
 WorldAvatar* GetWorldAvatar(int32 nAvatarID)
 {
@@ -82,6 +84,8 @@ WorldAvatar::WorldAvatar()
 	m_bTargetNodeAvatarCreated = false;
 
 	m_pWorld = NULL;
+
+	m_bStorageDataOnNode = false;
 }
 
 
@@ -158,12 +162,26 @@ void WorldAvatar::Send2CurNode(PacketBase& pkt)
 	Send2Node( &pkt, GetNodeSrvID());
 }
 
+int32 WorldAvatar::GetAvatarNameID()
+{
+	if(!m_pParamPool)
+		return -1;
+
+	const char* pUserName = m_pParamPool->GetValueString("title", NULL);
+	return UtilID::CreateFromString(pUserName);
+}
+
 void WorldAvatar::SetParamPool(ParamPool* p)
 {
 	if(!p)
 		return;
 
 	AvatarSrv::SetParamPool(p);
+}
+
+class WorldAvatarCommonData* WorldAvatar::GetCommonDataManager() const
+{
+	return static_cast<WorldAvatarCommonData*>(m_pCommonDataMgr);
 }
 
 void WorldAvatar::NoticeBillingLogout(bool bExitGame)
@@ -235,6 +253,56 @@ void WorldAvatar::SetCurState( WorldStateID newStateID )
 }
 
 
+bool WorldAvatar::PushAllData2CurNode()
+{
+	int32 nNodeSrvID = GetNodeSrvID();
+
+	ServerInfo* pInfo = ServerManager::Instance().GetNodeInfo( nNodeSrvID );
+	if(!pInfo)
+		return false;
+
+	int32 nAvatarID = GetAvatarID();
+
+	{
+		ParamPool* pPool = (ParamPool*)GetParamPool();
+		if(!pPool)
+		{
+			PacketAvatarData pkt;
+
+			pkt.nSrcAvatarID = nAvatarID;
+			pkt.nParamType = GetParamTypeID();
+
+			pkt.SyncParam2Node( this, nNodeSrvID, pPool, eParam_Flag_Server, eParam_Sync_All);
+		}
+	}
+
+	WorldAvatarCommonData* pData = GetCommonDataManager();
+	if(pData)
+		pData->InitData2Node(nNodeSrvID);
+
+	if(GetTeamID() != INVALID_TEAM_ID )
+	{
+		WorldTeam* pTeam = GetWorldTeam();
+		if(pTeam && pTeam->GetItem(GetAvatarDID()) != NULL)
+		{
+			// send complete team struct
+		}
+		else
+		{
+			SetTeamID(INVALID_TEAM_ID);
+
+			// update info 2 node
+		}
+	}
+	else
+	{
+		
+	}
+
+	WorldLoginActionManager::Instance().SendAction2Node(this);
+	return true;
+}
+
 void WorldAvatar::HandleCreateSceneResult(int32 nResult, WorldScene* pScene /*= NULL*/)
 {
 	if(GetScene() == NULL)
@@ -261,6 +329,13 @@ void WorldAvatar::OnEnterGameFailed()
 	SetCurState(eWS_ExitGame);
 }
 
+void WorldAvatar::OnAvatarEnterGame()
+{
+	int32 nAvatarID = GetAvatarID();
+	MyLog::message("Avatar Req EnterGame Succ, AvatarID[%d] Account[%s]", nAvatarID, GetAccountName());
+
+}
+
 void WorldAvatar::OnAvatarLeaveGame()
 {
 	int32 nAvatarID = GetAvatarID();
@@ -269,6 +344,16 @@ void WorldAvatar::OnAvatarLeaveGame()
 
 
 	m_nComState = 0;
+}
+
+bool WorldAvatar::CheckPlayerEnterScene(WorldScene* pScene)
+{
+	// judge the condition
+	// 1.change to arena scene, stop the thing that disturb this action
+	// 2.when loading map, distub to enter arena scene
+
+
+	return true;
 }
 
 void WorldAvatar::SyncAvatarData2DB(bool bExitGame, int32 nSyncFlag)
@@ -378,6 +463,35 @@ void WorldAvatar::TickComponent(int32 nDeltaTime)
 // 		m_pCDCom->WorldTick(nDeltaTime);
 }
 
+bool WorldAvatar::RequestBillingLogin()
+{
+// 	if(!WorldServer::bUseBilling)
+// 		return false;
+// 
+// 	{
+// 		m_nLastAvatarLevel = uint8(GetLevel());
+// 		m_nLastAvatarDID = GetAvatarDID();
+// 
+// 		const char* pSzAvatar = GetParamPool()->GetValueString( "title", NULL);
+// 		if(!pSzAvatar)
+// 		{
+// 			MyLog::error("WorldAvatar::RequestBillingLogin Failed to get pSzAvatar");
+// 			return false;
+// 		}
+// 
+// 		m_strLastAvatarName = std::string(pSzAvatar);
+// 		m_bLastAvatarInfoValid = true;
+// 	}
+// 
+// 	if(!m_bLastAvatarInfoValid)
+// 	{
+// 		MyLog::error("WorldAvatar::RequestBillingLogin Failed LastAvatarInfoValid Not Valid");
+// 		return false;
+// 	}
+
+	return false;
+}
+
 void WorldAvatar::RelaseComponent()
 {
 	//FACTORY_DELOBJ(m_pRelationComponent);
@@ -391,6 +505,22 @@ void WorldAvatar::NotifyCltKickout(int8 nReason)
 	PacketKickOutNotifyClt notifyPkt;
 	notifyPkt.nReason = nReason;
 	SendPacket(&notifyPkt);
+}
+
+void WorldAvatar::SyncAvatarStorageItemData2DB()
+{
+	// sync item data
+	return;
+}
+
+void WorldAvatar::OnAfterPullDataFromNode()
+{
+	WorldAvatarGroup::OnAfterPullDataFromNode();
+	if(m_bStorageDataOnNode)
+	{
+		SyncAvatarStorageItemData2DB();
+		m_bStorageDataOnNode = false;
+	}
 }
 
 Team* WorldAvatar::GetTeam()
@@ -419,7 +549,11 @@ int64 WorldAvatar::GenGalaxyUID()
 
 void WorldAvatar::CreateComponent()
 {
-	
+	WorldAvatarCommonData* pCommonDataMgr = FACTORY_NEWOBJ(WorldAvatarCommonData);
+	if( pCommonDataMgr )
+	{
+		
+	}
 }
 
 void WorldAvatar::ReleaseComponent()
@@ -443,4 +577,13 @@ bool WorldAvatar::Init(CreateWorldAvatarArg& args)
 	CreateComponent();
 
 	return true;
+}
+
+bool IsStorageItem(ParamPool& pool)
+{
+	assert( pool.GetParamDefineIndex() == eParam_Item);
+
+	bool b = (PARAM_GET_VALUE( (&pool), bagtype, (int8)0) == 3);
+
+	return b;
 }

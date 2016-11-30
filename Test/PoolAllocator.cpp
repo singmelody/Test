@@ -84,8 +84,8 @@ void* PoolAllocator::PopMemory()
 
 	if ( !m_head )
 	{
-		//pRes = (char*)dlmalloc(m_cellSize);
-		pRes = (char*)malloc(m_cellSize);
+		pRes = (char*)dlmalloc(m_cellSize);
+		//pRes = (char*)malloc(m_cellSize);
 		if(!pRes)
 			return NULL;
 

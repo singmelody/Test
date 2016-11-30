@@ -35,8 +35,8 @@ void* operator new( size_t nBytes)
 		{
 			if(!s_pAlloc)
 			{
-				//s_pAlloc = (Allocator*)dlmalloc( sizeof(DLAllocator));
-				s_pAlloc = (Allocator*)malloc( sizeof(DLAllocator));
+				s_pAlloc = (Allocator*)dlmalloc( sizeof(DLAllocator));
+				//s_pAlloc = (Allocator*)malloc( sizeof(DLAllocator));
 				if(s_pAlloc)
 				{
 					new(s_pAlloc)DLAllocator();

@@ -43,12 +43,14 @@ public:
 	WorldScene* GetWorldScene(int32 nSceneID) { return (WorldScene*)GetScene(nSceneID); }
 	WorldSceneInfo* GetWorldSceneInfo( uint16 nSceneSID);
 
+	virtual bool Tick( int32 nFrameTime);
+
 	void OnNodeCrash(int32 nNodeID = SERVERID_NULL);
 
 	typedef ID2ItemMap< int32, WorldScene> CreatingSceneMap;
 	CreatingSceneMap m_mapCreatingScenes;
 protected:
-	void PktNode_CreateNodeSceneRst(class PacketCreateSceneResult* pPkt);
+	void PktNode_CreateNodeSceneRst(class PacketCreateNodeSceneRst* pPkt);
 	void PktNode_SceneProcessBits(class PacketSceneProcessBits* pPkt);
 	void PktNode_DestroySceneRequest(class PacketDestroySceneRequest* pPkt);
 	void PktNode_WarScene(class PacketWarScene* pPkt);

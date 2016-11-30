@@ -10,7 +10,7 @@ public:
 
 	void Tick();
 
-	inline uint64 CurTime();
+	uint64 CurTime();
 
 	int32 FrameTime()
 	{

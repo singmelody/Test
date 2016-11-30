@@ -33,7 +33,7 @@ void WorldSceneManager::RegPeerPktHandle(class PacketProcessor* pProc)
 	{WorldScene_TeamCopy scene;}
 	{WorldScene_GuildCopy scene;}
 
-	REG_PACKET_HANDLER( pProc, PacketCreateSceneResult, WorldSceneManager, PktNode_CreateNodeSceneRst);
+	REG_PACKET_HANDLER( pProc, PacketCreateNodeSceneRst, WorldSceneManager, PktNode_CreateNodeSceneRst);
 	REG_PACKET_HANDLER( pProc, PacketSceneProcessBits, WorldSceneManager, PktNode_SceneProcessBits);
 	REG_PACKET_HANDLER( pProc, PacketDestroySceneRequest, WorldSceneManager, PktNode_DestroySceneRequest);
 
@@ -269,6 +269,15 @@ WorldSceneInfo* WorldSceneManager::GetWorldSceneInfo(uint16 nSceneSID)
 	return (WorldSceneInfo*)GetSceneInfo(nSceneSID);
 }
 
+bool WorldSceneManager::Tick(int32 nFrameTime)
+{
+	TickCreatingScenes(nFrameTime);
+
+	TickClosingScenes(nFrameTime);
+
+	return true;
+}
+
 void WorldSceneManager::OnNodeCrash(int32 nNodeID /*= SERVERID_NULL*/)
 {
 	if(nNodeID == SERVERID_NULL )
@@ -297,9 +306,36 @@ void WorldSceneManager::OnNodeCrash(int32 nNodeID /*= SERVERID_NULL*/)
 	}
 }
 
-void WorldSceneManager::PktNode_CreateNodeSceneRst(class PacketCreateSceneResult* pPkt)
+void WorldSceneManager::PktNode_CreateNodeSceneRst(class PacketCreateNodeSceneRst* pPkt)
 {
-	
+	if(!pPkt)
+		return;
+
+	int32 nSceneID = pPkt->nSceneID;
+	CreatingSceneMap& map = m_mapCreatingScenes;
+
+	WorldScene* pScene = map.GetItem(nSceneID);
+	if(!pScene)
+		return;
+
+	map.RemoveItem(nSceneID);
+
+	WorldSceneInfo* pSI = (WorldSceneInfo*)pScene->GetSceneInfo();
+	if( pPkt->nCreateFlag == eScene_Create_Succeed)
+	{
+		pScene->SetSceneState( Scene::eSceneState_Running );
+		pScene->SetArenaID( pPkt->nArenaID );
+		pScene->OnCreateSucceed();
+		pSI->OnSceneCreateSucceed(pScene);
+		m_ScenesTickList.Add( pScene->GetTickNode());
+	}
+	else
+	{
+		pSI->OnSceneCreateFailed( pScene, eCreateSceneError_CreateNodeScene);
+		DestroyScene(nSceneID);
+
+		MyLog::message("Node Create Scene Failed SceneSID[%d], SceneID[%d]", SceneInfo::GetSceneSID(nSceneID), nSceneID);
+	}
 }
 
 void WorldSceneManager::PktNode_SceneProcessBits(class PacketSceneProcessBits* pPkt)
@@ -309,7 +345,12 @@ void WorldSceneManager::PktNode_SceneProcessBits(class PacketSceneProcessBits* p
 
 void WorldSceneManager::PktNode_DestroySceneRequest(class PacketDestroySceneRequest* pPkt)
 {
+	if(!pPkt)
+		return;
 
+	WorldScene* pScene = GetWorldScene(pPkt->nSceneID);
+	if(pScene)
+		pScene->SetSceneState( Scene::eSceneState_Closing );
 }
 
 void WorldSceneManager::PktNode_WarScene(class PacketWarScene* pPkt)
