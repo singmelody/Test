@@ -150,3 +150,5 @@ PACKET_IMPL(PacketDelSrvInfo);
 PACKET_IMPL(PacketRoleListRequest);
 
 PACKET_IMPL(PacketAvatarData);
+
+PACKET_IMPL(PacketAOIListOption);

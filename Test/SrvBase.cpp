@@ -172,6 +172,14 @@ void SrvBase::FillSrvConfig()
 	// bla bla bla
 }
 
+void SrvBase::CloseCltConnection(int32 nSocketID)
+{
+	if(!m_SrvNetMgr)
+		return;
+
+	m_SrvNetMgr->Disconnect( nSocketID );
+}
+
 NetManager* SrvBase::CreateCltNetManager(bool bLZOCompress, int32 nSockRcBufSize, int32 nRcBufferSize, int32 nSockSnBuffSize, int32 nSnBufferSize, FunctionBase_Arg1<int32>* funcAccpet /*= NULL*/, FunctionBase_Arg1<int32>* funcCon /*= NULL*/, FunctionBase_Arg1<int32>* funcDiscon /*= NULL*/, int32 MAX_SOCKETS /*= MY_SOCKET_LIST_SIZE*/)
 {
 	return new BASENETMANAGER( bLZOCompress, nSockRcBufSize, nRcBufferSize, nSockSnBuffSize, nSnBufferSize, funcAccpet, funcCon, funcDiscon, MAX_SOCKETS);
@@ -242,4 +250,12 @@ void SrvBase::PktCltNetEvent(PacketNetEvent* pPkt)
 		MyLog::message("Clt Disconnect Srv because receive packetnetevent with flag = eNetEvent_Disconnect. SocketID = %d", nSocketID);
 		OnCltDisconnect(nSocketID);
 	}
+}
+
+int32 SrvBase::ProcCltPacket()
+{
+	if(!m_CltPktProc)
+		return 0;
+
+	return m_CltPktProc->DoProc();
 }

@@ -22,3 +22,13 @@ bool PeerSrvModuleBase::Init(int32 nArgc, char* argv[])
 
 	return true;
 }
+
+bool PeerSrvModuleBase::ProcessPacket()
+{
+	int32 nPacketProcessed = 0;
+
+	nPacketProcessed += PeerProcPacket();
+	nPacketProcessed += ProcCltPacket();
+
+	return nPacketProcessed > 0;
+}

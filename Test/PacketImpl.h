@@ -746,6 +746,20 @@ START_ADD_PACKET_MEMBER(PacketLogout2Login)
 	ADD_PACKET_MEMBER( nGateID, int32, nGateID);
 PACKET_END(PacketLogout2Login)
 
+PACKET_CLT_2_GATE(PacketAOIListOption, PacketBase)
+enum
+{
+	eClear	= 0,
+	eAdd	= 1,
+	eRemove	= 2,
+};
+uint8 nFlag;
+int32 nTargetAvatarID;
+START_ADD_PACKET_MEMBER(PacketAOIListOption)
+	ADD_PACKET_MEMBER( nFlag, uint8, nFlag);
+	ADD_PACKET_MEMBER( nTargetAvatarID, int32, nTargetAvatarID);
+PACKET_END(PacketAOIListOption)
+
 
 // Packet_Clt
 PACKET_CLT(PacketCltSceneReq, PacketBase)

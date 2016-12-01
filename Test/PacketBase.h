@@ -73,6 +73,8 @@ public:
 	virtual uint32 GetStaticAttribute() const { return PktAttr_ShouldEncrypt; }
 
 	static bool IsClient2Srv(uint32 attr) { return 0 != (attr & PktAttr_IsClt2Srv); }
+	static bool IsClt2Node(uint32 attr) { return 0 != (attr & PktAttr_IsClt2Node); }
+
 	static bool ShouldEncrypt(uint32 attr) { return 0 != (attr & PktAttr_ShouldEncrypt); }
 	static bool IsEvent(uint32 attr) { return 0 != (attr & PktAttr_IsEvent); }
 	static bool IsDisconnectCommand(uint32 attr) { return 0 != ( attr & PktAttr_DisconnectCommand);}

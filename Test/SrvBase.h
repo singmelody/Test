@@ -82,6 +82,7 @@ protected:
 	virtual void DftCltPktHandle(PacketBase* pPkt) {}
 	void PktCltNetEvent( class PacketNetEvent* pPkt);
 
+	virtual int32 ProcCltPacket();
 
 	std::map<int32, CltNewConnection*>	m_CltNewConnections;
 

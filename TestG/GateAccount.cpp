@@ -34,9 +34,25 @@ void GateAccount::Delete(GateAccount* ptr)
 	FactoryManager_Arg1<int32>::Instance().Delete(ptr);
 }
 
+void GateAccount::ChangeState(GateAccountState nNewState)
+{
+	GateAccountStateBase* pNewState = GateAccountStateBase::GetState(nNewState);
+	if( pNewState == m_pState )
+		return;
+
+	m_pState->OnLeave(*this);
+	m_pState = pNewState;
+	m_pState->OnEnter(*this);
+}
+
 void GateAccount::SetExpireTime(uint32 nMilliSeconds)
 {
 	m_expireTime = Time::CurrentTime() + Time(nMilliSeconds);
+}
+
+void GateAccount::Send2Clt(class PacketBase& pkt)
+{
+	GateServer::Instance().SrvSend( GetCltSocketID(), &pkt);
 }
 
 GateAccountManager::GateAccountManager()
@@ -123,4 +139,16 @@ GateAccount* GateAccountManager::GetAccountByAvatarID(int32 nAvatarID)
 
 	GateAccount* pAccount = itr->second;
 	return pAccount;
+}
+
+void GateAccountManager::Send2AllAvatar(PacketBase& pkt)
+{
+	for (GateAccountMap::iterator itr = m_mapAvatarID2Account.begin(); itr != m_mapAvatarID2Account.end();++itr)
+	{
+		GateAccount* pAccount = itr->second;
+		if(!pAccount)
+			continue;
+
+		pAccount->Send2Clt(pkt);
+	}
 }

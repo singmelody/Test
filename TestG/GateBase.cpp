@@ -1,6 +1,7 @@
 #include "StdAfx.h"
 #include "GateBase.h"
 #include "GateCltNetManager.h"
+#include "MyLog.h"
 
 GateBase::GateBase(void)
 	: PeerSrvModuleBase(eSrv_Gate)
@@ -26,4 +27,10 @@ GateCltNetChannel* GateBase::GetCltChannel(int32 nSocketID)
 void GateBase::FreeCltChannel(GateCltNetChannel* pChannel)
 {
 	m_SrvNetMgr->FreeChannel(pChannel);
+}
+
+void GateBase::OnRemoveWorldInfo(ServerInfo* pInfo)
+{
+	MyLog::message("World Srv Lose ! will Exit !");
+	StopMainLoop();
 }

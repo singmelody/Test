@@ -1,6 +1,7 @@
 #pragma once
 #include "PacketData.h"
 #include "Factory.h"
+#include <list>
 
 class FSMExtendData : public PacketData
 {
@@ -15,9 +16,15 @@ public:
 
 	uint8	m_nDataCnt;
 	uint16	m_nDataSize;
-	char	m_nDataBuffer[512];
+	char	m_vDataBuffer[512];
 
 	bool	FillPacket( class PacketBase& pkt);
 	void	ProcessPacket(class PacketProcessor* pProccessor);
 };
 
+class FSMExtendDataList : public std::list<FSMExtendData*>
+{
+public:
+	FSMExtendDataList();
+	virtual ~FSMExtendDataList();
+};

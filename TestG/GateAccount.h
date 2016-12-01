@@ -27,6 +27,7 @@ enum GateAccountState
 };
 
 class GateAccountStateBase;
+class PacketBase;
 
 struct GateAvatar
 {
@@ -67,6 +68,8 @@ public:
 	GateAccountStateBase* GetState() const { return m_pState; }
 	int32 GetCltSocketID() const { return m_nClntSockID; }
 
+	void Send2Clt(class PacketBase& pkt);
+
 	std::string strUserCN;
 protected:
 	int32	m_nClntSockID;
@@ -99,6 +102,7 @@ public:
 	GateAccount* GetAccount(int32 nSocketID);
 	GateAccount* GetAccountByAvatarID(int32 nAvatarID);
 
+	void Send2AllAvatar(PacketBase& pkt);
 private:
 	volatile long m_RWLock_mapAvatarID2ChannelID;
 	

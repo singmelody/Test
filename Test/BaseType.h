@@ -74,6 +74,10 @@ typedef TiXmlNode XmlNode;
 #define XIAOTUI_TIME					10000
 
 #define SRV_HEART_BEAT_INTERVAL			30000
+#define GATE_FRAME_TIME					50
+
+#define Clt_Packet_Check_Time			20
+#define Clt_Packet_Send_Freq			100*Clt_Packet_Check_Time
 
 #define MIN_ACCOUNT						5
 #define MAX_ACCOUNT						50

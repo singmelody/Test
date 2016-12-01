@@ -9,6 +9,17 @@
 
 ParamPool::ParamPool(void)
 {
+	m_pDef = NULL;
+
+	m_paramBlockCount = 0;
+
+	m_paramBuffSize = 0;
+
+	m_pParamBuffer = NULL;
+	m_pTemplateBuffer = NULL;
+
+	m_initDataID = 1;
+	m_bUserBuff = false;
 }
 
 

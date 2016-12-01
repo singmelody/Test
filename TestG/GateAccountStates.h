@@ -22,6 +22,7 @@ public:
 	virtual void HandleCltPacket(GateAccount& account, class PacketDelCharacter& pkt) { DefaultHandlePacket( account, pkt, "Client");}
 	virtual void HandleCltPacket(GateAccount& account, class PacketCltSelectAvatar& pkt) { DefaultHandlePacket( account, pkt, "Client");}
 	virtual void HandleCltPacket(GateAccount& account, class PacketLogout2Login& pkt) { DefaultHandlePacket( account, pkt, "Client");}
+	virtual void HandleCltPacket(GateAccount& account, class PacketConnectGateSrv& pkt) { DefaultHandlePacket( account, pkt, "Client"); }
 
 	// from world
 	virtual void HandleWorldPacket(GateAccount& account, class PacketNewConnectioRet& pkt) { DefaultHandlePacket( account, pkt, "World"); }

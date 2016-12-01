@@ -5,6 +5,7 @@
 #include "PacketFactory.h"
 #include "PacketImpl.h"
 #include "GateCltNetManager.h"
+#include "TimeManager.h"
 
 GatePeerPacketProc::GatePeerPacketProc()
 {
@@ -59,6 +60,44 @@ bool GatePeerPacketProc::OnPacketReceived(PacketBase* pPkt)
 	}
 
 	return MyPacketProc::OnPacketReceived(pPkt);
+}
+
+int32 GatePeerPacketProc::DoProc()
+{
+	int32 nProcCnt = 0;
+
+	uint64 nProcStopTime = TimeManager::Instance().CurTime() + GATE_FRAME_TIME;
+
+	PacketBase* pPkt = m_receivingPktList.Pop_Head();
+	while (!pPkt)
+	{
+		DoProcOne(pPkt);
+
+		FACTORY_DEL_PACKET(pPkt);
+		nProcCnt++;
+
+		if( nProcCnt >= PACKET_PROCESS_COUNT_PER_TICK )
+			break;
+
+		uint64 nNow = TimeManager::Instance().CurTime();
+		if( nNow > nProcStopTime )
+			break;
+
+		pPkt = m_receivingPktList.Pop_Head();
+	}
+
+	return nProcCnt;
+}
+
+void GatePeerPacketProc::DoProcOne(PacketBase* pPkt)
+{
+	if( pPkt->CheckPacketType( ePacketType_BroadCast ))
+	{
+		AccountMgr.Send2AllAvatar(*pPkt);
+		return;
+	}
+
+	ProcessPacket( pPkt );
 }
 
 GateCltPacketProc::GateCltPacketProc()
