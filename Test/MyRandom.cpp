@@ -69,3 +69,8 @@ uint32 MyRandom::RandInt(uint32 nMin, uint32 nMax)
 	else
 		return nMin + Rand32() % ( nMax - nMin + 1);
 }
+
+void MyRandom::SRand(int32 nSeed)
+{
+	srand(nSeed);
+}

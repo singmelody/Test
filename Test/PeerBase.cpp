@@ -194,6 +194,11 @@ void PeerBase::PeerNetOperation(int32 nSocketID, int32 nNetEvent)
 	m_PeerPktProc->PushPacket(pPkt);
 }
 
+NetChannelBase* PeerBase::GetPeerChannel(int32 nChannelID)
+{
+	return m_pPeerNetManager->GetChannel(nChannelID);
+}
+
 void PeerBase::Run()
 {
 	WatchDog::Instance().NextStep(PEER_THREAD_WATCHDOG_ID);
@@ -209,6 +214,11 @@ void PeerBase::Run()
 	{
 		GameUtil::Sleep(1);
 	}
+}
+
+void PeerBase::FreePeerChannel(class NetChannelBase* pChannel)
+{
+	m_pPeerNetManager->FreeChannel(pChannel);
 }
 
 int32 PeerBase::PeerConnect(char* sIP, int32 nPort, bool bDirty /*= false*/)

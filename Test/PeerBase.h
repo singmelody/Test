@@ -8,6 +8,7 @@
 class NetManager;
 class MyPacketProc;
 class MyThread;
+class NetChannelBase;
 
 class PeerBase : public PacketSender
 {
@@ -35,8 +36,14 @@ public:
 		FunctionBase_Arg1<int32>* funcAccpet = NULL, FunctionBase_Arg1<int32>* funcCon = NULL, FunctionBase_Arg1<int32>* funcDiscon = NULL, int32 MAX_SOCKETS = MY_SOCKET_LIST_SIZE);
 
 	void PeerNetOperation( int32 nSocketID, int32 nNetEvent);
+
+	NetChannelBase* GetPeerChannel(int32 nChannelID);
+	void FreePeerChannel(class NetChannelBase* pChannel);
+
 protected:
 	void Run();
+
+
 
 	int32 PeerConnect(char* sIP, int32 nPort, bool bDirty = false);
 

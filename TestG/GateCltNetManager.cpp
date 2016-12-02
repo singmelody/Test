@@ -39,7 +39,39 @@ void GateCltNetManager::OnReceivedPacket(NetChannelBase* pChannel, PacketBase* p
 		{
 			nPeerSockID = pCltChannel->m_nNodeSocketID;
 		}
+		else
+		{
+			nPeerSockID = pCltChannel->m_nWorldSocketID;
+		}
+
+		if(!Dispatch2PeerChannel( nPeerSockID, pPkt))
+			FACTORY_DEL_PACKET(pPkt);
+
+		return;
 	}
+
+	if(pCltChannel->ProcessPrivatePakcet(pPkt))
+	{
+		FACTORY_DEL_PACKET(pPkt);
+		return;
+	}
+
+	m_pProcessor->OnPacketReceived(pPkt);
+}
+
+bool GateCltNetManager::Dispatch2PeerChannel(int32 nChannel, PacketBase* pPkt)
+{
+	if( nChannel < 0 )
+		return false;
+
+	NetChannelBase* pChannel = GateSrv.GetPeerChannel(nChannel);
+	if(!pChannel)
+		return false;
+
+	pChannel->AppendPacket(pPkt);
+	GateSrv.FreePeerChannel(pChannel);
+
+	return true;
 }
 
 GateCltNetChannel::GateCltNetChannel()
@@ -85,7 +117,14 @@ bool GateCltNetChannel::ProcessFSMExtendDatas(FSMExtendDataList& list)
 
 bool GateCltNetChannel::ProcessPrivatePakcet(PacketBase* pPkt)
 {
+	static const int32 PACKET_ID_OF_PacketAOIChange = PacketAOIListOption::GetClassStatic()->ClassID();
+	if( pPkt->GetPacketID() == PACKET_ID_OF_PacketAOIChange )
+	{
+		OnAOIListOption( (PacketAOIListOption*)pPkt);
+		return true;
+	}
 
+	return false;
 }
 
 void GateCltNetChannel::AppendPacket(PacketBase* pPkt)

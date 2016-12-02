@@ -20,6 +20,8 @@ public:
 
 	f32	RandFloat( f32 fMin, f32 fMax);
 	uint32 RandInt( uint32 nMin, uint32 nMax);
+
+	static void SRand(int32 nSeed);
 protected:
 	int32 m_nSeed;
 	int32 m_nCount;

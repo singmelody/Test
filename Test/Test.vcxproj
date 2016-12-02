@@ -295,9 +295,11 @@
     <ClInclude Include="MyFile.h" />
     <ClInclude Include="MyMD5.h" />
     <ClInclude Include="MyMutex.h" />
+    <ClInclude Include="MyNetThread.h" />
     <ClInclude Include="MyNetWork.h" />
     <ClInclude Include="MyPacket.h" />
     <ClInclude Include="MyPacketProc.h" />
+    <ClInclude Include="MyProcessThread.h" />
     <ClInclude Include="MyRandom.h" />
     <ClInclude Include="MySockAddr.h" />
     <ClInclude Include="MySocket.h" />
@@ -306,7 +308,9 @@
     <ClInclude Include="MyXml.h" />
     <ClInclude Include="NetChannel.h" />
     <ClInclude Include="NetChannelBase.h" />
+    <ClInclude Include="NetEventHandler.h" />
     <ClInclude Include="NetManager.h" />
+    <ClInclude Include="NetReactor.h" />
     <ClInclude Include="NoCopyable.h" />
     <ClInclude Include="NodeSrvGrp.h" />
     <ClInclude Include="NpcParamDef.h" />
@@ -374,6 +378,7 @@
     <ClInclude Include="MyMath.h" />
     <ClInclude Include="UtilID.h" />
     <ClInclude Include="WatchDog.h" />
+    <ClInclude Include="WorkUnit.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Allocator.cpp" />
@@ -445,9 +450,11 @@
     <ClCompile Include="MyFile.cpp" />
     <ClCompile Include="MyMD5.cpp" />
     <ClCompile Include="MyMutex.cpp" />
+    <ClCompile Include="MyNetThread.cpp" />
     <ClCompile Include="MyNetWork.cpp" />
     <ClCompile Include="MyPacket.cpp" />
     <ClCompile Include="MyPacketProc.cpp" />
+    <ClCompile Include="MyProcessThread.cpp" />
     <ClCompile Include="MyRandom.cpp" />
     <ClCompile Include="MySockAddr.cpp" />
     <ClCompile Include="MySocket.cpp" />
@@ -531,6 +538,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="WatchDog.cpp" />
+    <ClCompile Include="WorkUnit.cpp" />
     <ClInclude Include="Singleton.h">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
