@@ -501,6 +501,9 @@
     <ClInclude Include="WorkUnit.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SelectReactor.h">
+      <Filter>Game\Net</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -916,6 +919,9 @@
     </ClCompile>
     <ClCompile Include="WorkUnit.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SelectReactor.cpp">
+      <Filter>Game\Net</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

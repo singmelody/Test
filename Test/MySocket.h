@@ -46,9 +46,10 @@ public:
 
 	SOCKET GetSocket() const { return m_Sock; }
 	void Shift(Socket& sock);
+
+	static int32 GetSysError();
 protected:
 	int32 GetSockError() const;
-	static int32 GetSysError();
 
 	bool IsValid();
 

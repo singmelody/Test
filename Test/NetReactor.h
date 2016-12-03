@@ -25,7 +25,7 @@ public:
 	virtual bool RegisterHandler(NetEventHandler* pEvent, int32 events = eNEM_ALL) = 0;
 	virtual void RemoveHandler(NetEventHandler* pEvent, int32 events = eNEM_ALL) = 0;
 
-	virtual bool HandleEvents(const Time& now) = 0;
+	virtual bool HandleEvents(const Time& now, int32 nWaitMs) = 0;
 	virtual int32 GetNumOfHandler() const = 0;
 };
 

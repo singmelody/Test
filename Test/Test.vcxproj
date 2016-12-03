@@ -352,6 +352,7 @@
     <ClInclude Include="SceneManagerBase.h" />
     <ClInclude Include="SceneProcess.h" />
     <ClInclude Include="SceneProcessCont.h" />
+    <ClInclude Include="SelectReactor.h" />
     <ClInclude Include="ServerConfig.h" />
     <ClInclude Include="ServerGrp.h" />
     <ClInclude Include="ServerGrpInfo.h" />
@@ -502,6 +503,7 @@
     <ClCompile Include="SceneManagerBase.cpp" />
     <ClCompile Include="SceneProcess.cpp" />
     <ClCompile Include="SceneProcessCont.cpp" />
+    <ClCompile Include="SelectReactor.cpp" />
     <ClCompile Include="ServerConfig.cpp" />
     <ClCompile Include="ServerGrp.cpp" />
     <ClCompile Include="ServerGrpInfo.cpp" />
