@@ -27,10 +27,10 @@ public:
 	~SockAddr(void) {}
 
 
-	uint16 GetPort() { return m_port; }
+	uint16 GetPort() const{ return m_port; }
 	void SetPort(uint16 port) { m_port = port; }
 
-	const std::string& GetIP()
+	const std::string& GetIP() const
 	{
 		return m_IP;
 	}

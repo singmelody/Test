@@ -52,6 +52,9 @@
     <Filter Include="Game\Net">
       <UniqueIdentifier>{42576d59-27be-425f-a752-a6c6612d53c2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Thread">
+      <UniqueIdentifier>{eb39a340-914f-4a4c-90fb-01bc74506e8f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -87,9 +90,6 @@
     <ClInclude Include="ServerConfig.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="MyMutex.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="LoadTemplate.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -106,9 +106,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CommonConfig.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Thread.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="NoCopyable.h">
@@ -177,15 +174,6 @@
     <ClInclude Include="MyMD5.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MySocket.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MySockAddr.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MYEvent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="PacketBase.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -199,9 +187,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PacketFactory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MyNetWork.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SocketAccept.h">
@@ -477,9 +462,6 @@
     <ClInclude Include="TimeManager.h">
       <Filter>Util\Time</Filter>
     </ClInclude>
-    <ClInclude Include="MyNetThread.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="NetChannel.h">
       <Filter>Game\Net</Filter>
     </ClInclude>
@@ -498,11 +480,44 @@
     <ClInclude Include="MyProcessThread.h">
       <Filter>Game\Net</Filter>
     </ClInclude>
-    <ClInclude Include="WorkUnit.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="SelectReactor.h">
       <Filter>Game\Net</Filter>
+    </ClInclude>
+    <ClInclude Include="MyNetThread.h">
+      <Filter>Game\Net</Filter>
+    </ClInclude>
+    <ClInclude Include="MySmartPtr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MyNetServiceImpl.h">
+      <Filter>Game\Net</Filter>
+    </ClInclude>
+    <ClInclude Include="MyThreadGroup.h">
+      <Filter>Game\Thread</Filter>
+    </ClInclude>
+    <ClInclude Include="Thread.h">
+      <Filter>Game\Thread</Filter>
+    </ClInclude>
+    <ClInclude Include="MyEvent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MyNetWork.h">
+      <Filter>Game\Net</Filter>
+    </ClInclude>
+    <ClInclude Include="MySockAddr.h">
+      <Filter>Game\Net</Filter>
+    </ClInclude>
+    <ClInclude Include="MySocket.h">
+      <Filter>Game\Net</Filter>
+    </ClInclude>
+    <ClInclude Include="MyMutex.h">
+      <Filter>Game\Thread</Filter>
+    </ClInclude>
+    <ClInclude Include="WorkUnit.h">
+      <Filter>Game\Thread</Filter>
+    </ClInclude>
+    <ClInclude Include="Acceptor.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -533,9 +548,6 @@
     <ClCompile Include="PoolAllocator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MyMutex.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="LoadTemplate.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -549,9 +561,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CommonConfig.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Thread.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="OperatorNew.cpp">
@@ -611,12 +620,6 @@
     <ClCompile Include="MyMD5.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MySocket.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MYEvent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="PacketBase.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -632,16 +635,10 @@
     <ClCompile Include="PacketFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MyNetWork.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="SocketAccept.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="DataSerialization.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MySockAddr.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="LZOCompressor.cpp">
@@ -896,9 +893,6 @@
     <ClCompile Include="TimeManager.cpp">
       <Filter>Util\Time</Filter>
     </ClCompile>
-    <ClCompile Include="MyNetThread.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="NetChannel.cpp">
       <Filter>Game\Net</Filter>
     </ClCompile>
@@ -917,11 +911,47 @@
     <ClCompile Include="MyProcessThread.cpp">
       <Filter>Game\Net</Filter>
     </ClCompile>
-    <ClCompile Include="WorkUnit.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="SelectReactor.cpp">
       <Filter>Game\Net</Filter>
+    </ClCompile>
+    <ClCompile Include="MyNetThread.cpp">
+      <Filter>Game\Net</Filter>
+    </ClCompile>
+    <ClCompile Include="MySmartPtr.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MyNetServiceImpl.cpp">
+      <Filter>Game\Net</Filter>
+    </ClCompile>
+    <ClCompile Include="Thread.cpp">
+      <Filter>Game\Thread</Filter>
+    </ClCompile>
+    <ClCompile Include="MyThreadGroup.cpp">
+      <Filter>Game\Thread</Filter>
+    </ClCompile>
+    <ClCompile Include="WorkUnit.cpp">
+      <Filter>Game\Thread</Filter>
+    </ClCompile>
+    <ClCompile Include="MyEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MyNetWork.cpp">
+      <Filter>Game\Net</Filter>
+    </ClCompile>
+    <ClCompile Include="MySockAddr.cpp">
+      <Filter>Game\Net</Filter>
+    </ClCompile>
+    <ClCompile Include="MySocket.cpp">
+      <Filter>Game\Net</Filter>
+    </ClCompile>
+    <ClCompile Include="MyMutex.cpp">
+      <Filter>Game\Thread</Filter>
+    </ClCompile>
+    <ClCompile Include="MyStatics.cpp">
+      <Filter>Game\Net</Filter>
+    </ClCompile>
+    <ClCompile Include="Acceptor.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

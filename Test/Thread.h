@@ -2,6 +2,7 @@
 
 #include <Windows.h>
 #include <string>
+#include "NoCopyable.h"
 
 #define GSleep(nTime) Thread::Sleep(nTime);
 
@@ -14,11 +15,11 @@ enum Status
 
 class FunctionBase_Arg0;
 
-class ThreadBase
+class Thread : public NoCopyable
 {
 public:
-	explicit ThreadBase( const char* strName = "");
-	virtual ~ThreadBase();
+	explicit Thread( const char* strName = "");
+	virtual ~Thread();
 	
 	void Start();
 	virtual void Run(){}
@@ -32,6 +33,8 @@ public:
 
 	const char* GetThreadName() { return m_strName.c_str();}
 
+	virtual uint32 GetLoad() const{ return 1; }
+
 	static void Sleep(const int64 nMilliSecond);
 protected:
 	unsigned int m_threadID;
@@ -44,7 +47,7 @@ protected:
 	const std::string m_strName;
 };
 
-class MyThread : public ThreadBase
+class MyThread : public Thread
 {
 public:
 	explicit MyThread(const std::string& strName = std::string());

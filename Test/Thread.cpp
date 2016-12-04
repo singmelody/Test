@@ -6,19 +6,19 @@
 
 #define MS_VC_EXCEPTION 0x406D1388
 
-ThreadBase::ThreadBase(const char* strName) : m_strName(strName)
+Thread::Thread(const char* strName) : m_strName(strName)
 {
 	m_threadID = 0;
 	SetStatus(eThread_Ready);
 	m_handle = NULL;
 }
 
-ThreadBase::~ThreadBase()
+Thread::~Thread()
 {
 
 }
 
-void ThreadBase::Start()
+void Thread::Start()
 {
 	if(GetStatus() != eThread_Ready)
 		return;
@@ -58,10 +58,10 @@ void ThreadBase::Start()
 	MyLog::message("Thread[%s] START!", m_strName.c_str());
 }
 
-void ThreadBase::Stop()
+void Thread::Stop()
 {
-// 	if(GetStatus() != eThread_Running)
-// 		return;
+	if(GetStatus() != eThread_Running)
+		return;
 
 	TerminateThread(m_handle, 0);
 	CloseHandle( m_handle);
@@ -71,7 +71,7 @@ void ThreadBase::Stop()
 	MyLog::message("Thread[%s] STOP!", m_strName.c_str());
 }
 
-void ThreadBase::Wait()
+void Thread::Wait()
 {
 	if( GetStatus() != eThread_Running )
 		return;
@@ -85,7 +85,7 @@ void ThreadBase::Wait()
 	MyLog::message("Thread[%s] STOP!", m_strName.c_str());
 }
 
-bool ThreadBase::IsInThisThread()
+bool Thread::IsInThisThread()
 {
 	if (GetStatus() != eThread_Running && GetStatus() != eThread_Exiting)
 		return false;
@@ -96,14 +96,14 @@ bool ThreadBase::IsInThisThread()
 	return true;
 }
 
-void ThreadBase::Sleep(const int64 nMilliSecond)
+void Thread::Sleep(const int64 nMilliSecond)
 {
 	::Sleep((DWORD)nMilliSecond);
 }
 
-unsigned int __stdcall ThreadBase::ThreadProcess(void* ptr)
+unsigned int __stdcall Thread::ThreadProcess(void* ptr)
 {
-	ThreadBase* pThread = (ThreadBase*)ptr;
+	Thread* pThread = (Thread*)ptr;
 	pThread->Run();
 	pThread->SetStatus(eThread_Exiting);
 	::_endthreadex(0);
@@ -112,7 +112,7 @@ unsigned int __stdcall ThreadBase::ThreadProcess(void* ptr)
 
 
 MyThread::MyThread(const std::string& strName /*= std::string()*/)
-	: ThreadBase(strName.c_str())
+	: Thread(strName.c_str())
 	, m_pUpdateFunc(NULL)
 	, m_bExit(false)
 {

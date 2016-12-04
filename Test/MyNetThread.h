@@ -16,9 +16,7 @@ public:
 
 	void RegisterHandler(NetEventHandler* pHandler, uint32 nEvent);
 
-	uint32 GetLoad() const{
-		return m_nNumOfHandle;
-	}
+	virtual uint32 GetLoad() const{ return m_nNumOfHandle; }
 
 protected:
 	virtual bool OnInit();

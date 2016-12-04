@@ -3,7 +3,7 @@
 #include "Thread.h"
 #include "WorkUnit.h"
 
-class MyProcessThread : public ThreadBase, public WorkUnit
+class MyProcessThread : public Thread, public WorkUnit
 {
 public:
 	MyProcessThread(void);

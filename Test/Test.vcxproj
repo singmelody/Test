@@ -232,6 +232,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Acceptor.h" />
     <ClInclude Include="Allocator.h" />
     <ClInclude Include="AreaManager.h" />
     <ClInclude Include="ArenaDefine.h" />
@@ -282,7 +283,7 @@
     <ClInclude Include="ModuleFuncManager.h" />
     <ClInclude Include="MyClass.h" />
     <ClInclude Include="MyClassManager.h" />
-    <ClInclude Include="MYEvent.h" />
+    <ClInclude Include="MyEvent.h" />
     <ClInclude Include="MyFactory.h" />
     <ClInclude Include="MyListNode.h" />
     <ClInclude Include="MyLoadTemplateManager.h" />
@@ -295,15 +296,18 @@
     <ClInclude Include="MyFile.h" />
     <ClInclude Include="MyMD5.h" />
     <ClInclude Include="MyMutex.h" />
+    <ClInclude Include="MyNetServiceImpl.h" />
     <ClInclude Include="MyNetThread.h" />
     <ClInclude Include="MyNetWork.h" />
     <ClInclude Include="MyPacket.h" />
     <ClInclude Include="MyPacketProc.h" />
     <ClInclude Include="MyProcessThread.h" />
     <ClInclude Include="MyRandom.h" />
+    <ClInclude Include="MySmartPtr.h" />
     <ClInclude Include="MySockAddr.h" />
     <ClInclude Include="MySocket.h" />
     <ClInclude Include="MyString.h" />
+    <ClInclude Include="MyThreadGroup.h" />
     <ClInclude Include="MyVector.h" />
     <ClInclude Include="MyXml.h" />
     <ClInclude Include="NetChannel.h" />
@@ -382,6 +386,7 @@
     <ClInclude Include="WorkUnit.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Acceptor.cpp" />
     <ClCompile Include="Allocator.cpp" />
     <ClCompile Include="AreaManager.cpp" />
     <ClCompile Include="AsynContextManager.cpp" />
@@ -438,7 +443,7 @@
     <ClCompile Include="ModuleFuncManager.cpp" />
     <ClCompile Include="MyClass.cpp" />
     <ClCompile Include="MyClassManager.cpp" />
-    <ClCompile Include="MYEvent.cpp" />
+    <ClCompile Include="MyEvent.cpp" />
     <ClCompile Include="MyFactory.cpp" />
     <ClCompile Include="MyListNode.cpp" />
     <ClCompile Include="MyLoadTemplateManager.cpp" />
@@ -451,15 +456,19 @@
     <ClCompile Include="MyFile.cpp" />
     <ClCompile Include="MyMD5.cpp" />
     <ClCompile Include="MyMutex.cpp" />
+    <ClCompile Include="MyNetServiceImpl.cpp" />
     <ClCompile Include="MyNetThread.cpp" />
     <ClCompile Include="MyNetWork.cpp" />
     <ClCompile Include="MyPacket.cpp" />
     <ClCompile Include="MyPacketProc.cpp" />
     <ClCompile Include="MyProcessThread.cpp" />
     <ClCompile Include="MyRandom.cpp" />
+    <ClCompile Include="MySmartPtr.cpp" />
     <ClCompile Include="MySockAddr.cpp" />
     <ClCompile Include="MySocket.cpp" />
+    <ClCompile Include="MyStatics.cpp" />
     <ClCompile Include="MyString.cpp" />
+    <ClCompile Include="MyThreadGroup.cpp" />
     <ClCompile Include="MyVector.cpp" />
     <ClCompile Include="NetChannel.cpp" />
     <ClCompile Include="NetChannelBase.cpp" />
