@@ -517,7 +517,7 @@
       <Filter>Game\Thread</Filter>
     </ClInclude>
     <ClInclude Include="Acceptor.h">
-      <Filter>Header Files</Filter>
+      <Filter>Game\Net</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -951,7 +951,7 @@
       <Filter>Game\Net</Filter>
     </ClCompile>
     <ClCompile Include="Acceptor.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Game\Net</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
