@@ -101,3 +101,6 @@ public:
 
 	void DestroyNetService(INetService* pService);
 };
+
+INetService* CreateNetService(uint32 nID, const NetServiceParam& param, INetEventListener* pListener);
+void DestroyNetService(INetService* pService)
