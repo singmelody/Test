@@ -4,8 +4,6 @@
 #include <string>
 #include "NoCopyable.h"
 
-#define GSleep(nTime) Thread::Sleep(nTime);
-
 enum Status
 {
 	eThread_Ready,

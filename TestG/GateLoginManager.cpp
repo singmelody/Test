@@ -6,7 +6,9 @@
 #include "MyLog.h"
 #include "GateServer.h"
 #include "GateAccountStates.h"
+#include "PacketImpl.h"
 
+FINISH_FACTORY_ARG0(PasskeyInfo);
 
 GateLoginManager::GateLoginManager(void)
 {
@@ -68,4 +70,40 @@ void GateLoginManager::PktClt_Logout2Login(class PacketLogout2Login *pPkt)
 {
 	assert(pPkt);
 	HandleCltPacket(*pPkt);
+}
+
+void GateLoginManager::Tick(int32 nFrameTime)
+{
+	ProcPassKeyInfo(nFrameTime);
+}
+
+void GateLoginManager::ProcPassKeyInfo(int32 nFrameTime)
+{
+	std::vector<UtilID> expireWaits;
+
+	PasskeyInfoMap& map = m_PasskeyInfos;
+
+	PasskeyInfoMap::iterator itrEnd = map.end();
+
+	for (auto itr = map.begin(); itr != itrEnd; ++itr)
+	{
+		PasskeyInfo* pPasskey = itr->second;
+
+		pPasskey->nExpireTime -= nFrameTime;
+
+		if( pPasskey->nExpireTime <= 0 )
+		{
+			OnLoseClt();
+			FACTORY_DELOBJ(pPasskey);
+			itr->second = NULL;
+			expireWaits.push_back(itr->first);
+		}
+	}
+}
+
+void GateLoginManager::OnLoseClt()
+{
+	PacketGateLoseClt pkt;
+	pkt.nGateID = GateSrv.GetSrvID();
+	Send2Login(&pkt);
 }

@@ -152,3 +152,7 @@ PACKET_IMPL(PacketRoleListRequest);
 PACKET_IMPL(PacketAvatarData);
 
 PACKET_IMPL(PacketAOIListOption);
+
+PACKET_IMPL(PacketGateStressInfo);
+
+PACKET_IMPL(PacketGateLoseClt);

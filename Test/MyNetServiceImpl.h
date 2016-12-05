@@ -1,8 +1,8 @@
 #pragma once
 
+#include <hash_map>
 #include "MyNetWork.h"
 #include "MyThreadGroup.h"
-#include <hash_map>
 
 enum NetServiceState
 {

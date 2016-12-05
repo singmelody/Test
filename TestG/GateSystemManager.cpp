@@ -3,8 +3,12 @@
 #include "MyLog.h"
 #include "PacketFactory.h"
 #include "PacketBase.h"
+#include "GateAccount.h"
+#include "PacketImpl.h"
+#include "GateServer.h"
 
 GateSystemManager::GateSystemManager(void)
+	: m_nLastSocketCnt(0)
 {
 }
 
@@ -42,4 +46,24 @@ void GateSystemManager::PrintPackets()
 	 
 	MyLog::message("******************************");
 
+}
+
+void GateSystemManager::Tick(int32 nFrameTime)
+{
+	ProcGateStressInfo(nFrameTime);
+}
+
+void GateSystemManager::ProcGateStressInfo(int32 nFrameTime)
+{
+	const uint32 nCurSocketCnt = int32(GateAccountManager::Instance().GetAccountCount());
+	if( nCurSocketCnt == m_nLastSocketCnt )
+		return;
+
+	m_nLastSocketCnt = nCurSocketCnt;
+
+	PacketGateStressInfo pkt;
+	pkt.nGateID = GateSrv.GetSrvID();
+	pkt.nSocketCnt = m_nLastSocketCnt;
+
+	Send2Login(&pkt);
 }

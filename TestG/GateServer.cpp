@@ -6,6 +6,9 @@
 #include "MyLog.h"
 #include "FSMExtendData.h"
 #include "GateChatManager.h"
+#include "GateSystemManager.h"
+#include "GateLoginManager.h"
+#include "GateAccount.h"
 
 GateServer::GateServer(void)
 {
@@ -15,6 +18,17 @@ GateServer::GateServer(void)
 
 GateServer::~GateServer(void)
 {
+}
+
+void GateServer::ProcessLogic(int32 nFrameTime)
+{
+	GateBase::ProcessLogic(nFrameTime);
+
+	ProcNewConnection(nFrameTime);
+
+	GateSystemManager::Instance().Tick(nFrameTime);
+	GateLoginManager::Instance().Tick(nFrameTime);
+	GateAccountManager::Instance().Tick(nFrameTime);
 }
 
 MyPacketProc* GateServer::CreatePeerPktProc()

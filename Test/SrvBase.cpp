@@ -7,6 +7,7 @@
 #include "PacketImpl.h"
 #include "WatchDog.h"
 #include "ConfigManager.h"
+#include "GameUtil.h"
 
 FINISH_FACTORY_ARG0(CltNewConnection);
 
@@ -231,6 +232,70 @@ void SrvBase::CltNetOperation(int32 nSocketID, int32 nNetEvent)
 	pkt->nFlag = nNetEvent;
 
 	m_CltPktProc->PushPacket(pkt);
+}
+
+void SrvBase::SrvThreadLoop()
+{
+	uint64 tStart = Time::CurrentTime().MilliSecond();
+
+	WatchDog::Instance().NextStep( SRV_THREAD_WATCHDOG_ID );
+
+	if( m_SrvNetMgr != NULL)
+		m_SrvNetMgr->NetRun();
+
+	uint64 tNow = Time::CurrentTime().MilliSecond();
+	if( tNow >= tStart )
+	{
+		uint64 usedTime = tNow - tStart;
+		if( usedTime < m_SrvNetThreadMinFrameTime )
+		{
+			GameUtil::Sleep(m_SrvNetThreadMinFrameTime - usedTime);
+		}
+	}
+
+	WatchDog::Instance().NextStep( SRV_THREAD_WATCHDOG_ID );
+
+	if(m_bUseSrvNetDelay)
+	{
+		int32 nDelayTime = m_SrvNetDelayMin + ( rand() % (m_SrvNetDelayMax - m_SrvNetDelayMin));
+		GameUtil::Sleep(nDelayTime);
+	}
+
+	WatchDog::Instance().UpdateTime(SRV_THREAD_WATCHDOG_ID);
+}
+
+void SrvBase::ProcNewConnection(int32 nFrameTime)
+{
+	std::vector<int32> v2Delete;
+
+	{
+		LOCK(&m_listMutex);
+
+		std::map<int32, CltNewConnection*>::iterator itr = m_CltNewConnections.begin();
+		for (; itr != m_CltNewConnections.end(); ++itr)
+		{
+			assert(itr->second);
+			if(itr->second->nTimeOffVal < 0)
+			{
+				// invalid record
+			}
+			else if( itr->second->nTimeOffVal <= nFrameTime )
+			{
+				v2Delete.push_back(itr->first);
+				itr->second->nTimeOffVal = -1;
+			}
+			else
+			{
+				itr->second->nTimeOffVal -= nFrameTime;
+			}
+
+		}
+	}
+
+	{
+		for(auto itr = v2Delete.begin(); itr != v2Delete.end(); ++itr)
+			m_SrvNetMgr->Disconnect(*itr);
+	}
 }
 
 void SrvBase::RegCltPktHandle(PacketProcessor* pProc)

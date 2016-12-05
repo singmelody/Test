@@ -152,3 +152,8 @@ void GateAccountManager::Send2AllAvatar(PacketBase& pkt)
 		pAccount->Send2Clt(pkt);
 	}
 }
+
+void GateAccountManager::Tick(int32 nFrameTime)
+{
+
+}

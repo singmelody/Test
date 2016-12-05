@@ -77,6 +77,7 @@ protected:
 	void CltNetOperation(int32 nSocketID, int32 nNetEvent);
 
 	void SrvThreadLoop();
+	void ProcNewConnection(int32 nFrameTime);
 
 	virtual void RegCltPktHandle(PacketProcessor* pPkt);
 	virtual void DftCltPktHandle(PacketBase* pPkt) {}

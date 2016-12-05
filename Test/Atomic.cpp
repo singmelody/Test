@@ -33,3 +33,7 @@ void AtomicInt64::Reset()
 	m_addTimes = 0;
 }
 
+ReadLock::~ReadLock()
+{
+	InterLockedAdd( m_pLock, -1);
+}

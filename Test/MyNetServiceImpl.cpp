@@ -63,7 +63,28 @@ bool MyNetServiceImpl::BindAddress(const SockAddr& addr)
 
 NetConnectionPtr MyNetServiceImpl::Connect(uint32 nID, const SockAddr& addr)
 {
-	BLABLA
+	if(GetState() != eNSS_Running )
+		return NULL;
+
+	Socket socket;
+	if(!socket.Create())
+	{
+		MyLog::message("[%s:%u] connection create error[%d]", addr.GetIP().c_str(), addr.GetPort(), Socket::GetSysError());
+		return NULL;
+	}
+
+	if(!socket.Connect(addr))
+	{
+		MyLog::message("[%s:%u] connection create error[%d]", addr.GetIP().c_str(), addr.GetPort(), Socket::GetSysError());
+		socket.Close();
+		return NULL;
+	}
+
+	if(!InitSocket(socket))
+	{
+		socket.Close();
+		return NULL;
+	}
 	 
 	INetConnection* pConnection = m_pListener->OnCreateConnection();
 	pConnection->IncRef();
@@ -79,6 +100,11 @@ NetConnectionPtr MyNetServiceImpl::Connect(uint32 nID, const SockAddr& addr)
 		pConnection->DecRef();
 		return NULL;
 	}
+
+	NetConnectionPtr autoPtr = pConnection;
+	ScheduleConnection(pConnection);
+
+	return autoPtr;
 }
 
 void MyNetServiceImpl::OnNewConnection(Socket& socket, ConnectionType type, uint32 nID /*= 0*/)
@@ -121,10 +147,23 @@ void MyNetServiceImpl::OnNewConnection(Socket& socket, ConnectionType type, uint
 
 bool MyNetServiceImpl::InitSocket(Socket& socket)
 {
+	if(!socket.SetNonBlocking())
+	{
+		MyLog::message("socket [%u] setnonblock error [%d]", socket.GetSocket(), Socket::GetSysError());
+		return false;
+	}
 
+	socket.SetRecvBuffSize(m_Param.nSizeOfSysBuffer);
+	socket.SetSendBuffSize(m_Param.nSizeOfSysBuffer);
+
+	return true;
 }
 
 void MyNetServiceImpl::ScheduleConnection(INetConnection* pConn)
 {
+	MyNetThread* pThread = (MyNetThread*)GetMinLoadThread();
+	if(!pThread)
+		return;
 
+	pThread->RegisterHandler( pConn, eNEM_EXCEPTION | eNEM_IN | eNEM_TICK);
 }

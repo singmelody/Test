@@ -2,6 +2,22 @@
 #include "GateFuncExManager.h"
 #include "Singleton.h"
 
+class PasskeyInfo
+{
+	DECLARE_FACTORY_ARG0( PasskeyInfo, -1, new PoolAllocator);
+public:
+	PasskeyInfo();
+
+	std::string accountName;
+	std::string key;
+
+	int32		nSocketID;
+	int32		nExpireTime;
+	uint32		nAccountOnlineTime;
+};
+
+typedef std::map< UtilID, PasskeyInfo*> PasskeyInfoMap;
+
 class GateLoginManager : public GateFuncExManager, public Singleton<GateLoginManager>
 {
 public:
@@ -22,6 +38,10 @@ public:
 	void PktClt_CltSelectAvatar(class PacketCltSelectAvatar *pPkt);
 	void PktClt_Logout2Login(class PacketLogout2Login *pPkt);
 
-
+	void Tick(int32 nFrameTime);
+	void ProcPassKeyInfo(int32 nFrameTime);
+	void OnLoseClt();
+protected:
+	PasskeyInfoMap m_PasskeyInfos;
 };
 

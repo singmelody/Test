@@ -24,6 +24,12 @@ void GateAccountStateBase::DefaultHandlePacket( GateAccount& account, class Pack
 		pkt.GetClassName(), pSzFrom, GetStateName(), account.strUserCN.c_str() );
 }
 
+GateAccountStateBase* GateAccountStateBase::GetState(GateAccountState state)
+{
+	assert( state >= 0 && state < eGateAccountState_Count);
+	return s_states[state];
+}
+
 void GateAccountStateBase::Init()
 {
 	s_states[eGateAccountState_CltConnected]			= GateAccountState_ClntConnected::InstancePtr();

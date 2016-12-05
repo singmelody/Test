@@ -102,7 +102,11 @@ public:
 	GateAccount* GetAccount(int32 nSocketID);
 	GateAccount* GetAccountByAvatarID(int32 nAvatarID);
 
+	size_t GetAccountCount() const { return m_mapSocketID2Account.size(); }
+	size_t GetAvatarCount() const { return m_mapAvatarID2Account.size(); }
+
 	void Send2AllAvatar(PacketBase& pkt);
+	void Tick(int32 nFrameTime);
 private:
 	volatile long m_RWLock_mapAvatarID2ChannelID;
 	

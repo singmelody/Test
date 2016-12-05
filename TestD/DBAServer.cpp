@@ -5,6 +5,9 @@
 #include "DBAAvatarManager.h"
 #include "MyLog.h"
 #include "Thread.h"
+#include "ParamPool.h"
+#include "GameUtil.h"
+#include "DBThreadPool.h"
 
 DBAServer::DBAServer(void)
 {
@@ -41,7 +44,7 @@ void DBAServer::Exit()
 	// guid & guid_commondata sync 2 db
 	{
 		MyLog::message("DBAServer::Exit() Waiting GUID SyncAll2DB...");
-		DBAGuidManagerEx::Instance().SyncAll2DBAndClearAll();
+		//DBAGuidManagerEx::Instance().SyncAll2DBAndClearAll();
 		MyLog::message("DBAServer::Exit() GUID SyncAll2DB Finished...");
 	}
 
@@ -50,7 +53,7 @@ void DBAServer::Exit()
 		MyLog::message("DBAServer::Exit() Waiting TaskQueue Empty...");
 		while (DBThreadPool::Instance().GetAllTaskLen() > 0)
 		{
-			GSleep(50);
+			GameUtil::Sleep(50);
 		}
 		MyLog::message("DBAServer::Exit() TaskQueue Empty...");
 	}
@@ -61,7 +64,7 @@ void DBAServer::Exit()
 		while (DBAAvatarManagerEx::Instance().GetAvatarCount() > 0)
 		{
 			DBAAvatarManagerEx::Instance().ProcExitedAvatars();
-			GSleep(5);
+			GameUtil::Sleep(5);
 		}
 		MyLog::message("DBAServer::Exit() AvatarMap Empty...");
 	}

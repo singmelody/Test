@@ -370,7 +370,7 @@ void NetManagerReactor::NetRun()
 	if(!m_pReactor)
 		return;
 
-	m_pReactor->HandleEvents(m_timer);
+	m_pReactor->HandleEvents(m_timer, GetEventWaitTime());
 
 	const int32 MAX_SOCKETS = m_ChannelList.GetMaxElement();
 	for (int32 i = 0; i < MAX_SOCKETS; ++i)

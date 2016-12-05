@@ -18,6 +18,12 @@ public:
 
 	static Time CurrentTime();
 
+	const Time& operator+=(const Time& time)
+	{
+		m_milliSec += time.m_milliSec;
+		return *this;
+	}
+
 	bool operator!=(const Time& time) const
 	{
 		return m_milliSec != time.m_milliSec;
@@ -46,12 +52,12 @@ private:
 	uint64 m_milliSec;
 };
 
-Time operator-(const Time& time1, const Time& time2)
+inline Time operator-(const Time& time1, const Time& time2)
 {
 	return time1.m_milliSec - time2.m_milliSec;
 }
 
-Time operator+(const Time& time1, const Time& time2)
+inline Time operator+(const Time& time1, const Time& time2)
 {
 	return time1.m_milliSec + time2.m_milliSec;
 }

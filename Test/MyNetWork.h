@@ -48,7 +48,7 @@ class INetEventListener
 public:
 	virtual ~INetEventListener(){}
 
-	virtual INetEventListener* OnCreateConnection() = 0;
+	virtual INetConnection* OnCreateConnection() = 0;
 	virtual void OnConnectionVerified(uint32 nID) = 0;
 	virtual void OnConeectionClosed(uint32 nID) = 0;
 };
@@ -103,4 +103,4 @@ public:
 };
 
 INetService* CreateNetService(uint32 nID, const NetServiceParam& param, INetEventListener* pListener);
-void DestroyNetService(INetService* pService)
+void DestroyNetService(INetService* pService);

@@ -12,6 +12,9 @@ public:
 
 	void PrintPackets();
 
+	void Tick(int32 nFrameTime);
+	void ProcGateStressInfo(int32 nFrameTime);
+
 protected:
 	int32 m_nLastSocketCnt;
 	std::vector<std::string> _blocklist;

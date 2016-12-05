@@ -657,6 +657,19 @@ START_ADD_PACKET_MEMBER(PacketDelSrvInfo)
 	ADD_PACKET_MEMBER( nSrvID, int32, nSrvID);
 PACKET_END(PacketDelSrvInfo)
 
+PACKET( PacketGateStressInfo, PacketBase)
+int32 nGateID;
+int32 nSocketCnt;
+START_ADD_PACKET_MEMBER(PacketGateStressInfo)
+	ADD_PACKET_MEMBER( nGateID, int32, nGateID)
+	ADD_PACKET_MEMBER( nSocketCnt, int32, nSocketCnt);
+PACKET_END(PacketGateStressInfo)
+
+PACKET( PacketGateLoseClt, PacketBase)
+	int32 nGateID;
+START_ADD_PACKET_MEMBER(PacketGateLoseClt)
+	ADD_PACKET_MEMBER( nGateID, int32, nGateID)
+PACKET_END(PacketGateLoseClt)
 
 // PacketEx
 PACKET_EX(PacketMulticast2Avatar, PacketBroadCastBase<int32>, new PoolPacketAllocator(40960))
