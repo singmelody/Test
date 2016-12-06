@@ -63,7 +63,7 @@ void GateServer::DftCltPktHandle(PacketBase* pPkt)
 
 void GateServer::OnCltDisconnect(int32 nSocketID)
 {
-
+	GateLoginManager::Instance().ProcessCltDisconnect(nSocketID);
 }
 
 bool GateServer::Init(int32 argc, char* argv[])

@@ -9,6 +9,11 @@
 #include "PacketImpl.h"
 
 FINISH_FACTORY_ARG0(PasskeyInfo);
+PasskeyInfo::PasskeyInfo()
+{
+	nExpireTime = 0;
+	nSocketID = 0;
+}
 
 GateLoginManager::GateLoginManager(void)
 {
@@ -106,4 +111,13 @@ void GateLoginManager::OnLoseClt()
 	PacketGateLoseClt pkt;
 	pkt.nGateID = GateSrv.GetSrvID();
 	Send2Login(&pkt);
+}
+
+void GateLoginManager::ProcessCltDisconnect(int32 nSocketID)
+{
+	GateAccount* pAccount = GateAccountManager::Instance().GetAccount(nSocketID);
+	if(!pAccount)
+		return;
+
+	pAccount->OnCltDisconnect();
 }

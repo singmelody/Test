@@ -41,6 +41,8 @@ public:
 	void Tick(int32 nFrameTime);
 	void ProcPassKeyInfo(int32 nFrameTime);
 	void OnLoseClt();
+
+	void ProcessCltDisconnect(int32 nSocketID);
 protected:
 	PasskeyInfoMap m_PasskeyInfos;
 };

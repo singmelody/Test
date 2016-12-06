@@ -46,6 +46,22 @@ void GateAccountStateBase::Init()
 	s_states[eGateAccountState_Destroy]					= GateAccountState_Destroy::InstancePtr();	
 }
 
+void GateAccountStateBase::Tick(GateAccount& account, int32 nFrameTime, Time& curTime)
+{
+	assert( nFrameTime >= 0 );
+
+	if(this->HasExpiration())
+	{
+		if( curTime > account.GetExpireTime() )
+		{
+			OnExpire(account);
+			return;
+		}
+	}
+
+	this->OnTick( account, nFrameTime, curTime);
+}
+
 void GameAccountState_CreateAvatar::OnEnter(GateAccount& account)
 {
 

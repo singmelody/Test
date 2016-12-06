@@ -55,6 +55,13 @@ void GateAccount::Send2Clt(class PacketBase& pkt)
 	GateServer::Instance().SrvSend( GetCltSocketID(), &pkt);
 }
 
+void GateAccount::OnCltDisconnect()
+{
+	m_bClntConnect = false;
+	ChangeState(eGateAccountState_Destroy);
+	MyLog::message("GateAccount::OnCltDisconnect UserCN=[%s] State=[%s]", strUserCN.c_str(), m_pState ? m_pState->GetStateName() : "Unkown");
+}
+
 GateAccountManager::GateAccountManager()
 {
 
@@ -155,5 +162,25 @@ void GateAccountManager::Send2AllAvatar(PacketBase& pkt)
 
 void GateAccountManager::Tick(int32 nFrameTime)
 {
+	std::vector<int32> vDestroy;
 
+	Time tCurr = Time::CurrentTime();
+
+	for (auto itr = m_mapSocketID2Account.begin(); itr != m_mapSocketID2Account.end(); ++itr)
+	{
+		GateAccount* pAccount = itr->second;
+		assert(pAccount);
+
+		GateAccountStateBase* pState = pAccount->GetState();
+		assert(pState);
+
+		pState->Tick( *pAccount, nFrameTime, tCurr);
+		if(pAccount->IsDestroy())
+			vDestroy.push_back(itr->first);
+	}
+
+	for (auto itr = vDestroy.begin(); itr != vDestroy.end(); ++itr)
+	{
+		RemoveAccount(*itr);
+	}
 }

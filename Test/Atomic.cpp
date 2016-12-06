@@ -37,3 +37,9 @@ ReadLock::~ReadLock()
 {
 	InterLockedAdd( m_pLock, -1);
 }
+
+WriteLock::WriteLock(volatile long* lock)
+{
+	assert(m_pLock);
+	blabla
+}

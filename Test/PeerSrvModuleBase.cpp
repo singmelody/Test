@@ -23,6 +23,13 @@ bool PeerSrvModuleBase::Init(int32 nArgc, char* argv[])
 	return true;
 }
 
+void PeerSrvModuleBase::Exit()
+{
+	SrvExit();
+
+	PeerModuleBase::Exit();
+}
+
 bool PeerSrvModuleBase::ProcessPacket()
 {
 	int32 nPacketProcessed = 0;

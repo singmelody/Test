@@ -26,9 +26,14 @@ public:
 
 	// from world
 	virtual void HandleWorldPacket(GateAccount& account, class PacketNewConnectioRet& pkt) { DefaultHandlePacket( account, pkt, "World"); }
+
+	void Tick(GateAccount& account, int32 nFrameTime, Time& curTime);
 protected:
 	virtual void OnTick(GateAccount& account, int32 nFrameTime, Time& tCurr){}
-	
+	virtual bool HasExpiration() { return true; }
+	virtual void OnExpire(GateAccount& account) { account.ChangeState(eGateAccountState_Destroy); }
+	void DestroyAccount(GateAccount& account) { account.m_bDestroy = true; }
+
 	explicit GateAccountStateBase(GateAccountState state);
 	virtual ~GateAccountStateBase(){}
 

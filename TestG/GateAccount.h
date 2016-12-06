@@ -70,6 +70,10 @@ public:
 
 	void Send2Clt(class PacketBase& pkt);
 
+	bool IsDestroy() const { return m_bDestroy; }
+
+	void OnCltDisconnect();
+
 	std::string strUserCN;
 protected:
 	int32	m_nClntSockID;

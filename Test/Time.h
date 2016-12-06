@@ -40,6 +40,11 @@ public:
 		return m_milliSec < time.m_milliSec;
 	}
 
+	bool operator>(const Time& time) const
+	{
+		return m_milliSec > time.m_milliSec;
+	}
+
 	bool operator<=(const Time& time) const
 	{
 		return m_milliSec <= time.m_milliSec;
