@@ -3,6 +3,10 @@
 #include <assert.h>
 #include <Windows.h>
 
+static union { char c[4]; unsigned long myLong; }test_endian = { {'L', '?', '?', 'B'}};
+
+#define ENDIANNESS ( (char)(test_endian.myLong))
+
 void InterLockedAdd(volatile long * dst, long nVal)
 {
 	assert(dst);
@@ -33,13 +37,36 @@ void AtomicInt64::Reset()
 	m_addTimes = 0;
 }
 
+const long WRITE_LOCK_VALUE = 1 << 24;
+ReadLock::ReadLock(volatile long* lock)
+{
+	InterLockedAdd( m_pLock, 1);
+
+	{
+		volatile char* pWL = (volatile char *)m_pLock;
+		if(ENDIANNESS == 'L')
+			pWL += 3;
+
+		for (;*pWL;)
+			;
+	}
+}
+
 ReadLock::~ReadLock()
 {
 	InterLockedAdd( m_pLock, -1);
 }
 
+
 WriteLock::WriteLock(volatile long* lock)
 {
 	assert(m_pLock);
-	blabla
+	while ( 0 != InterLockedCompareExchange( m_pLock, WRITE_LOCK_VALUE, 0))
+	{
+	}
+}
+
+WriteLock::~WriteLock()
+{
+	InterLockedAdd( m_pLock, WRITE_LOCK_VALUE);
 }

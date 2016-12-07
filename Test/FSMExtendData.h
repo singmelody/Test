@@ -2,6 +2,7 @@
 #include "PacketData.h"
 #include "Factory.h"
 #include <list>
+#include "DataSerialization.h"
 
 class FSMExtendData : public PacketData
 {
@@ -10,7 +11,7 @@ public:
 	FSMExtendData(void);
 	~FSMExtendData(void);
 
-	virtual bool SerializeData(uint16 nSyncFlag, class MemoryIOStreamBase& ios);
+	virtual bool SerializeData(uint16 nSyncFlag, DS::MemoryIOStreamBase& ios);
 
 	int32	m_OwnerID;
 

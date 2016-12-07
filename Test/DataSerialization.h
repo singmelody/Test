@@ -67,11 +67,54 @@ namespace DS
 
 	class IOStreamBase
 	{
+	public:
+		IOStreamBase(char* pStart, char* pEnd)
+			:m_pBuffer(pStart)
+			,m_pBufferBegin(pStart)
+			,m_pBufferEnd(pEnd)
+			,m_bError(false)
+		{
+			assert( m_pBuffer && m_pBufferEnd && m_pBuffer <= m_pBufferEnd);
+		}
 
+	private:
+		char* m_pBuffer;
+		char* const m_pBufferBegin;
+		char* const m_pBufferEnd;
+		bool m_bError;
 	};
 
 	class MemoryIOStreamBase : public IOStreamBase
 	{
+	public:
+		MemoryIOStreamBase(bool bIsStream, char* bufferStart, char* bufferEnd)
+			: IOStreamBase( bufferStart, bufferEnd), m_bIsStream(bIsStream)
+		{
 
+		}
+
+	private:
+		bool m_bIsStream;
+	};
+
+	class MemoryOStream : public MemoryIOStreamBase
+	{
+	public:
+		MemoryOStream(char* pBufferStart, char* pBufferEnd): MemoryIOStreamBase( false, pBufferStart, pBufferEnd){}
+		MemoryOStream(char* pBufferStart, size_t nBufferLen): MemoryIOStreamBase( false, pBufferStart, pBufferStart + nBufferLen){}
+
+	private:
+		MemoryOStream(const MemoryOStream& );
+		MemoryOStream& operator= (const MemoryOStream&);
+	};
+
+	class MemoryIStream : public MemoryIOStreamBase
+	{
+	public:
+		MemoryIStream(char* pBufferStart, char* pBufferEnd): MemoryIOStreamBase( false, pBufferStart, pBufferEnd){}
+		MemoryIStream(char* pBufferStart, size_t nBufferLen): MemoryIOStreamBase( false, pBufferStart, pBufferStart + nBufferLen){}
+	private:
+		MemoryIStream(const MemoryIStream& );
+		MemoryIStream& operator= (const MemoryIStream&);
 	};
 }

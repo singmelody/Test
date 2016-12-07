@@ -18,7 +18,7 @@ FSMExtendData::~FSMExtendData(void)
 {
 }
 
-bool FSMExtendData::SerializeData(uint16 nSyncFlag, class MemoryIOStreamBase& ios)
+bool FSMExtendData::SerializeData(uint16 nSyncFlag,  DS::MemoryIOStreamBase& ios)
 {
 	return true;
 }

@@ -6,6 +6,9 @@
 #include "PacketImpl.h"
 #include "GateCltNetManager.h"
 #include "TimeManager.h"
+#include "FSMExtendData.h"
+#include "MyLog.h"
+#include "DataSerialization.h"
 
 GatePeerPacketProc::GatePeerPacketProc()
 {
@@ -98,6 +101,44 @@ void GatePeerPacketProc::DoProcOne(PacketBase* pPkt)
 	}
 
 	ProcessPacket( pPkt );
+}
+
+void GatePeerPacketProc::ProcessFSMExtendDataPacket(class PacketFSMExtendData* pPkt, uint16 nChannelCnt, int16 channelList[])
+{
+	FSMExtendDataList list;
+
+	uint16 nOffset = 0;
+	DS::MemoryIStream is( pPkt->GetPacketBuff(), pPkt->GetCurBufferSize());
+
+	for (int32 i = 0; i < pPkt->m_nDataCnt; ++i)
+	{
+		FSMExtendData* pData =FACTORY_NEWOBJ(FSMExtendData);
+		if(!pData)
+			return;
+
+		if(!pData->SerializeData( pPkt->m_nSyncFlag, is))
+		{
+			MyLog::error("GatePeerPacketProc::ProcessFSMExtendDataPacket SerializeData Failed");
+			FACTORY_DELOBJ(pData);
+			return;
+		}
+
+		list.push_back(pData);
+	}
+
+	for (int32 i = 0; i < nChannelCnt; ++i)
+	{
+		int32 nChannelID = channelList[i];
+		if(nChannelID >= 0)
+		{
+			GateCltNetChannel* pChannel = GateServer::Instance().GetCltChannel(nChannelID);
+			if(pChannel)
+			{
+				pChannel->ProcessFSMExtendDatas(list);
+				GateServer::Instance().FreeCltChannel(pChannel);
+			}
+		}
+	}
 }
 
 GateCltPacketProc::GateCltPacketProc()
