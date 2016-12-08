@@ -156,3 +156,5 @@ PACKET_IMPL(PacketAOIListOption);
 PACKET_IMPL(PacketGateStressInfo);
 
 PACKET_IMPL(PacketGateLoseClt);
+
+PACKET_IMPL(PacketDogDataFin);

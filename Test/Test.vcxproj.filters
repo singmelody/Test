@@ -519,6 +519,9 @@
     <ClInclude Include="Acceptor.h">
       <Filter>Game\Net</Filter>
     </ClInclude>
+    <ClInclude Include="CrashHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -952,6 +955,9 @@
     </ClCompile>
     <ClCompile Include="Acceptor.cpp">
       <Filter>Game\Net</Filter>
+    </ClCompile>
+    <ClCompile Include="CrashHandler.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

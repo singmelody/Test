@@ -67,6 +67,9 @@ protected:
 
 	void InitLog( int32 argc, char* argv[]);
 
+	void ProcessDog(int32 nFrameTime);
+	void UpdateDogPool(int32 nFrameTime);
+
 	ServerManager& Servers;
 	LoadTemplateManager& Templates;
 

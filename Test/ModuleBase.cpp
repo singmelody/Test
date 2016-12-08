@@ -13,6 +13,7 @@
 #include "ParamPool.h"
 #include "TimeManager.h"
 #include <sstream>
+#include "PacketImpl.h"
 
 #define DOG 1
 
@@ -227,6 +228,12 @@ void ModuleBase::Broadcast2DogPool()
 	}
 }
 
+void ModuleBase::SetRunState(int8 nState)
+{
+	m_RunState = nState;
+	MODULEDOG_SET_VALUE(  RunState, m_RunState);
+}
+
 void ModuleBase::SetSrvID(int32 nSrvID)
 {
 	MyLog::message("Set Srv ID[%d]", nSrvID);
@@ -307,5 +314,32 @@ void ModuleBase::InitLog(int32 nArgc, char* argv[])
 	g_pLog = new Log();
 	MyLog::Create( logName.c_str() );
 	LogThread::Instance().Start();
+
+}
+
+void ModuleBase::ProcessDog(int32 nFrameTime)
+{
+	if(Servers.m_DogGroup.ServerCnt() == 0 )
+		return;
+
+	static uint32 nTickShowTime = 0;
+	nTickShowTime += nFrameTime;
+
+	if( nTickShowTime >= 1000)
+	{
+		nTickShowTime -= 1000;
+		UpdateDogPool(nFrameTime);
+		Broadcast2DogPool();
+
+		PacketDogDataFin pkt;
+		pkt.CurTime = TimeManager::Instance().CurTime();
+	
+		Servers.m_DogGroup.BroadcastPacket(&pkt);
+
+	}
+}
+
+void ModuleBase::UpdateDogPool(int32 nFrameTime)
+{
 
 }

@@ -671,6 +671,13 @@ START_ADD_PACKET_MEMBER(PacketGateLoseClt)
 	ADD_PACKET_MEMBER( nGateID, int32, nGateID)
 PACKET_END(PacketGateLoseClt)
 
+PACKET(PacketDogDataFin, PacketBase)
+uint64 CurTime;
+START_ADD_PACKET_MEMBER(PacketDogDataFin)
+ADD_PACKET_MEMBER( CurTime, uint64, CurTime);
+PACKET_END(PacketDogDataFin)
+
+
 // PacketEx
 PACKET_EX(PacketMulticast2Avatar, PacketBroadCastBase<int32>, new PoolPacketAllocator(40960))
 START_ADD_PACKET_MEMBER(PacketMulticast2Avatar)

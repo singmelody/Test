@@ -9,6 +9,7 @@
 #include "GateSystemManager.h"
 #include "GateLoginManager.h"
 #include "GateAccount.h"
+#include "WatchDog.h"
 
 GateServer::GateServer(void)
 {
@@ -89,4 +90,13 @@ bool GateServer::Init(int32 argc, char* argv[])
 	GateChatManager::Instance().Init();
 
 	return true;
+}
+
+bool GateServer::Start()
+{
+	LoginWorldServer();
+
+	WatchDog::Instance().RegWatchDog( GAME_THREAD_WATCHDOG_ID, "Gate-Game-Thread", GATE_FRAME_TIME*10);
+
+	return StartMainLoop(m_nGateTickTime);
 }

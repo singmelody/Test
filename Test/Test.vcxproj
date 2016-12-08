@@ -256,6 +256,7 @@
     <ClInclude Include="CommonDataObj.h" />
     <ClInclude Include="CommonDataOwner.h" />
     <ClInclude Include="ConfigManager.h" />
+    <ClInclude Include="CrashHandler.h" />
     <ClInclude Include="DataBuffer.h" />
     <ClInclude Include="DataSerialization.h" />
     <ClInclude Include="DBAConfig.h" />
@@ -409,6 +410,7 @@
     <ClCompile Include="CommonDataObj.cpp" />
     <ClCompile Include="CommonDataOwner.cpp" />
     <ClCompile Include="ConfigManager.cpp" />
+    <ClCompile Include="CrashHandler.cpp" />
     <ClCompile Include="DataBuffer.cpp" />
     <ClCompile Include="DataSerialization.cpp" />
     <ClCompile Include="DBAConfig.cpp" />

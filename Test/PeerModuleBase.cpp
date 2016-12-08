@@ -10,6 +10,7 @@
 #include "ParamPool.h"
 #include "ParamTypeDef.h"
 #include "Time.h"
+#include "GameUtil.h"
 
 #define CONNECTION_INTERVAL 1000
 
@@ -97,6 +98,75 @@ void PeerModuleBase::Broadcast2Dogs(ParamPool* pPool)
 
 		pkt.SyncParam2Dog( this, -1, pPool, eParam_Flag_Server, eParam_Sync_ClearDirty);
 	}
+}
+
+bool PeerModuleBase::LoginWorldServer(int32 nMaxWaitTime /*= -1*/)
+{
+	MyLog::message("Begin PeerModuleBase::LoginWorldServer()");
+	std::string strWorldIP = "127.0.0.1";
+	int32 nWorldPort = 9999;
+
+	ConfigManager::GetConfigValue( "CommonConfig", "WorldIP", strWorldIP);
+	ConfigManager::GetConfigValue( "CommonConfig", "WorldPort", nWorldPort);
+
+	MyLog::message("Try to connect World Ip = %s, port = %d\n", strWorldIP.c_str(), nWorldPort);
+
+	PARAM_SET_VALUE( m_pModuleDogPool, WorldIP, strWorldIP.c_str(), true);
+	PARAM_SET_VALUE( m_pModuleDogPool, WorldPort, nWorldPort, true);
+
+	bool bAlwaysWait = nMaxWaitTime < 0;
+
+	const Time timeExpire = Time::CurrentTime() + Time(nMaxWaitTime);
+
+	while (!LoginPeerServer( strWorldIP, nWorldPort, false))
+	{
+		MyLog::message("Connecting WorldServer ........");
+
+		PeerProcPacket();
+		GameUtil::Sleep(500);
+
+		ProcessDog(500);
+
+		if(!bAlwaysWait)
+		{
+			if(Time::CurrentTime() > timeExpire)
+				return false;
+		}
+	}
+
+	SetRunState( eRS_Connected );
+
+	MyLog::message("PeerModuleBase::LoginWorldServer() connected World");
+
+	while(Servers.m_pLocalWorld == NULL)
+	{
+		MyLog::message("Waiting for World Server Info ........");
+
+		PeerProcPacket();
+		GameUtil::Sleep(500);
+
+		ProcessDog(500);
+
+		if(!bAlwaysWait)
+		{
+			if(Time::CurrentTime() > timeExpire)
+				return false;
+		}
+	}
+
+	SetRunState( eRS_Ready );
+	MyLog::message("End PeerModuleBase::LoginWorldServer()");
+	return true;
+}
+
+bool PeerModuleBase::LoginPeerServer(std::string& ip, int32 nPort, bool bWait)
+{
+	int32 nSocketID = PeerConnect( (char*)ip.c_str(), nPort, bWait);
+	if( nSocketID == -1 )
+		return false;
+
+	SendPacketSrvConnect(nSocketID);
+	return true;
 }
 
 void PeerModuleBase::OnAddServerInfo(ServerInfo* pInfo)

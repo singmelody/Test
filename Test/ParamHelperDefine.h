@@ -44,7 +44,12 @@ enum
 	param_name_teampost		= 467,
 	param_name_SceneProcessBits = 595,
 
+	param_name_RunState			= 678,
+
 	param_name_ServerID			= 679,
+
+	param_name_WorldIP			= 680,
+	param_name_WorldPort		= 681,
 
 	param_name_DBType			= 682,
 

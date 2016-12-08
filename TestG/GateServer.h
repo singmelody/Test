@@ -24,5 +24,7 @@ public:
 	virtual void OnCltDisconnect(int32 nSocketID);
 
 	bool Init(int32 nArgc, char* argv[]);
+
+	bool Start();
 };
 
