@@ -5,7 +5,7 @@
 #define LOCK(pLock) AUTOLOCK(*pLock)
 
 #define AUTOLOCK(mutex) \
-	AutoLock __autolock(&mutex);
+	AutoLock __autolock(&(mutex));
 
 // »¥³âËø
 class Mutex : private NoCopyable

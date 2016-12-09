@@ -110,6 +110,7 @@ public:
 	virtual void SetParamDirty( int32 nParamIdx) = 0;
 
 	virtual bool DirtyCheck() = 0;
+
 	virtual void ClearDirty() = 0;
 	virtual void SetAllParamDirty() = 0;
 

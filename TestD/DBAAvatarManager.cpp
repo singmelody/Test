@@ -5,6 +5,8 @@
 #include "MyLog.h"
 #include "SHMAvatar.h"
 #include "PacketImpl.h"
+#include "DBAServer.h"
+#include "ConfigManager.h"
 
 DBAAvatarManagerEx::DBAAvatarManagerEx(void)
 {
@@ -68,6 +70,17 @@ bool DBAAvatarManagerEx::ScheduleAvatarTask(DBTaskAvatar* pDbTask, DBATaskLevel 
 	return pAvatar->ScheduleTask( pDbTask, taskLevel);
 }
 
+void DBAAvatarManagerEx::OnAvatarExited(AvatarSHM& avatar)
+{
+	AUTOLOCK(m_lockQueueExitedAvatars);
+	m_queueExitedAvatars.push_back(avatar.GetAvatarDID());
+}
+
+void DBAAvatarManagerEx::FillConfig()
+{
+	return;
+}
+
 AvatarSHM* DBAAvatarManagerEx::GetAvatar(int64 nDID) const
 {
 	auto itr = m_avatarHashMap.find(nDID);
@@ -96,7 +109,7 @@ void DBAAvatarManagerEx::ProcExitedAvatars()
 		{
 			PacketAvatarDecommision pkt;
 			pkt.SetAvatarID(pAvatar->GetAvatarID());
-			DBAServer::Instance().Send2LocalWorld(&pkt);
+			DBAServer::Instance().Send2LocalWorld(pkt);
 
 			auto itr = m_avatarHashMap.find(pAvatar->GetAvatarDID());
 			if( itr != m_avatarHashMap.end() )

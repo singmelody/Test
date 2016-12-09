@@ -39,7 +39,7 @@ void DBASqlHelper::GetInsertString(ParamDef* pDef, ParamPool* pParamSet, std::st
 	{
 		ParamBase* pParam = pDef->GetParam(i);
 
-		if(!pParam || !pParam->CheckFlag(eParamFlag_Save))
+		if(!pParam || !pParam->CheckFlag(eParam_Flag_Save))
 			continue;
 
 		if(strcmp( pParam->Name(), "avatardid") == 0)
@@ -64,18 +64,22 @@ std::string DBASqlHelper::GetProcString(ParamDef* pDef, ParamPool* pPool, bool b
 	{
 		ParamBase* pParam = pDef->GetParam(i);
 		int32 tmp = 0;
-		if( !pParam || !pParam->CheckFlag(eParamFlag_Save))
+		if( !pParam || !pParam->CheckFlag(eParam_Flag_Save))
 			continue;
 
-		if(!bForInsert && pParam->CheckFlag(eParamFlag_NoUpdate))
+		if(!bForInsert && pParam->CheckFlag(eParam_Flag_NoUpdate))
 			continue;
 
 		if(bForInsert && !pParam->SqlFlag_IsInsertProcParam())
 			continue;
 
-		sParam2String( pParamSet, pParam, ss);
+		sParam2String( pPool, pParam, ss);
 		ss<<',';
 	}
+
+	std::string OutString = ss.str();
+	OutString = OutString.substr( 0, OutString.length() - 1);
+	return OutString;
 }
 
 bool DBASqlHelper::GetUpdateSqlString(ParamPool* pParamSet, ParamBase* pParam, std::stringstream& sqlTemplate)
@@ -102,8 +106,8 @@ bool DBASqlHelper::GetUpdateSqlString(ParamDef* pParamDef, ParamPool* pParamSet,
 		ParamBase* pParam = pParamDef->GetParam(i);
 
 		int32 nTemp = 0;
-		if(!nTemp || !pParam->CheckFlag(eParamFlag_Save | eParamFlag_NoUpdate) 
-			|| !pParam->ParamDirtyCheck(i) )
+		if(!nTemp || !pParam->CheckFlag(eParam_Flag_Save | eParam_Flag_NoUpdate) 
+			|| !pParamSet->ParamDirtyCheck(i) )
 			continue;
 
 		bool bRet = true;
@@ -127,18 +131,18 @@ void sParam2String(ParamPool* pParamSet, ParamBase* pParam, std::stringstream& s
 	case eTypeID_int64: sqlTemplate << pParamSet->GetValue( pParam, int64(0)); break;
 	case eTypeID_uint64: sqlTemplate << pParamSet->GetValue( pParam, uint64(0)); break;
 
-	case eTypeID_int32: sqlTemplate << pParam->GetValue( pParam, int32(0)); break;
-	case eTypeID_uint32: sqlTemplate << pParam->GetValue( pParam, uint32(0)); break;
+	case eTypeID_int32: sqlTemplate << pParamSet->GetValue( pParam, int32(0)); break;
+	case eTypeID_uint32: sqlTemplate << pParamSet->GetValue( pParam, uint32(0)); break;
 
-	case eTypeID_int16: sqlTemplate << pParam->GetValue( pParam, int16(0)); break;
-	case eTypeID_uint16: sqlTemplate << pParam->GetValue( pParam, uint16(0)); break;
+	case eTypeID_int16: sqlTemplate << pParamSet->GetValue( pParam, int16(0)); break;
+	case eTypeID_uint16: sqlTemplate << pParamSet->GetValue( pParam, uint16(0)); break;
 
-	case eTypeID_int8: sqlTemplate << pParam->GetValue( pParam, int8(0)); break;
-	case eTypeID_uint8: sqlTemplate << pParam->GetValue( pParam, uint8(0)); break;
+	case eTypeID_int8: sqlTemplate << pParamSet->GetValue( pParam, int8(0)); break;
+	case eTypeID_uint8: sqlTemplate << pParamSet->GetValue( pParam, uint8(0)); break;
 
-	case eTypeID_f64: sqlTemplate << pParam->GetValue( pParam, f64(0)); break;
-	case eTypeID_f32: sqlTemplate << pParam->GetValue( pParam, f32(0)); break;
+	case eTypeID_f64: sqlTemplate << pParamSet->GetValue( pParam, f64(0)); break;
+	case eTypeID_f32: sqlTemplate << pParamSet->GetValue( pParam, f32(0)); break;
 
-	case eTypeID_str: sqlTemplate << "\'"<< pParam->GetValueString( pParam, "No") <<"\'"; break;
+	case eTypeID_str: sqlTemplate << "\'"<< pParamSet->GetValueString( pParam, "No") <<"\'"; break;
 	}
 }

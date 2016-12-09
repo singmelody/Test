@@ -6,6 +6,7 @@
 #include "FunctionBase.h"
 #include "MyLog.h"
 #include "TimeManager.h"
+#include <vector>
 
 ODBCThread::ODBCThread(DBThreadPool& threadPool, const std::string& dbName, const std::string& user, const std::string& pwd)
 	: MyThread(std::string("ODBC")), m_threadPool(threadPool)
@@ -115,5 +116,32 @@ bool DBThreadPool::ScheduleTaks(DBTask* pTask, DBATaskLevel taskLevel /*= eDTL_1
 	}
 
 	return true;
+}
+
+uint32 DBThreadPool::GetTaskLen(int32 nTaskLv)
+{
+	uint32 nTotal = m_taskQueue.GetTaskLen(nTaskLv);
+	for (std::vector<ODBCThread*>::iterator itr = m_vThreads.begin(); itr != m_vThreads.end(); ++itr)
+	{
+		assert( *itr );
+		nTotal += (*itr)->GetTaskQueue().GetAllTaskLen();
+	}
+	return nTotal;
+}
+
+uint32 DBThreadPool::GetAllTaskLen()
+{
+	uint32 nTotal = m_taskQueue.GetAllTaskLen();
+	for (std::vector<ODBCThread*>::iterator itr = m_vThreads.begin(); itr != m_vThreads.end(); ++itr)
+	{
+		assert(*itr);
+		nTotal += (*itr)->GetTaskQueue().GetAllTaskLen();
+	}
+	return nTotal;
+}
+
+void DBThreadPool::FillConfig()
+{
+	return;
 }
 

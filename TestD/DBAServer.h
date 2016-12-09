@@ -12,7 +12,7 @@ public:
 	DBAServer(void);
 	virtual ~DBAServer(void);
 
-	bool Init(int32 argc, int32 argv[]);
+	bool Init(int32 argc, char* argv[]);
 	bool Start();
 	virtual void Exit();
 	SHMManager_DBA& GetSHMMgr() { return m_shmMgr; }
@@ -21,7 +21,12 @@ public:
 	void Send2LocalWorld(PacketBase& pkt);
 
 	void OnWorldDisconnect(ServerInfo* pInfo);
+
+	IParamPool2SqlProcessor* GetParam2SqlProcessor(int32 nParamIdx);
 protected:
+	class DBInterface* m_pInterface;
 	SHMManager_DBA m_shmMgr;
+
+	uint32 DBAConfig_delta_time_of_db_statics;
 };
 

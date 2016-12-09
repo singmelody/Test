@@ -1,8 +1,9 @@
 #include "StdAfx.h"
 #include "DBABase.h"
-
+#include "ParamSet.h"
 
 DBABase::DBABase(void)
+	: PeerModuleBase( eSrv_DBA )
 {
 }
 
@@ -26,5 +27,5 @@ bool DBABase::CreateDogPool()
 
 void DBABase::UpdateDogPool(int32 nFrameTime)
 {
-
+	PeerModuleBase::UpdateDogPool(nFrameTime);
 }

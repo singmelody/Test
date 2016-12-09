@@ -8,6 +8,8 @@ public:
 	DBAConfig(void);
 	virtual ~DBAConfig(void);
 
+	static void FillConfig(const std::string& sectionName = "DBAConfig");
+
 	static bool DBAUseSHM;
 };
 

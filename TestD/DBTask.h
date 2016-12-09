@@ -37,12 +37,14 @@ public:
 
 	int64 GetAvatarDID() const { return nAvatarDID;}
 	const char* GetSqlTemplate() const { return sqlTemplate.c_str(); }
+
+	int32				nAvatarID;
+	int64				nAvatarDID;
 protected:
 	int32				nSockID;
-	int32				nAvatarID;
 	uint32				nFlag;
 	int32				nTableNum;
-	int64				nAvatarDID;
+
 	std::string			sqlTemplate;
 	DBInterface*		pInterface;
 	MyListNode<DBTask*>	vListNode;

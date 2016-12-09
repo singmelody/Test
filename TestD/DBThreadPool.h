@@ -74,6 +74,9 @@ public:
 	TaskQueueWithLevel& GetTaskQueue() { return m_taskQueue; }
 
 	bool IsDBStaticEnable() const { return DBAConfig_Enable_Db_Statics; }
+	uint32 GetTaskLen(int32 nTaskLv);
+	uint32 GetAllTaskLen();
+	void FillConfig();
 protected:
 	TaskQueueWithLevel			m_taskQueue;
 	std::vector<ODBCThread*>	m_vThreads;

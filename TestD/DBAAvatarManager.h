@@ -27,6 +27,10 @@ public:
 	void SyncAll2DBAndClearAll();
 	void SnapshotAllAvatars();
 	bool ScheduleAvatarTask( DBTaskAvatar* pDbTask, DBATaskLevel taskLevel);
+	uint32 GetAvatarCount() { return (int32)m_avatarHashMap.size(); }
+
+	void OnAvatarExited(AvatarSHM& avatar);
+	void FillConfig();
 
  	Mutex* GetMutex() { return &m_AvatarHashTableLock; }
  	AvatarSHM* GetAvatar(int64 nDID) const;
