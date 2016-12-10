@@ -10,7 +10,7 @@ class SHMParamPool2SqlProcessor_DBA_Avatar : public ParamPool2SqlProcessor_DBA_A
 	virtual bool UseSHM() const { return true; }
 };
 
-class SHMParamPool2SqlProcessor_DBA_CommonData : public ParamPool2Sqlprocessor_DBA_CommonData
+class SHMParamPool2SqlProcessor_DBA_Avatar_CommonData : public ParamPool2Sqlprocessor_DBA_Avatar_CommonData
 {
 	virtual bool UseSHM() const { return true; }
 };

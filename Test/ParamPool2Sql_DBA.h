@@ -16,6 +16,8 @@ public:
 	inline void SetInsert() { m_dataState = IParamPool2SqlProcessor::eParamDS_Insert; }
 	inline bool IsInsert() const { return m_dataState == IParamPool2SqlProcessor::eParamDS_Insert; }
 
+	IParamPool2SqlProcessor::EDataState GetState() const { return IParamPool2SqlProcessor::EDataState(m_dataState);}
+
 	inline void SetUpdateSafe()
 	{
 		if(!IsInsert())
@@ -65,7 +67,7 @@ class ParamPool2SqlProcessor_DBA_Avatar : public IParamPool2SqlProcessor
 	virtual bool GetSqlString_Delete( ParamPool& pool, std::string& strSql) const;
 };
 
-class ParamPool2Sqlprocessor_DBA_CommonData : public IParamPool2SqlProcessor
+class ParamPool2Sqlprocessor_DBA_Avatar_CommonData : public IParamPool2SqlProcessor
 {
 	virtual uint32 GetExtraSize() const { return sizeof(*this); }
 	virtual IParamPool2SqlProcessor::EDataState GetDataState(ParamPool& pool) const;

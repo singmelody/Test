@@ -20,3 +20,12 @@ void DBTask::Send2World(PacketBase& pkt)
 	DBAServer::Instance().Send2World(pkt);
 }
 
+TaskFactory::TaskFactory()
+{
+
+}
+
+TaskFactory::~TaskFactory()
+{
+
+}

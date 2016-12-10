@@ -36,6 +36,8 @@ public:
 	static void ScheduleSimpleTask(const std::string& strSql);
 
 	int64 GetAvatarDID() const { return nAvatarDID;}
+
+	void SetSqlTemplate(const char* s) { sqlTemplate = s;}
 	const char* GetSqlTemplate() const { return sqlTemplate.c_str(); }
 
 	int32				nAvatarID;

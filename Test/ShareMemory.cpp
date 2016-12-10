@@ -3,6 +3,7 @@
 #include "MyLog.h"
 #include "UtilID.h"
 #include <assert.h>
+#include <Windows.h>
 
 ShareMemory::ShareMemory(void)
 {
@@ -37,5 +38,47 @@ bool ShareMemory::Open( const char* szPath, SM_KEY nKey, uint32 nSize, bool& bCr
 	m_SMSize = nSize;
 
 	return true;
+}
+
+void ShareMemory::Close()
+{
+	Detach();
+
+	CloseShareMemory();
+
+	Reset();
+}
+
+void ShareMemory::Detach()
+{
+	if( m_SMMemPtr )
+	{
+		UnmapViewOfFile(m_SMMemPtr);
+	}
+}
+
+void ShareMemory::Reset()
+{
+	m_SMName.clear();
+
+	m_SMSize = 0;
+	m_SMHandle = INVALID_SMHANDLE;
+	m_SMMemPtr = NULL;
+}
+
+void* ShareMemory::GetShareMemoryPtr() const
+{
+	return m_SMMemPtr;
+}
+
+void ShareMemory::CloseShareMemory()
+{
+	if( m_SMHandle != INVALID_SMHANDLE )
+		CloseHandle(m_SMHandle);
+}
+
+void ShareMemory::SHMRM(const char* szPath, SM_KEY nKey)
+{
+	return;
 }
 

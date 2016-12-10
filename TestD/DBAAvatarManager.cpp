@@ -109,7 +109,7 @@ void DBAAvatarManagerEx::ProcExitedAvatars()
 		{
 			PacketAvatarDecommision pkt;
 			pkt.SetAvatarID(pAvatar->GetAvatarID());
-			DBAServer::Instance().Send2LocalWorld(pkt);
+			DBAServer::Instance().Send2LocalWorld(&pkt);
 
 			auto itr = m_avatarHashMap.find(pAvatar->GetAvatarDID());
 			if( itr != m_avatarHashMap.end() )

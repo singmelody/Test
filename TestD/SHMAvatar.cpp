@@ -128,3 +128,16 @@ long AvatarSHM::IncPendingTaskCount()
 {
 	return InterlockedDecrement(&m_pendingTaskCount);
 }
+
+void AvatarSHM::ScheduleSavingTask(const std::string& strSql)
+{
+	DBTaskAvatar* pDBTask = FACTORY_NEW_DBTASK(DBTaskAvatar);
+	if(!pDBTask)
+	{
+		MyLog::error("AvatarSHM::ScheduleLoadingTask() Failed! strSql=[%s]!Allocte DBTaskAvatar", strSql.c_str());
+		return;
+	}
+
+	pDBTask->SetSqlTemplate(strSql.c_str());
+	ScheduleTask( pDBTask, eDBATL_1);
+}

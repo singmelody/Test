@@ -232,6 +232,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\TestD\DBASqlHelper.h" />
     <ClInclude Include="Acceptor.h" />
     <ClInclude Include="Allocator.h" />
     <ClInclude Include="AreaManager.h" />
@@ -337,6 +338,7 @@
     <ClInclude Include="ParamNameIndexHelper.h" />
     <ClInclude Include="ParamPool.h" />
     <ClInclude Include="ParamPool2SqlProcessor.h" />
+    <ClInclude Include="ParamPool2Sql_DBA.h" />
     <ClInclude Include="ParamPoolOwner.h" />
     <ClInclude Include="ParamSet.h" />
     <ClInclude Include="ParamTypeDef.h" />
@@ -414,6 +416,7 @@
     <ClCompile Include="DataBuffer.cpp" />
     <ClCompile Include="DataSerialization.cpp" />
     <ClCompile Include="DBAConfig.cpp" />
+    <ClCompile Include="DBASqlHelper.cpp" />
     <ClCompile Include="DBInterface.cpp" />
     <ClCompile Include="DIYDataManager.cpp" />
     <ClCompile Include="DLAllocator.cpp" />
@@ -497,6 +500,7 @@
     <ClCompile Include="ParamNameIndexHelper.cpp" />
     <ClCompile Include="ParamPool.cpp" />
     <ClCompile Include="ParamPool2SqlProcessor.cpp" />
+    <ClCompile Include="ParamPool2Sql_DBA.cpp" />
     <ClCompile Include="ParamPoolOwner.cpp" />
     <ClCompile Include="ParamSet.cpp" />
     <ClCompile Include="PeerBase.cpp" />

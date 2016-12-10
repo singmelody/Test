@@ -92,6 +92,9 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <AdditionalIncludeDirectories>$(SolutionDir)\Test;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <Optimization>Disabled</Optimization>
     </ClCompile>
     <Link>
       <AdditionalDependencies>..\lib\Debug\Test.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -106,7 +109,6 @@
     <ClInclude Include="DBAFuncManager.h" />
     <ClInclude Include="DBAGuidManager.h" />
     <ClInclude Include="DBAServer.h" />
-    <ClInclude Include="DBASqlHelper.h" />
     <ClInclude Include="DBTask.h" />
     <ClInclude Include="DBThreadPool.h" />
     <ClInclude Include="SHMAvatar.h" />
@@ -120,7 +122,6 @@
     <ClCompile Include="DBAFuncManager.cpp" />
     <ClCompile Include="DBAGuidManager.cpp" />
     <ClCompile Include="DBAServer.cpp" />
-    <ClCompile Include="DBASqlHelper.cpp" />
     <ClCompile Include="DBTask.cpp" />
     <ClCompile Include="DBThreadPool.cpp" />
     <ClCompile Include="SHMAvatar.cpp" />

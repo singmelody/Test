@@ -24,8 +24,8 @@ void SHMManager_DBA::InitParamPool2SqlProcessors(bool bUseSHM)
 		AddParam2SqlProcessor( eParam_Avatar, new SHMParamPool2SqlProcessor_DBA_Avatar);
 
 		// avatar commondata
-		AddParam2SqlProcessor( eParam_Skill, new SHMParamPool2SqlProcessor_DBA_CommonData);
-		AddParam2SqlProcessor( eParam_Coin, new SHMParamPool2SqlProcessor_DBA_CommonData);
+		AddParam2SqlProcessor( eParam_Skill, new SHMParamPool2SqlProcessor_DBA_Avatar_CommonData);
+		AddParam2SqlProcessor( eParam_Coin, new SHMParamPool2SqlProcessor_DBA_Avatar_CommonData);
 	}
 	else
 	{
@@ -33,8 +33,8 @@ void SHMManager_DBA::InitParamPool2SqlProcessors(bool bUseSHM)
 		AddParam2SqlProcessor( eParam_Avatar, new ParamPool2SqlProcessor_DBA_Avatar);
 
 		// avatar commondata
-		AddParam2SqlProcessor( eParam_Skill, new SHMParamPool2SqlProcessor_DBA_CommonData);
-		AddParam2SqlProcessor( eParam_Coin, new SHMParamPool2SqlProcessor_DBA_CommonData);
+		AddParam2SqlProcessor( eParam_Skill, new SHMParamPool2SqlProcessor_DBA_Avatar_CommonData);
+		AddParam2SqlProcessor( eParam_Coin, new SHMParamPool2SqlProcessor_DBA_Avatar_CommonData);
 	}
 
 }

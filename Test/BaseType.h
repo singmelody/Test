@@ -47,6 +47,8 @@ typedef TiXmlElement XmlElement;
 typedef TiXmlDeclaration XmlDeclaration;
 typedef TiXmlNode XmlNode;
 
+typedef void* SMHandle;
+
 #define SAFE_DELETE(p) if(p) { delete (p); p = NULL; }
 #define SAFE_DELETE_ARRAY(p) if(p) { delete[] (p); p = NULL; }
 #define SAFE_RELEASE(p) if(p) { p.Release(); p = NULL; }
@@ -95,5 +97,7 @@ typedef TiXmlNode XmlNode;
 #define NET_TEST_REDEFINE_SEND_COUNT_PER_TICK	0
 #define NET_TEST_PACKET_SEND_COUNT_PER_TICK		200
 #define GATE_SRV_SEND_DROP_PACKET_COUNT			1024*1000
+
+#define INVALID_SMHANDLE NULL
 
 #define _WINSOCKAPI_

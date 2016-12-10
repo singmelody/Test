@@ -19,6 +19,15 @@ ParamPool2SqlProcessorManagerBase::~ParamPool2SqlProcessorManagerBase(void)
 }
 
 
+IParamPool2SqlProcessor* ParamPool2SqlProcessorManagerBase::GetParam2SqlProcessor(int32 nParamIdx) const
+{
+	auto itr = m_mapParamIdx2Processor.find(nParamIdx);
+	if( itr == m_mapParamIdx2Processor.end())
+		return 0;
+
+	return itr->second;
+}
+
 void ParamPool2SqlProcessorManagerBase::AddParam2SqlProcessor(int32 nParamIdx, IParamPool2SqlProcessor* pProcessor)
 {
 	if(!m_mapParamIdx2Processor.insert(std::make_pair( nParamIdx, pProcessor)).second)

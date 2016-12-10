@@ -21,6 +21,10 @@ public:
 
 	virtual void Multicast2Gate( PacketBase* pPkt, class CasterTrunkGate* pTrunk, int32 nExceptID, int32 exceptGateChannelID){}
 	virtual void Multicast2Node( PacketBase* pPkt, class CasterTrunkGate* pTrunk, int32 nExceptID){}
+
+	// differ from the war node , in war scene these two are different. not in war , they are always the same.
+	virtual void Send2LocalWorld(PacketBase* pPkt){ Send2World(pPkt); }
+	virtual void Send2HomeWorld(PacketBase* pPkt) { Send2World(pPkt); }
 };
 
 typedef void (PacketSender::*SENDPARAMFUNC1)( PacketBase* pPkt);
