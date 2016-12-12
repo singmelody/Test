@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ID2ItemMap.h"
+#include "Scenario.h"
 
 template <class T>
 class SceneObjMgr : public ID2ItemMap<int32, T>

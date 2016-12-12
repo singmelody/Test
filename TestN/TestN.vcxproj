@@ -81,6 +81,7 @@
     <ClInclude Include="NodeScenario.h" />
     <ClInclude Include="NodeScene.h" />
     <ClInclude Include="Scenario.h" />
+    <ClInclude Include="ScenarioDef.h" />
     <ClInclude Include="ScenarioMgr.h" />
     <ClInclude Include="SpaceGrid.h" />
     <ClInclude Include="SpaceManager.h" />
@@ -91,6 +92,7 @@
     <ClCompile Include="NodeScenario.cpp" />
     <ClCompile Include="NodeScene.cpp" />
     <ClCompile Include="Scenario.cpp" />
+    <ClCompile Include="ScenarioDef.cpp" />
     <ClCompile Include="ScenarioMgr.cpp" />
     <ClCompile Include="SpaceGrid.cpp" />
     <ClCompile Include="SpaceManager.cpp" />

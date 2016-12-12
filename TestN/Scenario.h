@@ -1,5 +1,6 @@
 #pragma once
 #include "GameObject.h"
+#include "ScenarioDef.h"
 
 class ScenarioInfo;
 class ScenarioFlow;
@@ -17,6 +18,11 @@ public:
 
 	virtual bool TickScenario(int32 nFrameInterval);
 
+	bool SetCurStep(int32 nStepID);
+
 	ScenarioStepInfo* m_pCurStep;
+
+	f32	m_fTickTime;
+	f32 m_fCurTime;
 };
 
