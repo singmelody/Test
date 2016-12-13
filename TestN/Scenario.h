@@ -2,8 +2,16 @@
 #include "GameObject.h"
 #include "ScenarioDef.h"
 
+
+#define REG_SCENARIO_STEP( pScenarioInfo, classObj, function, funcID, succeedFuncID) \
+	pScenarioInfo->RegsterStepInfo( funcID, new ScenarioStepInfoEx<classObj>( &classObj::function, succeedFuncID, succeedFuncID));
+
+#define REG_SCENARIO_STEP2( pScenarioInfo, classObj, function, funcID, succeedFuncID, failedFuncID) \
+	pScenarioInfo->RegsterStepInfo( funcID, new ScenarioStepInfoEx<classObj>( &classObj::function, succeedFuncID, failedFuncID));
+
 class ScenarioInfo;
 class ScenarioFlow;
+
 
 class Scenario : public GameObject
 {

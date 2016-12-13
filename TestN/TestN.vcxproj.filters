@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Game">
+      <UniqueIdentifier>{ec993709-371b-4525-90aa-70fa9504b6e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Scenario">
+      <UniqueIdentifier>{ce9699fa-917a-4199-99b1-5aeda7f28407}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -31,19 +37,25 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="NodeScenario.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Scenario.h">
-      <Filter>Header Files</Filter>
+      <Filter>Game\Scenario</Filter>
     </ClInclude>
     <ClInclude Include="NodeScene.h">
-      <Filter>Header Files</Filter>
+      <Filter>Game\Scenario</Filter>
     </ClInclude>
-    <ClInclude Include="ScenarioMgr.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Scenario.h">
+      <Filter>Game\Scenario</Filter>
+    </ClInclude>
+    <ClInclude Include="Scenario_LoadContent.h">
+      <Filter>Game\Scenario</Filter>
     </ClInclude>
     <ClInclude Include="ScenarioDef.h">
-      <Filter>Header Files</Filter>
+      <Filter>Game\Scenario</Filter>
+    </ClInclude>
+    <ClInclude Include="ScenarioManager.h">
+      <Filter>Game\Scenario</Filter>
+    </ClInclude>
+    <ClInclude Include="ScenarioMgr.h">
+      <Filter>Game\Scenario</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -59,20 +71,26 @@
     <ClCompile Include="SpaceGrid.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="NodeScenario.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Scenario.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="NodeScene.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ScenarioMgr.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Scenario_LoadContent.cpp">
+      <Filter>Game\Scenario</Filter>
     </ClCompile>
     <ClCompile Include="ScenarioDef.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Game\Scenario</Filter>
+    </ClCompile>
+    <ClCompile Include="ScenarioManager.cpp">
+      <Filter>Game\Scenario</Filter>
+    </ClCompile>
+    <ClCompile Include="ScenarioMgr.cpp">
+      <Filter>Game\Scenario</Filter>
+    </ClCompile>
+    <ClCompile Include="NodeScenario.cpp">
+      <Filter>Game\Scenario</Filter>
+    </ClCompile>
+    <ClCompile Include="NodeScene.cpp">
+      <Filter>Game\Scenario</Filter>
+    </ClCompile>
+    <ClCompile Include="Scenario.cpp">
+      <Filter>Game\Scenario</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

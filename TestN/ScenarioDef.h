@@ -4,6 +4,24 @@
 #include "DBInterface.h"
 #include "ID2ItemMap.h"
 
+#define MaxScenarioStep 100
+
+enum ScenarioStepAction
+{
+	eStepAction_Enter,
+	eStepAction_Tick,
+	eStepAction_Leave,
+};
+
+enum ScenarioStepResult
+{
+	eStepResult_Keep = 0,
+	eStepResult_Succeed,
+	eStepResult_Failed,
+
+	eStepResult_Exit,
+};
+
 class ScenarioStepInfo
 {
 public:
