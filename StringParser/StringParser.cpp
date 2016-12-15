@@ -3,6 +3,11 @@
 
 #include "stdafx.h"
 #include <assert.h>
+#include <iostream>
+#include <vector>
+#include <sstream>
+using namespace std;
+
 typedef unsigned long long uint64;
 typedef long long int64;
 typedef char Char;
@@ -39,19 +44,104 @@ enum eParamType
 	eParam_Player
 };
 
-struct SCommand;
+struct sCommand;
+struct sCommandParserContext;
 
-int32 g_Common_Char = '#';
-sCommand g_Cmds[] = 
+typedef void(*ParserFunc)(char* s, char* ts, sCommand& cmd, sCommandParserContext& context, int32& p);
+
+
+int32 g_Command_Char = '#';
+char* g_Command_String = "#";
+char* g_Empty_String = "";
+char* g_Str_Tmt_CMD = "}";
+char* g_Str_Pre_Color = "<FONT SIZE='";
+char* g_Str_Post_Color = "'>";
+char* g_Str_Tmt_Font = "</FONT>";
+
+const static size_t Color_CMD_Size = 8;
+
+
+struct sStringSegment
 {
-	{ "#c",		0,			Color_CMD_Size,	g_str_Pre_Color,	g_Str_Post_Color, g_str_Tmt}
-}
+	sStringSegment() : pBuffer(0), nLen(0) {}
+	sStringSegment(char* s, size_t l) : pBuffer(s), nLen(l) {}
+	bool Equals(const char* s);
+
+	char*	pBuffer;
+	size_t	nLen;
+};
+
+struct sStringSegmentList
+{
+	static sStringSegment NULLSG;
+
+	sStringSegmentList() : nLen(0){}
+	size_t Count();
+	void Push( char* s, size_t l)
+	{
+		segs.push_back(sStringSegment(s, l));
+		nLen += l;
+	}
+
+	void Clear();
+	char* Combine();
+	sStringSegment& operator[](size_t nIdx)
+	{
+		if( nIdx > segs.size() - 1 )
+			return NULLSG;
+
+		return segs[nIdx];
+	}
+
+	typedef std::vector<sStringSegment> SegsVect;
+	SegsVect	segs;
+	size_t		nLen;
+};
+
+template <int32 nCapacity>
+struct sStringBuffer
+{
+	typedef std::vector<char*>	DynamicBuffVect;
+
+	sStringBuffer()
+	{
+		memset( stBuff, 0, sizeof(stBuff));
+		nPos = 0;
+	}
+
+	~sStringBuffer()
+	{
+		Clear();
+	}
+
+	void Clear()
+	{
+		nPos = 0;
+		if(dynBuff.empty())
+			return;
+
+		DynamicBuffVect::iterator lastItr = dynBuff.end();
+		for( DynamicBuffVect::iterator itr = dynBuff.begin(); itr != lastItr; ++itr)
+			free(*itr);
+
+		dynBuff.clear();
+	}
+
+	char	stBuff[nCapacity];
+	size_t	nPos;
+	DynamicBuffVect dynBuff;
+
+	char* Write();
+};
+
 
 struct sCommandParserContext
 {
-	sCommandParserContext();
-
-	
+	sCommandParserContext(){}
+	sStringSegmentList	sl;
+	sStringBuffer<1024>	sb;
+	typedef std::vector<sCommand*>	CmdStack;
+	CmdStack ss;
 };
 
 struct sCommand
@@ -64,8 +154,94 @@ struct sCommand
 	char* strTmt;
 	ParserFunc func;
 	int32 nParse;
-	bool Exe(char** s, sCommandParserContext& context, int32& p);
+	bool Exe(char** s, sCommandParserContext& context, int32& p)
+	{
+		char* c = strCmd;
+		char* ts = *s;
+
+		while (*c != 0 && *ts != 0 && *c == *ts )
+		{
+			++c; 
+			++ts;
+		}
+
+		if(*c)
+			return false;
+
+		char* tst = ts;
+		char* preTst = 0;
+		if(strCmdTmt)
+		{
+			char* ct = strCmdTmt;
+			for (; (*tst) != 0; ++tst)
+			{
+				if(*tst == *ct)
+				{
+					char* ttst = tst;
+					while ( *ct != 0 && *ttst != 0 && *ct == *ttst )
+					{
+						++ct;
+						++ttst;
+					}
+
+					if(*ct == 0)
+						break;
+
+					ct = strCmdTmt;
+				}
+			}
+
+			if(*tst == 0)
+				return true;
+
+			preTst = tst;
+			tst = tst + strlen(strCmdTmt);
+		}
+		else
+		{
+			size_t nIdx = 0;
+			while (nIdx < nCmdLen )
+			{
+				if( *((*s) + nIdx) == 0 )
+					return true;
+
+				++nIdx;
+			}
+
+			tst = *s + nCmdLen;
+			preTst = tst;
+		}
+
+		if(strPre)
+			context.sl.Push( strPre, strlen(strPre));
+
+		int32 nDynParse = eCmdParser_Undetermined;
+		if(func)
+			(*func)(ts, preTst, *this, context, nDynParse);
+
+		if(strPost)
+			context.sl.Push( strPost, strlen(strPost));
+
+		if(strTmt)
+			context.ss.push_back(this);
+
+		if(nParse == eCmdParser_Undetermined)
+			p = nDynParse;
+		else
+			p = nParse;
+
+		*s = tst;
+
+		return true;
+	}
 };
+
+sCommand g_Cmds[] = 
+{
+	{ "#c",		0,		Color_CMD_Size,		g_Str_Pre_Color,	g_Str_Post_Color,	g_Str_Tmt_Font,		NULL,		eCmdParser_Static},
+};
+
+
 const static size_t g_CmdCount = sizeof(g_Cmds) / sizeof(sCommand);
 
 struct sParam
@@ -80,8 +256,12 @@ struct sParam
 
 struct sString
 {
-	sString();
-	~sString();
+	sString() : str(NULL), pStr(NULL), cStr(NULL), nParamParser(eParamParser_Undefined), nCmdParser(eCmdParser_Undetermined), pParams(NULL)
+	{
+
+	}
+
+	~sString(){}
 
 	char* str;	// Ô­Ê¼×Ö·û´®
 	char* pStr;	// º¬²Î×Ö·û´®
@@ -91,6 +271,29 @@ struct sString
 	int32	nCmdParser;
 	sParam* pParams;
 };
+
+
+char* sStringSegmentList::Combine()
+{
+	if( nLen < 1)
+		return g_Empty_String;
+
+	char* s = new char[nLen + 1];
+	size_t cp = 0;
+	SegsVect::iterator itr = segs.end();
+	for (SegsVect::iterator itr = segs.begin(); itr != segs.end(); ++itr)
+	{
+		sStringSegment& seg = *itr;
+		memcpy( s+cp, seg.pBuffer, seg.nLen);
+		cp += seg.nLen;
+	}
+
+	s[nLen] = '\0';
+	return s;
+}
+
+
+
 
 struct sParamParser
 {
@@ -106,7 +309,7 @@ struct sParamParser
 		char* preStop = s;
 		while (*s != '\0')
 		{
-			if(*s == g_Common_Char)
+			if(*s == g_Command_Char)
 			{
 				++s;
 
@@ -240,6 +443,7 @@ struct sParamParser
 
 class StrParser
 {
+public:
 	static bool ParseParams(sString* sPtr)
 	{
 		if( !sPtr || !sPtr->str || sPtr->nParamParser != eParamParser_Undefined)
@@ -269,27 +473,203 @@ class StrParser
 			sPtr->nParamParser = eParamParser_HasParam;
 			sPtr->pParams = pParam;
 		}
+
+		return true;
 	}
 	
 
 	static bool ApplyParams(sString* sPtr, int32 nArgc, const char* argv[])
 	{
-		if( sPtr == '\0' || sPtr->pParams == NULL)
-			return;
+		if( !sPtr || !(sPtr->pParams) )
+			return false;
 
 		assert( sPtr->nParamParser == eParamParser_HasParam );
+
+		sParam* p = sPtr->pParams;
+
+		sStringSegmentList	sl;
+		sStringBuffer<256>	sb;
+
+		std::stringstream ss;
+
+		int32 nIdx = 0;
+		while (p)
+		{
+			switch(p->nParamType)
+			{
+			case eParam_None:
+				{
+					sl.Push( p->addr, p->nLen);
+				}
+				break;
+			case eParam_Decimal:
+			case eParam_Real:
+			case eParam_String:
+				{
+					if( nIdx < nArgc )
+					{
+						const char* val = argv[nIdx];
+						size_t l = strlen(val);
+						sl.Push(const_cast<char*>(val), l);
+					}
+
+					++nIdx;
+				}
+			case eParam_Player:
+				{
+					if( nIdx < nArgc )
+					{
+						int32 nCnt = *(argv[nIdx] - '0');
+						++nIdx;
+
+						int32 i = 0;
+						for (; i < nCnt && ( nIdx < nArgc); ++i, ++nIdx)
+						{
+							const char* pArgStr = argv[nIdx];
+							if(!pArgStr)
+								break;
+
+							size_t l = strlen(pArgStr);
+							sl.Push(const_cast<char*>(pArgStr), l);
+						}
+					}
+				}
+				break;
+			default:break;
+			}
+			p = p->n;
+		}
+
+		char* s = sl.Combine();
+		if(sPtr->pStr)
+		{
+			assert( sPtr->str != sPtr->pStr);
+			if(sPtr->pStr == sPtr->cStr)
+				sPtr->cStr = NULL;
+
+			delete [] sPtr->pStr;
+		}
+
+		sPtr->pStr = s;
+		return true;
 	}
 
-	static bool ParserCommands()
+	static bool ParserCommands(sString* pPtr)
 	{
+		if( !pPtr || !pPtr->pStr)
+			return false;
 
+		if( pPtr->nCmdParser == eCmdParser_Static )
+			return false;
+	
+		char* s = pPtr->pStr;
+		int32 p = eCmdParser_Static;
+		sCommandParserContext context;
+
+		char* preS = '\0';
+		bool bHasCmd = false;
+		for (;(*s) != '\0';)
+		{
+			if(!IsCommandChar(*s))
+			{
+				if(!preS)
+					preS = s;
+				++s;
+				continue;
+			}
+
+			if(preS != '\0' && preS < s)
+				context.sl.Push( preS, size_t(s - preS));
+
+			preS = '\0';
+			bHasCmd = true;
+			char* oldS = s;
+			for (size_t i = 0; i < g_CmdCount; ++i)
+			{
+				int32 nCmdParse = eCmdParser_Undetermined;
+				if( g_Cmds[i].Exe( &s, context, nCmdParse))
+				{
+					if( nCmdParse == eCmdParser_ParserEveryTime)
+						p = eCmdParser_ParserEveryTime;
+
+					break;
+				}
+			}
+
+			if( oldS == s)
+				++s;
+		}
+
+		if( preS != '\0' && preS < s)
+			context.sl.Push( preS, size_t(s-preS));
+
+		preS = 0;
+
+		if(pPtr->nParamParser == eParamParser_HasParam )
+			p = eCmdParser_ParserEveryTime;
+
+		pPtr->nCmdParser = p;
+		if(!bHasCmd)
+		{
+			pPtr->cStr = pPtr->pStr;
+			return true;
+		}
+
+		// clear stack
+		while (!context.ss.empty() )
+		{
+			sCommandParserContext::CmdStack::iterator fiter = context.ss.begin();
+			if(fiter == context.ss.end() )
+				return false;
+
+			sCommand* tCmd = *fiter;
+			if(!tCmd)
+				continue;
+
+			context.sl.Push(tCmd->strTmt, strlen(tCmd->strTmt));
+			context.ss.erase(fiter);
+		}
+
+		// combine string
+		char* destS = context.sl.Combine();
+
+		// save rst
+		if(pPtr->cStr)
+			delete [] pPtr->cStr;
+
+		pPtr->cStr = destS;
+
+		return true;
 	}
+
+	static bool IsCommandChar(char c)
+	{
+		return (c == g_Command_Char);
+	}
+	//int32 GenPlayerLink(std::vector<>)
 };
 
-int _tmain(int argc, _TCHAR* argv[])
+
+
+int _tmain(int argc, const char* argv[])
 {
-	sParamParser parser;
-	parser.Parser("111%d111#%#%");
+	sString sptr;
+
+	const char* myArgv[] = {
+			"1",
+			"2"
+	};
+
+	int32 nArgc = sizeof(myArgv)/sizeof(char*);
+
+	sptr.str = "ÔÚß÷ß÷ß÷ÖÐÕÒµ½ÁËÑ©ß÷ß÷%d";
+
+	StrParser::ParseParams(&sptr);
+	StrParser::ApplyParams(&sptr, nArgc, myArgv);
+	StrParser::ParserCommands(&sptr);
+
+	std::cout<<sptr.cStr<<std::endl;
+
 	return 0;
 }
 
