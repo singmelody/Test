@@ -48,6 +48,7 @@ struct sCommand;
 struct sCommandParserContext;
 
 typedef void(*ParserFunc)(char* s, char* ts, sCommand& cmd, sCommandParserContext& context, int32& p);
+void Test(char* s, char* ts, sCommand& cmd, sCommandParserContext& context, int32& p);
 
 
 int32 g_Command_Char = '#';
@@ -131,7 +132,24 @@ struct sStringBuffer
 	size_t	nPos;
 	DynamicBuffVect dynBuff;
 
-	char* Write();
+	char* Write(char* s, size_t l)
+	{
+		if( l < 1)
+			return 0;
+
+		if( nPos + l > nCapacity)
+		{
+			void* db = malloc(l);
+			memcpy( db, s, l);
+			dynBuff.push_back((char*)db);
+			return (char*)db;
+		}
+
+		char* sb = stBuff + nPos;
+		memcpy( sb, s, l);
+		nPos += l;
+		return sb;
+	}
 };
 
 
@@ -238,7 +256,7 @@ struct sCommand
 
 sCommand g_Cmds[] = 
 {
-	{ "#c",		0,		Color_CMD_Size,		g_Str_Pre_Color,	g_Str_Post_Color,	g_Str_Tmt_Font,		NULL,		eCmdParser_Static},
+	{ "#c",		0,		Color_CMD_Size,		g_Str_Pre_Color,	g_Str_Post_Color,	g_Str_Tmt_Font,		Test,		eCmdParser_Static},
 };
 
 
@@ -515,6 +533,7 @@ public:
 
 					++nIdx;
 				}
+				break;
 			case eParam_Player:
 				{
 					if( nIdx < nArgc )
@@ -649,6 +668,16 @@ public:
 	//int32 GenPlayerLink(std::vector<>)
 };
 
+void Test(char* s, char* ts, sCommand& cmd, sCommandParserContext& context, int32& p)
+{
+	size_t nParamSize = Color_CMD_Size - strlen(cmd.strCmd);
+	if( strlen(s) < nParamSize)
+		return;
+
+	char* wb = context.sb.Write( s, nParamSize);
+	if(wb)
+		context.sl.Push( wb, nParamSize);
+}
 
 
 int _tmain(int argc, const char* argv[])
@@ -656,13 +685,17 @@ int _tmain(int argc, const char* argv[])
 	sString sptr;
 
 	const char* myArgv[] = {
-			"1",
-			"2"
+			"10",
+			"200"
 	};
 
 	int32 nArgc = sizeof(myArgv)/sizeof(char*);
 
-	sptr.str = "ÔÚß÷ß÷ß÷ÖÐÕÒµ½ÁËÑ©ß÷ß÷%d";
+	sptr.str = "#cffffffß÷ß÷ß÷%d %d";
+
+	StrParser::ParseParams(&sptr);
+	StrParser::ApplyParams(&sptr, nArgc, myArgv);
+	StrParser::ParserCommands(&sptr);
 
 	StrParser::ParseParams(&sptr);
 	StrParser::ApplyParams(&sptr, nArgc, myArgv);
