@@ -78,8 +78,11 @@
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="NodeBase.h" />
     <ClInclude Include="NodeScenario.h" />
+    <ClInclude Include="NodeScenarioManager.h" />
     <ClInclude Include="NodeScene.h" />
+    <ClInclude Include="NodeServer.h" />
     <ClInclude Include="Scenario.h" />
     <ClInclude Include="ScenarioDef.h" />
     <ClInclude Include="ScenarioManager.h" />
@@ -91,8 +94,11 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="NodeBase.cpp" />
     <ClCompile Include="NodeScenario.cpp" />
+    <ClCompile Include="NodeScenarioManager.cpp" />
     <ClCompile Include="NodeScene.cpp" />
+    <ClCompile Include="NodeServer.cpp" />
     <ClCompile Include="Scenario.cpp" />
     <ClCompile Include="ScenarioDef.cpp" />
     <ClCompile Include="ScenarioManager.cpp" />

@@ -266,6 +266,8 @@
     <ClInclude Include="DLAllocator.h" />
     <ClInclude Include="DLMalloc.h" />
     <ClInclude Include="DLMallocConfig.h" />
+    <ClInclude Include="EventBase.h" />
+    <ClInclude Include="EventProcessBase.h" />
     <ClInclude Include="Factory.h" />
     <ClInclude Include="FactoryManagerBase.h" />
     <ClInclude Include="FSMExtendData.h" />
@@ -430,6 +432,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Itanium'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="EventBase.cpp" />
+    <ClCompile Include="EventProcessBase.cpp" />
     <ClCompile Include="Factory.cpp" />
     <ClCompile Include="FactoryManagerBase.cpp" />
     <ClCompile Include="FSMExtendData.cpp" />

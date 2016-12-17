@@ -57,6 +57,15 @@
     <ClInclude Include="ScenarioMgr.h">
       <Filter>Game\Scenario</Filter>
     </ClInclude>
+    <ClInclude Include="NodeScenarioManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NodeServer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NodeBase.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -91,6 +100,15 @@
     </ClCompile>
     <ClCompile Include="Scenario.cpp">
       <Filter>Game\Scenario</Filter>
+    </ClCompile>
+    <ClCompile Include="NodeScenarioManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="NodeServer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="NodeBase.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -528,6 +528,12 @@
     <ClInclude Include="..\TestD\DBASqlHelper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="EventProcessBase.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EventBase.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -969,6 +975,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="DBASqlHelper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EventProcessBase.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EventBase.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
