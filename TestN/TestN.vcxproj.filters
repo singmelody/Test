@@ -66,6 +66,21 @@
     <ClInclude Include="NodeBase.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="NodeScene_CreateDestroy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NodeScene_Space.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NodeScene_ObjMgr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ISceneObjFinder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MyBullet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -108,6 +123,21 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="NodeBase.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="NodeScene_CreateDestroy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="NodeScene_Space.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="NodeScene_ObjMgr.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ISceneObjFinder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MyBullet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -4,21 +4,21 @@
 class EventHandlerBase;
 
 template <class T>
-class EventProcessBase
+class EventProcessorBase
 {
 public:
-	EventProcessBase(void)
+	EventProcessorBase(void)
 	{
 		m_ProcPtr = NULL;
 		m_ProcPtr = static_cast<T*>(this);
 	}
 
-	EventProcessBase(T* pPtr)
+	EventProcessorBase(T* pPtr)
 	{
 		m_ProcPtr = pPtr;
 	}
 
-	~EventProcessBase(void)
+	~EventProcessorBase(void)
 	{
 
 	}

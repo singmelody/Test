@@ -433,7 +433,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Itanium'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="EventBase.cpp" />
-    <ClCompile Include="EventProcessBase.cpp" />
+    <ClCompile Include="EventProcessorBase.cpp" />
     <ClCompile Include="Factory.cpp" />
     <ClCompile Include="FactoryManagerBase.cpp" />
     <ClCompile Include="FSMExtendData.cpp" />

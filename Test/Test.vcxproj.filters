@@ -977,10 +977,10 @@
     <ClCompile Include="DBASqlHelper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="EventProcessBase.cpp">
+    <ClCompile Include="EventBase.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="EventBase.cpp">
+    <ClCompile Include="EventProcessorBase.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

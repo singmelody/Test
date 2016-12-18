@@ -1,6 +1,23 @@
 #pragma once
 
 #include "Factory.h"
+#include "MyListNode.h"
+
+class EventFactory : public FactoryManagerBase, public Singleton<EventFactory>
+{
+public:
+	EventFactory(){}
+	virtual ~EventFactory(){}
+
+	void* New(int32 nClassID)
+	{
+		FactoryBase_Arg0* pFactory = m_FuncName_Arg0[nClassID];
+		if(!pFactory)
+			return NULL;
+
+		return pFactory->New();
+	}
+};
 
 class EventBase
 {

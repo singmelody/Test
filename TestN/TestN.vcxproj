@@ -78,10 +78,15 @@
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ISceneObjFinder.h" />
+    <ClInclude Include="MyBullet.h" />
     <ClInclude Include="NodeBase.h" />
     <ClInclude Include="NodeScenario.h" />
     <ClInclude Include="NodeScenarioManager.h" />
     <ClInclude Include="NodeScene.h" />
+    <ClInclude Include="NodeScene_CreateDestroy.h" />
+    <ClInclude Include="NodeScene_ObjMgr.h" />
+    <ClInclude Include="NodeScene_Space.h" />
     <ClInclude Include="NodeServer.h" />
     <ClInclude Include="Scenario.h" />
     <ClInclude Include="ScenarioDef.h" />
@@ -94,10 +99,15 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ISceneObjFinder.cpp" />
+    <ClCompile Include="MyBullet.cpp" />
     <ClCompile Include="NodeBase.cpp" />
     <ClCompile Include="NodeScenario.cpp" />
     <ClCompile Include="NodeScenarioManager.cpp" />
     <ClCompile Include="NodeScene.cpp" />
+    <ClCompile Include="NodeScene_CreateDestroy.cpp" />
+    <ClCompile Include="NodeScene_ObjMgr.cpp" />
+    <ClCompile Include="NodeScene_Space.cpp" />
     <ClCompile Include="NodeServer.cpp" />
     <ClCompile Include="Scenario.cpp" />
     <ClCompile Include="ScenarioDef.cpp" />

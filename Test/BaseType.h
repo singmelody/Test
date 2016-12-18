@@ -77,8 +77,7 @@ typedef void* SMHandle;
 
 #define SRV_HEART_BEAT_INTERVAL			30000
 
-#define DBA_FRAME_TIME					100
-#define GATE_FRAME_TIME					50
+
 
 #define Clt_Packet_Check_Time			20
 #define Clt_Packet_Send_Freq			100*Clt_Packet_Check_Time
@@ -98,8 +97,11 @@ typedef void* SMHandle;
 #define NET_TEST_PACKET_SEND_COUNT_PER_TICK		200
 #define GATE_SRV_SEND_DROP_PACKET_COUNT			1024*1000
 
-#define NODE_FAST_TICK_TIME						40
-#define NODE_NORMAL_TICK_TIME					100
+#define WORLD_FRAME_TIME				100		// 10fps
+#define GATE_FRAME_TIME					50		// 20fps
+#define DBA_FRAME_TIME					100		// 10fps
+#define NODE_FRAME_TIME					40		// 25fps
+#define NODE_SLOW_TICK_TIME				100		// 10fps for scenario
 
 #define INVALID_SMHANDLE NULL
 

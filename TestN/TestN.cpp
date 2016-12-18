@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 
+#include "CrashHandler.h"
 #include "NodeServer.h"
 
 void MyExit()
@@ -10,7 +11,7 @@ void MyExit()
 	NodeServer::Instance().Exit();
 }
 
-int _tmain(int argc, _TCHAR* argv[])
+int _tmain(int argc, char* argv[])
 {
 
 	CrashHandler::InitGlobalHandler("TestN");

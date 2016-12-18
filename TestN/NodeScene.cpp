@@ -31,7 +31,7 @@ bool NodeScene::DebugTick(int32 nDeltaTime)
 	// slow tick
 	{
 		m_nNormalTickTime += nDeltaTime;
-		if( m_nNormalTickTime >= NODE_NORMAL_TICK_TIME )
+		if( m_nNormalTickTime >= NODE_SLOW_TICK_TIME )
 		{
 			m_mgrScenarios.Tick(m_nNormalTickTime);
 

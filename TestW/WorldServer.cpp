@@ -10,7 +10,7 @@
 #include "WorldSceneManager.h"
 #include "WorldAvatar.h"
 #include "WorldState.h"
-
+#include "WatchDog.h"
 
 bool WorldServer::bUseBilling = false;
 
@@ -42,7 +42,8 @@ bool WorldServer::Init(int32 nArgc, char* argv[])
 
 bool WorldServer::Start()
 {
-	return true;
+	WatchDog::Instance().RegWatchDog( GAME_THREAD_WATCHDOG_ID, "World-Game-Thread", WORLD_FRAME_TIME*10);
+	return StartMainLoop( WORLD_FRAME_TIME);
 }
 
 void WorldServer::OnGateDisconnect(ServerInfo* pInfo)
