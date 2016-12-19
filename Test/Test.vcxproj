@@ -275,6 +275,8 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameUtil.h" />
     <ClInclude Include="GateSrvGrp.h" />
+    <ClInclude Include="LogicTreeBase.h" />
+    <ClInclude Include="MyLogic.h" />
     <ClInclude Include="MyMap.h" />
     <ClInclude Include="ID2ItemMap.h" />
     <ClInclude Include="IDPool.h" />
@@ -386,6 +388,7 @@
     <ClInclude Include="TimeManager.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="MyMath.h" />
+    <ClInclude Include="TreeNode.h" />
     <ClInclude Include="UtilID.h" />
     <ClInclude Include="WatchDog.h" />
     <ClInclude Include="WorkUnit.h" />
@@ -441,6 +444,8 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameUtil.cpp" />
     <ClCompile Include="GateSrvGrp.cpp" />
+    <ClCompile Include="LogicTreeBase.cpp" />
+    <ClCompile Include="MyLogic.cpp" />
     <ClCompile Include="MyMap.cpp" />
     <ClCompile Include="ID2ItemMap.cpp" />
     <ClCompile Include="IDPool.cpp" />
@@ -558,6 +563,7 @@
     <ClCompile Include="thirdparty\tinyxml\tinyxmlparser.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="TreeNode.cpp" />
     <ClCompile Include="WatchDog.cpp" />
     <ClCompile Include="WorkUnit.cpp" />
     <ClInclude Include="Singleton.h">
@@ -582,6 +588,9 @@
     <ClCompile Include="MyMath.cpp" />
     <ClCompile Include="TimeManager.cpp" />
     <ClCompile Include="UtilID.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Test.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

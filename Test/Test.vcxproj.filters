@@ -55,6 +55,9 @@
     <Filter Include="Game\Thread">
       <UniqueIdentifier>{eb39a340-914f-4a4c-90fb-01bc74506e8f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\LogicTree">
+      <UniqueIdentifier>{a9a002a3-a878-47eb-b12c-847496a10cb0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -534,6 +537,15 @@
     <ClInclude Include="EventBase.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="MyLogic.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LogicTreeBase.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TreeNode.h">
+      <Filter>Game\LogicTree</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -983,5 +995,17 @@
     <ClCompile Include="EventProcessorBase.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="MyLogic.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LogicTreeBase.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TreeNode.cpp">
+      <Filter>Game\LogicTree</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Test.rc" />
   </ItemGroup>
 </Project>

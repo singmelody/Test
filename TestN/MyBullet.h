@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Factory.h"
+#include "MyMath.h"
 
 class MyBullet
 {
