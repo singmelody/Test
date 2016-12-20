@@ -13,6 +13,17 @@ Scenario::~Scenario(void)
 {
 }
 
+bool Scenario::StartScenario()
+{
+	SetCurStep(0);
+	return true;
+}
+
+void Scenario::DestroyScenario(bool bNotify /*= false*/)
+{
+
+}
+
 bool Scenario::TickScenario(int32 nFrameInterval)
 {
 	m_fCurTime += nFrameInterval;

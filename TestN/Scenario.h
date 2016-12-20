@@ -24,6 +24,9 @@ public:
 	void ParseScenarioParams( ScenarioParamMap* pMap);
 	virtual void OnParseParam(ScenarioParam& param);
 
+	virtual void DestroyScenario(bool bNotify = false);
+
+	virtual bool StartScenario();
 	virtual bool TickScenario(int32 nFrameInterval);
 
 	bool SetCurStep(int32 nStepID);

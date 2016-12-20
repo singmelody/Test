@@ -1,4 +1,9 @@
 #pragma once
+
+#include "EventProcessorBase.h"
+#include "NodeScene_CreateDestroy.h"
+#include "ScenarioManager.h"
+
 class NodeScene : public NodeScene_CreateDestroy, public EventProcessorBase<NodeScene>
 {
 public:
@@ -7,7 +12,7 @@ public:
 
 	bool DebugTick(int32 nDeltaTime);
 
-
+	void ExitSceneAndDestroy(NodeNPC* pNpc);
 protected:
 	int64 m_nAreaEnableMask;
 	int32 m_nFastTickTime;

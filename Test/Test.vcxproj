@@ -275,7 +275,9 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameUtil.h" />
     <ClInclude Include="GateSrvGrp.h" />
+    <ClInclude Include="LogicOuput.h" />
     <ClInclude Include="LogicTreeBase.h" />
+    <ClInclude Include="LogicTypeDefine.h" />
     <ClInclude Include="MyLogic.h" />
     <ClInclude Include="MyMap.h" />
     <ClInclude Include="ID2ItemMap.h" />
@@ -444,7 +446,9 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameUtil.cpp" />
     <ClCompile Include="GateSrvGrp.cpp" />
+    <ClCompile Include="LogicOuput.cpp" />
     <ClCompile Include="LogicTreeBase.cpp" />
+    <ClCompile Include="LogicTypeDefine.cpp" />
     <ClCompile Include="MyLogic.cpp" />
     <ClCompile Include="MyMap.cpp" />
     <ClCompile Include="ID2ItemMap.cpp" />

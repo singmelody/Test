@@ -537,14 +537,20 @@
     <ClInclude Include="EventBase.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MyLogic.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="LogicTreeBase.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="TreeNode.h">
       <Filter>Game\LogicTree</Filter>
+    </ClInclude>
+    <ClInclude Include="MyLogic.h">
+      <Filter>Game\LogicTree</Filter>
+    </ClInclude>
+    <ClInclude Include="LogicTypeDefine.h">
+      <Filter>Game\LogicTree</Filter>
+    </ClInclude>
+    <ClInclude Include="LogicTreeBase.h">
+      <Filter>Game\LogicTree</Filter>
+    </ClInclude>
+    <ClInclude Include="LogicOuput.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -995,14 +1001,20 @@
     <ClCompile Include="EventProcessorBase.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MyLogic.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="LogicTreeBase.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="TreeNode.cpp">
       <Filter>Game\LogicTree</Filter>
+    </ClCompile>
+    <ClCompile Include="MyLogic.cpp">
+      <Filter>Game\LogicTree</Filter>
+    </ClCompile>
+    <ClCompile Include="LogicTreeBase.cpp">
+      <Filter>Game\LogicTree</Filter>
+    </ClCompile>
+    <ClCompile Include="LogicTypeDefine.cpp">
+      <Filter>Game\LogicTree</Filter>
+    </ClCompile>
+    <ClCompile Include="LogicOuput.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

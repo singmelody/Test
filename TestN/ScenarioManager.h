@@ -17,6 +17,11 @@ public:
 	std::string		TemplateClass;
 };
 
+class ScenarioTemplateMap : public std::map< int32, ScenarioTemplateInfo>
+{
+
+};
+
 class ScenarioInfo : public ScenarioParamMap
 {
 public:
@@ -58,9 +63,9 @@ public:
 
 	virtual bool LoadDataFromDB(DBInterface* pDBI);
 
-	bool InitScenarioInfo( DBInterface* pDBI);
-	bool InitScenarioParam( DBInterface* pDBI);
-	bool InitScenarioTemplate( DBInterface* pDBI);
+	bool LoadScenarioInfo( DBInterface* pDBI);
+	bool LoadScenarioParam( DBInterface* pDBI);
+	bool LoadScenarioTemplate( DBInterface* pDBI);
 
 	ScenarioTemplateMap	m_mapTemplates;
 

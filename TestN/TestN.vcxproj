@@ -80,6 +80,9 @@
   <ItemGroup>
     <ClInclude Include="ISceneObjFinder.h" />
     <ClInclude Include="MyBullet.h" />
+    <ClInclude Include="NodeAvatar.h" />
+    <ClInclude Include="NodeAvatarComponent.h" />
+    <ClInclude Include="NodeAvatarFSM.h" />
     <ClInclude Include="NodeBase.h" />
     <ClInclude Include="NodeScenario.h" />
     <ClInclude Include="NodeScenarioManager.h" />
@@ -95,12 +98,16 @@
     <ClInclude Include="Scenario_LoadContent.h" />
     <ClInclude Include="SpaceGrid.h" />
     <ClInclude Include="SpaceManager.h" />
+    <ClInclude Include="SpaceObject.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ISceneObjFinder.cpp" />
     <ClCompile Include="MyBullet.cpp" />
+    <ClCompile Include="NodeAvatar.cpp" />
+    <ClCompile Include="NodeAvatarComponent.cpp" />
+    <ClCompile Include="NodeAvatarFSM.cpp" />
     <ClCompile Include="NodeBase.cpp" />
     <ClCompile Include="NodeScenario.cpp" />
     <ClCompile Include="NodeScenarioManager.cpp" />
@@ -116,6 +123,7 @@
     <ClCompile Include="Scenario_LoadContent.cpp" />
     <ClCompile Include="SpaceGrid.cpp" />
     <ClCompile Include="SpaceManager.cpp" />
+    <ClCompile Include="SpaceObject.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
