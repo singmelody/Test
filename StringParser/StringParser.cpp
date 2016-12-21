@@ -41,7 +41,9 @@ enum eParamType
 	eParam_Decimal,
 	eParam_Real,
 	eParam_String,
-	eParam_Player
+	eParam_Player,
+	eParam_Place,
+	eParam_Npc,
 };
 
 struct sCommand;
@@ -375,7 +377,6 @@ struct sParamParser
 						AddParam( 0, 0, eParam_String);
 					}
 					break;
-
 				case '0':
 				case '1':
 				case '2':
@@ -458,6 +459,12 @@ struct sParamParser
 	sParam* pCur;
 	bool	bHasParam;
 };
+
+std::string GetS()
+{
+	const char* str = "ÈÕ»ª³Ç";
+	return str;
+}
 
 class StrParser
 {
@@ -685,15 +692,15 @@ int _tmain(int argc, const char* argv[])
 	sString sptr;
 
 	const char* myArgv[] = {
-			"10",
-			"200"
+			"1002",
+			//"200"
 	};
 
 	int32 nArgc = sizeof(myArgv)/sizeof(char*);
 
-	sptr.str = "#cffffffß÷ß÷ß÷%d %d";
+	sptr.str = "#cffffffß÷ß÷ß÷";
 
-	StrParser::ParseParams(&sptr);
+	//StrParser::ParseParams(&sptr);
 	StrParser::ApplyParams(&sptr, nArgc, myArgv);
 	StrParser::ParserCommands(&sptr);
 

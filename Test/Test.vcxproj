@@ -275,6 +275,7 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameUtil.h" />
     <ClInclude Include="GateSrvGrp.h" />
+    <ClInclude Include="LogicClassManager.h" />
     <ClInclude Include="LogicOuput.h" />
     <ClInclude Include="LogicTreeBase.h" />
     <ClInclude Include="LogicTypeDefine.h" />
@@ -357,7 +358,6 @@
     <ClInclude Include="resource1.h" />
     <ClInclude Include="RSAipher.h" />
     <ClInclude Include="Scene.h" />
-    <ClInclude Include="SceneContentItem.h" />
     <ClInclude Include="SceneContentNpc.h" />
     <ClInclude Include="SceneInfo.h" />
     <ClInclude Include="SceneInstanceMgr.h" />
@@ -446,6 +446,7 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameUtil.cpp" />
     <ClCompile Include="GateSrvGrp.cpp" />
+    <ClCompile Include="LogicClassManager.cpp" />
     <ClCompile Include="LogicOuput.cpp" />
     <ClCompile Include="LogicTreeBase.cpp" />
     <ClCompile Include="LogicTypeDefine.cpp" />
@@ -523,7 +524,6 @@
     <ClCompile Include="PoolAllocatorEx.cpp" />
     <ClCompile Include="RSAipher.cpp" />
     <ClCompile Include="Scene.cpp" />
-    <ClCompile Include="SceneContentItem.cpp" />
     <ClCompile Include="SceneContentNpc.cpp" />
     <ClCompile Include="SceneInfo.cpp" />
     <ClCompile Include="SceneInstanceMgr.cpp" />

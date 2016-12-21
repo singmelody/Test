@@ -2,6 +2,7 @@
 
 #include "DBInterface.h"
 #include "MyMath.h"
+#include "ScenarioDef.h"
 
 class NodeScene;
 
@@ -27,5 +28,29 @@ protected:
 
 	Point3	m_pos;
 	Vector3 m_dir;
+};
+
+class ScenarioFlow : public ScenarioParamMap
+{
+public:
+	ScenarioFlow(DBRow& row, ScenarioManager& manager);
+
+	int32 nContentID;
+	int16 nFlowID;
+	int32 nScenarioID;
+	int32 nID;
+	bool  bSyncClt;
+
+	int64 nSceneProcessCompleteBit;
+	int64 nSceneProcessInvalidBit;
+
+	int64 nSceneInstanceCompleteBit;
+	int64 nSceneInstanceInvalidBit;
+
+	int64 nSceneProessStartBit;
+	int32 nSceneInstanceStartBit;
+
+	int64 nSceneCollisionBit;
+	ScenarioInfo*	m_pScenarioInfo;	// template info
 };
 

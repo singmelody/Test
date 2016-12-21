@@ -12,7 +12,7 @@ public:
 	NodeScenario(void);
 	virtual ~NodeScenario(void);
 
-	virtual bool InitScenario(NodeScene* pScene, ScenarioFlow* pInfo,UID2AvatarIDMap& map, UID2AvatarIDMap& map, CreateArgList& listDelay);
+	virtual bool InitScenario(NodeScene* pScene, ScenarioFlow* pInfo,UID2AvatarIDMap& map, CreateArgList& listDelay);
 	virtual void DestroyScenario(bool bNotify = false);
 
 	NodeAvatar* FindAvatarInContent(int32 nUID);
@@ -21,6 +21,7 @@ public:
 	NodeScene*	m_pScene;
 protected:
 
-	UID2AvatarIDMap* m_pMapUID2AvatarID2;
+	ScenarioFlow*		m_pScenarioFlow;
+	UID2AvatarIDMap*	m_pMapUID2AvatarID2;
 };
 

@@ -1,5 +1,6 @@
 #pragma once
 #include "MyListNode.h"
+#include "EventBase.h"
 
 class EventHandlerBase;
 

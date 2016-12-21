@@ -138,9 +138,6 @@
     <ClInclude Include="SceneContentNpc.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SceneContentItem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ParamDef.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -552,6 +549,9 @@
     <ClInclude Include="LogicOuput.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="LogicClassManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -615,9 +615,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SceneContentNpc.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneContentItem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ParamDef.cpp">
@@ -1014,6 +1011,9 @@
       <Filter>Game\LogicTree</Filter>
     </ClCompile>
     <ClCompile Include="LogicOuput.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LogicClassManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

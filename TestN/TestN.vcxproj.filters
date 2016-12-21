@@ -22,6 +22,12 @@
     <Filter Include="Game\Avatar">
       <UniqueIdentifier>{0ec9a695-1a49-403f-a2cd-e58935caefac}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Scene">
+      <UniqueIdentifier>{f5eb7da0-ea2e-4411-adf8-d073448dce38}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\LogicTree">
+      <UniqueIdentifier>{2b2f3f87-cf0a-48fc-b03d-48b7ce9c7ab6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -60,9 +66,6 @@
     <ClInclude Include="ScenarioMgr.h">
       <Filter>Game\Scenario</Filter>
     </ClInclude>
-    <ClInclude Include="NodeScenarioManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="NodeServer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -94,6 +97,15 @@
       <Filter>Game\Avatar</Filter>
     </ClInclude>
     <ClInclude Include="SpaceObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneContentItem.h">
+      <Filter>Game\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="NodeScenarioManager.h">
+      <Filter>Game\Scenario</Filter>
+    </ClInclude>
+    <ClInclude Include="MyLogicImpl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -131,9 +143,6 @@
     <ClCompile Include="Scenario.cpp">
       <Filter>Game\Scenario</Filter>
     </ClCompile>
-    <ClCompile Include="NodeScenarioManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="NodeServer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -165,6 +174,15 @@
       <Filter>Game\Avatar</Filter>
     </ClCompile>
     <ClCompile Include="SpaceObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="NodeScenarioManager.cpp">
+      <Filter>Game\Scenario</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneContentItem.cpp">
+      <Filter>Game\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="MyLogicImpl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

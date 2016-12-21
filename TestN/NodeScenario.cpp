@@ -12,6 +12,13 @@ NodeScenario::~NodeScenario(void)
 {
 }
 
+bool NodeScenario::InitScenario(NodeScene* pScene, ScenarioFlow* pFlow,UID2AvatarIDMap& map, CreateArgList& listDelay)
+{
+	m_pScene = pScene;
+	m_pScenarioFlow = pFlow;
+	m_pScenarioInfo = ;
+}
+
 void NodeScenario::DestroyScenario(bool bNotify /*= false*/)
 {
 	Scenario::DestroyScenario(bNotify);
@@ -43,10 +50,18 @@ void NodeScenario::DestroyScenario(bool bNotify /*= false*/)
 
 NodeAvatar* NodeScenario::FindAvatarInContent(int32 nUID)
 {
+	if(!m_pMapUID2AvatarID2)
+		return NULL;
 
+	int32 nAvatarID = m_pMapUID2AvatarID2->GetAvatarID(nUID);
+	if( nAvatarID == 0)
+		return NULL;
+
+	return FindAvatarFromScene(nAvatarID);
 }
 
 NodeAvatar* NodeScenario::FindAvatarFromScene(int32 nAvatarID)
 {
-
+	NodeAvatar* pAvatar = m_pScene->GetSceneAvatar(nAvatarID);
+	return pAvatar;
 }
