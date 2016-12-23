@@ -1,4 +1,5 @@
 #pragma once
+#include "AISerializeBase.h"
 
 class AIBehavior : public AISerializeBase
 {
@@ -9,7 +10,7 @@ class AIBehavior : public AISerializeBase
 	AIUNIT_Ref( AIBehavior, AISerializeBase)
 	Add_Ref_Member( m_nCDGroup, int32, eTB_Flag_Sec, CDGroupId);
 	Add_Ref_Member( m_nClear, int32, eTB_Flag_Sec, Clear);
-	AIUNIT_REF_END(AIBehavior)
+	AIUNIT_Ref_End(AIBehavior)
 public:
 	AIBehavior(void);
 	virtual ~AIBehavior(void);
