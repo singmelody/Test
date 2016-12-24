@@ -2,6 +2,41 @@
 #include "GameUtil.h"
 #include "Thread.h"
 #include <Windows.h>
+#include <string.h>
+
+int32 TokenParser::GetToken(const char* str_cur_pos, char* token, int32 nToken_Max, char separator /*= ' '*/)
+{
+	*token = '\0';
+
+	char* tData = const_cast<char*>(str_cur_pos);
+	char* c_begin = tData;
+
+	int32 nIdx_Offset = 0;
+	while (c_begin)
+	{
+		if(*c_begin == '\0')
+			return 0;
+
+		if(*c_begin != separator)
+			break;
+
+		++nIdx_Offset;
+		++c_begin;
+	}
+
+	char* c_end = strchr( c_begin, separator);
+	if(c_end)
+		*c_end = '\0';
+
+	int32 nLen = (int32)strlen(c_begin);
+	char* ret = strncpy(token, c_begin, nLen);
+	token[nLen] = '\0';
+	if(c_end)
+		*c_end = separator;
+
+	return nIdx_Offset + (int32)strlen(token);
+}
+
 
 std::string MyPath::m_MainPath = "";
 
@@ -87,3 +122,4 @@ void GameUtil::Sleep(const Time& time)
 {
 	MyThread::Sleep(time.MilliSecond());
 }
+

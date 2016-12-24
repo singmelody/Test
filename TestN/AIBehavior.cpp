@@ -13,7 +13,7 @@ AIBehavior::AIBehavior(void)
 	m_nCDGroupID = -1;
 	m_nClear = true;
 
-	memset( m_nBehList, 0, sizeof(AIBehavior*)*MAX_CHILD_AI_BEHAVIOR_COUNT);
+	memset( m_pBehList, 0, sizeof(AIBehavior*)*MAX_CHILD_AI_BEHAVIOR_COUNT);
 }
 
 
