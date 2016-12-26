@@ -48,6 +48,11 @@ AIBehavior* AIBehaviorSelector::Process(NodeAvatar& avatar)
 			pCDCom->StartCD( m_nGrpIdx, eCDType_Skill);
 		}
 
+		if(ServerConfig::DebugAIErrorFlag == 2 || ServerConfig::DebugAIErrorFlag == avatar.GetAvatarID())
+		{
+			printf("-----------------------------------------------");
+		}
 
+		AIBehaviorWeight weight;
 	}
 }
