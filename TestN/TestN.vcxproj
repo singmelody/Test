@@ -82,6 +82,7 @@
     <ClInclude Include="AIBehaviorAction.h" />
     <ClInclude Include="AIBehaviorSelector.h" />
     <ClInclude Include="AIBehaviorWeight.h" />
+    <ClInclude Include="AIPassiveBehManager.h" />
     <ClInclude Include="AISerializeBase.h" />
     <ClInclude Include="AITypeDefine.h" />
     <ClInclude Include="ISceneObjFinder.h" />
@@ -116,6 +117,7 @@
     <ClCompile Include="AIBehaviorAction.cpp" />
     <ClCompile Include="AIBehaviorSelector.cpp" />
     <ClCompile Include="AIBehaviorWeight.cpp" />
+    <ClCompile Include="AIPassiveBehManager.cpp" />
     <ClCompile Include="AISerializeBase.cpp" />
     <ClCompile Include="AITypeDefine.cpp" />
     <ClCompile Include="ISceneObjFinder.cpp" />
