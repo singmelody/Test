@@ -6,7 +6,7 @@ class PeerSrvModuleBase : public PeerModuleBase, public SrvBase
 {
 public:
 	PeerSrvModuleBase(SrvType nModuelType);
-	~PeerSrvModuleBase(void);
+	virtual ~PeerSrvModuleBase(void);
 
 	virtual bool Init(int32 nArgc, char* argv[]);
 	virtual void Exit();

@@ -19,9 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{D891F955-5928-4385-8573-70A4F5A515E2}</ProjectGuid>
+    <ProjectGuid>{392376D2-3AB6-4066-BABA-5439D73C95A7}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>TestN</RootNamespace>
+    <RootNamespace>TestL</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -32,7 +32,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -64,8 +64,6 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)lib\$(Configuration)\</OutDir>
-    <IntDir>$(SolutionDir)\tmp\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -84,7 +82,6 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)\Test;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -140,78 +137,27 @@
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AIBehavior.h" />
-    <ClInclude Include="AIBehaviorAction.h" />
-    <ClInclude Include="AIBehaviorSelector.h" />
-    <ClInclude Include="AIBehaviorWeight.h" />
-    <ClInclude Include="AIPassiveBehManager.h" />
-    <ClInclude Include="AISerializeBase.h" />
-    <ClInclude Include="AITypeDefine.h" />
-    <ClInclude Include="ISceneObjFinder.h" />
-    <ClInclude Include="MyBullet.h" />
-    <ClInclude Include="MyLogicImpl.h" />
-    <ClInclude Include="NodeAvatar.h" />
-    <ClInclude Include="NodeAvatarComponent.h" />
-    <ClInclude Include="NodeAvatarFSM.h" />
-    <ClInclude Include="NodeBase.h" />
-    <ClInclude Include="NodeScenario.h" />
-    <ClInclude Include="NodeScenarioManager.h" />
-    <ClInclude Include="NodeScene.h" />
-    <ClInclude Include="NodeScene_CreateDestroy.h" />
-    <ClInclude Include="NodeScene_ObjMgr.h" />
-    <ClInclude Include="NodeScene_Space.h" />
-    <ClInclude Include="NodeServer.h" />
-    <ClInclude Include="resource.h" />
-    <ClInclude Include="Scenario.h" />
-    <ClInclude Include="ScenarioDef.h" />
-    <ClInclude Include="ScenarioManager.h" />
-    <ClInclude Include="ScenarioMgr.h" />
-    <ClInclude Include="Scenario_LoadContent.h" />
-    <ClInclude Include="SceneContentItem.h" />
-    <ClInclude Include="SpaceGrid.h" />
-    <ClInclude Include="SpaceManager.h" />
-    <ClInclude Include="SpaceObject.h" />
+    <ClInclude Include="AccountStateBase.h" />
+    <ClInclude Include="LoginFuncManager.h" />
+    <ClInclude Include="LoginServer.h" />
+    <ClInclude Include="MyAccount.h" />
+    <ClInclude Include="LoginStateManager.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AIBehavior.cpp" />
-    <ClCompile Include="AIBehaviorAction.cpp" />
-    <ClCompile Include="AIBehaviorSelector.cpp" />
-    <ClCompile Include="AIBehaviorWeight.cpp" />
-    <ClCompile Include="AIPassiveBehManager.cpp" />
-    <ClCompile Include="AISerializeBase.cpp" />
-    <ClCompile Include="AITypeDefine.cpp" />
-    <ClCompile Include="ISceneObjFinder.cpp" />
-    <ClCompile Include="MyBullet.cpp" />
-    <ClCompile Include="MyLogicImpl.cpp" />
-    <ClCompile Include="NodeAvatar.cpp" />
-    <ClCompile Include="NodeAvatarComponent.cpp" />
-    <ClCompile Include="NodeAvatarFSM.cpp" />
-    <ClCompile Include="NodeBase.cpp" />
-    <ClCompile Include="NodeScenario.cpp" />
-    <ClCompile Include="NodeScenarioManager.cpp" />
-    <ClCompile Include="NodeScene.cpp" />
-    <ClCompile Include="NodeScene_CreateDestroy.cpp" />
-    <ClCompile Include="NodeScene_ObjMgr.cpp" />
-    <ClCompile Include="NodeScene_Space.cpp" />
-    <ClCompile Include="NodeServer.cpp" />
-    <ClCompile Include="Scenario.cpp" />
-    <ClCompile Include="ScenarioDef.cpp" />
-    <ClCompile Include="ScenarioManager.cpp" />
-    <ClCompile Include="ScenarioMgr.cpp" />
-    <ClCompile Include="Scenario_LoadContent.cpp" />
-    <ClCompile Include="SceneContentItem.cpp" />
-    <ClCompile Include="SpaceGrid.cpp" />
-    <ClCompile Include="SpaceManager.cpp" />
-    <ClCompile Include="SpaceObject.cpp" />
+    <ClCompile Include="AccountStateBase.cpp" />
+    <ClCompile Include="LoginFuncManager.cpp" />
+    <ClCompile Include="LoginServer.cpp" />
+    <ClCompile Include="MyAccount.cpp" />
+    <ClCompile Include="LoginStateManager.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="TestN.cpp" />
+    <ClCompile Include="TestL.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -27,6 +27,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestN", "TestN\TestN.vcxpro
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StringParser", "StringParser\StringParser.vcxproj", "{CC95A3FE-5084-4863-903A-DD4923A279A4}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestL", "TestL\TestL.vcxproj", "{392376D2-3AB6-4066-BABA-5439D73C95A7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -72,7 +74,7 @@ Global
 		{30EF5E8A-3A8B-44F0-9057-1C0C3D8B4099}.Release|x64.Build.0 = Release|x64
 		{D891F955-5928-4385-8573-70A4F5A515E2}.Debug|Win32.ActiveCfg = Debug|Win32
 		{D891F955-5928-4385-8573-70A4F5A515E2}.Debug|Win32.Build.0 = Debug|Win32
-		{D891F955-5928-4385-8573-70A4F5A515E2}.Debug|x64.ActiveCfg = Debug|Win32
+		{D891F955-5928-4385-8573-70A4F5A515E2}.Debug|x64.ActiveCfg = Debug|x64
 		{D891F955-5928-4385-8573-70A4F5A515E2}.Release|Win32.ActiveCfg = Release|Win32
 		{D891F955-5928-4385-8573-70A4F5A515E2}.Release|Win32.Build.0 = Release|Win32
 		{D891F955-5928-4385-8573-70A4F5A515E2}.Release|x64.ActiveCfg = Release|Win32
@@ -82,6 +84,12 @@ Global
 		{CC95A3FE-5084-4863-903A-DD4923A279A4}.Release|Win32.ActiveCfg = Release|Win32
 		{CC95A3FE-5084-4863-903A-DD4923A279A4}.Release|Win32.Build.0 = Release|Win32
 		{CC95A3FE-5084-4863-903A-DD4923A279A4}.Release|x64.ActiveCfg = Release|Win32
+		{392376D2-3AB6-4066-BABA-5439D73C95A7}.Debug|Win32.ActiveCfg = Debug|Win32
+		{392376D2-3AB6-4066-BABA-5439D73C95A7}.Debug|Win32.Build.0 = Debug|Win32
+		{392376D2-3AB6-4066-BABA-5439D73C95A7}.Debug|x64.ActiveCfg = Debug|x64
+		{392376D2-3AB6-4066-BABA-5439D73C95A7}.Release|Win32.ActiveCfg = Release|Win32
+		{392376D2-3AB6-4066-BABA-5439D73C95A7}.Release|Win32.Build.0 = Release|Win32
+		{392376D2-3AB6-4066-BABA-5439D73C95A7}.Release|x64.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
