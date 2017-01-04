@@ -1,6 +1,7 @@
 #pragma once
 
-#include "AccountState_Init.h"
+#include "AccountStateBase.h"
+#include "Singleton.h"
 
 class AccountState_Init : public AccountStateBase, public Singleton<AccountState_Init>
 {
@@ -31,8 +32,21 @@ public:
 		MyLog::message("Full Version[%s]", m_strGameResVersion.c_str());
 	}
 
-	~AccountState_Init(void);
+	virtual ~AccountState_Init(void);
 
+	virtual bool HandlePacket( LoginAccount& account, PacketConnectLoginServer& pkt)
+	{
+		{
+			MyMD5 md5;
+			md5.Init();
+			md5.Update(pkt.m_macAddress, pkt.MAC_ADDRESS_LEN);
+			md5.Final();
+
+			const byte* res = md5.GetDigestStream();
+			char pwdhash[MD5_SIZE+1];
+
+		}
+	}
 protected:
 	virtual bool HasExpiration() { return false; }
 

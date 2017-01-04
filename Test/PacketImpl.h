@@ -211,6 +211,12 @@ START_ADD_PACKET_MEMBER(PacketAvatarDataSend2DBAFin)
 	ADD_PACKET_MEMBER( nAvatarDID, int64, "")
 PACKET_END(PacketAvatarDataSend2DBAFin)
 
+PACKET( PacketCloseCommand, PacketBase)
+private:
+virtual uint32 GetStaticAttribute() const { return PktAttr_DisconnectCommand; }
+START_ADD_PACKET_MEMBER(PacketCloseCommand)
+PACKET_END(PacketCloseCommand)
+
 enum
 {
 	eAvatarData_Select = 0,
