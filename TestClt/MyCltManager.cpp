@@ -1,6 +1,7 @@
 #include "StdAfx.h"
 #include "MyCltManager.h"
-
+#include "Thread.h"
+#include "PacketImpl.h"
 
 MyCltManager::MyCltManager(void)
 {
@@ -58,8 +59,11 @@ void MyCltManager::InitNetManager()
 
 	m_pNetManager = pManager;
 
-	HOGActorPktHandleManager::Instance().RegisterPktHandlers(pProc);
-	HOGLogicPktHandleManager::Instance().RegisterPktHandlers(pProc);
+	CltActorPktHandleManager::Instance().RegisterPktHandlers(pProc);
+	CltLogicPktHandleManager::Instance().RegisterPktHandlers(pProc);
+
+	m_pThread = new MyThread("MyCltManager::ThreadRun");
+	m_pThread->Init( new FunctionBase_Arg0<MyCltManager>(this, &MyCltManager::ThreadRun))
 }
 
 void MyCltManager::Tick(bool bSleep)
@@ -78,4 +82,24 @@ void MyCltManager::Tick(bool bSleep)
 
 	if(bSleep)
 		GameUtil::Sleep(10);
+}
+
+void MyCltManager::ThreadRun()
+{
+	while (1)
+	{
+		if(m_pNetManager)
+			m_pNetManager->NetRun();
+
+		Sleep(1);
+	}
+}
+
+void MyCltManager::SendPacket(int32 nSocketID, PacketBase* pPkt)
+{
+	if(!pPkt)
+		return;
+
+	if(m_pNetManager)
+		m_pNetManager->SendPacket( *pPkt, nSocketID);
 }

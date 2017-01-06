@@ -1,6 +1,8 @@
 #pragma once
 #include "Singleton.h"
 
+class MyThread;
+
 class MyCltManager : public Singleton<MyCltManager>
 {
 public:
@@ -11,5 +13,10 @@ public:
 	void InitNetManager();
 	virtual void Init();
 	virtual void Tick(bool bSleep);
+
+	void ThreadRun();
+	void SendPacket(int32 nSocketID, PacketBase* pkt);
+protected:
+	MyThread*	m_pThread;
 };
 

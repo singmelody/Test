@@ -158,3 +158,5 @@ PACKET_IMPL(PacketGateStressInfo);
 PACKET_IMPL(PacketGateLoseClt);
 
 PACKET_IMPL(PacketDogDataFin);
+
+PACKET_IMPL(PacketConnectLoginServer);

@@ -38,6 +38,10 @@
 		virtual uint32 GetStaticAttribute() const { return ATTRI; } \
 	public: \
 
+#define PACKET_CLT_2_LOGIN( packet, basePacket) \
+	PACKET( packet, basePacket) \
+	IMPLE_GetStaticAttribute( PktAttr_IsClt2Srv | PktAttr_IsClt2Login)
+
 #define PACKET_CLT_2_NODE( packet, basePacket) \
 	PACKET( packet, basePacket) \
 	IMPLE_GetStaticAttribute( PktAttr_IsClt2Srv | PktAttr_IsClt2Node | PktAttr_ShouldEncrypt)

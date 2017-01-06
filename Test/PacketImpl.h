@@ -807,3 +807,87 @@ START_ADD_PACKET_MEMBER(PacketParallelInfo)
 ADD_PACKET_MEMBER( nSceneSID, uint16, "");
 ADD_PACKET_MEMBER( nParallelBits, uint32, "");
 PACKET_END(PacketParallelInfo)
+
+// Packet_Login
+enum ePacketConnectLoginServer
+{
+	PACKET_ACCOUNTLEN		= 50,
+	PACKET_STOKEN_LEN		= 128,
+	PACKET_MACHINECODE_LEN	= 255,
+	PACKET_VERSION_LEN		= 128,
+};
+
+PACKET_CLT_2_LOGIN(PacketConnectLoginServer, PacketBaseEx<PACKET_EX_BUFF_SIZE>)
+uint8 uiaccountlen;
+uint8 m_account[PACKET_ACCOUNTLEN];
+
+static const int32 MAC_ADDRESS_LEN = 6;
+uint8 m_macAddress[MAC_ADDRESS_LEN];
+uint8 uitokenlen;
+uint8 m_securityToken[PACKET_STOKEN_LEN];
+uint8 uimachinecodelen;
+uint8 m_machineCode[PACKET_MACHINECODE_LEN];
+
+uint8 uiversionlen;
+char  m_GameVersion[PACKET_VERSION_LEN];
+
+uint8 m_nPhyProcessor;
+uint8 m_nLogicalProcessor;
+uint8 m_nAvailProcessor;
+
+uint32 m_nPhyMemory;
+uint32 m_nVideoMemory;
+
+uint8 m_nCpuTypeStrLen;
+uint8 m_nGpuTypeStrLen;
+
+enum eWinVersion
+{
+	eWinUndetected,
+	eWin2000,
+	eWinXP,
+	eWin7,
+	eWin8
+};
+
+int8 m_nWinVersion;
+int8 m_bIsBit64;
+const char* GetWinVersionStr()
+{
+	switch (m_nWinVersion)
+	{
+	case eWin2000: return "Win2000";
+	case eWinXP: return "WinXP";
+	case eWin7: return "Win7";
+	default:
+		break;
+	}
+
+	return "WinUndetected";
+}
+START_ADD_PACKET_MEMBER(PacketConnectLoginServer)
+	ADD_PACKET_MEMBER_STR( m_account, PACKET_ACCOUNTLEN, m_account)
+	ADD_PACKET_MEMBER_STR( m_macAddress, MAC_ADDRESS_LEN, m_macAddress)
+	ADD_PACKET_MEMBER_STR( m_securityToken, PACKET_STOKEN_LEN, m_securityToken)
+	ADD_PACKET_MEMBER_STR( m_machineCode, PACKET_MACHINECODE_LEN, m_machineCode)
+	ADD_PACKET_MEMBER_STR( m_GameVersion, PACKET_VERSION_LEN, m_machineCode)
+
+	ADD_PACKET_MEMBER( uiaccountlen, uint8, uiaccountlen)
+	ADD_PACKET_MEMBER( uitokenlen, uint8, uiaccountlen)
+	ADD_PACKET_MEMBER( uimachinecodelen, uint8, uiaccountlen)
+	ADD_PACKET_MEMBER( uiaccountlen, uint8, uiaccountlen)
+
+	ADD_PACKET_MEMBER( m_nPhyProcessor, uint8, m_nPhyProcessor)
+	ADD_PACKET_MEMBER( m_nLogicalProcessor, uint8, m_nLogicalProcessor)
+	ADD_PACKET_MEMBER( m_nAvailProcessor, uint8, m_nAvailProcessor)
+
+	ADD_PACKET_MEMBER( m_nPhyMemory, uint32, m_nPhyMemory)
+	ADD_PACKET_MEMBER( m_nVideoMemory, uint32, m_nVideoMemory)
+
+	ADD_PACKET_MEMBER( m_nCpuTypeStrLen, uint8, m_nCpuTypeStrLen)
+	ADD_PACKET_MEMBER( m_nGpuTypeStrLen, uint8, m_nGpuTypeStrLen)
+
+	ADD_PACKET_MEMBER( m_nWinVersion, uint8, m_nWinVersion)
+	ADD_PACKET_MEMBER( m_bIsBit64, uint8, m_bIsBit64)
+
+PACKET_END(PacketConnectLoginServer)
