@@ -13,6 +13,7 @@ typedef signed short int16;
 typedef unsigned int uint32;
 typedef signed int int32;
 typedef unsigned long SM_KEY;
+typedef unsigned long DWORD;
 
 #define SrvID_NULL	-1
 #define IPLEN		32
