@@ -272,6 +272,7 @@
     <ClInclude Include="FactoryManagerBase.h" />
     <ClInclude Include="FSMExtendData.h" />
     <ClInclude Include="FunctionBase.h" />
+    <ClInclude Include="GameActor.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameUtil.h" />
     <ClInclude Include="GateSrvGrp.h" />
@@ -443,6 +444,7 @@
     <ClCompile Include="FactoryManagerBase.cpp" />
     <ClCompile Include="FSMExtendData.cpp" />
     <ClCompile Include="FunctionBase.cpp" />
+    <ClCompile Include="GameActor.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameUtil.cpp" />
     <ClCompile Include="GateSrvGrp.cpp" />

@@ -1,4 +1,5 @@
 #pragma once
+#include "GameDummy.h"
 
 typedef std::map<int32, GameObj*> GameObjMap;
 
@@ -12,6 +13,10 @@ public:
 
 	void Tick(int32 nFrameTime);
 
+	CltGameActor* GetGameActor(int32 nAvatarID);
+	GameObj* GetGameObj(int32 nAvatarID);
+	GameDummy* GetGameDummy(int32 nAvatarID);
+
 	int32 m_nSceneID;
 	int32 m_nSceneSID;
 
@@ -23,5 +28,7 @@ public:
 	GameLocalPlayer*	m_pLocalPlayer;
 	SceneInfo*			m_pSceneInfo;
 	GameActor*			m_pSelectActor;
+
+	GameObjMap			m_mapGameActor;
 };
 

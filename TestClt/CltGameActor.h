@@ -1,5 +1,5 @@
 #pragma once
-class CltGameActor : public GameObj, public MyGameActor, public CommonDataOwner
+class CltGameActor : public GameObj, public GameActor, public CommonDataOwner
 {
 public:
 	CltGameActor(void);

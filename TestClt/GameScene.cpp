@@ -41,6 +41,42 @@ void GameScene::Tick(int32 nFrameTime)
 {
 	for (GameObjMap::iterator itr = m_mapGameActors.begin(); itr != m_mapGameActors.end(); ++itr)
 	{
+		GameObj* pObj = itr->second;
+		if(!pObj)
+			continue;
 
+		pObj->Tick(nFrameTime);
 	}
+}
+
+CltGameActor* GameScene::GetGameActor(int32 nAvatarID)
+{
+	GameObjMap::iterator itr = m_mapGameActor.find(nAvatarID);
+	if( itr == m_mapGameActor.end() )
+		return NULL;
+
+	return (CltGameActor*)itr->second;
+}
+
+GameObj* GameScene::GetGameObj(int32 nAvatarID)
+{
+	CltGameActor* pGameActor = GetGameActor(nAvatarID);
+	if(pGameActor != NULL)
+		return pGameActor;
+
+	GameDummy* pGameDummy = GetGameDummy(nAvatarID);
+	if(pGameDummy != NULL)
+		return pGameDummy;
+
+	return NULL;
+}
+
+
+GameDummy* GameScene::GetGameDummy(int32 nAvatarID)
+{
+	auto itr = m_mapGameActor,find(nAvatarID);
+	if( itr == m_mapGameActor.end() )
+		return NULL;
+
+	return (GameDummy*)itr->second;
 }

@@ -2,6 +2,7 @@
 
 #include "MySmartPtr.h"
 #include "PacketSender.h"
+#include "GameScene.h"
 
 class MyClt : public IReferable, public PacketSender
 {

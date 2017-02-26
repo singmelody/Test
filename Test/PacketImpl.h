@@ -891,3 +891,15 @@ START_ADD_PACKET_MEMBER(PacketConnectLoginServer)
 	ADD_PACKET_MEMBER( m_bIsBit64, uint8, m_bIsBit64)
 
 PACKET_END(PacketConnectLoginServer)
+
+
+PACKET_EX( PacketInitAvatarData, PacketParamPool, new PoolPacketAllocator(2048))
+uint32 nParamType;
+int32 nSrcAvatarID;
+
+
+
+
+PACKET_EX( PacketUpdateAvatarData, PacketParamPool, new PoolPacketAllocator(2048))
+	uint32 nParamType;
+int32 nSrcAvatarID;
