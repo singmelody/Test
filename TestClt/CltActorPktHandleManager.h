@@ -1,5 +1,6 @@
 #pragma once
 #include "CltPktHandleManager.h"
+#include "Singleton.h"
 
 class CltActorPktHandleManager : public CltPktHandleManager, public Singleton<CltActorPktHandleManager>
 {
@@ -13,6 +14,6 @@ public:
 	virtual void PktNode_InitAvatarData(class PacketInitAvatarData* pPkt);
 	virtual void PktNode_UpdateAvatarData(class PacketUpdateAvatarData* pPkt);
 
-
+	void PktNode_Chat(class PacketChat* pPkt);
 };
 

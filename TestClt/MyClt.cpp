@@ -32,7 +32,7 @@ void MyClt::SendPacket(PacketBase* pPkt)
 
 void MyClt::InitAvatarData(class PacketInitAvatarData* pPkt)
 {
-	DWORD nParam = pPkt->nParamType;
+	DWORD nParamID = pPkt->nParamType;
 	int32 nSrcAvatarID = pPkt->nSrvAvatarID;
 
 	if( nSrcAvatarID == m_nAvatarID )
@@ -52,10 +52,56 @@ void MyClt::InitAvatarData(class PacketInitAvatarData* pPkt)
 		pDummy->SetParamSet(ParamSet);
 	}
 
+	pPkt->UpdateParamPool(pParamSet);
 
+	if(pPkt->IsLastPacket())
+	{
+		m_pScene->RemoveGameDummy(nSrcAvatarID);
+
+		CltGameActor* pObj = m_pScene->CreateGameActor( pPkt->nSrcAvatarID, pParamSet, pDummy);
+
+		if(!pObj)
+		{
+			pObj->nParamTypeID = PARAM_ID(nParamID);
+			pObj->nParamDataID = PARAM_DATA_ID(nParamID);
+		}
+
+		SAFE_DELETE(pDummy);
+
+		// drop data from server
+		PacketCltCommonDataRequest pkt;
+
+		pkt.TargetAvatarID = pObj->GetAvatarID();
+		pkt.SetAvatarID(m_nAvatarID);
+
+		SendPacket(&pkt);
+	}
 }
 
 void MyClt::UpdateAvatarData(class PacketUpdateAvatarData* pPkt)
 {
+	DWORD nParamID = pPkt->nParamType;
 
+	if(m_nAvatarID == pPkt->nSrcAvatarID)
+	{
+		if(m_pLocalDummy != NULL)
+		{
+			ParamPool* pParamSet = m_pLocalDummy->m_pParamSet;
+			if(!pParamSet)
+			{
+				pParamSet = ParamSet::CreateNew(nParamID);
+				m_pLocalDummy->m_pParamSet = pParamSet;
+			}
+
+			pPkt->UpdateParamPool(pParamSet);
+			return;
+		}
+	}
+
+	CltGameActor* pActor = m_pScene->GetGameActor(pPkt->nSrcAvatarID);
+	if(!pActor)
+	{
+		pPkt->UpdateParamPool(pActor);
+		return;
+	}
 }
