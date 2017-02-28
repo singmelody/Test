@@ -86,6 +86,8 @@
     <ClInclude Include="GameLocalPlayer.h" />
     <ClInclude Include="GameObj.h" />
     <ClInclude Include="GameScene.h" />
+    <ClInclude Include="LoginAction.h" />
+    <ClInclude Include="MyAOIManager.h" />
     <ClInclude Include="MyClt.h" />
     <ClInclude Include="MyCltManager.h" />
     <ClInclude Include="stdafx.h" />
@@ -99,6 +101,8 @@
     <ClCompile Include="GameLocalPlayer.cpp" />
     <ClCompile Include="GameObj.cpp" />
     <ClCompile Include="GameScene.cpp" />
+    <ClCompile Include="LoginAction.cpp" />
+    <ClCompile Include="MyAOIManager.cpp" />
     <ClCompile Include="MyClt.cpp" />
     <ClCompile Include="MyCltManager.cpp" />
     <ClCompile Include="stdafx.cpp">

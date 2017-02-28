@@ -555,6 +555,12 @@
     <ClInclude Include="GameActor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="AOIManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FSMBasicData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -1020,6 +1026,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GameActor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AOIManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FSMBasicData.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

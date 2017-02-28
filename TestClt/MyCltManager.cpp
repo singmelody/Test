@@ -41,6 +41,34 @@ void MyCltManager::Connect2LoginSrv(const char* sAddr, int32 nPort)
 	m_pCltsLoginPending[nSocketID] = pClt;
 }
 
+void MyCltManager::SendCltSelectAvatar(int32 nIdx)
+{
+	PacketCltSelectAvatar selPkt;
+
+	selPkt.SetAvatarID(m_nAvatarID);
+	selPkt.nAvatarIdx = nIdx;
+	selPkt.SetPacketType(ePacketType_GateProc);
+
+	SendPacket(&selPkt);
+
+	AddTicks("SendCltSelectAvatar");
+}
+
+void MyCltManager::SendCltCreateCharacter(const std::string& strRoleName)
+{
+
+}
+
+void MyCltManager::SendCltCreateDefaultCharacter()
+{
+
+}
+
+void MyCltManager::SendCltDelCharacter(int32 nIdx)
+{
+
+}
+
 void MyCltManager::InitNetManager()
 {
 	CltPacketProcessor* pProc = CltPacketProcessor::GetSingletonPtr();
@@ -102,4 +130,19 @@ void MyCltManager::SendPacket(int32 nSocketID, PacketBase* pPkt)
 
 	if(m_pNetManager)
 		m_pNetManager->SendPacket( *pPkt, nSocketID);
+}
+
+int32 MyCltManager::GetTicks(const std::string& key)
+{
+	MapTicks::iterator itr = m_mapTicks.find(key);
+	if( itr == m_mapTicks.end() )
+		return 0;
+	return itr->second;
+}
+
+int32 MyCltManager::SetTicks(const std::string& key)
+{
+	int32 nTicks = GetTickCount();
+	m_mapTicks[key] = nTicks;
+	return nTicks;
 }

@@ -51,6 +51,12 @@
     <ClInclude Include="GameScene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="LoginAction.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MyAOIManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -84,6 +90,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GameScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LoginAction.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MyAOIManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
