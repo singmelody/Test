@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "MyClt.h"
-
+#include "PacketImpl.h"
 
 MyClt::MyClt(void)
 {

@@ -2,6 +2,8 @@
 
 #include "PacketData.h"
 
+typedef int8 FSMStateID;
+
 class FSMBasicData : public PacketData
 {
 public:

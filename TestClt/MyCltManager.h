@@ -2,6 +2,7 @@
 #include "Singleton.h"
 #include "PacketBase.h"
 #include <map>
+#include "MyClt.h"
 
 typedef std::map<std::string, int32> MapTicks;
 
