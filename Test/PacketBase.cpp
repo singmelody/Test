@@ -314,4 +314,3 @@ void PacketAttachBase::AttachPacket(PacketBase* pPkt)
 	m_pPacket->ReadPacket(pBuffer);
 }
 
-
