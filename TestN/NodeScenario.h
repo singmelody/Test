@@ -18,6 +18,24 @@ public:
 	NodeAvatar* FindAvatarInContent(int32 nUID);
 	NodeAvatar* FindAvatarFromScene(int32 nAvatarID);
 
+	void AddAvatarToScene( int32 nCount, int32 ids[]);
+	void AddAvatarToScene( int32 nAvatraID, NodeAvatar* pAvatar);
+
+	void RemoveNPCFromScene( int32 nCount, int32 ids[]);
+	void RemoveNPCFromScene( int32 nAvatarID, NodeNPC* pNpc);
+
+	void CombineSceneProcess();
+	void CombineSceneInstanceProcess();
+
+	virtual bool CheckStarted();
+	virtual bool CheckInterval();
+
+	virtual bool CheckSceneProcess( int32 iBitPos);
+	virtual bool CheckSceneInstanceProcess( int32 iBitPos);
+
+	virtual bool CheckSceneProcessStart();
+	virtual bool CheckSceneInstanceProcessStart();
+
 	NodeScene*	m_pScene;
 protected:
 
