@@ -1,0 +1,296 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="ThirdParty">
+      <UniqueIdentifier>{2715db6f-47ac-4abc-8f9a-532498f3111c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\LuaBridge">
+      <UniqueIdentifier>{23af8e0e-36b7-40d9-9a7c-bcd89e221534}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\LuaBridge\detail">
+      <UniqueIdentifier>{0536a988-5803-4baf-a2c6-85be978588df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\Lua5.3.3">
+      <UniqueIdentifier>{83c84921-4f9f-4859-8edb-a7b63bfffa09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\Lua5.3.3\luaSrc">
+      <UniqueIdentifier>{c81f8cf6-4662-4844-93d3-e5080d96c3ff}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ReadMe.txt" />
+    <None Include="..\Thirdparty\lua-5.3.3\src\Makefile">
+      <Filter>ThirdParty\Lua5.3.3\luaSrc</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Thirdparty\lua-5.3.3\src\lapi.h">
+      <Filter>ThirdParty\Lua5.3.3\luaSrc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Thirdparty\lua-5.3.3\src\lauxlib.h">
+      <Filter>ThirdParty\Lua5.3.3\luaSrc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Thirdparty\lua-5.3.3\src\lcode.h">
+      <Filter>ThirdParty\Lua5.3.3\luaSrc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Thirdparty\lua-5.3.3\src\lctype.h">
+      <Filter>ThirdParty\Lua5.3.3\luaSrc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Thirdparty\lua-5.3.3\src\ldebug.h">
+      <Filter>ThirdParty\Lua5.3.3\luaSrc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Thirdparty\lua-5.3.3\src\ldo.h">
+      <Filter>ThirdParty\Lua5.3.3\luaSrc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Thirdparty\lua-5.3.3\src\lfunc.h">
+      <Filter>ThirdParty\Lua5.3.3\luaSrc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Thirdparty\lua-5.3.3\src\lgc.h">
+      <Filter>ThirdParty\Lua5.3.3\luaSrc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Thirdparty\lua-5.3.3\src\llex.h">
+      <Filter>ThirdParty\Lua5.3.3\luaSrc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Thirdparty\lua-5.3.3\src\llimits.h">
+      <Filter>ThirdParty\Lua5.3.3\luaSrc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Thirdparty\lua-5.3.3\src\lmem.h">
+      <Filter>ThirdParty\Lua5.3.3\luaSrc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Thirdparty\lua-5.3.3\src\lobject.h">
+      <Filter>ThirdParty\Lua5.3.3\luaSrc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Thirdparty\lua-5.3.3\src\lopcodes.h">
+      <Filter>ThirdParty\Lua5.3.3\luaSrc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Thirdparty\lua-5.3.3\src\lparser.h">
+      <Filter>ThirdParty\Lua5.3.3\luaSrc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Thirdparty\lua-5.3.3\src\lprefix.h">
+      <Filter>ThirdParty\Lua5.3.3\luaSrc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Thirdparty\lua-5.3.3\src\lstate.h">
+      <Filter>ThirdParty\Lua5.3.3\luaSrc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Thirdparty\lua-5.3.3\src\lstring.h">
+      <Filter>ThirdParty\Lua5.3.3\luaSrc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Thirdparty\lua-5.3.3\src\ltable.h">
+      <Filter>ThirdParty\Lua5.3.3\luaSrc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Thirdparty\lua-5.3.3\src\ltm.h">
+      <Filter>ThirdParty\Lua5.3.3\luaSrc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Thirdparty\lua-5.3.3\src\lua.h">
+      <Filter>ThirdParty\Lua5.3.3\luaSrc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Thirdparty\lua-5.3.3\src\lua.hpp">
+      <Filter>ThirdParty\Lua5.3.3\luaSrc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Thirdparty\lua-5.3.3\src\luaconf.h">
+      <Filter>ThirdParty\Lua5.3.3\luaSrc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Thirdparty\lua-5.3.3\src\lualib.h">
+      <Filter>ThirdParty\Lua5.3.3\luaSrc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Thirdparty\lua-5.3.3\src\lundump.h">
+      <Filter>ThirdParty\Lua5.3.3\luaSrc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Thirdparty\lua-5.3.3\src\lvm.h">
+      <Filter>ThirdParty\Lua5.3.3\luaSrc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Thirdparty\lua-5.3.3\src\lzio.h">
+      <Filter>ThirdParty\Lua5.3.3\luaSrc</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaVM.h">
+      <Filter>ThirdParty\LuaBridge</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Thirdparty\luabridge\detail\CFunctions.h">
+      <Filter>ThirdParty\LuaBridge\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Thirdparty\luabridge\detail\ClassInfo.h">
+      <Filter>ThirdParty\LuaBridge\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Thirdparty\luabridge\detail\Constructor.h">
+      <Filter>ThirdParty\LuaBridge\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Thirdparty\luabridge\detail\dump.h">
+      <Filter>ThirdParty\LuaBridge\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Thirdparty\luabridge\detail\FuncTraits.h">
+      <Filter>ThirdParty\LuaBridge\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Thirdparty\luabridge\detail\Iterator.h">
+      <Filter>ThirdParty\LuaBridge\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Thirdparty\luabridge\detail\LuaException.h">
+      <Filter>ThirdParty\LuaBridge\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Thirdparty\luabridge\detail\LuaHelpers.h">
+      <Filter>ThirdParty\LuaBridge\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Thirdparty\luabridge\detail\LuaRef.h">
+      <Filter>ThirdParty\LuaBridge\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Thirdparty\luabridge\detail\Namespace.h">
+      <Filter>ThirdParty\LuaBridge\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Thirdparty\luabridge\detail\Stack.h">
+      <Filter>ThirdParty\LuaBridge\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Thirdparty\luabridge\detail\TypeList.h">
+      <Filter>ThirdParty\LuaBridge\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Thirdparty\luabridge\detail\TypeTraits.h">
+      <Filter>ThirdParty\LuaBridge\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Thirdparty\luabridge\detail\Userdata.h">
+      <Filter>ThirdParty\LuaBridge\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="ExportLua.h">
+      <Filter>ThirdParty</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Singleton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TestLua.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Thirdparty\lua-5.3.3\src\lapi.c">
+      <Filter>ThirdParty\Lua5.3.3\luaSrc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Thirdparty\lua-5.3.3\src\lauxlib.c">
+      <Filter>ThirdParty\Lua5.3.3\luaSrc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Thirdparty\lua-5.3.3\src\lbaselib.c">
+      <Filter>ThirdParty\Lua5.3.3\luaSrc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Thirdparty\lua-5.3.3\src\lbitlib.c">
+      <Filter>ThirdParty\Lua5.3.3\luaSrc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Thirdparty\lua-5.3.3\src\lcode.c">
+      <Filter>ThirdParty\Lua5.3.3\luaSrc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Thirdparty\lua-5.3.3\src\lcorolib.c">
+      <Filter>ThirdParty\Lua5.3.3\luaSrc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Thirdparty\lua-5.3.3\src\lctype.c">
+      <Filter>ThirdParty\Lua5.3.3\luaSrc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Thirdparty\lua-5.3.3\src\ldblib.c">
+      <Filter>ThirdParty\Lua5.3.3\luaSrc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Thirdparty\lua-5.3.3\src\ldebug.c">
+      <Filter>ThirdParty\Lua5.3.3\luaSrc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Thirdparty\lua-5.3.3\src\ldo.c">
+      <Filter>ThirdParty\Lua5.3.3\luaSrc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Thirdparty\lua-5.3.3\src\ldump.c">
+      <Filter>ThirdParty\Lua5.3.3\luaSrc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Thirdparty\lua-5.3.3\src\lfunc.c">
+      <Filter>ThirdParty\Lua5.3.3\luaSrc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Thirdparty\lua-5.3.3\src\lgc.c">
+      <Filter>ThirdParty\Lua5.3.3\luaSrc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Thirdparty\lua-5.3.3\src\linit.c">
+      <Filter>ThirdParty\Lua5.3.3\luaSrc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Thirdparty\lua-5.3.3\src\liolib.c">
+      <Filter>ThirdParty\Lua5.3.3\luaSrc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Thirdparty\lua-5.3.3\src\llex.c">
+      <Filter>ThirdParty\Lua5.3.3\luaSrc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Thirdparty\lua-5.3.3\src\lmathlib.c">
+      <Filter>ThirdParty\Lua5.3.3\luaSrc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Thirdparty\lua-5.3.3\src\lmem.c">
+      <Filter>ThirdParty\Lua5.3.3\luaSrc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Thirdparty\lua-5.3.3\src\loadlib.c">
+      <Filter>ThirdParty\Lua5.3.3\luaSrc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Thirdparty\lua-5.3.3\src\lobject.c">
+      <Filter>ThirdParty\Lua5.3.3\luaSrc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Thirdparty\lua-5.3.3\src\lopcodes.c">
+      <Filter>ThirdParty\Lua5.3.3\luaSrc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Thirdparty\lua-5.3.3\src\loslib.c">
+      <Filter>ThirdParty\Lua5.3.3\luaSrc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Thirdparty\lua-5.3.3\src\lparser.c">
+      <Filter>ThirdParty\Lua5.3.3\luaSrc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Thirdparty\lua-5.3.3\src\lstate.c">
+      <Filter>ThirdParty\Lua5.3.3\luaSrc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Thirdparty\lua-5.3.3\src\lstring.c">
+      <Filter>ThirdParty\Lua5.3.3\luaSrc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Thirdparty\lua-5.3.3\src\lstrlib.c">
+      <Filter>ThirdParty\Lua5.3.3\luaSrc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Thirdparty\lua-5.3.3\src\ltable.c">
+      <Filter>ThirdParty\Lua5.3.3\luaSrc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Thirdparty\lua-5.3.3\src\ltablib.c">
+      <Filter>ThirdParty\Lua5.3.3\luaSrc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Thirdparty\lua-5.3.3\src\ltm.c">
+      <Filter>ThirdParty\Lua5.3.3\luaSrc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Thirdparty\lua-5.3.3\src\lua.c">
+      <Filter>ThirdParty\Lua5.3.3\luaSrc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Thirdparty\lua-5.3.3\src\luac.c">
+      <Filter>ThirdParty\Lua5.3.3\luaSrc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Thirdparty\lua-5.3.3\src\lundump.c">
+      <Filter>ThirdParty\Lua5.3.3\luaSrc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Thirdparty\lua-5.3.3\src\lutf8lib.c">
+      <Filter>ThirdParty\Lua5.3.3\luaSrc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Thirdparty\lua-5.3.3\src\lvm.c">
+      <Filter>ThirdParty\Lua5.3.3\luaSrc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Thirdparty\lua-5.3.3\src\lzio.c">
+      <Filter>ThirdParty\Lua5.3.3\luaSrc</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaVM.cpp">
+      <Filter>ThirdParty\LuaBridge</Filter>
+    </ClCompile>
+    <ClCompile Include="ExportLua.cpp">
+      <Filter>ThirdParty</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
