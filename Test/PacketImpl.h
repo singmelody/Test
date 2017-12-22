@@ -874,7 +874,7 @@ START_ADD_PACKET_MEMBER(PacketConnectLoginServer)
 
 	ADD_PACKET_MEMBER( uiaccountlen, uint8, uiaccountlen)
 	ADD_PACKET_MEMBER( uitokenlen, uint8, uiaccountlen)
-	ADD_PACKET_MEMBER( uimachinecodelen, uint8, uiaccountlen)
+	ADD_PACKET_MEMBER( uimachinecodelen, uint8, uimachinecodelen)
 	ADD_PACKET_MEMBER( uiaccountlen, uint8, uiaccountlen)
 
 	ADD_PACKET_MEMBER( m_nPhyProcessor, uint8, m_nPhyProcessor)
