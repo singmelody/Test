@@ -11,3 +11,17 @@ ScenarioParam::DBInfo::DBInfo(DBTable& table)
 
 
 }
+
+ScenarioParam::ScenarioParam(DBInfo dbInfo, DBRow& row)
+{
+	row.Fill( ParamName, dbInfo.Col_ParamName, "");
+	std::transform( ParamName.begin(), ParamName.end(), ParamName.begin(), ::tolower);
+
+	row.Fill( ParamInt1, dbInfo.Col_ParamInt1, -1);
+	row.Fill( ParamInt2, dbInfo.Col_ParamInt2, -1);
+
+	row.Fill( ParamFloat, dbInfo.Col_ParamFloat, -1);
+	row.Fill( ParamString, dbInfo.Col_ParamString, "");
+}
+
+

@@ -23,7 +23,7 @@ AIBehavior* AIBehaviorSelector::Clone()
 	pRes->m_nParentID = m_nParentID;
 	pRes->m_nChildIdx = m_nChildIdx;
 	pRes->m_nCDGroupID = m_nCDGroupID;
-	res.m_bUseWeight = m_bUseWeight;
+	pRes->m_bUseWeight = m_bUseWeight;
 
 
 	for (int32 i = 0; i < (int32)m_nConditionCount; ++i)

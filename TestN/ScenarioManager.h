@@ -63,9 +63,9 @@ public:
 
 	virtual bool LoadDataFromDB(DBInterface* pDBI);
 
-	bool LoadScenarioInfo( DBInterface* pDBI);
-	bool LoadScenarioParam( DBInterface* pDBI);
-	bool LoadScenarioTemplate( DBInterface* pDBI);
+	bool InitialScenarioInfo( DBInterface* pDBI);
+	bool InitialScenarioParam( DBInterface* pDBI);
+	bool InitialScenarioTemplate( DBInterface* pDBI);
 
 	ScenarioTemplateMap	m_mapTemplates;
 
