@@ -2,6 +2,63 @@
 #include "ScenarioManager.h"
 
 
+ScenarioTemplateInfo::ScenarioTemplateInfo(DBRow& row)
+{
+	static const int32 nCol_TemplateID = row.GetColumnIdx("TemplateID");
+	static const int32 nCol_TemplateClass = row.GetColumnIdx("TemplateClass");
+
+	row.Fill( nTemplateID, nCol_TemplateID, 0);
+	row.Fill( TemplateClass, nCol_TemplateClass, "");
+
+	if(TemplateClass.length() < 5)
+		TemplateClass = "NodeScenario";
+}
+
+ScenarioInfo::ScenarioInfo(DBRow& row)
+{
+	static const int32 Col_ScenarioID = row.GetColumnIdx("ScenarioID");
+	static const int32 Col_ScenarioName = row.GetColumnIdx("ScenarioName");
+	static const int32 Col_ScenarioTemplateID = row.GetColumnIdx("ScenarioTemplateID");
+
+	static const int32 Col_IntParam1 = row.GetColumnIdx("IntParam1");
+	static const int32 Col_IntParam2 = row.GetColumnIdx("IntParam2");
+	static const int32 Col_FloatParam1 = row.GetColumnIdx("FloatParam1");
+	static const int32 Col_StrParam = row.GetColumnIdx("StrParam");
+
+	row.Fill( nScenarioID, Col_ScenarioID, 0);
+	row.Fill( ScenarioName, Col_ScenarioName, "");
+	row.Fill( ScenarioTemplateID, Col_ScenarioTemplateID, 0);
+
+	row.Fill( nIntParam1, Col_IntParam1, 0);
+	row.Fill( nIntParam2, Col_IntParam2, 0);
+	row.Fill( fParam1, Col_FloatParam1, 0.0f);
+	row.Fill( StrParam, Col_StrParam, "");
+
+	bStepFuncsInit = false;
+	memset( StepInfos, 0, sizeof(ScenarioStepInfo*) * MaxScenarioStep);
+}
+
+Scenario* ScenarioInfo::CreateScenario()
+{
+	Scenario* pScenario = (Scenario*)FactoryManager::Instance().New( ScenarioTemplateClass.c_str() );
+	if(!pScenario)
+		return;
+
+	pScenario->m_pScenarioInfo = this;
+	if(!bStepFuncsInit)
+	{
+		bStepFuncsInit = true;
+		pScenario->InitStepFuncs( this );
+	}
+
+	return pScenario;
+}
+
+void ScenarioInfo::RegisterStepInfo(int32 nStepID, ScenarioStepInfo* pStepInfo)
+{
+
+}
+
 ScenarioManager::ScenarioManager(void)
 {
 }
@@ -11,7 +68,7 @@ ScenarioManager::~ScenarioManager(void)
 {
 }
 
-bool ScenarioManager::LoadDataFromDB(DBInterface* pDBI)
+bool ScenarioManager::InitialDataFromDB(DBInterface* pDBI)
 {
 	if(!InitialScenarioTemplate(pDBI))
 		return false;

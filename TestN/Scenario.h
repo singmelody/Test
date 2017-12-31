@@ -31,7 +31,9 @@ public:
 
 	bool SetCurStep(int32 nStepID);
 
-	ScenarioStepInfo* m_pCurStep;
+	ScenarioFlow*		m_pScenarioFlow;
+	ScenarioInfo*		m_pScenarioInfo;
+	ScenarioStepInfo*	m_pCurStep;
 
 	f32	m_fTickTime;
 	f32 m_fCurTime;

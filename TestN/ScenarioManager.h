@@ -24,35 +24,35 @@ class ScenarioTemplateMap : public std::map< int32, ScenarioTemplateInfo>
 
 class ScenarioInfo : public ScenarioParamMap
 {
-public:
-	ScenarioInfo(DBRow& row);
-
-	Scenario* CreateScenario();
-
-	int32			nScenarioID;
-	std::string		ScenarioName;
-	int32			ScenarioTemplateID;
-	int32			ScenarioAttribute;
-
 	enum
 	{
 		eSet_Weekday		= 1 << 0,
 		eSet_TimeInterval	= 1 << 1,
 	};
+public:
+	ScenarioInfo(DBRow& row);
+
+	Scenario* CreateScenario();
 
 	bool IsSetWeekday() { return ( ScenarioAttribute & eSet_Weekday) != 0; }
 	bool IsSetTimeInterval() { return ( ScenarioAttribute & eSet_TimeInterval) != 0;}
 
-	std::string ScenarioTemplateClass;
-	int32	nIntParam1, nIntParam2;
-	f32		fParam1,fParam2;
-	std::string StrParam;
-
-	bool bStepFuncsInit;
-
 	void RegisterStepInfo( int32 nStepID, ScenarioStepInfo* pStepInfo);
 	ScenarioStepInfo* GetStepInfo(int32 nStepID);
-	ScenarioStepInfo* StepInfos[MaxScenarioStep];
+
+	int32				nScenarioID;
+	std::string			ScenarioName;
+	int32				ScenarioTemplateID;
+	int32				ScenarioAttribute;
+
+	std::string			ScenarioTemplateClass;
+	int32				nIntParam1;
+	int32				nIntParam2;
+	f32					fParam1;
+	std::string			StrParam;
+
+	bool				bStepFuncsInit;
+	ScenarioStepInfo*	StepInfos[MaxScenarioStep];
 };
 
 class ScenarioManager : public LoadTemplate, public ID2ItemMap< int32, ScenarioInfo>

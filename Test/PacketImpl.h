@@ -873,9 +873,9 @@ START_ADD_PACKET_MEMBER(PacketConnectLoginServer)
 	ADD_PACKET_MEMBER_STR( m_GameVersion, PACKET_VERSION_LEN, m_machineCode)
 
 	ADD_PACKET_MEMBER( uiaccountlen, uint8, uiaccountlen)
-	ADD_PACKET_MEMBER( uitokenlen, uint8, uiaccountlen)
+	ADD_PACKET_MEMBER( uitokenlen, uint8, uitokenlen)
 	ADD_PACKET_MEMBER( uimachinecodelen, uint8, uimachinecodelen)
-	ADD_PACKET_MEMBER( uiaccountlen, uint8, uiaccountlen)
+	ADD_PACKET_MEMBER( uiversionlen, uint8, uiversionlen)
 
 	ADD_PACKET_MEMBER( m_nPhyProcessor, uint8, m_nPhyProcessor)
 	ADD_PACKET_MEMBER( m_nLogicalProcessor, uint8, m_nLogicalProcessor)

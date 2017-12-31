@@ -2,6 +2,8 @@
 #include "Scenario.h"
 #include "MyLog.h"
 
+#include "ScenarioManager.h"
+
 Scenario::Scenario(void)
 {
 	m_fTickTime = 500.0f;

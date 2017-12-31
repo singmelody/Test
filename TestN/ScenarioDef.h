@@ -22,6 +22,8 @@ enum ScenarioStepResult
 	eStepResult_Exit,
 };
 
+class Scenario;
+
 class ScenarioStepInfo
 {
 public:

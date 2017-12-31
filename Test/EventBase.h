@@ -32,7 +32,7 @@ public:
 	virtual void EventID(int32 cid) { m_cid = cid;}
 
 	inline EventBase* prev() { return _prev; }
-	inline void next(EventBase* _p)	{ _prev = _p; }
+	inline void prev(EventBase* _p)	{ _prev = _p; }
 
 	inline EventBase* next() { return _next; }
 	inline void next(EventBase* _n) { _next = _n; }
@@ -50,7 +50,7 @@ protected:
 	{ \
 		DECLARE_FACTORY_ARG0_Ex( event, -1, new PoolAllocator, EventFactory::Instance()); \
 	public:
-		event(){ EventID(id), Init(); } \
+		event(){ EventID(id); Init(); } \
 		virtual ~event() {} \
 		virtual EventBase& Clone(EventBase* pEvent) \
 		{\
